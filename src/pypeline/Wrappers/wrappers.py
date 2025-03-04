@@ -3,7 +3,7 @@ import sys
 
 from functools import wraps
 import time
-from Exception import base_exception
+from Exceptions import base_exception
 
 def timer(func):
     @wraps(func)

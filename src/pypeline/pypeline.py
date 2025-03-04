@@ -1,9 +1,9 @@
 from collections import OrderedDict
 
-# from Log.log_base import *
+from Log.log_base import *
 from Wrappers.wrappers import *
-# from Utils.utils import *
-# from Types.type_validation import *
+from Utils.utils import *
+from Types.type_validation import *
 # from Cache.LFUCache import CustomLFUCache
 # from Step.step import step as base_step
 # from Context.context import context as base_context
@@ -67,6 +67,22 @@ class pypeline():
     
     def update_parameter_index(self, parameter, value):
         self.parameter_index[parameter] = value
+        return
+    
+    def update_step_index(self, step_key, step):
+        self.step_index[step_key] = step
+        return
+    
+    def update_step_key_index(self, step_name, step_key):
+        self.step_key_index[step_name] = step_key
+        return
+    
+    def update_dataframe_index(self, step_key, dataframe_name):
+        self.dataframe_index[step_key] = dataframe_name
+        return
+    
+    def update_cache_index(self, step_key, cache_step_key):
+        self.cache_index[step_key].append(cache_step_key)
         return
     
 
