@@ -1,6 +1,4 @@
 import os
-import sys
-
 import logging
 import datetime
 from Utils.utils import *

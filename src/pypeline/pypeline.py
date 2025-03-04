@@ -1,21 +1,22 @@
 from collections import OrderedDict
 
-from Log.log_base import *
+from pypeline.Log.logger import *
 from Wrappers.wrappers import *
 from Utils.utils import *
 from Types.type_validation import *
-# from Cache.LFUCache import CustomLFUCache
+from Cache.LFUCache import LFUCache
 # from Step.step import step as base_step
 # from Context.context import context as base_context
 
 class pypeline():
     def __init__(self, mode = "TEST", cache_type = "LFU"):
-        # self.logger = custom_logger().logger
+        self.logger = custom_logger().logger
         self.mode = mode
         self.__target_extractor = None
         self.__target_loader = None
         
-        # init_cache(cache_type)
+        self.__cache = None
+        self.init_cache(cache_type)
 
         self.__parameter_index = {}
         self.__step_index = OrderedDict()
@@ -30,6 +31,10 @@ class pypeline():
     @property
     def target_loader(self):
         return self.__target_loader
+    
+    @property
+    def cache(self):
+        return self.__cache
     
     @property
     def parameter_index(self):
@@ -64,6 +69,11 @@ class pypeline():
             self.__target_loader = loader
             self.logger.info("Target loader set...")
         return
+
+    @cache.setter
+    def cache(self, cache):
+        self.__cache = cache
+        return
     
     def update_parameter_index(self, parameter, value):
         self.parameter_index[parameter] = value
@@ -86,9 +96,11 @@ class pypeline():
         return
     
 
-    # def init_cache(cache_type):
-    #     match cache_type:
-    #         case "LFU":
-    #             self.__cache = CustomLFUCache
-    #         case _:
-    #             self.__cache = CustomLFUCache
+    def init_cache(self, cache_type):
+        match cache_type:
+            case "LFU":
+                self.cache = LFUCache()
+            case "Manual":
+                self.cache = None
+            case _:
+                self.cache = LFUCache()
