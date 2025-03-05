@@ -5,7 +5,6 @@ from .Wrappers import *
 from .Utils import *
 from .Types import *
 from .Cache import LFUCache as LFUCache
-from .Step import step as base_step
 from .Context import context as base_context
 
 class pypeline():
@@ -159,9 +158,10 @@ class pypeline():
 
                 if param_value is None:
                     desired_dataframes = self.dataframe_index[step_key] if step_key in self.dataframe_index else []
+                    #if cached is in desired dataframes then we gather the dataframes from the cache
 
                     if desired_dataframes == []:
-                        subcontext = self.globalcontext
+                        subcontext = self.globalcontext # or get
                     else:
                         for dataframe_name in desired_dataframes:
                             subcontext.add_dataframe(dataframe_name, self.globalcontext.get_dataframe(dataframe_name))

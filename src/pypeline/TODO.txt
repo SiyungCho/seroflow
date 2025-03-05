@@ -1,13 +1,22 @@
 TODO:
+v2
+- instead of UUID for step_keys use hash function so they stay the same 
 - implement basic cache
+- add basic engine
 - add adl e/l
 - add sql e/l
+- turn logger off and on
+- time how long certain things take (cached vs not cached)
+- need to make sure that if input data is changed then cache is reset and not used
+- maybe keep variables from run to run in cache config? (save variables between executions)
+
+v3
 - add universal engine
 - implement different 'modes' for pypeline (and maybe for steps)
 - add tqdm to pypeline.execute method
-- add MT and MP
 - add chunking
-- turn logger off and on
+
+v4
 - add pre-made custom steps
     - add/delete dataframe
     - add/delete/update internal variable
@@ -16,4 +25,12 @@ TODO:
     - change variable name
     - change dataframe name/properties
     - template for adding custom context/dataframes
+    - transpose dataframe
+    - get mean/median/mode of dataframe column and store in variable
     
+future
+- add MT and MP
+- add REST compatible e/l
+- use other container types (numpy, spark dataframes)
+- upload to pip
+- documentation (internal github & webapp)
