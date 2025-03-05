@@ -6,7 +6,7 @@ from ..Wrappers.wrappers import log_error
 class csv_extractor(extractor): 
     def __init__(self, source, step_name = "csv_extractor", **kwargs):
         super().__init__(step_name = step_name, func = self.func)
-        if not check_directory(source):
+        if not check_directory(source): #or check if its a file
             raise Exception(f"""Error directory not found""")
         
         self.source = source

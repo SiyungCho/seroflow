@@ -1,7 +1,7 @@
 import pickle
 import gzip
-from .Cache import abstract_cache
 from collections import defaultdict, OrderedDict
+from .Cache import abstract_cache
 
 class LFUCache(abstract_cache):
     def __init__(self, capacity = 3):

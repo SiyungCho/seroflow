@@ -11,6 +11,8 @@ class extractor(step):
         return
 
     def stop_step(self):
+        #check that the returned item is of context type
+        self.params.clear()
         return
 
     @abstractmethod

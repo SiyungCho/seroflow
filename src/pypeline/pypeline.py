@@ -102,7 +102,7 @@ class pypeline():
                 self.globalcontext.set_dataframe(dataframe_name, subcontext.get_dataframe(dataframe_name))
             else:
                 self.globalcontext.add_dataframe(dataframe_name, subcontext.get_dataframe(dataframe_name))
-                print(f"Added dataframe: {dataframe_name} to globalcontext")
+                self.logger.info(f"Added dataframe: {dataframe_name} to globalcontext")
         return
         
     def put_cache(self, key, value):
@@ -146,9 +146,11 @@ class pypeline():
         if self.target_extractor:
             target_extractor_key = self.parse_step(self.target_extractor)
             self.step_index.move_to_end(target_extractor_key, last=False)
+            self.step_name_index.move_to_end(target_extractor_key, last=False)
         if self.target_loader:
             target_loader_key = self.parse_step(self.target_loader)
             self.step_index.move_to_end(target_loader_key)
+            self.step_name_index.move_to_end(target_loader_key)
         return
 
     def parse_step(self, step):
@@ -173,13 +175,22 @@ class pypeline():
                 default_value = self.step_index[step_key].default_params[param] if param in self.step_index[step_key].default_params else None
                 param_value = input_value or curr_value or default_value
             else:
-                desired_dataframes = self.dataframe_index[step_key] if step_key in self.dataframe_index else [] #need to configure so if no dataframe explicitly set then use the one in the previous step or globalcontext
+                param_value = None
                 step_name = self.step_name_index[step_key]
                 subcontext = base_context(step_name+"_subcontext")
-                if not is_extractor(self.step_index[step_key], False): #instead of this we see if the function requests a context but nothing is specified then a blank context is returned
-                    for dataframe_name in desired_dataframes:
-                        subcontext.add_dataframe(dataframe_name, self.globalcontext.get_dataframe(dataframe_name))
-                param_value = subcontext      
+
+                if is_extractor(self.step_index[step_key], False):
+                    param_value = subcontext  
+
+                if param_value is None:
+                    desired_dataframes = self.dataframe_index[step_key] if step_key in self.dataframe_index else []
+
+                    if desired_dataframes == []:
+                        subcontext = self.globalcontext
+                    else:
+                        for dataframe_name in desired_dataframes:
+                            subcontext.add_dataframe(dataframe_name, self.globalcontext.get_dataframe(dataframe_name))
+                    param_value = subcontext
             if param_value is None:
                 raise Exception("Error parameter value not found in any index")
             kwargs[param] = param_value
@@ -216,13 +227,14 @@ class pypeline():
 
         for step_key in self.step_index.keys():
             print(f"Executing Step: {self.step_name_index[step_key]}")
+            self.logger.info(f"Executing Step: {self.step_name_index[step_key]}")
 
             step_params = self.parse_parameters(step_key)
             step_output = self.validate_step_output(self.step_index[step_key](**step_params), step_key)
             if step_output:
                 self.parse_step_output(step_output, step_key)
 
-            self.logger.info(f"step: {step_key} completed...")
+            self.logger.info(f"Step: {self.step_name_index[step_key]} completed...")
             #step was successful
             #start new thread
             #inside thread we cache the current state of all indexes and outputs

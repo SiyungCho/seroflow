@@ -4,6 +4,7 @@ from .Context import context as context
 from .Exceptions import base_exception as base_exception
 from .Extract import extractor as extractor
 from .Extract import csv_extractor as csv_extractor
+from .Extract import excel_extractor as excel_extractor
 from .Load import loader as loader
 from .Load import csv_loader as csv_loader
 from .Log import custom_logger as custom_logger
