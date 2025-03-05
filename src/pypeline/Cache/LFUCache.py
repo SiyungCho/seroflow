@@ -1,15 +1,40 @@
 import pickle
 import gzip
 from collections import defaultdict, OrderedDict
+import os
+
+from ..Utils.utils import *
 from .Cache import abstract_cache
 
 class LFUCache(abstract_cache):
-    def __init__(self, capacity = 3):
+    def __init__(self, capacity = 3, cache_dir = None):
         self.capacity = capacity
         self.min_freq = 0
         self.keys_to_value_freq = {} # key -> (value, frequency)
         self.freq_to_keys = defaultdict(OrderedDict) # frequency -> keys (recency ordered)
 
+        self.__source_directory = os.path.abspath(os.getcwd())
+        self.__cache_directory_path, self.__cache_config_path = self.init_directory(cache_dir)
+
+    def init_directory(self, cache_dir):
+        if cache_dir is not None:
+            cache_directory_path = cache_dir
+            #search for .config file in cache directory
+            cache_config_file_path = None
+            for file in os.listdir(cache_directory_path):
+                if file.endswith(".config"):
+                    cache_config_file_path = os.path.join(cache_directory_path, file)
+                    break
+            if cache_config_file_path is None:
+                cache_config_file_path = os.path.join(cache_directory_path, "cache.config")
+                create_file(cache_config_file_path)
+        else:
+            cache_directory_path = os.path.join(self.__source_directory, ".cache")
+            create_directory(cache_directory_path)
+            cache_config_file_path = os.path.join(cache_directory_path, "cache.config")
+            create_file(cache_config_file_path)
+        return cache_directory_path, cache_config_file_path
+    
     def get(self, key):
         if key not in self.key_to_val_freq:
             return -1

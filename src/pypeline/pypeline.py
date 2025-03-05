@@ -9,7 +9,7 @@ from .Step import step as base_step
 from .Context import context as base_context
 
 class pypeline():
-    def __init__(self, mode = "TEST", cache_type = LFUCache):
+    def __init__(self, cache_type=LFUCache, mode = "TEST"):
         self.logger = custom_logger("pypeline").logger
         self.mode = mode
         self.__target_extractor = None
@@ -21,7 +21,6 @@ class pypeline():
         self.__step_index = OrderedDict()
         self.__step_name_index = OrderedDict()
         self.__dataframe_index = {}
-        self.__cache_index = {}
         self.__globalcontext = base_context("globalcontext")
 
     @property
@@ -52,10 +51,6 @@ class pypeline():
     def dataframe_index(self):
         return self.__dataframe_index
     
-    @property
-    def cache_index(self):
-        return self.__cache_index
-        
     @property
     def globalcontext(self):
         return self.__globalcontext
@@ -92,10 +87,6 @@ class pypeline():
         self.dataframe_index[step_key].append(dataframe_name)
         return
     
-    def update_cache_index(self, step_key, cache_step_key):
-        self.cache_index[step_key].append(cache_step_key)
-        return
-
     def update_globalcontext(self, subcontext):
         for dataframe_name in subcontext.get_dataframe_names():
             if dataframe_name in self.globalcontext.get_dataframe_names():
@@ -104,23 +95,7 @@ class pypeline():
                 self.globalcontext.add_dataframe(dataframe_name, subcontext.get_dataframe(dataframe_name))
                 self.logger.info(f"Added dataframe: {dataframe_name} to globalcontext")
         return
-        
-    def put_cache(self, key, value):
-        self.cache.put(key, value)
-        return
-
-    def get_cache(self, key):
-        self.cache.get(key)
-        return
-
-    def store_cache(self, file_path):
-        self.cache.store(file_path)
-        return
-
-    def load_cache(self, file_path):
-        self.cache.load(file_path)
-        return
-
+    
     def add_steps(self, steps):
         if not isinstance(steps, list):
             raise TypeError("try using a list...")
@@ -221,6 +196,7 @@ class pypeline():
         self.logger.info("Beginning ETL Execution...")
         self.add_targets_to_steps()
 
+        #check cache:
         # search for init cache file
         # if one is present then we are in dev and want to figure out which cache file to start from (ie can be newest file or check functions for changes and go from most recent that has not been changed)
         # if one is not present then we start from the beginning
@@ -235,6 +211,8 @@ class pypeline():
                 self.parse_step_output(step_output, step_key)
 
             self.logger.info(f"Step: {self.step_name_index[step_key]} completed...")
+
+            #update cache:
             #step was successful
             #start new thread
             #inside thread we cache the current state of all indexes and outputs
