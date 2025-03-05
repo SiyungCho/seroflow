@@ -1,0 +1,19 @@
+TODO:
+- implement basic cache
+- add adl e/l
+- add sql e/l
+- add universal engine
+- implement different 'modes' for pypeline (and maybe for steps)
+- add tqdm to pypeline.execute method
+- add MT and MP
+- add chunking
+- turn logger off and on
+- add pre-made custom steps
+    - add/delete dataframe
+    - add/delete/update internal variable
+    - perform sql query on dataframe or entire context (ie all dataframes)
+    - convert dataframe column type
+    - change variable name
+    - change dataframe name/properties
+    - template for adding custom context/dataframes
+    
