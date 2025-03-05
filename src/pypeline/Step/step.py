@@ -1,5 +1,5 @@
-from base_step import abstract_step
-from Utils.utils import *
+from .base_step import abstract_step
+from ..Utils.utils import *
 
 class step(abstract_step):
     def __init__(self, step_name=None, params={}, dataframes = [], **kwargs):

@@ -1,7 +1,7 @@
 import pandas as pd
-from Utils.utils import *
-from Extract.extractor import extractor
-from Wrappers.wrappers import log_err
+from ..Utils.utils import *
+from ..Extract.extractor import extractor
+from ..Wrappers.wrappers import log_error
 
 class csv_extractor(extractor): 
     def __init__(self, source, step_name = "csv_connector", description = "Connect to csv data", mode = "TEST", contexts = [], **kwargs):

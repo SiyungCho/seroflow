@@ -1,16 +1,16 @@
 from collections import OrderedDict
 
-from pypeline.Log.logger import *
-from Wrappers.wrappers import *
-from Utils.utils import *
-from Types.type_validation import *
-from Cache.LFUCache import LFUCache
-from Step.step import step as base_step
-from Context.context import context as base_context
+from .Log import *
+from .Wrappers import *
+from .Utils import *
+from .Types import *
+from .Cache import LFUCache as LFUCache
+from .Step import step as base_step
+from .Context import context as base_context
 
 class pypeline():
     def __init__(self, mode = "TEST", cache_type = LFUCache):
-        self.logger = custom_logger().logger
+        self.logger = custom_logger("pypeline").logger
         self.mode = mode
         self.__target_extractor = None
         self.__target_loader = None

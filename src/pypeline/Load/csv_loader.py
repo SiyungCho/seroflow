@@ -1,7 +1,7 @@
-from Utils.utils import *
-from Load.loader import loader
-from Wrappers.wrappers import log_err
-from Context.Context import context as base_context
+from ..Utils.utils import *
+from ..Load.loader import loader
+from ..Wrappers.wrappers import log_error
+from ..Context.Context import context as base_context
 
 class csv_loader(loader):
     def __init__(self, target, step_name = "csv_releasor", description = "Release to csv file", mode = "TEST", contexts = ['all'], exists = "append", **kwargs):

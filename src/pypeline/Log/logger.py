@@ -1,7 +1,7 @@
 import os
 import logging
 import datetime
-from Utils.utils import *
+from ..Utils.utils import *
 
 class custom_logger():
     def __init__(self, log_name, log_file_path = None):

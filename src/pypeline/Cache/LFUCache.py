@@ -1,6 +1,6 @@
 import pickle
 import gzip
-from Cache import abstract_cache
+from .Cache import abstract_cache
 from collections import defaultdict, OrderedDict
 
 class LFUCache(abstract_cache):

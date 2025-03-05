@@ -1,7 +1,7 @@
-from Step.step import step as base_step
-from Extract.extractor import extractor as base_extractor
-from Load.loader import loader as base_loader
-from Context.context import context as base_context
+from ..Step.step import step as base_step
+from ..Extract.extractor import extractor as base_extractor
+from ..Load.loader import loader as base_loader
+from ..Context.Context import context as base_context
 
 def is_extractor(extractor, _raise=False):
     if not isinstance(extractor, base_extractor):

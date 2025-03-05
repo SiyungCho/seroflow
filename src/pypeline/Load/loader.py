@@ -1,7 +1,7 @@
 from abc import abstractmethod
-from Step.step import step
-from Utils.utils import *
-from Wrappers.wrappers import log_err
+from ..Step.step import step
+from ..Utils.utils import *
+from ..Wrappers.wrappers import log_error
 
 class loader(step):
     def __init__(self, step_name, description, mode, contexts, exists, func):
