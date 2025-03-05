@@ -97,7 +97,11 @@ class pypeline():
         return
 
     def update_globalcontext(self, subcontext):
-       
+        for dataframe_name in subcontext.get_dataframe_names():
+            if dataframe_name in self.globalcontext.get_dataframe_names():
+                self.globalcontext.set_dataframe(dataframe_name, subcontext.get_dataframe(dataframe_name))
+            else:
+                self.globalcontext.add_dataframe(dataframe_name, subcontext.get_dataframe(dataframe_name))
         return
         
     def put_cache(self, key, value):
