@@ -94,8 +94,23 @@ class pypeline():
     def update_cache_index(self, step_key, cache_step_key):
         self.cache_index[step_key].append(cache_step_key)
         return
-    
 
+    def put_cache(self, key, value):
+        self.cache.put(key, value)
+        return
+
+    def get_cache(self, key):
+        self.cache.get(key)
+        return
+
+    def store_cache(self, file_path):
+        self.cache.store(file_path)
+        return
+
+    def load_cache(self, file_path):
+        self.cache.load(file_path)
+        return
+    
     def init_cache(self, cache_type):
         match cache_type:
             case "LFU":

@@ -1,3 +1,5 @@
+import pickle
+import gzip
 from Cache import abstract_cache
 from collections import defaultdict, OrderedDict
 
@@ -42,3 +44,28 @@ class LFUCache(abstract_cache):
         self.key_to_val_freq[key] = (value, 1)
         self.freq_to_keys[1][key] = None
         self.min_freq = 1
+
+    def store(self, file_path):
+        state = {
+            'cache_type': 'LFU',
+            'capacity': self.capacity,
+            'min_freq': self.min_freq,
+            'key_to_val_freq': self.key_to_val_freq,
+            'freq_to_keys': self.freq_to_keys,
+        }
+        with gzip.open(file_path, 'wb') as f:
+            pickle.dump(state, f)
+    
+    @classmethod
+    def load(cls, file_path):
+        with gzip.open(file_path, 'rb') as f:
+            state = pickle.load(f)
+        
+        if state.get('cache_type') != 'LFU':
+            raise ValueError("The stored file does not contain an LFU cache state.")
+        
+        cache = cls(state['capacity'])
+        cache.min_freq = state['min_freq']
+        cache.key_to_val_freq = state['key_to_val_freq']
+        cache.freq_to_keys = state['freq_to_keys']
+        return cache
