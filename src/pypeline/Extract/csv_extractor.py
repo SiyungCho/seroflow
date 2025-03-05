@@ -4,8 +4,8 @@ from ..Extract.extractor import extractor
 from ..Wrappers.wrappers import log_error
 
 class csv_extractor(extractor): 
-    def __init__(self, source, step_name = "csv_connector", description = "Connect to csv data", mode = "TEST", contexts = [], **kwargs):
-        super().__init__(step_name = step_name, description = description, mode = mode, contexts = contexts, func = self.func)
+    def __init__(self, source, step_name = "csv_extractor", **kwargs):
+        super().__init__(step_name = step_name, func = self.func)
         if not check_directory(source):
             raise Exception(f"""Error directory not found""")
         
@@ -14,9 +14,8 @@ class csv_extractor(extractor):
         self.kwargs = kwargs
 
     def func(self, context):
-        for context_item in context.values():
-            for name, file in zip(self.file_names, self.file_paths):
-                context_item.add_dataframe(get_file_name_without_extension(name), self.__read_csv(file, self.kwargs))
+        for name, file in zip(self.file_names, self.file_paths):
+            context.add_dataframe(remove_extension(name), self.__read_csv(file, self.kwargs))
         return context
 
     def __read_csv(self, file, kwargs):

@@ -22,7 +22,7 @@ class step(abstract_step):
             return self
         else:
             self.params = {param: None for param in self.params_list}
-            self.__create_kwargs_params(args, kwargs)
+            self.create_kwargs_params(args, kwargs)
             if 'kwargs' in self.params:
                 self.params.pop('kwargs')
             return self.execute()
@@ -67,18 +67,18 @@ class step(abstract_step):
         self.add_params(self.input_params)
         self.add_params(self.default_params)
 
-    def __start_step(self):
+    def start_step(self):
         self.check_params()
         return
 
-    def __stop_step(self):
+    def stop_step(self):
         self.params.clear()
         return
 
     def execute(self):
-        self.__start_step()
+        self.start_step()
         self.step_output = self.step_func(**self.params)
-        self.__stop_step()
+        self.stop_step()
         return self.step_output
 
     def __str__(self):

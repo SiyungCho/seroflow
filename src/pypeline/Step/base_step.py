@@ -2,11 +2,11 @@ from abc import ABC, abstractmethod
 
 class abstract_step(ABC):
     @abstractmethod
-    def __start_step(self):
+    def start_step(self):
         pass
 
     @abstractmethod
-    def __stop_step(self):
+    def stop_step(self):
         pass
 
     @abstractmethod
