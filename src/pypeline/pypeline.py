@@ -128,7 +128,7 @@ class pypeline():
         return
 
     def parse_step(self, step):
-        step_key = generate_key()
+        step_key = generate_key(step.step_name)
         self.update_step_index(step_key, step)
         self.update_step_name_index(step_key, step.step_name)
         if step.params_list:

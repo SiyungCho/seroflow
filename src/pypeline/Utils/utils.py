@@ -3,9 +3,13 @@ import inspect
 import ast
 import textwrap
 import uuid
+import hashlib
 
-def generate_key():
-    return uuid.uuid4()
+def generate_key(input_string):
+    return hashlib.md5(input_string.encode('utf-8')).hexdigest()
+
+# def generate_key():
+#     return uuid.uuid4()
 
 def check_kw_in_kwargs(kw, kwargs):
     return False if kw not in kwargs else True
