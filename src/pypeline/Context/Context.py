@@ -22,6 +22,9 @@ class context:
     def set_dataframe(self, name, df):
         self.dataframes[name] = df
 
+    def get_dataframe_names(self):
+        return self.dataframes.keys()
+
     def get_metadata(self, key):
         return self.metadata.get(key)
 
