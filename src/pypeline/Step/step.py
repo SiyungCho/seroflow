@@ -44,3 +44,45 @@ class step(abstract_step):
             if default_value.default is not inspect.Parameter.empty
         }
         return default_params
+    
+    def check_params(self):
+        for param, value in self.params.items():
+            if value is None:
+                raise Exception(f"Error parameter {param} has value None, please either explicitly pass in a value or set a default")
+
+    def add_params(self, params):
+        for param, value in params.items():
+            if param not in self.params:
+                if 'kwargs' not in self.params:
+                    raise Exception("Error parameter given not found in function signature")
+                self.params[param] = value
+            elif self.params[param] is None:
+                self.params[param] = value
+
+    def create_kwargs_params(self, args, kwargs):
+        for index, value in enumerate(args):
+            kwargs[list(self.params.keys())[index]] = value
+
+        self.add_params(kwargs)
+        self.add_params(self.input_params)
+        self.add_params(self.default_params)
+
+    def __start_step(self):
+        self._check_params()
+        return
+
+    def __stop_step(self):
+        self.params.clear()
+        return
+
+    def execute(self):
+        self.__start_step()
+        self.step_output = self.step_func(**self.params)
+        self.__stop_step()
+        return self.step_output
+
+    def __str__(self):
+        print(self.description)
+        print(self.mode)
+        print(self.input_params)
+        return self.step_name
