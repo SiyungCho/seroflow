@@ -68,7 +68,7 @@ class step(abstract_step):
         self.add_params(self.default_params)
 
     def __start_step(self):
-        self._check_params()
+        self.check_params()
         return
 
     def __stop_step(self):
