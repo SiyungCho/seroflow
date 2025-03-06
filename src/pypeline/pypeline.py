@@ -1,4 +1,7 @@
 from collections import OrderedDict
+import pickle
+import gzip
+import os
 
 from .Log import *
 from .Wrappers import *
@@ -191,6 +194,19 @@ class pypeline():
         elif len(self.step_index[step_key].return_list) != len(step_output):
             raise Exception("Error incorrect amount of return elements found")
         return step_output
+    
+    def load_last_checkpoint(self):
+        """
+        Check if a cache configuration file exists and return the last checkpoint (step_key)
+        """
+        config_path = self.cache._LFUCache__cache_config_path  # accessing the internal config file path
+        if os.path.exists(config_path):
+            with open(config_path, 'r') as config_file:
+                last_checkpoint = config_file.read().strip()
+                if last_checkpoint:
+                    self.logger.info(f"Found checkpoint: {last_checkpoint}")
+                    return last_checkpoint
+        return None
 
     def execute(self, on_fail="skip"):
         self.logger.info("Beginning ETL Execution...")
@@ -198,25 +214,44 @@ class pypeline():
 
         #check cache:
         # search for init cache file
-        # if one is present then we are in dev and want to figure out which cache file to start from (ie can be newest file or check functions for changes and go from most recent that has not been changed)
-        # if one is not present then we start from the beginning
+        # if one is present then we are in dev and want to figure out which cache file to start from 
+        # gather last_step_completed value (the step_key)
+        # then compare all the function code blocks to the internal function code blocks and see if any differences
+        # if there are then start from that functions cache file
+        # if not then start from last_step_completed
 
-        for step_key in self.step_index.keys():
-            print(f"Executing Step: {self.step_name_index[step_key]}")
-            self.logger.info(f"Executing Step: {self.step_name_index[step_key]}")
+
+
+        # first we will check if there were any changes made to the functions in any of the previous steps, if there were changes then we start from the last unchanged functions state
+        # if no changes were made then we will either start execution from the newest zipped cache file (indicated in the cache config as a property)
+        # if a cache config file is not present then we start from the beginning
+
+        # Load a previous checkpoint (if any) to determine from which step to resume.
+        # last_checkpoint = self.load_last_checkpoint()
+        checkpoint = self.cache.load(self)
+        print(checkpoint)
+        step_keys = list(self.step_index.keys())
+        start_index = 0
+
+        # if last_checkpoint and last_checkpoint in step_keys:
+        #     start_index = step_keys.index(last_checkpoint) + 1
+        #     self.logger.info(f"Resuming execution from checkpoint: {last_checkpoint}")
+        # else:
+        #     self.logger.info("No valid checkpoint found, starting from the beginning...")
+
+        for step_key in step_keys[start_index:]:
+            step_name = self.step_name_index[step_key]
+            print(f"Executing Step: {step_name}")
+            self.logger.info(f"Executing Step: {step_name}")
 
             step_params = self.parse_parameters(step_key)
             step_output = self.validate_step_output(self.step_index[step_key](**step_params), step_key)
             if step_output:
                 self.parse_step_output(step_output, step_key)
+            self.cache.store(self, step_key)
+            
+            self.logger.info(f"Step: {step_name} completed...")
 
-            self.logger.info(f"Step: {self.step_name_index[step_key]} completed...")
-
-            #update cache:
-            #step was successful
-            #start new thread
-            #inside thread we cache the current state of all indexes and outputs
-            #upload to corresponding cache file
         self.logger.info("ETL Execution Finished...")
 
     def __str__(self):
@@ -224,5 +259,4 @@ class pypeline():
         print(self.step_index)
         print(self.step_name_index)
         print(self.dataframe_index)
-        print(self.cache_index)
         return "pypeline object"

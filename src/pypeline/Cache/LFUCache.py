@@ -1,7 +1,11 @@
 import pickle
 import gzip
+import dill
 from collections import defaultdict, OrderedDict
 import os
+import inspect
+import hashlib
+import json
 
 from ..Utils.utils import *
 from .Cache import abstract_cache
@@ -19,19 +23,18 @@ class LFUCache(abstract_cache):
     def init_directory(self, cache_dir):
         if cache_dir is not None:
             cache_directory_path = cache_dir
-            #search for .config file in cache directory
             cache_config_file_path = None
             for file in os.listdir(cache_directory_path):
-                if file.endswith(".config"):
+                if file.endswith(".json"):
                     cache_config_file_path = os.path.join(cache_directory_path, file)
                     break
             if cache_config_file_path is None:
-                cache_config_file_path = os.path.join(cache_directory_path, "cache.config")
+                cache_config_file_path = os.path.join(cache_directory_path, "config.json")
                 create_file(cache_config_file_path)
         else:
             cache_directory_path = os.path.join(self.__source_directory, ".cache")
             create_directory(cache_directory_path)
-            cache_config_file_path = os.path.join(cache_directory_path, "cache.config")
+            cache_config_file_path = os.path.join(cache_directory_path, "config.json")
             create_file(cache_config_file_path)
         return cache_directory_path, cache_config_file_path
     
@@ -70,27 +73,55 @@ class LFUCache(abstract_cache):
         self.freq_to_keys[1][key] = None
         self.min_freq = 1
 
-    def store(self, file_path):
-        state = {
-            'cache_type': 'LFU',
-            'capacity': self.capacity,
-            'min_freq': self.min_freq,
-            'key_to_val_freq': self.key_to_val_freq,
-            'freq_to_keys': self.freq_to_keys,
+    def read_config(self):
+        try:
+            with open(self.__cache_config_path, 'r') as config_file:
+                conf = json.load(config_file)
+        except (json.JSONDecodeError, FileNotFoundError):
+            conf = {}
+        return conf
+
+    def write_config(self, conf):
+        with open(self.__cache_config_path, 'w') as config_file:
+            json.dump(conf, config_file, indent=4)
+
+    def update_config(self, pypeline, step_key):
+        conf = self.read_config()
+        conf['last_completed_step'] = step_key
+
+        hash_code = get_function_hash(pypeline.step_index[step_key].step_func)
+        conf[step_key] = {
+            "func_hash": hash_code
         }
-        with gzip.open(file_path, 'wb') as f:
-            pickle.dump(state, f)
-    
-    @classmethod
-    def load(cls, file_path):
-        with gzip.open(file_path, 'rb') as f:
-            state = pickle.load(f)
+        #store function code for step_key inside json file
+        self.write_config(conf)
+        return
+
+    def store(self, pypeline, step_key):
+        checkpoint_file = os.path.join(self.__cache_directory_path, f"{step_key}.pkl.gz")
+        with gzip.open(checkpoint_file, 'wb') as f:
+            dill.dump(pypeline, f)
+        self.update_config(pypeline, step_key)
+
+    def compare_function_code(self, conf, step_key, func):
+        current_hash_code = get_function_hash(func)
+        conf_hash_code = conf[step_key].get("func_hash")
+        if current_hash_code != conf_hash_code:
+            return False
+        return True
+
+    def load(self, pypeline):
+        conf = self.read_config()
+        if conf == {}:
+            return None
         
-        if state.get('cache_type') != 'LFU':
-            raise ValueError("The stored file does not contain an LFU cache state.")
+        last_completed_step = conf['last_completed_step']
+        for step_key in pypeline.step_index.keys(): #actually we want to iterate through the step_keys in the config file not the pypeline
+            if step_key == last_completed_step:
+                break
+            else:
+                if not (self.compare_function_code(conf, step_key, pypeline.step_index[step_key].step_func)):
+                    return previous_step_key if previous_step_key is not None else step_key
+            previous_step_key = step_key
+        return last_completed_step
         
-        cache = cls(state['capacity'])
-        cache.min_freq = state['min_freq']
-        cache.key_to_val_freq = state['key_to_val_freq']
-        cache.freq_to_keys = state['freq_to_keys']
-        return cache

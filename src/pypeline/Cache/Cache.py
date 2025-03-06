@@ -11,9 +11,9 @@ class abstract_cache(ABC):
         pass
     
     @abstractmethod
-    def store(self, file_path):
+    def store(self):
         pass
     
-    @classmethod
-    def load(cls, file_path):
+    @abstractmethod
+    def load(self):
         pass

@@ -4,12 +4,21 @@ import ast
 import textwrap
 import uuid
 import hashlib
+import json
 
 def generate_key(input_string):
     return hashlib.md5(input_string.encode('utf-8')).hexdigest()
 
-# def generate_key():
-#     return uuid.uuid4()
+def get_function_source(func):
+    return inspect.getsource(func)
+
+def hash_source(source):
+    return hashlib.sha256(source.encode('utf-8')).hexdigest()
+
+def get_function_hash(func):
+    source_code = get_function_source(func)
+    code_hash = hash_source(source_code)
+    return code_hash
 
 def check_kw_in_kwargs(kw, kwargs):
     return False if kw not in kwargs else True
