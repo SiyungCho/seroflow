@@ -1,15 +1,8 @@
 TODO:
-v2
-- add adl e/l
 
 v3
-- add universal engine
-- implement different 'modes' for pypeline (and maybe for steps)
-- implement 'on_fail' functionality
+- fix adl e/l
 - add chunking
-
-v4
-- fix logger and turn logger off and on
 - add pre-made custom steps
     - add/delete dataframe
     - add/delete/update internal variable
@@ -20,10 +13,14 @@ v4
     - template for adding custom context/dataframes
     - transpose dataframe
     - get mean/median/mode of dataframe column and store in variable
-    
+
+v4
+- fix logger and turn logger off and on
+- add universal engine
+- implement different 'modes' for pypeline (and maybe for steps)
+- implement 'on_fail' functionality
+
 future
 - add MT and MP
 - add REST compatible e/l
 - use other container types (numpy, spark dataframes)
-- upload to pip
-- documentation (internal github & webapp)
