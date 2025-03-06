@@ -3,8 +3,6 @@ import gzip
 import dill
 from collections import defaultdict, OrderedDict
 import os
-import inspect
-import hashlib
 import json
 
 from ..Utils.utils import *
@@ -40,18 +38,15 @@ class LFUCache(abstract_cache):
     
     def get(self, key):
         if key not in self.key_to_val_freq:
-            # Return a tuple of two Nones so that the caller can unpack safely.
             return (None, None)
         
         value, freq = self.key_to_val_freq[key]
-        # Remove from the current frequency list
         del self.freq_to_keys[freq][key]
         if not self.freq_to_keys[freq]:
             del self.freq_to_keys[freq]
             if self.min_freq == freq:
                 self.min_freq += 1
 
-        # Increase frequency count and add to the new frequency list
         new_freq = freq + 1
         self.freq_to_keys[new_freq][key] = None
         self.key_to_val_freq[key] = (value, new_freq)
@@ -61,28 +56,23 @@ class LFUCache(abstract_cache):
         if self.capacity <= 0:
             return
 
-        # If the value is a dict with state info, convert it to a tuple.
         if isinstance(value, dict) and "parameter_index" in value and "globalcontext" in value:
             value = (value["parameter_index"], value["globalcontext"])
 
-        #generate key based on position, ie if there are 0 items in the cache, key is 0
         key = len(self.key_to_val_freq)
 
         if key in self.key_to_val_freq:
-            # Update value (if necessary) and bump the frequency.
             _, freq = self.key_to_val_freq[key]
             self.key_to_val_freq[key] = (value, freq)
-            self.get(key)  # Update frequency count.
+            self.get(key)
             return
 
         if len(self.key_to_val_freq) >= self.capacity:
-            # Evict the least frequently used key (the oldest one among those).
             evict_key, _ = self.freq_to_keys[self.min_freq].popitem(last=False)
             if not self.freq_to_keys[self.min_freq]:
                 del self.freq_to_keys[self.min_freq]
             del self.key_to_val_freq[evict_key]
 
-        # Insert new key with frequency 1.
         self.key_to_val_freq[key] = (value, 1)
         self.freq_to_keys[1][key] = None
         self.min_freq = 1
@@ -189,3 +179,14 @@ class LFUCache(abstract_cache):
         self.freq_to_keys = cache_state["freq_to_keys"]
         
         return parameter_index, global_context
+    
+    def reset(self, delete_directory=False):
+        self.min_freq = 0
+        self.key_to_val_freq = {}
+        self.freq_to_keys = defaultdict(OrderedDict)
+
+        if delete_directory:
+            for file in os.listdir(self.__cache_directory_path):
+                file_path = os.path.join(self.__cache_directory_path, file)
+                os.remove(file_path)
+        return

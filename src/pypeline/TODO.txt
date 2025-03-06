@@ -1,13 +1,11 @@
 TODO:
 v2
 - add adl e/l
-- add reset cache functionality
-- need to make sure that if input data is changed then cache is reset and not used
 
 v3
 - add universal engine
 - implement different 'modes' for pypeline (and maybe for steps)
-- add tqdm to pypeline.execute method
+- implement 'on_fail' functionality
 - add chunking
 
 v4

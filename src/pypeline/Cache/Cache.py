@@ -17,3 +17,7 @@ class abstract_cache(ABC):
     @abstractmethod
     def load(self):
         pass
+
+    @abstractmethod
+    def reset(self):
+        pass

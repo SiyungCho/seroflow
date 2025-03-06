@@ -1,1 +1,1 @@
-from .exception import base_exception as base_exception
+from .exception import base_exception
