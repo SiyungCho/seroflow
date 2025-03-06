@@ -1,8 +1,6 @@
 TODO:
 v2
-- add basic engine
 - add adl e/l
-- add sql e/l
 - add reset cache functionality
 - need to make sure that if input data is changed then cache is reset and not used
 
