@@ -10,11 +10,10 @@ Each class is a subclass of the abstract transformation class and implements the
 transformation function.
 """
 
-from ..Transform.Transformation import transformation
 from copy import deepcopy
+from ..transform.transformation import Transformation
 
-
-class cache_state(transformation):
+class CacheState(Transformation):
     """
     A transformation step that caches the current state of the pipeline.
 
@@ -91,7 +90,7 @@ class cache_state(transformation):
         return f"{self.cache}"
 
 
-class reload_cached_state(transformation):
+class ReloadCacheState(Transformation):
     """
     A transformation step that reloads the cached pipeline state.
 
@@ -166,7 +165,7 @@ class reload_cached_state(transformation):
         return f"{self.cache}"
 
 
-class reset_cache(transformation):
+class ResetCache(Transformation):
     """
     A transformation step that resets the cache.
 

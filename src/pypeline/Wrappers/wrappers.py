@@ -2,8 +2,11 @@
 This module provides decorators for function instrumentation.
 
 It includes:
-    - timer: A decorator that measures and logs the execution time of a function.
-    - log_error: A decorator generator that logs errors occurring in a function and optionally re-raises the exception.
+    - timer:
+    A decorator that measures and logs the execution time of a function.
+    - log_error:
+    A decorator generator that logs errors occurring in a function. 
+    Optionally re-raises the exception.
 """
 
 from functools import wraps
@@ -29,16 +32,17 @@ def timer(func):
         start = time.time()
         result = func(*args, **kwargs)
         end = time.time()
-        # Logs the time taken using the logger attribute of the first argument (typically 'self').
         args[0].logger.info("%s took: %s sec", func.__name__, end - start)
         return result
     return wrap
 
 def log_error(err_msg, logger, log_only=False):
     """
-    Decorator generator that logs errors occurring in a function and optionally re-raises the exception.
+    Decorator generator that logs errors occurring in a function.
+    Optionally re-raises the exception.
 
-    When the decorated function raises an exception, the decorator logs an error message that includes:
+    When the decorated function raises an exception, 
+    the decorator logs an error message that includes:
         - A custom error message (err_msg).
         - The function name and line number where the error occurred.
         - The exception details.
@@ -46,9 +50,11 @@ def log_error(err_msg, logger, log_only=False):
 
     Args:
         err_msg (str): A custom error message to include in the log.
-        logger (logging.Logger): The logger instance used to log error messages.
-        log_only (bool, optional): If True, the error is logged without re-raising the exception.
-                                   Defaults to False.
+        logger (logging.Logger): 
+            The logger instance used to log error messages.
+        log_only (bool, optional): 
+            If True, the error is logged without re-raising the exception.
+            Defaults to False.
 
     Returns:
         function: A decorator that wraps the target function with error logging.

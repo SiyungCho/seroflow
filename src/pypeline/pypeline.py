@@ -1,29 +1,33 @@
 """
-This module provides the `pypeline` class, a framework for constructing and executing ETL (Extract, Transform, Load)
-pipelines. The `pypeline` class manages pipeline steps, parameters, caching, and global context to facilitate
-efficient ETL processes. It integrates with various helper modules for logging, caching, context management, and
-data transformation.
+This module provides the `pypeline` class.
+A framework for constructing and executing ETL (Extract, Transform, Load)
+pipelines. The `pypeline` class manages:
+steps, parameters, caching, and a global context to facilitate
+efficient ETL processes. It integrates with various helper modules for logging, 
+caching, context management, and data transformation.
 
 Usage:
-    Instantiate the `pypeline` class and add steps to build your ETL pipeline. Then, call the `execute` method to run
-    the pipeline. The class supports caching and resuming from checkpoints, making it useful for long-running ETL jobs.
+    Instantiate the `pypeline` class and add steps to build your ETL pipeline. 
+    Then, call the `execute` method to run the pipeline. 
+    The class supports caching and resuming from checkpoints, 
+    making it useful for long-running ETL jobs.
 """
 
 import time
 from collections import OrderedDict
 from tqdm import tqdm
 
-from .Log import custom_logger
-from .Utils import generate_key
-from .Types import is_extractor, is_loader, is_step, is_context, is_context_object
-from .Cache import LFUCache
-from .Context import context as base_context
-from .Transform import cache_state
-from .Transform import reload_cached_state
-from .Transform import reset_cache
+from .log import CustomLogger
+from .utils import generate_key
+from .types import is_extractor, is_loader, is_step, is_context, is_context_object
+from .cache import LFUCache
+from .context import Context as base_context
+from .transform import CacheState
+from .transform import ReloadCacheState
+from .transform import ResetCache
 
 
-class pypeline():
+class Pypeline():
     """
     A class for creating and executing an ETL (Extract, Transform, Load) pipeline.
 
@@ -54,7 +58,7 @@ class pypeline():
             mode (str): The mode of execution for the pipeline (e.g., "TEST").
                         Defaults to "TEST".
         """
-        self.logger = custom_logger("pypeline").logger
+        self.logger = CustomLogger("pypeline").logger
         self.mode = mode
         self.__target_extractor = None
         self.__target_loader = None
@@ -312,7 +316,7 @@ class pypeline():
         """
         if (not self.target_extractor) or (not self.target_loader):
             if _raise:
-                raise Exception("Target loader or extractor not found")
+                raise TypeError("Target loader or extractor not found")
             return False
         return True
 
@@ -374,7 +378,7 @@ class pypeline():
         For each parameter in the step's parameter list (except 'context'), this method
         selects the appropriate value from input parameters, the current parameter index, or
         default parameters. For the 'context' parameter, a subcontext is created or updated.
-
+        
         Args:
             step_key (str): The unique key identifying the step.
 
@@ -382,50 +386,37 @@ class pypeline():
             dict: A dictionary of parameters and their resolved values.
 
         Raises:
-            Exception: If a parameter value cannot be resolved.
+            ValueError: If a parameter value cannot be resolved.
         """
         kwargs = {}
-        for param in self.step_index[step_key].params_list:
+        step = self.step_index[step_key]
+
+        for param in step.params_list:
             if param != "context":
-                if param in self.step_index[step_key].input_params:
-                    input_value = self.step_index[step_key].input_params[param]
-                else:
-                    input_value = None
-
-                curr_value = self.parameter_index[param]
-
-                if param in self.step_index[step_key].default_params:
-                    default_value = self.step_index[step_key].default_params[param]
-                else:
-                    default_value = None
+                input_value = step.input_params.get(param)
+                curr_value = self.parameter_index.get(param)
+                default_value = step.default_params.get(param)
                 param_value = input_value or curr_value or default_value
             else:
-                param_value = None
                 step_name = self.step_name_index[step_key]
                 subcontext = base_context(step_name + "_subcontext")
-
-                if is_extractor(self.step_index[step_key], False):
-                    param_value = subcontext
-
-                if param_value is None:
-                    desired_dataframes = (
-                        self.dataframe_index[step_key]
-                        if step_key in self.dataframe_index
-                        else []
-                    )
-                    # If no desired dataframes, use the global context.
-                    if desired_dataframes == []:
+                # If the step is not an extractor, update the context with desired dataframes.
+                if not is_extractor(step, False):
+                    desired_dataframes = self.dataframe_index.get(step_key, [])
+                    if not desired_dataframes:
                         subcontext = self.globalcontext
                     else:
                         for dataframe_name in desired_dataframes:
                             subcontext.add_dataframe(
                                 dataframe_name,
-                                self.globalcontext.get_dataframe(dataframe_name),
+                                self.globalcontext.get_dataframe(dataframe_name)
                             )
-                    param_value = subcontext
+                param_value = subcontext
+
             if param_value is None:
-                raise Exception("Error parameter value not found in any index")
+                raise ValueError("Error parameter value not found in any index")
             kwargs[param] = param_value
+
         return kwargs
 
     def parse_step_output(self, step_output, step_key):
@@ -472,7 +463,7 @@ class pypeline():
         if (self.step_index[step_key].return_list == []) and (step_output[0] is None):
             return None
         if len(self.step_index[step_key].return_list) != len(step_output):
-            raise Exception("Error incorrect amount of return elements found")
+            raise ValueError("Error incorrect amount of return elements found")
         return step_output
 
     def cache_state(self, step_name="cache_state"):
@@ -489,7 +480,7 @@ class pypeline():
         Returns:
             The result from the `cache_state` function.
         """
-        return cache_state(
+        return CacheState(
             step_name=step_name,
             cache=self.cache,
             parameter_index=self.parameter_index,
@@ -511,7 +502,7 @@ class pypeline():
         Returns:
             The result from the `reload_cached_state` function.
         """
-        return reload_cached_state(
+        return ReloadCacheState(
             step_name=step_name, cache_key=cache_key, cache=self.cache, pypeline=self
         )
 
@@ -531,7 +522,7 @@ class pypeline():
         Returns:
             The result from the `reset_cache` function.
         """
-        return reset_cache(
+        return ResetCache(
             step_name=step_name, cache=self.cache, delete_directory=delete_directory
         )
 
@@ -603,7 +594,8 @@ class pypeline():
             self.logger.info("Executing Step: %s", step_name)
 
             step_params = self.parse_parameters(step_key)
-            step_output = self.validate_step_output(self.step_index[step_key](**step_params), step_key)
+            step_output = self.validate_step_output(self.step_index[step_key](**step_params),
+                                                    step_key)
             if step_output:
                 self.parse_step_output(step_output, step_key)
 

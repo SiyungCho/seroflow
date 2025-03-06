@@ -1,1 +1,4 @@
-from .logger import custom_logger
+"""
+Module for log implementations.
+"""
+from .logger import CustomLogger

@@ -1,1 +1,4 @@
-from .exception import base_exception
+"""
+Module for exceptions implementations.
+"""
+from .exception import CustomException

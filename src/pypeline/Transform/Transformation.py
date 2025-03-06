@@ -9,9 +9,9 @@ method 'func' that must be implemented by all concrete transformation steps.
 """
 
 from abc import abstractmethod
-from ..Step.step import step
+from ..step.step import Step
 
-class transformation(step):
+class Transformation(Step):
     """
     Abstract class representing a transformation step in an ETL pipeline.
 

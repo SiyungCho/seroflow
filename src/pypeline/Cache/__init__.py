@@ -1,2 +1,5 @@
-from .Cache import abstract_cache
-from .LFUCache import LFUCache
+"""
+Module for cache implementations.
+"""
+from .abstract_cache import AbstractCache
+from .lfu_cache import LFUCache

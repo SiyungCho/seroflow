@@ -1,4 +1,7 @@
-from .extractor import extractor
-from .csv_extractor import csv_extractor
-from .excel_extractor import excel_extractor
-from .sqlserver_extractor import sqlserver_extractor
+"""
+Module for extract implementations.
+"""
+from .extractor import Extractor
+from .csv_extractor import CSVExtractor
+from .excel_extractor import ExcelExtractor
+from .sqlserver_extractor import SQLServerExtractor

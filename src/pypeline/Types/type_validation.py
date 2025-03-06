@@ -13,10 +13,10 @@ Functions:
     is_context_object(context, _raise=False)
 """
 
-from ..Step.step import step as base_step
-from ..Extract.extractor import extractor as base_extractor
-from ..Load.loader import loader as base_loader
-from ..Context.Context import context as base_context
+from ..step.step import Step as base_step
+from ..extract.extractor import Extractor as base_extractor
+from ..load.loader import Loader as base_loader
+from ..context.context import Context as base_context
 
 
 def is_extractor(extractor, _raise=False):

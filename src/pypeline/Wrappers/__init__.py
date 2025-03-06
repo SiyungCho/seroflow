@@ -1,5 +1,5 @@
 """
-These wrappers are used to instrument functions for performance monitoring and error handling.
+Module for wrappers implementations.
 """
 
 from .wrappers import timer

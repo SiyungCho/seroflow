@@ -1,4 +1,7 @@
-from .loader import loader
-from .csv_loader import csv_loader
-from .excel_loader import excel_loader
-from .sqlserver_loader import sqlserver_loader
+"""
+Module for load implementations.
+"""
+from .loader import Loader
+from .csv_loader import CSVLoader
+from .excel_loader import ExcelLoader
+from .sqlserver_loader import SQLServerLoader

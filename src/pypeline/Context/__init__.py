@@ -1,1 +1,4 @@
-from .Context import context
+"""
+Module for context implementations.
+"""
+from .context import Context
