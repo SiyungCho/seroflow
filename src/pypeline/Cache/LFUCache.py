@@ -85,15 +85,18 @@ class LFUCache(abstract_cache):
         with open(self.__cache_config_path, 'w') as config_file:
             json.dump(conf, config_file, indent=4)
 
-    def update_config(self, pypeline, step_key):
+    def update_config(self, step_func, step_key):
         conf = self.read_config()
         conf['last_completed_step'] = step_key
 
-        hash_code = get_function_hash(pypeline.step_index[step_key].step_func)
-        conf[step_key] = {
+        if 'steps' not in conf:
+            conf['steps'] = {}
+
+        source_code, hash_code = get_function_hash(step_func)
+        conf['steps'][step_key] = {
+            "source_code": source_code,
             "func_hash": hash_code
         }
-        #store function code for step_key inside json file
         self.write_config(conf)
         return
 
@@ -101,27 +104,38 @@ class LFUCache(abstract_cache):
         checkpoint_file = os.path.join(self.__cache_directory_path, f"{step_key}.pkl.gz")
         with gzip.open(checkpoint_file, 'wb') as f:
             dill.dump(pypeline, f)
-        self.update_config(pypeline, step_key)
+        self.update_config(pypeline.step_index[step_key].step_func, step_key)
 
     def compare_function_code(self, conf, step_key, func):
-        current_hash_code = get_function_hash(func)
-        conf_hash_code = conf[step_key].get("func_hash")
-        if current_hash_code != conf_hash_code:
-            return False
+        current_source_code, current_hash_code = get_function_hash(func)
+        conf_source_code = conf['steps'][step_key].get("source_code")
+        conf_hash_code = conf['steps'][step_key].get("func_hash")
+        print("Comparing function code")
+        print(current_hash_code)
+        print(conf_hash_code)
+        print(current_source_code)
+        print(conf_source_code)
+
+        # if current_hash_code != conf_hash_code:
+        #     return False
         return True
 
     def load(self, pypeline):
         conf = self.read_config()
+        print(conf)
         if conf == {}:
             return None
         
         last_completed_step = conf['last_completed_step']
-        for step_key in pypeline.step_index.keys(): #actually we want to iterate through the step_keys in the config file not the pypeline
-            if step_key == last_completed_step:
-                break
-            else:
-                if not (self.compare_function_code(conf, step_key, pypeline.step_index[step_key].step_func)):
-                    return previous_step_key if previous_step_key is not None else step_key
+        conf_steps = conf['steps']
+        previous_step_key = None
+        for step_key in conf_steps.keys(): #actually we want to iterate through the step_keys in the config file not the pypeline
+            # if step_key == last_completed_step:
+            #     break
+            # else:
+            # pypeline_step_key = #get the step_key from the pypeline and index value
+            if not (self.compare_function_code(conf, step_key, pypeline.step_index[step_key].step_func)):
+                return previous_step_key if previous_step_key is not None else step_key
             previous_step_key = step_key
         return last_completed_step
         

@@ -18,7 +18,7 @@ def hash_source(source):
 def get_function_hash(func):
     source_code = get_function_source(func)
     code_hash = hash_source(source_code)
-    return code_hash
+    return source_code, code_hash
 
 def check_kw_in_kwargs(kw, kwargs):
     return False if kw not in kwargs else True
