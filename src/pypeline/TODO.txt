@@ -1,13 +1,10 @@
 TODO:
 v2
-- implement basic cache
 - add basic engine
 - add adl e/l
 - add sql e/l
-- turn logger off and on
-- time how long certain things take (cached vs not cached)
 - need to make sure that if input data is changed then cache is reset and not used
-- maybe keep variables from run to run in cache config? (save variables between executions)
+- in global caching we also need to cache the state of the cache
 
 v3
 - add universal engine
@@ -16,6 +13,7 @@ v3
 - add chunking
 
 v4
+- fix logger and turn logger off and on
 - add pre-made custom steps
     - add/delete dataframe
     - add/delete/update internal variable

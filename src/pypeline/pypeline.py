@@ -149,7 +149,8 @@ class pypeline():
         return
 
     def parse_step(self, step):
-        step_key = generate_key(step.step_name)
+        key_index = len(list(self.step_index.keys())) + 1 if self.step_index else 0
+        step_key = generate_key(step.step_name + "_" + str(key_index))
         self.update_step_index(step_key, step)
         self.update_step_name_index(step_key, step.step_name)
         if step.params_list:
@@ -213,12 +214,10 @@ class pypeline():
             raise Exception("Error incorrect amount of return elements found")
         return step_output
     
-    def cache_state(self, cache_step, step_name="cache_state"): #if cache_step is none then use last step
-        cache_key = generate_key(cache_step)
-        return cache_state(step_name=step_name, cache_key=cache_key, cache=self.cache, parameter_index=self.parameter_index, globalcontext=self.globalcontext)
+    def cache_state(self, step_name="cache_state"): #if cache_step is none then use last step
+        return cache_state(step_name=step_name, cache=self.cache, parameter_index=self.parameter_index, globalcontext=self.globalcontext)
     
-    def reload_cached_state(self, cache_step, step_name="reload_cached_state"):
-        cache_key = generate_key(cache_step)
+    def reload_cached_state(self, cache_key, step_name="reload_cached_state"):
         return reload_cached_state(step_name=step_name, cache_key=cache_key, cache=self.cache, pypeline=self)
     
     def load_from_cache(self, step_keys):

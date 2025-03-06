@@ -57,13 +57,16 @@ class LFUCache(abstract_cache):
         self.key_to_val_freq[key] = (value, new_freq)
         return value
 
-    def put(self, key, value):
+    def put(self, value):
         if self.capacity <= 0:
             return
 
         # If the value is a dict with state info, convert it to a tuple.
         if isinstance(value, dict) and "parameter_index" in value and "globalcontext" in value:
             value = (value["parameter_index"], value["globalcontext"])
+
+        #generate key based on position, ie if there are 0 items in the cache, key is 0
+        key = len(self.key_to_val_freq)
 
         if key in self.key_to_val_freq:
             # Update value (if necessary) and bump the frequency.
@@ -166,12 +169,23 @@ class LFUCache(abstract_cache):
         step_num = list(step_index.keys()).index(step_key)
         self.update_config(step_index[step_key].step_func, step_key, step_num)
         checkpoint_file = os.path.join(self.__cache_directory_path, f"{step_key}.pkl.gz")
+        cache_state = {
+            "capacity": self.capacity,
+            "min_freq": self.min_freq,
+            "key_to_val_freq": self.key_to_val_freq,
+            "freq_to_keys": self.freq_to_keys
+        }
         with gzip.open(checkpoint_file, 'wb') as f:
-            #want to save pypeline.parameter_index and pypeline.global_context in the same dump
-            dill.dump((parameter_index, global_context), f)
+            dill.dump((parameter_index, global_context, cache_state), f)
     
     def load(self, step_key):
         checkpoint_file = os.path.join(self.__cache_directory_path, f"{step_key}.pkl.gz")
         with gzip.open(checkpoint_file, 'rb') as f:
-            parameter_index, global_context = dill.load(f)
+            parameter_index, global_context, cache_state = dill.load(f)
+        
+        self.capacity = cache_state["capacity"]
+        self.min_freq = cache_state["min_freq"]
+        self.key_to_val_freq = cache_state["key_to_val_freq"]
+        self.freq_to_keys = cache_state["freq_to_keys"]
+        
         return parameter_index, global_context

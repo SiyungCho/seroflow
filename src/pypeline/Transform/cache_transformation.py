@@ -4,9 +4,8 @@ from ..Wrappers.wrappers import log_error
 from copy import deepcopy
 
 class cache_state(transformation):
-    def __init__(self, cache_key, cache, parameter_index, globalcontext, step_name="cache_state"):
+    def __init__(self, cache, parameter_index, globalcontext, step_name="cache_state"):
         super().__init__(step_name=step_name, func=self.func)
-        self.cache_key = cache_key
         self.cache = cache
         self.parameter_index = parameter_index
         self.globalcontext = globalcontext
@@ -22,7 +21,7 @@ class cache_state(transformation):
             "parameter_index": deepcopy(self.parameter_index),
             "globalcontext": deepcopy(self.globalcontext)
         }
-        self.cache.put(self.cache_key, data)
+        self.cache.put(data)
         return
 
     def __str__(self):
