@@ -14,8 +14,8 @@ class LFUCache(abstract_cache):
     def __init__(self, capacity = 3, cache_dir = None):
         self.capacity = capacity
         self.min_freq = 0
-        self.keys_to_value_freq = {} # key -> (value, frequency)
-        self.freq_to_keys = defaultdict(OrderedDict) # frequency -> keys (recency ordered)
+        self.key_to_val_freq = {}  # key -> (value, frequency)
+        self.freq_to_keys = defaultdict(OrderedDict)  # frequency -> keys (ordered by recency)
 
         self.__source_directory = os.path.abspath(os.getcwd())
         self.__cache_directory_path, self.__cache_config_path = self.init_directory(cache_dir)
@@ -40,15 +40,18 @@ class LFUCache(abstract_cache):
     
     def get(self, key):
         if key not in self.key_to_val_freq:
-            return -1
-
+            # Return a tuple of two Nones so that the caller can unpack safely.
+            return (None, None)
+        
         value, freq = self.key_to_val_freq[key]
+        # Remove from the current frequency list
         del self.freq_to_keys[freq][key]
         if not self.freq_to_keys[freq]:
             del self.freq_to_keys[freq]
             if self.min_freq == freq:
                 self.min_freq += 1
 
+        # Increase frequency count and add to the new frequency list
         new_freq = freq + 1
         self.freq_to_keys[new_freq][key] = None
         self.key_to_val_freq[key] = (value, new_freq)
@@ -58,17 +61,25 @@ class LFUCache(abstract_cache):
         if self.capacity <= 0:
             return
 
+        # If the value is a dict with state info, convert it to a tuple.
+        if isinstance(value, dict) and "parameter_index" in value and "globalcontext" in value:
+            value = (value["parameter_index"], value["globalcontext"])
+
         if key in self.key_to_val_freq:
-            self.key_to_val_freq[key] = (value, self.key_to_val_freq[key][1])
-            self.get(key)
+            # Update value (if necessary) and bump the frequency.
+            _, freq = self.key_to_val_freq[key]
+            self.key_to_val_freq[key] = (value, freq)
+            self.get(key)  # Update frequency count.
             return
 
         if len(self.key_to_val_freq) >= self.capacity:
+            # Evict the least frequently used key (the oldest one among those).
             evict_key, _ = self.freq_to_keys[self.min_freq].popitem(last=False)
             if not self.freq_to_keys[self.min_freq]:
                 del self.freq_to_keys[self.min_freq]
             del self.key_to_val_freq[evict_key]
 
+        # Insert new key with frequency 1.
         self.key_to_val_freq[key] = (value, 1)
         self.freq_to_keys[1][key] = None
         self.min_freq = 1
@@ -85,57 +96,82 @@ class LFUCache(abstract_cache):
         with open(self.__cache_config_path, 'w') as config_file:
             json.dump(conf, config_file, indent=4)
 
-    def update_config(self, step_func, step_key):
+    def delete_cached_file(self, step_key):
+        file_to_delete = os.path.join(self.__cache_directory_path, f"{step_key}.pkl.gz")
+        if os.path.exists(file_to_delete):
+            os.remove(file_to_delete)
+        return
+
+    def update_config(self, step_func, step_key, step_num):
         conf = self.read_config()
         conf['last_completed_step'] = step_key
 
         if 'steps' not in conf:
-            conf['steps'] = {}
+            conf['steps'] = OrderedDict()
 
         source_code, hash_code = get_function_hash(step_func)
-        conf['steps'][step_key] = {
+        data = {
             "source_code": source_code,
             "func_hash": hash_code
         }
+        steps_list = list(conf['steps'].items())
+
+        if (step_num < len(steps_list)):
+            overridden_key, _ = steps_list[step_num]
+            if not self.compare_function_code(conf, overridden_key, step_func):
+                self.delete_cached_file(overridden_key)
+                steps_list.pop(step_num)
+
+        steps_list.insert(step_num, (step_key, data))
+        conf['steps'] = OrderedDict(steps_list)
+
         self.write_config(conf)
         return
-
-    def store(self, pypeline, step_key):
-        checkpoint_file = os.path.join(self.__cache_directory_path, f"{step_key}.pkl.gz")
-        with gzip.open(checkpoint_file, 'wb') as f:
-            dill.dump(pypeline, f)
-        self.update_config(pypeline.step_index[step_key].step_func, step_key)
 
     def compare_function_code(self, conf, step_key, func):
         current_source_code, current_hash_code = get_function_hash(func)
         conf_source_code = conf['steps'][step_key].get("source_code")
         conf_hash_code = conf['steps'][step_key].get("func_hash")
-        print("Comparing function code")
-        print(current_hash_code)
-        print(conf_hash_code)
-        print(current_source_code)
-        print(conf_source_code)
-
-        # if current_hash_code != conf_hash_code:
-        #     return False
+        if current_hash_code != conf_hash_code:
+            return False
+        if current_source_code != conf_source_code:
+            return False
         return True
 
-    def load(self, pypeline):
+    def get_cached_checkpoint(self, step_index):
+        #Load cases:
+        #case 1: no changes made to steps before last completed step return last completed step
+        #case 2: change was found in step before last completed step return step right before change
+        #case 3: first step was changed return None
+        #case 4: last completed step is the last step return last completed step
         conf = self.read_config()
-        print(conf)
-        if conf == {}:
+        if conf == OrderedDict():
+            # No cached files found 
             return None
         
         last_completed_step = conf['last_completed_step']
         conf_steps = conf['steps']
         previous_step_key = None
-        for step_key in conf_steps.keys(): #actually we want to iterate through the step_keys in the config file not the pypeline
-            # if step_key == last_completed_step:
-            #     break
-            # else:
-            # pypeline_step_key = #get the step_key from the pypeline and index value
-            if not (self.compare_function_code(conf, step_key, pypeline.step_index[step_key].step_func)):
-                return previous_step_key if previous_step_key is not None else step_key
-            previous_step_key = step_key
+        for conf_step_key, pypeline_step_key in zip(conf_steps.keys(), step_index.keys()):
+            if conf_step_key != pypeline_step_key:
+                return previous_step_key
+            if not self.compare_function_code(conf, conf_step_key, step_index[conf_step_key].step_func):
+                return previous_step_key
+            if conf_step_key == last_completed_step:
+                break
+            previous_step_key = conf_step_key
         return last_completed_step
-        
+    
+    def store(self, step_index, parameter_index, global_context, step_key):
+        step_num = list(step_index.keys()).index(step_key)
+        self.update_config(step_index[step_key].step_func, step_key, step_num)
+        checkpoint_file = os.path.join(self.__cache_directory_path, f"{step_key}.pkl.gz")
+        with gzip.open(checkpoint_file, 'wb') as f:
+            #want to save pypeline.parameter_index and pypeline.global_context in the same dump
+            dill.dump((parameter_index, global_context), f)
+    
+    def load(self, step_key):
+        checkpoint_file = os.path.join(self.__cache_directory_path, f"{step_key}.pkl.gz")
+        with gzip.open(checkpoint_file, 'rb') as f:
+            parameter_index, global_context = dill.load(f)
+        return parameter_index, global_context

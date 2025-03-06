@@ -9,6 +9,9 @@ from .Utils import *
 from .Types import *
 from .Cache import LFUCache as LFUCache
 from .Context import context as base_context
+from .Step import step
+from .Transform import cache_state as cache_state
+from .Transform import reload_cached_state as reload_cached_state
 
 class pypeline():
     def __init__(self, cache_type=LFUCache, mode = "TEST"):
@@ -70,6 +73,16 @@ class pypeline():
             self.__target_loader = loader
             self.logger.info("Target loader set...")
         return
+
+    @parameter_index.setter
+    def parameter_index(self, parameter_index):
+        self.__parameter_index = parameter_index
+        return
+    
+    @globalcontext.setter
+    def globalcontext(self, globalcontext):
+        self.__globalcontext = globalcontext
+        return
     
     def update_parameter_index(self, parameter, value):
         self.parameter_index[parameter] = value
@@ -108,6 +121,7 @@ class pypeline():
         if is_step(step, True):
             step_key = self.parse_step(step)
         print("Successfully added step with key: " + str(step_key))
+        self.logger.info(f"Successfully added step with key: {str(step_key)}")
 
     def targets_found(self, _raise=False):
         if (not self.target_extractor) or (not self.target_loader):
@@ -122,10 +136,14 @@ class pypeline():
 
         if self.target_extractor:
             target_extractor_key = self.parse_step(self.target_extractor)
+            print("Successfully added target extractor with key: " + str(target_extractor_key))
+            self.logger.info(f"Successfully added step with key: {str(target_extractor_key)}")
             self.step_index.move_to_end(target_extractor_key, last=False)
             self.step_name_index.move_to_end(target_extractor_key, last=False)
         if self.target_loader:
             target_loader_key = self.parse_step(self.target_loader)
+            print("Successfully added target loader with key: " + str(target_loader_key))
+            self.logger.info(f"Successfully added step with key: {str(target_loader_key)}")
             self.step_index.move_to_end(target_loader_key)
             self.step_name_index.move_to_end(target_loader_key)
         return
@@ -195,49 +213,38 @@ class pypeline():
             raise Exception("Error incorrect amount of return elements found")
         return step_output
     
-    def load_last_checkpoint(self):
-        """
-        Check if a cache configuration file exists and return the last checkpoint (step_key)
-        """
-        config_path = self.cache._LFUCache__cache_config_path  # accessing the internal config file path
-        if os.path.exists(config_path):
-            with open(config_path, 'r') as config_file:
-                last_checkpoint = config_file.read().strip()
-                if last_checkpoint:
-                    self.logger.info(f"Found checkpoint: {last_checkpoint}")
-                    return last_checkpoint
-        return None
+    def cache_state(self, cache_step, step_name="cache_state"): #if cache_step is none then use last step
+        cache_key = generate_key(cache_step)
+        return cache_state(step_name=step_name, cache_key=cache_key, cache=self.cache, parameter_index=self.parameter_index, globalcontext=self.globalcontext)
+    
+    def reload_cached_state(self, cache_step, step_name="reload_cached_state"):
+        cache_key = generate_key(cache_step)
+        return reload_cached_state(step_name=step_name, cache_key=cache_key, cache=self.cache, pypeline=self)
+    
+    def load_from_cache(self, step_keys):
+        cached_checkpoint = self.cache.get_cached_checkpoint(self.step_index)
+        if cached_checkpoint and (cached_checkpoint in step_keys):
+            self.parameter_index, self.globalcontext = self.cache.load(cached_checkpoint)
+            start_index = step_keys.index(cached_checkpoint) + 1
+            self.logger.info(f"Resuming execution from checkpoint: {cached_checkpoint}")
+            print(f"Resuming execution from checkpoint: {cached_checkpoint}")
+        else:
+            start_index = 0
+            self.logger.info("No valid checkpoint found, starting from the beginning...")
+            print("No valid checkpoint found, starting from the beginning...")
+        return start_index
+    
+    def store_in_cache(self, step_key):
+        self.cache.store(self.step_index, self.parameter_index, self.globalcontext, step_key)
+        self.logger.info(f"Checkpoint stored for step: {step_key}")
+        return
 
-    def execute(self, on_fail="skip"):
+    def execute(self, use_cache=True, on_fail="skip"):
         self.logger.info("Beginning ETL Execution...")
         self.add_targets_to_steps()
 
-        #check cache:
-        # search for init cache file
-        # if one is present then we are in dev and want to figure out which cache file to start from 
-        # gather last_step_completed value (the step_key)
-        # then compare all the function code blocks to the internal function code blocks and see if any differences
-        # if there are then start from that functions cache file
-        # if not then start from last_step_completed
-
-
-
-        # first we will check if there were any changes made to the functions in any of the previous steps, if there were changes then we start from the last unchanged functions state
-        # if no changes were made then we will either start execution from the newest zipped cache file (indicated in the cache config as a property)
-        # if a cache config file is not present then we start from the beginning
-
-        # Load a previous checkpoint (if any) to determine from which step to resume.
-        # last_checkpoint = self.load_last_checkpoint()
-        checkpoint = self.cache.load(self)
-        print(checkpoint)
         step_keys = list(self.step_index.keys())
-        start_index = 0
-
-        # if last_checkpoint and last_checkpoint in step_keys:
-        #     start_index = step_keys.index(last_checkpoint) + 1
-        #     self.logger.info(f"Resuming execution from checkpoint: {last_checkpoint}")
-        # else:
-        #     self.logger.info("No valid checkpoint found, starting from the beginning...")
+        start_index = 0 if not use_cache else self.load_from_cache(step_keys)
 
         for step_key in step_keys[start_index:]:
             step_name = self.step_name_index[step_key]
@@ -248,8 +255,9 @@ class pypeline():
             step_output = self.validate_step_output(self.step_index[step_key](**step_params), step_key)
             if step_output:
                 self.parse_step_output(step_output, step_key)
-            self.cache.store(self, step_key)
-            
+
+            if use_cache:
+                self.store_in_cache(step_key)
             self.logger.info(f"Step: {step_name} completed...")
 
         self.logger.info("ETL Execution Finished...")

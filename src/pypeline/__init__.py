@@ -10,6 +10,9 @@ from .Load import csv_loader as csv_loader
 from .Log import custom_logger as custom_logger
 from .Step import abstract_step as abstract_step
 from .Step import step as step
+from .Transform import transformation as transformation
+from .Transform import cache_state as cache_state
+from .Transform import reload_cached_state as reload_cached_state
 from .Types import is_extractor as is_extractor
 from .Types import is_loader as is_loader
 from .Types import is_step as is_step
