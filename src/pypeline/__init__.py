@@ -14,6 +14,7 @@ from .extract import CSVExtractor
 from .extract import ExcelExtractor
 from .extract import SQLServerExtractor
 from .load import Loader
+from .load import FileLoader
 from .load import CSVLoader
 from .load import ExcelLoader
 from .load import SQLServerLoader

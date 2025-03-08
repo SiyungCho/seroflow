@@ -46,13 +46,11 @@ class Extractor(Step):
         its state after execution.
         """
         self.params.clear()
-        return
 
     @abstractmethod
-    def func(self):
+    def func(self, context):
         """
         Execute the extraction logic.
 
         Subclasses must implement this method to define the extraction process.
         """
-        pass

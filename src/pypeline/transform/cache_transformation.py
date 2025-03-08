@@ -2,7 +2,7 @@
 This module provides transformation classes for managing cache operations in an ETL pipeline.
 
 It defines three transformation steps:
-    - cache_state: Caches the current pipeline state (parameter index and global context) into a cache.
+    - cache_state: Caches the current pipeline state into a cache.
     - reload_cached_state: Reloads the cached state from the cache and updates the pipeline.
     - reset_cache: Resets the cache and optionally deletes the cache directory.
 
@@ -78,7 +78,6 @@ class CacheState(Transformation):
             "globalcontext": deepcopy(self.globalcontext)
         }
         self.cache.put(data)
-        return
 
     def __str__(self):
         """
@@ -153,7 +152,6 @@ class ReloadCacheState(Transformation):
         parameter_index, globalcontext = self.cache.get(self.cache_key)
         self.pypeline.parameter_index = parameter_index
         self.pypeline.globalcontext = globalcontext
-        return
 
     def __str__(self):
         """
@@ -223,7 +221,6 @@ class ResetCache(Transformation):
             None
         """
         self.cache.reset(delete_directory=self.delete_directory)
-        return
 
     def __str__(self):
         """

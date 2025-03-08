@@ -152,7 +152,7 @@ class LFUCache(AbstractCache):
             dict: The cache configuration.
         """
         try:
-            with open(self.__cache_config_path, 'r') as config_file:
+            with open(self.__cache_config_path, 'r', encoding="utf-8") as config_file:
                 conf = json.load(config_file)
         except (json.JSONDecodeError, FileNotFoundError):
             conf = {}
@@ -165,7 +165,7 @@ class LFUCache(AbstractCache):
         Args:
             conf (dict): The configuration data to be written.
         """
-        with open(self.__cache_config_path, 'w') as config_file:
+        with open(self.__cache_config_path, 'w', encoding="utf-8") as config_file:
             json.dump(conf, config_file, indent=4)
 
     def delete_cached_file(self, step_key):
@@ -266,7 +266,9 @@ class LFUCache(AbstractCache):
         for conf_step_key, pypeline_step_key in zip(conf_steps.keys(), step_index.keys()):
             if conf_step_key != pypeline_step_key:
                 return previous_step_key
-            if not self.compare_function_code(conf, conf_step_key, step_index[conf_step_key].step_func):
+            if not self.compare_function_code(conf,
+                                              conf_step_key,
+                                              step_index[conf_step_key].step_func):
                 return previous_step_key
             if conf_step_key == last_completed_step:
                 break
@@ -316,12 +318,12 @@ class LFUCache(AbstractCache):
         checkpoint_file = os.path.join(self.__cache_directory_path, f"{step_key}.pkl.gz")
         with gzip.open(checkpoint_file, 'rb') as f:
             parameter_index, global_context, cache_state = dill.load(f)
-        
+
         self.capacity = cache_state["capacity"]
         self.min_freq = cache_state["min_freq"]
         self.key_to_val_freq = cache_state["key_to_val_freq"]
         self.freq_to_keys = cache_state["freq_to_keys"]
-        
+
         return parameter_index, global_context
 
     def reset(self, delete_directory=False):

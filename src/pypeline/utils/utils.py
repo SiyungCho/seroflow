@@ -88,7 +88,7 @@ def check_kw_in_kwargs(kw, kwargs):
     Returns:
         bool: True if the keyword is present, False otherwise.
     """
-    return False if kw not in kwargs else True
+    return kw not in kwargs
 
 
 def filter_kwargs(kwargs, keys_to_remove):
@@ -115,15 +115,15 @@ def _convert_ast_node_to_python(node):
         node (ast.AST): The AST node to convert.
 
     Returns:
-        object: The Python representation of the node (e.g., a string for ast.Name or a literal for ast.Constant),
+        object: The Python representation of the node 
+        (e.g., a string for ast.Name or a literal for ast.Constant),
                 or None if the node type is unsupported.
     """
     if isinstance(node, ast.Name):
         return node.id
-    elif isinstance(node, ast.Constant):
+    if isinstance(node, ast.Constant):
         return node.value
-    else:
-        return None
+    return None
 
 
 def get_return_elements(func):
@@ -147,11 +147,11 @@ def get_return_elements(func):
     func_def = next((node for node in tree.body if isinstance(node, ast.FunctionDef)), None)
     if not func_def:
         return []
-    
+
     return_node = next((node for node in ast.walk(func_def) if isinstance(node, ast.Return)), None)
     if not return_node or not return_node.value:
         return []
-    
+
     elements = []
     if isinstance(return_node.value, ast.Tuple):
         for elt in return_node.value.elts:
@@ -167,7 +167,8 @@ def gather_files(source, file_type):
 
     Args:
         source (str): The directory path to search for files.
-        file_type (iterable): An iterable of file extension strings (e.g., ['.csv', '.txt']) to match.
+        file_type (iterable): An iterable of file extension strings 
+        (e.g., ['.csv', '.txt']) to match.
 
     Returns:
         tuple: A tuple containing:
@@ -219,7 +220,7 @@ def check_directory(path):
     Returns:
         bool: True if the path is a directory, False otherwise.
     """
-    return True if find_dir(path) else False
+    return find_dir(path)
 
 
 def check_file(path):
@@ -232,7 +233,7 @@ def check_file(path):
     Returns:
         bool: True if the path is a file, False otherwise.
     """
-    return True if find_file(path) else False
+    return find_file(path)
 
 
 def create_directory(path):
@@ -250,7 +251,7 @@ def create_directory(path):
             os.mkdir(path)
         return
     except Exception as e:
-        raise Exception("Error creating directory")
+        raise FileNotFoundError("Error creating directory: " + e) from e
 
 
 def create_file(path):
@@ -265,11 +266,11 @@ def create_file(path):
     """
     try:
         if not check_file(path):
-            with open(path, 'w') as fp:
+            with open(path, 'w', encoding="utf-8"):
                 pass
         return
     except Exception as e:
-        raise Exception("Error creating file")
+        raise FileNotFoundError("Error creating file: " + e) from e
 
 
 def split_last_delimiter(value, delimiter='.'):
@@ -282,7 +283,8 @@ def split_last_delimiter(value, delimiter='.'):
                                    Defaults to '.'.
 
     Returns:
-        list: A list of substrings resulting from the split. Typically, this will be a list with two elements,
+        list: A list of substrings resulting from the split. 
+              Typically, this will be a list with two elements,
               where the first element is the part of the string before the last delimiter.
     """
     return value.rsplit(delimiter, 1)

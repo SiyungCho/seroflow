@@ -26,7 +26,8 @@ class Loader(Step):
         Args:
             step_name (str): The name of the loader step.
             dataframes (list or dict): The dataframes to be processed or loaded.
-            exists (str): Behavior if data already exists. Must be one of 'append', 'fail', or 'replace'.
+            exists (str): Behavior if data already exists. 
+            Must be one of 'append', 'fail', or 'replace'.
             func (callable): The function to execute for the loading process.
         """
         super().__init__(step_name=step_name, dataframes=dataframes, func=func)
@@ -49,7 +50,7 @@ class Loader(Step):
             Exception: If the 'exists' parameter is not one of the allowed values.
         """
         if exists not in ['append', 'fail', 'replace']:
-            raise Exception("exists param must be either 'append', 'fail' or 'replace'")
+            raise ValueError("exists param must be either 'append', 'fail' or 'replace'")
         return exists
 
     def start_step(self):
@@ -69,16 +70,14 @@ class Loader(Step):
         Clears any stored parameters, effectively resetting the step's state.
         """
         self.params.clear()
-        return
 
     @abstractmethod
-    def func(self):
+    def func(self, context):
         """
         Execute the loading process.
 
         Subclasses must implement this method to define the logic for loading data.
         """
-        pass
 
     @abstractmethod
     def map_exists_parameter(self):
@@ -91,4 +90,3 @@ class Loader(Step):
         Returns:
             The mapped behavior for handling existing data.
         """
-        pass

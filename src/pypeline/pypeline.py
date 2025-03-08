@@ -292,13 +292,10 @@ class Pypeline():
         Side Effects:
             Logs the successful addition of the step.
         """
-        if is_step(step, True):
+        if is_step(step, _raise=True):
             step_key = self.parse_step(step)
             print("Successfully added step with key: " + str(step_key))
             self.logger.info("Successfully added step with key: %s", step_key)
-        else:
-            # In case step is not valid, you may add additional handling here.
-            pass
 
     def targets_found(self, _raise=False):
         """

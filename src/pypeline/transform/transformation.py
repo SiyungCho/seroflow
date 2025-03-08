@@ -56,7 +56,6 @@ class Transformation(Step):
             None
         """
         self.params.clear()
-        return
 
     @abstractmethod
     def func(self):
@@ -69,4 +68,3 @@ class Transformation(Step):
         Raises:
             NotImplementedError: If the method is not implemented by a subclass.
         """
-        pass

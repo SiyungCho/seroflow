@@ -70,6 +70,7 @@ def log_error(err_msg, logger, log_only=False):
                 logger.error("Error %s; Occurred at: %s; On line number: %s; Exception %s",
                              err_msg, function_name, code_line, e)
                 if not log_only:
-                    raise Exception("%s; %s" % (e, err_msg))
+                    raise Exception(err_msg) from e
+                return None
         return wrap
     return log_error_inner

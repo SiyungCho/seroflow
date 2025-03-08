@@ -26,7 +26,8 @@ class SQLServerExtractor(Extractor):
             engine: The database engine instance used for connection and table verification.
                     It is assumed to have methods like `table_exists` and attributes such as
                     `schema` and `engine` (the latter being an SQLAlchemy engine instance).
-            step_name (str, optional): The name of the extraction step. Defaults to "SQLServerExtractor".
+            step_name (str, optional): 
+                The name of the extraction step. Defaults to "SQLServerExtractor".
             **kwargs: Additional keyword arguments to pass to pandas.read_sql_table.
         
         Note:

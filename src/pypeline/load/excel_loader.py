@@ -7,11 +7,10 @@ directory. The file write mode is determined by the 'exists' parameter.
 """
 
 import os
-from ..utils.utils import check_directory
-from ..load.loader import Loader
+from ..load.file_loader import FileLoader
 
 
-class ExcelLoader(Loader):
+class ExcelLoader(FileLoader):
     """
     Loader for writing pandas DataFrames to Excel files.
 
@@ -21,7 +20,7 @@ class ExcelLoader(Loader):
     """
 
     def __init__(self, target, file_extension=".xlsx", step_name="ExcelLoader",
-                 dataframes=[], exists="append", **kwargs):
+                 dataframes=None, exists="append", **kwargs):
         """
         Initialize an ExcelLoader instance.
 
@@ -30,21 +29,24 @@ class ExcelLoader(Loader):
 
         Args:
             target (str): The target directory where Excel files will be saved.
-            file_extension (str, optional): The file extension for the output files. Defaults to ".xlsx".
+            file_extension (str, optional): The file extension for the output files. 
+                Defaults to ".xlsx".
             step_name (str, optional): The name of this loader step. Defaults to "excel_loader".
-            dataframes (list, optional): A list or dictionary of DataFrames to load. Defaults to an empty list.
-            exists (str, optional): Behavior when file already exists; must be 'append', 'fail', or 'replace'. Defaults to "append".
+            dataframes (list, optional): A list or dictionary of DataFrames to load. 
+                Defaults to an empty list.
+            exists (str, optional): Behavior when file already exists; 
+            must be 'append', 'fail', or 'replace'. Defaults to "append".
             **kwargs: Additional keyword arguments to pass to pandas.DataFrame.to_excel.
 
         Raises:
             Exception: If the target directory is not found.
         """
-        super().__init__(step_name=step_name, dataframes=dataframes, exists=exists, func=self.func)
-        if not check_directory(target):  # or check if it's a file
-            raise Exception("Error directory not found")
-        
-        self.target_dir = target
-        self.kwargs = kwargs
+        super().__init__(step_name=step_name,
+                         target=target,
+                         dataframes= [] if dataframes is None else dataframes,
+                         exists=exists,
+                         func=self.func,
+                         kwargs=kwargs)
         self.file_extension = file_extension
 
     def func(self, context):
@@ -64,7 +66,6 @@ class ExcelLoader(Loader):
         for key, df in context.dataframes.items():
             target_file_path = os.path.join(self.target_dir, key + self.file_extension)
             self.__to_excel(df, target_file_path, self.kwargs)
-        return
 
     def __to_excel(self, df, target_file_path, kwargs):
         """
@@ -79,18 +80,3 @@ class ExcelLoader(Loader):
             kwargs (dict): Additional keyword arguments for pandas.DataFrame.to_excel.
         """
         df.to_excel(target_file_path, mode=self.map_exists_parameter(), **kwargs)
-
-    def map_exists_parameter(self):
-        """
-        Map the 'exists' parameter to the appropriate Excel file mode.
-
-        Returns:
-            str: The file mode for pandas.DataFrame.to_excel:
-                 'a' for append, 'x' for fail (if file exists), or 'w' for replace.
-        """
-        if self.exists == "append":
-            return 'a'
-        elif self.exists == "fail":
-            return 'x'
-        elif self.exists == "replace":
-            return 'w'

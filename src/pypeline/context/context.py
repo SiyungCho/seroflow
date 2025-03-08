@@ -1,5 +1,5 @@
 """
-Module that defines the Context dataclass for managing pandas DataFrames along with associated metadata.
+Module that defines the Context dataclass for managing pandas DataFramesand metadata.
 
 The Context class provides a structured way to store and retrieve multiple DataFrames,
 manage related metadata, and track DataFrame addresses.
@@ -19,7 +19,7 @@ class Context:
         context_name (str): The name of the context.
         dataframes (Dict[str, pd.DataFrame]): A dictionary mapping names to DataFrame objects.
         metadata (Dict[str, Any]): A dictionary to store metadata about the context.
-        dataframe_addr (Dict[str, id]): A dictionary mapping DataFrame names to their unique addresses.
+        dataframe_addr (Dict[str, id]): Dictionary mapping DataFrame names to their ids.
     """
     context_name: str
     dataframes: Dict[str, pd.DataFrame] = field(default_factory=dict)
@@ -53,7 +53,8 @@ class Context:
             name (str): The name of the DataFrame to retrieve.
 
         Returns:
-            pd.DataFrame or None: The DataFrame associated with the given name, or None if not found.
+            pd.DataFrame or None: 
+                The DataFrame associated with the given name, or None if not found.
         """
         return self.dataframes.get(name)
 

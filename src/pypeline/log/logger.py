@@ -2,7 +2,8 @@
 Module for custom logging.
 
 This module defines the CustomLogger class, which sets up a logging mechanism for an application.
-It creates log directories, configures logging to write to a file with a timestamp, and provides a logger instance.
+It creates log directories, configures logging to write to a file with a timestamp.
+Provides a logger instance.
 """
 
 import os
@@ -16,8 +17,9 @@ class CustomLogger():
     Custom logger for managing application logs.
 
     The CustomLogger class configures the Python logging module to write log messages to a file.
-    If no log file path is provided, it creates a log directory structure based on the current working
-    directory and the process ID, and generates a log file name that includes the log name and a timestamp.
+    If no log file path is provided, it creates a log directory structure 
+    based on the current working directory and the process ID, and generates 
+    a log file name that includes the log name and a timestamp.
     """
 
     def __init__(self, log_name, log_file_path=None):
@@ -25,13 +27,14 @@ class CustomLogger():
         Initialize a CustomLogger instance.
 
         This method sets up the log file path and configures the logging module with the appropriate
-        file mode, filename, log format, and logging level. If log_file_path is not provided, a default
-        log directory is created.
+        file mode, filename, log format, and logging level. 
+        If log_file_path is not provided, a default log directory is created.
 
         Args:
             log_name (str): The name to be used in the log file name.
-            log_file_path (str, optional): The full path to the log file. If None, a default directory
-                                           structure is created. Defaults to None.
+            log_file_path (str, optional): The full path to the log file. If None, 
+                                           a default directory structure is created. 
+                                           Defaults to None.
         """
         self.log_name = log_name
         self.__pid = os.getpid()
@@ -50,8 +53,10 @@ class CustomLogger():
         """
         Initialize and return the log file path.
 
-        Creates a "logs" directory in the current working directory and a subdirectory named after the
-        current process ID. Constructs a log file name using the log name and the current date and time.
+        Creates a "logs" directory in the current working directory
+        and a subdirectory named after the current process ID.
+        Constructs a log file name using the log name
+        and the current date and time.
 
         Returns:
             str: The full path to the generated log file.

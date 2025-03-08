@@ -37,8 +37,8 @@ class CSVExtractor(Extractor):
         """
         super().__init__(step_name=step_name, func=self.func)
         if not check_directory(source):  # or check if it's a file
-            raise Exception("Error directory not found")
-        
+            raise FileNotFoundError("Error directory not found")
+
         self.source = source
         self.file_paths, self.file_names = gather_files(self.source, ["csv"])
         self.kwargs = kwargs

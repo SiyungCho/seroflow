@@ -16,35 +16,35 @@ class AbstractCache(ABC):
     """
 
     @abstractmethod
-    def put(self):
+    def put(self, value):
         """Insert an item into the cache.
 
         Implementations should provide the logic to add an item to the cache.
         """
 
     @abstractmethod
-    def get(self):
+    def get(self, key):
         """Retrieve an item from the cache.
 
         Implementations should provide the logic to retrieve an item from the cache.
         """
 
     @abstractmethod
-    def store(self):
+    def store(self, step_index, parameter_index, global_context, step_key):
         """Store the current state of the cache.
 
         Implementations should provide the logic to persist the cache state.
         """
 
     @abstractmethod
-    def load(self):
+    def load(self, step_key):
         """Load a previously stored cache state.
 
         Implementations should provide the logic to restore the cache state.
         """
 
     @abstractmethod
-    def reset(self):
+    def reset(self, delete_directory=False):
         """Reset the cache to its initial state.
 
         Implementations should clear all items from the cache and restore any default settings.

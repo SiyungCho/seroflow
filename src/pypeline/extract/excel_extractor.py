@@ -25,11 +25,12 @@ class ExcelExtractor(Extractor):
         Initialize an ExcelExtractor instance.
 
         This method verifies that the source directory exists, gathers the file paths and names
-        for Excel files in the directory, and stores any additional keyword arguments for reading Excel files.
+        for Excel files in the directory, stores any additional keyword arguments for Excel files.
 
         Args:
             source (str): The directory path where Excel files are located.
-            step_name (str, optional): The name of the extraction step. Defaults to "ExcelExtractor".
+            step_name (str, optional): 
+                The name of the extraction step. Defaults to "ExcelExtractor".
             **kwargs: Additional keyword arguments to pass to pandas.read_excel.
 
         Raises:
@@ -37,8 +38,8 @@ class ExcelExtractor(Extractor):
         """
         super().__init__(step_name=step_name, func=self.func)
         if not check_directory(source):  # or check if it's a file
-            raise Exception("Error directory not found")
-        
+            raise FileNotFoundError("Error directory not found")
+
         self.source = source
         self.file_paths, self.file_names = gather_files(self.source, ["xlsx", "xls"])
         self.kwargs = kwargs
@@ -81,7 +82,6 @@ class ExcelExtractor(Extractor):
         """
         if file.endswith('.xls'):
             return pd.read_excel(file, engine='xlrd', **kwargs)
-        elif file.endswith('.xlsx'):
+        if file.endswith('.xlsx'):
             return pd.read_excel(file, engine='openpyxl', **kwargs)
-        else:
-            raise ValueError(f"Unsupported file format: {file}")
+        raise ValueError(f"Unsupported file format: {file}")

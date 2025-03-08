@@ -16,24 +16,28 @@ class Step(AbstractStep):
     """
     A concrete implementation of a processing step.
 
-    The Step class allows a function to be decorated as a processing step. It handles
-    parameter initialization, default values, and execution of the function with the provided parameters.
+    The Step class allows a function to be decorated as a processing step. 
+    It handles parameter initialization, default values, and execution of 
+    the function with the provided parameters.
     """
 
-    def __init__(self, step_name=None, params={}, dataframes=[], **kwargs):
+    def __init__(self, step_name=None, params=None, dataframes=None, **kwargs):
         """
         Initialize a Step instance.
 
         Args:
-            step_name (str, optional): The name of the step. If not provided, it will be set to the name
-                of the function decorated later.
+            step_name (str, optional): The name of the step. If not provided, 
+            it will be set to the name of the function decorated later.
             params (dict, optional): A dictionary of initial parameters for the step.
-            dataframes (list, optional): A list of dataframes associated with the step. Defaults to an empty list.
-            **kwargs: Additional keyword arguments. If 'func' is provided, it will be used as the step function.
+            dataframes (list, optional): A list of dataframes associated with the step. 
+                Defaults to an empty list.
+            **kwargs: Additional keyword arguments. 
+                If 'func' is provided, it will be used as the step function.
         """
         self.step_name = step_name
-        self.input_params = params
-        self.dataframes = None if dataframes == [] else dataframes
+        self.input_params = {} if params is None else params
+        self.dataframes = dataframes
+        self.params = None
 
         if 'func' in kwargs:
             self.step_func = kwargs['func']
@@ -46,8 +50,9 @@ class Step(AbstractStep):
         Callable interface for the Step instance.
 
         On the first call, the method expects a decorated function as the sole argument,
-        which is then set as the step function. On subsequent calls, the provided arguments and keyword
-        arguments are used to update the function parameters and execute the step.
+        which is then set as the step function. 
+        On subsequent calls, the provided arguments and keyword arguments are used to 
+        update the function parameters and execute the step.
 
         Args:
             *args: Positional arguments to pass to the step function.
@@ -65,12 +70,11 @@ class Step(AbstractStep):
             self.step_func = args[0]
             self.init_step_func_params()
             return self
-        else:
-            self.params = {param: None for param in self.params_list}
-            self.create_kwargs_params(args, kwargs)
-            if 'kwargs' in self.params:
-                self.params.pop('kwargs')
-            return self.execute()
+        self.params = {param: None for param in self.params_list}
+        self.create_kwargs_params(args, kwargs)
+        if 'kwargs' in self.params:
+            self.params.pop('kwargs')
+        return self.execute()
 
     def init_step_func_params(self):
         """
@@ -87,7 +91,6 @@ class Step(AbstractStep):
 
         if self.step_name is None:
             self.step_name = self.step_func.__name__
-        return
 
     def get_default_params(self, sig):
         """
@@ -97,7 +100,8 @@ class Step(AbstractStep):
             sig (inspect.Signature): The signature of the step function.
 
         Returns:
-            dict: A dictionary mapping parameter names to their default values for parameters that have defaults.
+            dict: A dictionary mapping parameter names 
+                to their default values for parameters that have defaults.
         """
         default_params = {
             param_name: default_value.default
@@ -115,14 +119,15 @@ class Step(AbstractStep):
         """
         for param, value in self.params.items():
             if value is None:
-                raise Exception(f"Error parameter {param} has value None, please either explicitly pass in a value or set a default")
+                raise ValueError(f"Error parameter {param} has value None")
 
     def add_params(self, params):
         """
         Add parameters to the current parameter dictionary.
 
         This method updates self.params with values from the given dictionary.
-        If a parameter is not present in self.params and 'kwargs' is not a key, an Exception is raised.
+        If a parameter is not present in self.params and 'kwargs' is not a key, 
+        an Exception is raised.
 
         Args:
             params (dict): A dictionary of parameters to add.
@@ -130,7 +135,7 @@ class Step(AbstractStep):
         for param, value in params.items():
             if param not in self.params:
                 if 'kwargs' not in self.params:
-                    raise Exception("Error parameter given not found in function signature")
+                    raise ValueError("Error parameter given not found in function signature")
                 self.params[param] = value
             elif self.params[param] is None:
                 self.params[param] = value
@@ -139,7 +144,8 @@ class Step(AbstractStep):
         """
         Create and update the step function's parameters using provided arguments.
 
-        Maps positional arguments to parameter names, then updates the parameters with keyword arguments,
+        Maps positional arguments to parameter names, 
+        then updates the parameters with keyword arguments,
         input parameters, and default parameters.
 
         Args:
@@ -161,14 +167,12 @@ class Step(AbstractStep):
             Exception: If any required parameter has not been assigned a value.
         """
         self.check_params()
-        return
 
     def stop_step(self):
         """
         Finalize the step by clearing the parameters.
         """
         self.params.clear()
-        return
 
     def execute(self):
         """
@@ -181,20 +185,18 @@ class Step(AbstractStep):
             The output produced by the step function.
         """
         self.start_step()
-        self.step_output = self.step_func(**self.params)
+        step_output = self.step_func(**self.params)
         self.stop_step()
-        return self.step_output
+        return step_output
 
     def __str__(self):
         """
         Return a string representation of the Step instance.
 
-        Prints the description, mode, and input parameters, then returns the step name.
+        Prints the input parameters, then returns the step name.
 
         Returns:
             str: The name of the step.
         """
-        print(self.description)
-        print(self.mode)
         print(self.input_params)
         return self.step_name
