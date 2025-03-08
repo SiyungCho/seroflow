@@ -3,6 +3,9 @@ TODO:
 v3
 - fix adl e/l
 - add chunking
+    - Batching data
+    - intermediate checkpoints
+        - probably do combination of both, so when you batch data, you can add a checkpoint step to chunk up to a certain point then process normally or continue batching?
 - add pre-made custom steps
     - add/delete dataframe
     - add/delete/update internal variable
