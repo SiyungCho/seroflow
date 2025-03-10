@@ -17,6 +17,7 @@ v3
     - template for adding custom context/dataframes
     - transpose dataframe
     - get mean/median/mode of dataframe column and store in variable
+    - string column manipulation (remove char, remove list of chars, count number of time char appears etc)
 - look into adding other pandas compatible APIs (https://pandas.pydata.org/community/ecosystem.html#out-of-core)
 
 v4
