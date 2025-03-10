@@ -48,3 +48,14 @@ we are going to implement 2 main principles behind chunking data
         - # rows is equal to chunk size, once smaller dfs reach end then empty df is used in their place for subsequent chunks
     - multiple extractors
         - directly gather data one after another by chunksize
+
+- on step level, set chunksize
+- from ... import RecursiveChunker
+- on pypeline.execute(chunk_method = RecursiveChunker)
+- inside pypeline:
+    - chunker is init and added to pypeline obj
+    - chunker iterates through steps, makes sure allloaders are set to append, finds all extractor steps with chunksize and appends to internal index; step_key -> chunksize, current_chunk
+    - somehow figure out number of rows in each to be extracted df
+    - calculate all # chunks, chunk coordinates, (different depending if recursive or direct)
+    - branch execution using cache?
+    - send coords to extractor functions by manip internal step kwargs
