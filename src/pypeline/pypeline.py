@@ -13,6 +13,90 @@ Usage:
     making it useful for long-running ETL jobs.
 """
 
+"""
+TODO: 
+- add chunking:
+Method 1 Batching:
+- add add chunksize flag to all extractors. and global chunk (bool) to all extractors
+- when parsing steps check for extractors, check if global chunk is true then add extractor step to chunk index, if not then step level chunking is performed (ie data is only chunked till next step)
+- create a chunk index, step_key -> (chunksize, current_chunk)
+- ensure all subsequent loaders have 'append' turned on
+
+cases:
+- one(one) to one, (one extractor, one df, one loader)
+- one(many) to one, (one extractor, many df, one loader)
+- one(one) to many, (one extractor, one df, many loader)
+- one(many) to many, (one extractor, many df, many loader)
+- many(one) to one, (many extractor, one df, one loader)
+- many(many) to one, (many extractor, many df, one loader)
+- many(one) to many, (many extractor, one df, many loader)
+- many(many) to many, (many extractor, many df, many loader)
+
+**need to figure out how caching is going to be used with this
+
+one(one) to one
+one file (1 df:100 rows, chunk 50) -> 50 rows -> append via loader
+                                   -> 50 rows -> append via loader
+one(many) to one
+many files (3 dfs , 100 rows, 200 rows, 150 rows, chunk 50) -> df1:50 rows, df2: 50 rows, df3:50rows -> append via loader
+                                                            -> df1:50 rows, df2: 50 rows, df3:empty  -> append via loader
+                                                            -> df1:empty, df2: 50 rows, df3:empty    -> append via loader
+                                                            -> df1:empty, df2: 50 rows, df3:empty    -> append via loader
+one(one) to many
+one file (1 df:100 rows, chunk 50) -> 50 rows -> append via loader -> transformation -> append via loader
+                                   -> 50 rows -> append via loader -> transformation -> append via loader
+
+one(many) to many
+many files (3 dfs , 100 rows, 200 rows, 150 rows, chunk 50) -> df1:50 rows, df2: 50 rows, df3:50rows -> append via loader -> transformation -> append via loader
+                                                            -> df1:50 rows, df2: 50 rows, df3:empty  -> append via loader -> transformation -> append via loader
+                                                            -> df1:empty, df2: 50 rows, df3:empty    -> append via loader -> transformation -> append via loader
+                                                            -> df1:empty, df2: 50 rows, df3:empty    -> append via loader -> transformation -> append via loader
+many(one) to one 
+** issue is that the 2nd transformation occurs twice on the initial dataframe chunks so we need to split the initial dataframe again (recursive splitting)
+one file (1 df1:100 rows, chunk 50) -> 50 rows -> transformation -> one file (1 df2:100 rows, chunk 50) -> df1: 25 rows, df2:25rows -> transformation -> append via loader
+                                                                                                        -> df1: 25 rows, df2:25rows -> transformation -> append via loader
+                                    -> 50 rows -> transformation -> one file (1 df2:100 rows, chunk 50) -> df1: 25 rows, df2:25rows -> transformation -> append via loader
+                                                                                                        -> df1: 25 rows, df2:25rows -> transformation -> append via loader
+one file (1 df1:50 rows, chunk 50) -> 50 rows -> transformation -> one file (1 df2:100 rows, chunk 50) -> df1: 25 rows, df2:50rows -> transformation -> append via loader
+                                                                                                       -> df1: 25 rows, df2:50rows -> transformation -> append via loader
+one file (1 df1:150 rows, chunk 50) -> 50 rows -> transformation -> one file (1 df2:100 rows, chunk 50) -> df1: 25 rows, df2:16rows -> transformation -> append via loader
+                                                                                                        -> df1: 25 rows, df2:16rows -> transformation -> append via loader
+                                    -> 50 rows -> transformation -> one file (1 df2:100 rows, chunk 50) -> df1: 25 rows, df2:16rows -> transformation -> append via loader
+                                                                                                        -> df1: 25 rows, df2:16rows -> transformation -> append via loader
+                                    -> 50 rows -> transformation -> one file (1 df2:100 rows, chunk 50) -> df1: 25 rows, df2:16rows -> transformation -> append via loader
+                                                                                                        -> df1: 25 rows, df2:20rows -> transformation -> append via loader
+many(many) to one
+many files (3 dfs , 100 rows, 200 rows, 150 rows, chunk 50) -> df1:50 rows, df2: 50 rows, df3:50rows -> one file (1 df4:100 rows, chunk 50) -> df1: 25 rows, df2: 25 rows, df3: 25 rows, df4: 12 rows -> transformation -> append via loader
+                                                                                                                                            -> df1: 25 rows, df2: 25 rows, df3: 25 rows, df4: 12 rows -> transformation -> append via loader
+                                                            -> df1:50 rows, df2: 50 rows, df3:empty  -> one file (1 df4:100 rows, chunk 50) -> df1: 25 rows, df2: 25 rows, df3: empty rows, df4: 12 rows -> transformation -> append via loader
+                                                                                                                                            -> df1: 25 rows, df2: 25 rows, df3: empty rows, df4: 12 rows -> transformation -> append via loader
+                                                            -> df1:empty, df2: 50 rows, df3:empty    -> one file (1 df4:100 rows, chunk 50) -> df1: empty rows, df2: 25 rows, df3: empty rows, df4: 12 rows -> transformation -> append via loader
+                                                                                                                                            -> df1: empty rows, df2: 25 rows, df3: empty rows, df4: 12 rows -> transformation -> append via loader
+                                                            -> df1:empty, df2: 50 rows, df3:empty    -> one file (1 df4:100 rows, chunk 50) -> df1: empty rows, df2: 25 rows, df3: empty rows, df4: 12 rows -> transformation -> append via loader
+                                                                                                                                            -> df1: empty rows, df2: 25 rows, df3: empty rows, df4: 16 rows -> transformation -> append via loader
+one file (1 df1:150 rows, chunk 50) -> 50 rows -> transformation -> many files (3 dfs , 100 rows, 200 rows, 150 rows, chunk 50)
+                                    -> 50 rows -> transformation -> many files (3 dfs , 100 rows, 200 rows, 150 rows, chunk 50)
+                                    -> 50 rows -> transformation -> many files (3 dfs , 100 rows, 200 rows, 150 rows, chunk 50)
+many files (3 dfs , 100 rows, 200 rows, 150 rows, chunk 50) -> df1:50 rows, df2: 50 rows, df3:50rows -> one file (2 dfs, 100 rows, 150 rows, chunk 50) -> df1: 16 rows, df2: 16 rows, df3: 16 rows, df4: 8 rows, df5: 12 -> transformation -> append via loader
+                                                                                                                                                       -> df1: 16 rows, df2: 16 rows, df3: 16 rows, df4: 8 rows, df5: 12 -> transformation -> append via loader
+                                                                                                                                                       -> df1: 18 rows, df2: 18 rows, df3: 18 rows, df4: 8 rows, df5: 12 -> transformation -> append via loader
+                                                            -> df1:50 rows, df2: 50 rows, df3:empty  -> one file (2 dfs, 100 rows, 150 rows, chunk 50) -> df1: 16 rows, df2: 16 rows, df3: empty rows, df4: 8 rows, df5: 12 -> transformation -> append via loader
+                                                                                                                                                       -> df1: 16 rows, df2: 16 rows, df3: empty rows, df4: 8 rows, df5: 12 -> transformation -> append via loader
+                                                                                                                                                       -> df1: 18 rows, df2: 18 rows, df3: empty rows, df4: 8 rows, df5: 12 -> transformation -> append via loader
+                                                            -> df1:empty, df2: 50 rows, df3:empty    -> one file (2 dfs, 100 rows, 150 rows, chunk 50) -> df1: empty rows, df2: 16 rows, df3: empty rows, df4: 8 rows, df5: 12 -> transformation -> append via loader
+                                                                                                                                                       -> df1: empty rows, df2: 16 rows, df3: empty rows, df4: 8 rows, df5: 12 -> transformation -> append via loader
+                                                                                                                                                       -> df1: empty rows, df2: 18 rows, df3: empty rows, df4: 8 rows, df5: 12 -> transformation -> append via loader
+                                                            -> df1:empty, df2: 50 rows, df3:empty    -> one file (2 dfs, 100 rows, 150 rows, chunk 50) -> df1: empty rows, df2: 16 rows, df3: empty rows, df4: 8 rows, df5: 12 -> transformation -> append via loader
+                                                                                                                                                       -> df1: empty rows, df2: 16 rows, df3: empty rows, df4: 8 rows, df5: 12 -> transformation -> append via loader
+                                                                                                                                                       -> df1: empty rows, df2: 18 rows, df3: empty rows, df4: 12 rows, df5: 18 -> transformation -> append via loader
+many(one) to many
+many(many) to many
+
+downstream chunk formulas: 
+total downstream chunks = # chunks ex1 * # chunks ex2 * ...
+chunksize = ex# total rows/total downstream chunks (up to ex#)
+"""
+
 import time
 from collections import OrderedDict
 from tqdm import tqdm
