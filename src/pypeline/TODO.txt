@@ -26,7 +26,7 @@ v4
     - (in dev mode, executes all steps but doesnot actually release exports detailed review of global context) 
     - (in test mode: executes the entire pypeline, but only on random sampled values, exports detailed review of global context and detailed review of execution, but only for random sampled values) 
     - (in prod mode, executes entire pypeline on whole dataset, generates detailed review of execution on all data)
-- implement 'on_fail' functionality
+- implement 'on_fail' functionality (ignore, log, raise)
 
 future
 - add MT and MP
