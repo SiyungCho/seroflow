@@ -6,6 +6,7 @@ v3
     - Batching data
     - intermediate checkpoints
         - probably do combination of both, so when you batch data, you can add a checkpoint step to chunk up to a certain point then process normally or continue batching?
+        - try using other libraries as per the pandas documentation 
 - add pre-made custom steps
     - add/delete dataframe
     - add/delete/update internal variable
@@ -16,14 +17,19 @@ v3
     - template for adding custom context/dataframes
     - transpose dataframe
     - get mean/median/mode of dataframe column and store in variable
+- look into adding other pandas compatible APIs (https://pandas.pydata.org/community/ecosystem.html#out-of-core)
 
 v4
 - fix logger and turn logger off and on
 - add universal engine
-- implement different 'modes' for pypeline (and maybe for steps)
+- implement different 'modes' for pypeline (and maybe for steps) 
+    - (in dev mode, executes all steps but doesnot actually release exports detailed review of global context) 
+    - (in test mode: executes the entire pypeline, but only on random sampled values, exports detailed review of global context and detailed review of execution, but only for random sampled values) 
+    - (in prod mode, executes entire pypeline on whole dataset, generates detailed review of execution on all data)
 - implement 'on_fail' functionality
 
 future
 - add MT and MP
 - add REST compatible e/l
 - use other container types (numpy, spark dataframes)
+- optimized data viz
