@@ -59,3 +59,5 @@ we are going to implement 2 main principles behind chunking data
     - calculate all # chunks, chunk coordinates, (different depending if recursive or direct)
     - branch execution using cache? (give special keys to cache)
     - send coords to extractor functions by manip internal step kwargs
+
+- need to add get_number_rows abstract method to all extractor steps, always ran on post_init
