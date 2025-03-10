@@ -33,3 +33,18 @@ future
 - add REST compatible e/l
 - use other container types (numpy, spark dataframes)
 - optimized data viz
+
+Chunking implementation:
+we are going to implement 2 main principles behind chunking data
+1. Recursive Chunking
+    - at each extractor
+        - number of chunks is determined by the floor(largest df/chunksize)
+        - # rows is determined proportionally to amount of chunks (spread evenly)
+    - multiple extractors
+        - previous chunks and new data rows are spread evenly across new chunks downstream
+2. Direct Chunking
+    - at each extractor
+        - number of chunks is determined by the floor(largest df/chunksize)
+        - # rows is equal to chunk size, once smaller dfs reach end then empty df is used in their place for subsequent chunks
+    - multiple extractors
+        - directly gather data one after another by chunksize
