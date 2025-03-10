@@ -17,7 +17,7 @@ class SQLServerExtractor(Extractor):
     database engine and loads the data as pandas DataFrames into a context.
     """
 
-    def __init__(self, source, engine, step_name="SQLServerExtractor", **kwargs):
+    def __init__(self, source, engine, step_name="SQLServerExtractor", chunk_size=None, **kwargs):
         """
         Initialize an SQLServerExtractor instance.
 
@@ -34,7 +34,7 @@ class SQLServerExtractor(Extractor):
             This initializer does not enforce a type check on the engine; it is expected
             that the engine provided is valid.
         """
-        super().__init__(step_name=step_name, func=self.func)
+        super().__init__(step_name=step_name, func=self.func, chunk_size=chunk_size)
         # Optionally, validate that engine is a proper engine instance here.
         self.source = [source] if not isinstance(source, list) else source
         self.engine = engine

@@ -19,7 +19,7 @@ class Extractor(Step):
     'func' method to perform the actual extraction logic.
     """
 
-    def __init__(self, step_name, func):
+    def __init__(self, step_name, func, chunk_size=None):
         """
         Initialize an Extractor instance.
 
@@ -27,7 +27,7 @@ class Extractor(Step):
             step_name (str): The name of the extractor step.
             func (callable): The function to execute for the extraction process.
         """
-        super().__init__(step_name=step_name, func=func)
+        super().__init__(step_name=step_name, func=func, chunk_size=chunk_size)
 
     def start_step(self):
         """
@@ -53,4 +53,13 @@ class Extractor(Step):
         Execute the extraction logic.
 
         Subclasses must implement this method to define the extraction process.
+        """
+
+    @abstractmethod
+    def get_max_row_count(self):
+        """
+        Gets largest number of rows extracted.
+
+        Returns:
+            int: The largest number of rows extracted.
         """

@@ -5,6 +5,9 @@ Version:
 
 from .cache import AbstractCache
 from .cache import LFUCache
+from .chunker import Chunker
+from .chunker import DirectChunker
+from .chunker import RecursiveChunker
 from .context import Context
 from .engine import PyodbcEngine
 from .engine import SQLAlchemyEngine

@@ -20,7 +20,7 @@ class ExcelExtractor(Extractor):
     to a context with a key based on the file name.
     """
 
-    def __init__(self, source, step_name="ExcelExtractor", **kwargs):
+    def __init__(self, source, step_name="ExcelExtractor", chunk_size = None, **kwargs):
         """
         Initialize an ExcelExtractor instance.
 
@@ -36,7 +36,7 @@ class ExcelExtractor(Extractor):
         Raises:
             Exception: If the specified source directory is not found.
         """
-        super().__init__(step_name=step_name, func=self.func)
+        super().__init__(step_name=step_name, func=self.func, chunk_size=chunk_size)
         if not check_directory(source):  # or check if it's a file
             raise FileNotFoundError("Error directory not found")
 

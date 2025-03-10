@@ -20,7 +20,7 @@ class CSVExtractor(Extractor):
     using a key derived from the file name.
     """
 
-    def __init__(self, source, step_name="CSVExtractor", **kwargs):
+    def __init__(self, source, step_name="CSVExtractor", chunk_size=None, **kwargs):
         """
         Initialize a CSVExtractor instance.
 
@@ -35,7 +35,7 @@ class CSVExtractor(Extractor):
         Raises:
             Exception: If the source directory is not found.
         """
-        super().__init__(step_name=step_name, func=self.func)
+        super().__init__(step_name=step_name, func=self.func, chunk_size=chunk_size)
         if not check_directory(source):  # or check if it's a file
             raise FileNotFoundError("Error directory not found")
 
@@ -75,3 +75,19 @@ class CSVExtractor(Extractor):
             pd.DataFrame: The DataFrame containing the CSV data.
         """
         return pd.read_csv(file, **kwargs)
+    
+    def get_max_row_count(self):
+        """
+        Out of all the files to be extracted we gather the largest number of rows. without actually reading the files.
+
+        Returns:
+            int: The largest number of rows extracted.
+        """
+        
+        max_rows = 0
+        for file in self.file_paths:
+            with open(file, 'r') as f:
+                row_count = sum(1 for row in f)
+                if row_count > max_rows:
+                    max_rows = row_count
+        return max_rows
