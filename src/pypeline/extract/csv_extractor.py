@@ -35,7 +35,7 @@ class CSVExtractor(Extractor):
         Raises:
             Exception: If the source directory is not found.
         """
-        super().__init__(step_name=step_name, func=self.func, chunk_size=chunk_size)
+        super().__init__(step_name=step_name, func= self.func if chunk_size is None else self.chunk_func, chunk_size=chunk_size)
         if not check_directory(source):  # or check if it's a file
             raise FileNotFoundError("Error directory not found")
 
@@ -59,6 +59,11 @@ class CSVExtractor(Extractor):
         for name, file in zip(self.file_names, self.file_paths):
             context.add_dataframe(remove_extension(name), self.__read_csv(file, self.kwargs))
         return context
+
+    def chunk_func(self, context, chunk_coordinates):
+        for name, file in zip(self.file_names, self.file_paths):
+            context.add_dataframe(remove_extension(name), self.__read_csv(file, self.kwargs))
+        return context     
 
     def __read_csv(self, file, kwargs):
         """
