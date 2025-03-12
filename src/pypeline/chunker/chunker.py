@@ -159,9 +159,8 @@ class Chunker:
     def calculate_chunks(self):
         pass
 
-    @abstractmethod
-    def enqueue(self):
-        pass
+    def enqueue(self, value):
+        self.coordinate_queue.put(value)
 
     @abstractmethod
     def dequeue(self):
