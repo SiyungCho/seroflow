@@ -33,7 +33,8 @@ class DirectChunker(Chunker):
             # Update the chunk info for this key.
             self.chunk_index[key] = (chunk_size, current_chunk + (1 if not finished_calculating else 0), num_rows, finished_calculating)
 
-        if self.coordinate_queue.qsize() % 2 == 1:
+        #pad the final output
+        while(self.coordinate_queue.qsize() % num_keys != 0):
             self.coordinate_queue.put((None, None))
 
     def __str__(self):

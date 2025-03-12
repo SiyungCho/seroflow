@@ -2,6 +2,10 @@ TODO:
 
 v3
 - fix adl e/l
+- fix group extractors (make new class specifically for grouped types)
+- need to split single vs multi extractors (eg multicsvextractor can grab csv files from multiple directories and 'ignore' certain files) and loaders
+- fix all loaders and extractors
+- fix recursive chunking logic
 - add chunking
     - Batching data
     - intermediate checkpoints
@@ -18,6 +22,7 @@ v3
     - transpose dataframe
     - get mean/median/mode of dataframe column and store in variable
     - string column manipulation (remove char, remove list of chars, count number of time char appears etc)
+    - skip step on condition
 - look into adding other pandas compatible APIs (https://pandas.pydata.org/community/ecosystem.html#out-of-core)
 
 v4

@@ -93,9 +93,6 @@ class ExcelExtractor(Extractor):
     
     def __read_excel_chunk(self, file, chunk_coordinates, kwargs):
         start_idx, stop_idx = chunk_coordinates
-        print("excel coords:")
-        print(start_idx)
-        print(stop_idx)
         if start_idx is None:
             return pd.DataFrame()
 

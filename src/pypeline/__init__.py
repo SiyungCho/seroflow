@@ -16,6 +16,7 @@ from .extract import Extractor
 from .extract import CSVExtractor
 from .extract import ExcelExtractor
 from .extract import SQLServerExtractor
+from .extract import GroupCSVExtractor
 from .load import Loader
 from .load import FileLoader
 from .load import CSVLoader
