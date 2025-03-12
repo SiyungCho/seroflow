@@ -21,18 +21,13 @@ class DirectChunker(Chunker):
             else:
                 start_idx = current_chunk * chunk_size
                 if start_idx <= num_rows:
-                    # Calculate stop index.
                     stop_idx = start_idx + chunk_size
                     if stop_idx >= num_rows:
                         stop_idx = num_rows
                         finished_calculating = True
 
-            # Put the chunk coordinates into the coordinate queue.
             self.coordinate_queue.put((start_idx, stop_idx))
-
-            # Update the chunk info for this key.
             self.chunk_index[key] = (chunk_size, current_chunk + (1 if not finished_calculating else 0), num_rows, finished_calculating)
-
         #pad the final output
         while(self.coordinate_queue.qsize() % num_keys != 0):
             self.coordinate_queue.put((None, None))

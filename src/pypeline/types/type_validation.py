@@ -15,6 +15,7 @@ Functions:
 
 from ..step.step import Step as base_step
 from ..extract.extractor import Extractor as base_extractor
+from ..extract.extractor import MultiExtractor as base_multiextractor
 from ..load.loader import Loader as base_loader
 from ..context.context import Context as base_context
 
@@ -37,6 +38,13 @@ def is_extractor(extractor, _raise=False):
     if not isinstance(extractor, base_extractor):
         if _raise:
             raise TypeError("Not of type Extractor")
+        return False
+    return True
+
+def is_multiextractor(multiextractor, _raise=False):
+    if not isinstance(multiextractor, base_multiextractor):
+        if _raise:
+            raise TypeError("Not of type multiextractor")
         return False
     return True
 

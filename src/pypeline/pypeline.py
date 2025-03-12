@@ -19,7 +19,7 @@ from tqdm import tqdm
 
 from .log import CustomLogger
 from .utils import generate_key
-from .types import is_extractor, is_loader, is_step, is_context, is_context_object
+from .types import is_extractor, is_multiextractor, is_loader, is_step, is_context, is_context_object
 from .cache import LFUCache
 from .context import Context as base_context
 from .transform import CacheState
@@ -168,7 +168,7 @@ class Pypeline():
         Side Effects:
             Logs the event when a valid extractor is set.
         """
-        if is_extractor(extractor, True):
+        if is_extractor(extractor, False) or is_multiextractor(extractor, False):
             self.__target_extractor = extractor
             self.logger.info("Target extractor set...")
 
@@ -306,6 +306,9 @@ class Pypeline():
         Side Effects:
             Logs the successful addition of the step.
         """
+        if is_multiextractor(step):
+            for extractor in step.extractors:
+                self.add_step(extractor)
         if is_step(step, _raise=True):
             step_key = self.parse_step(step)
             print("Successfully added step with key: " + str(step_key))
@@ -330,6 +333,12 @@ class Pypeline():
                 raise TypeError("Target loader or extractor not found")
             return False
         return True
+    
+    def add_target(self, target, last=False):
+        target_key = self.parse_step(target)
+        self.logger.info("Successfully added step with key: %s", target_key)
+        self.step_index.move_to_end(target_key, last=last)
+        self.step_name_index.move_to_end(target_key, last=last)
 
     def add_targets_to_steps(self):
         """
@@ -346,15 +355,14 @@ class Pypeline():
         if self.mode != "TEST":  # In test mode, targets may not be required.
             self.targets_found(_raise=True)
         if self.target_extractor:
-            target_extractor_key = self.parse_step(self.target_extractor)
-            self.logger.info("Successfully added step with key: %s", target_extractor_key)
-            self.step_index.move_to_end(target_extractor_key, last=False)
-            self.step_name_index.move_to_end(target_extractor_key, last=False)
+            if is_multiextractor(self.target_extractor):
+                for extractor in self.target_extractor.extractors:
+                    self.add_target(extractor, last=False)
+            else:
+                self.add_target(self.target_extractor, last=False)
         if self.target_loader:
-            target_loader_key = self.parse_step(self.target_loader)
-            self.logger.info("Successfully added step with key: %s", target_loader_key)
-            self.step_index.move_to_end(target_loader_key)
-            self.step_name_index.move_to_end(target_loader_key)
+            self.add_target(self.target_loader, last=True)
+
 
     def parse_step(self, step):
         """
@@ -622,13 +630,13 @@ class Pypeline():
             if step_output:
                 self.parse_step_output(step_output, step_key)
 
-            if use_cache and (not isinstance(self.step_index[step_key], ResetCache)):
+            if use_cache and (not isinstance(self.step_index[step_key], ResetCache)): # Need to fix this
                 self.store_in_cache(step_key)
             self.logger.info("Step: %s completed...", step_name)
-
-        if (self.chunker.keep_executing):
-            self.parameter_index, self.globalcontext = self.chunker.reload()
-            self.execute(use_cache=use_cache, chunker=chunker)
+        if not(self.chunker is None):
+            if (self.chunker.keep_executing):
+                self.parameter_index, self.globalcontext = self.chunker.reload()
+                self.execute(use_cache=use_cache, chunker=chunker)
         else:
             end_time = time.time()  # End timer
             self.logger.info("ETL Execution Finished at time: %s ...", end_time)

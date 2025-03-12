@@ -7,8 +7,9 @@ and adds them to a provided context.
 """
 
 import pandas as pd
-from ..utils.utils import check_file, gather_files, remove_extension
+from ..utils.utils import check_file, check_directory, gather_files, remove_extension
 from ..extract.extractor import Extractor
+from ..extract.extractor import MultiExtractor
 
 
 class CSVExtractor(Extractor):
@@ -42,7 +43,6 @@ class CSVExtractor(Extractor):
         self.source = source
         self.file_path = source
         self.file_name = remove_extension(source.split('/')[-1])
-        # self.file_paths, self.file_names = gather_files(self.source, ["csv"])
         self.kwargs = kwargs
 
     def func(self, context):
@@ -104,3 +104,15 @@ class CSVExtractor(Extractor):
             if row_count > max_rows:
                 max_rows = row_count
         return max_rows
+
+class MultiCSVExtractor(MultiExtractor):
+    def __init__(self, source, chunk_size=None, **kwargs):
+        super().__init__(step_name="MultiCSVExtractor", type=CSVExtractor, chunk_size=chunk_size)
+
+        if not check_directory(source): 
+            raise FileNotFoundError("Error directory not found")
+
+        self.source = source
+        self.file_paths, self.file_names = gather_files(self.source, ["csv"])
+
+        self.add_extractors(self.file_paths, **kwargs)

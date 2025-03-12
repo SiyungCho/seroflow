@@ -72,3 +72,17 @@ class Extractor(Step):
         Returns:
             int: The largest number of rows extracted.
         """
+
+class MultiExtractor(Step):
+    def __init__(self, step_name, type, chunk_size=None):
+        super().__init__(step_name=step_name, func=self.func)
+        self.extractors = []
+        self.chunk_size = chunk_size
+        self.type = type
+
+    def add_extractors(self, it, **kwargs):
+        for item in it:
+            self.extractors.append(self.type(source=item, chunk_size=self.chunk_size, **kwargs))
+
+    def func(self):
+        pass

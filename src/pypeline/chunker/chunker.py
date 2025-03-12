@@ -48,12 +48,12 @@ many files (3 dfs , 100 rows, 200 rows, 150 rows, chunk 50) -> df1:50 rows, df2:
                                                             -> df1:empty, df2: 50 rows, df3:empty    -> append via loader -> transformation -> append via loader
 many(one, one) to one
 ** issue is that the 2nd transformation occurs twice on the initial dataframe chunks so we need to split the initial dataframe again (recursive splitting)
-one file (1 df1:150 rows, chunk 50) -> 50 rows -> transformation -> one file (1 df2:100 rows, chunk 50) -> df1: 25 rows, df2:16rows -> transformation -> append via loader
-                                                                                                        -> df1: 25 rows, df2:16rows -> transformation -> append via loader
-                                    -> 50 rows -> transformation -> one file (1 df2:100 rows, chunk 50) -> df1: 25 rows, df2:16rows -> transformation -> append via loader
-                                                                                                        -> df1: 25 rows, df2:16rows -> transformation -> append via loader
-                                    -> 50 rows -> transformation -> one file (1 df2:100 rows, chunk 50) -> df1: 25 rows, df2:16rows -> transformation -> append via loader
-                                                                                                        -> df1: 25 rows, df2:20rows -> transformation -> append via loader
+(1 df1:150 rows, chunk 50) -> df1: 50 rows -> (1 df2:100 rows, chunk 50) -> df1: 25 rows, df2:16rows 
+                                                                         -> df1: 25 rows, df2:16rows
+                           -> df1: 50 rows -> (1 df2:100 rows, chunk 50) -> df1: 25 rows, df2:16rows 
+                                                                         -> df1: 25 rows, df2:16rows 
+                           -> df1: 50 rows -> (1 df2:100 rows, chunk 50) -> df1: 25 rows, df2:16rows 
+                                                                         -> df1: 25 rows, df2:20rows 
 many(one, many) to one
 one file (1 df1:100 rows, chunk 20) -> 20 rows -> transformation -> many files (3 dfs , 100 rows, 200 rows, 150 rows, chunk 5) -> df1:  rows, df2:  rows, df3:  rows, df4:  rows ->
                                                                                                                                 -> df1:  rows, df2:  rows, df3:  rows, df4:  rows ->
@@ -141,7 +141,6 @@ class Chunker:
 		for step_key, step in step_index.items():
 			if hasattr(step, 'chunk_size') and is_extractor(step, _raise=False):
 				if not(step.chunk_size is None):
-					print(step.get_max_row_count())
 					self.chunk_index[step_key] = (step.chunk_size, 0, step.get_max_row_count(), False)
 				
 			if is_loader(step, _raise=False) and hasattr(step, 'exists'):

@@ -9,14 +9,15 @@ from .chunker import Chunker
 from .chunker import DirectChunker
 from .chunker import RecursiveChunker
 from .context import Context
-from .engine import PyodbcEngine
+# from .engine import PyodbcEngine
 from .engine import SQLAlchemyEngine
 from .exceptions import CustomException
 from .extract import Extractor
+from .extract import MultiExtractor
 from .extract import CSVExtractor
+from .extract import MultiCSVExtractor
 from .extract import ExcelExtractor
 from .extract import SQLServerExtractor
-from .extract import GroupCSVExtractor
 from .load import Loader
 from .load import FileLoader
 from .load import CSVLoader
@@ -30,6 +31,7 @@ from .transform import CacheState
 from .transform import ReloadCacheState
 from .transform import ResetCache
 from .types import is_extractor
+from .types import is_multiextractor
 from .types import is_loader
 from .types import is_step
 from .types import is_context
