@@ -62,7 +62,7 @@ class CSVExtractor(Extractor):
 
     def chunk_func(self, context, chunk_coordinates):
         for name, file in zip(self.file_names, self.file_paths):
-            context.add_dataframe(remove_extension(name), self.__read_csv(file, self.kwargs))
+            context.add_dataframe(remove_extension(name), self.__read_csv(file, chunk_coordinates, self.kwargs))
         return context     
 
     def __read_csv(self, file, kwargs):
@@ -80,6 +80,38 @@ class CSVExtractor(Extractor):
             pd.DataFrame: The DataFrame containing the CSV data.
         """
         return pd.read_csv(file, **kwargs)
+    
+    def __read_csv(self, file, chunk_coordinates, kwargs):
+        start_idx, stop_idx = chunk_coordinates
+        print(start_idx)
+        print(stop_idx)
+        if start_idx is None:
+            return pd.DataFrame()
+        
+        # Calculate how many rows to read.
+        nrows = stop_idx - start_idx
+        return pd.read_csv(file, skiprows=start_idx, nrows=nrows, **kwargs)
+        # # Make a copy of kwargs so we don't modify the caller's dictionary.
+        # kwargs = kwargs.copy()
+        
+        # # Determine if a header is present. If header is not None, assume the first row is a header.
+        # header = kwargs.get("header", "infer")
+        
+        # if header is not None:
+        #     # First, read the header row only to capture column names.
+        #     df_header = pd.read_csv(file, nrows=0, **kwargs)
+        #     # When reading the data chunk, we want to preserve the header row,
+        #     # so we skip rows from 1 up to (and including) start_idx.
+        #     # This is because pd.read_csv treats the first row (row index 0) as the header.
+        #     skiprows = list(range(1, start_idx + 1))
+        #     # Read the chunk with header=None (since we already have column names).
+        #     df_chunk = pd.read_csv(file, skiprows=skiprows, nrows=nrows, header=None, **kwargs)
+        #     # Reassign the header.
+        #     df_chunk.columns = df_header.columns
+        #     return df_chunk
+        # else:
+        #     # If no header is present, simply skip the first `start_idx` rows.
+        #     return pd.read_csv(file, skiprows=start_idx, nrows=nrows, **kwargs)
     
     def get_max_row_count(self):
         """

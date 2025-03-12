@@ -64,6 +64,9 @@ class SQLServerExtractor(Extractor):
                 )
             )
         return context
+    
+    def chunk_func(self, context, chunk_coordinates):
+        return
 
     def __read_sqlserver_table(self, table_name, schema, engine, kwargs):
         """

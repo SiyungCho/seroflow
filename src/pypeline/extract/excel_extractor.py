@@ -61,6 +61,11 @@ class ExcelExtractor(Extractor):
         for name, file in zip(self.file_names, self.file_paths):
             context.add_dataframe(remove_extension(name), self.__read_excel(file, self.kwargs))
         return context
+    
+    def chunk_func(self, context, chunk_coordinates):
+        for name, file in zip(self.file_names, self.file_paths):
+            context.add_dataframe(remove_extension(name), self.__read_excel(file, chunk_coordinates, self.kwargs))
+        return context 
 
     def __read_excel(self, file, kwargs):
         """
@@ -85,3 +90,52 @@ class ExcelExtractor(Extractor):
         if file.endswith('.xlsx'):
             return pd.read_excel(file, engine='openpyxl', **kwargs)
         raise ValueError(f"Unsupported file format: {file}")
+    
+    def __read_excel(self, file, chunk_coordinates, kwargs):
+        start_idx, stop_idx = chunk_coordinates
+        if start_idx is None:
+            return pd.DataFrame()
+
+        # Determine how many rows to read for this chunk.
+        nrows = stop_idx - start_idx
+        # Make a copy of kwargs so we don't modify the original dictionary.
+        kwargs = kwargs.copy()
+
+        # Select the engine based on the file extension.
+        if file.endswith('.xls'):
+            engine = 'xlrd'
+        elif file.endswith('.xlsx'):
+            engine = 'openpyxl'
+        else:
+            raise ValueError(f"Unsupported file format: {file}")
+
+        # Check if a header is present.
+        header = kwargs.get("header", 0)
+        if header is not None:
+            # Read the header separately to capture column names.
+            df_header = pd.read_excel(file, nrows=0, engine=engine, **kwargs)
+            # When reading the chunk, skip rows from 1 to start_idx (since row 0 is the header).
+            skiprows = list(range(1, start_idx + 1))
+            # Read the chunk with header=None so that the header row is not re-read.
+            df_chunk = pd.read_excel(file, skiprows=skiprows, nrows=nrows, header=None, engine=engine, **kwargs)
+            df_chunk.columns = df_header.columns
+            return df_chunk
+        else:
+            # If no header is present, directly skip the first start_idx rows.
+            return pd.read_excel(file, skiprows=start_idx, nrows=nrows, engine=engine, **kwargs)
+    
+    def get_max_row_count(self):
+        """
+        Out of all the files to be extracted we gather the largest number of rows. without actually reading the files.
+
+        Returns:
+            int: The largest number of rows extracted.
+        """
+        
+        max_rows = 0
+        for file in self.file_paths:
+            with open(file, 'r') as f:
+                row_count = sum(1 for row in f)
+                if row_count > max_rows:
+                    max_rows = row_count
+        return max_rows

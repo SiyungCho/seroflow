@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
+from collections import OrderedDict
 from queue import Queue
+from copy import deepcopy
 from ..types import is_extractor, is_loader
 """
 TODO: 
@@ -134,44 +136,44 @@ chunksize = ex# total rows/total downstream chunks (up to ex#)
 # - * There is only ever 1 cache, each branch/sub branch can access the same cache 
 
 class Chunker:
-    def __init__(self, step_index):
-        self.chunk_index = {}
-        for step_key, step in step_index.items():
-            if hasattr(step, 'chunk_size') and is_extractor(step, _raise=False):
-                self.chunk_index[step_key] = (step.chunk_size, 0, step.get_number_rows())
-            
-            if is_loader(step, _raise=False) and hasattr(step, 'exists'):
-                if step.exists != 'append':
-                    raise ValueError("All loaders must have 'append' as the 'exists' parameter when using chunking")
-        self.calculate_chunks()
-        self.keep_executing = False
-        self.coordinate_queue = Queue()
+	def __init__(self, step_index):
+		self.chunk_index = OrderedDict()
+		for step_key, step in step_index.items():
+			if hasattr(step, 'chunk_size') and is_extractor(step, _raise=False):
+				self.chunk_index[step_key] = (step.chunk_size, 0, step.get_max_row_count(), False)
+				
+			if is_loader(step, _raise=False) and hasattr(step, 'exists'):
+				if step.exists != 'append':
+					raise ValueError("All loaders must have 'append' as the 'exists' parameter when using chunking")
+		self.keep_executing = True
+		self.coordinate_queue = Queue()
+		self.saved_state = {}
+		self.calculate_chunks()
 
-    def check_queue_empty(self):
-      return self.coordinate_queue.empty()
+	# def check_queue_empty(self):
+	# 	return self.coordinate_queue.qsize()
 
-    def check_keep_executing(self):
-      if check_queue_empty:
-        self.keep_executing = False
-      self.keep_executing = True
+	def check_keep_executing(self):
+		if self.coordinate_queue.qsize() == 0:
+			return False
+		return True
 
-    def enqueue(self, value):
-      self.coordinate_queue.put(value)
+	def enqueue(self, value):
+		self.coordinate_queue.put(value)
 
-    def dequeue(self):
-      value = self.coordinate_queue.get()
-      self.check_keep_executing()
-      return value
-
-    @abstractmethod
-    def calculate_chunks(self):
-        pass
-      
-    @abstractmethod
-    def reload(self):
-        pass
-      
-    @abstractmethod
-    def save(self):
-        pass
-      
+	def dequeue(self):
+		value = self.coordinate_queue.get()
+		self.keep_executing = self.check_keep_executing()
+		return value
+		
+	def reload(self):
+		return self.saved_state['parameter_index'], self.saved_state['globalcontext']
+			
+	def save(self, **kwargs):
+		for key, value in kwargs.items():
+			self.saved_state[key] = deepcopy(value)
+		
+	@abstractmethod
+	def calculate_chunks(self):
+		pass
+	

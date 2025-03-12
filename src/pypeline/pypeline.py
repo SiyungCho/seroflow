@@ -60,9 +60,11 @@ class Pypeline():
         """
         self.logger = CustomLogger("pypeline").logger
         self.mode = mode
+        self.checked_targets = False
         self.__target_extractor = None
         self.__target_loader = None
         self.__cache = cache_type()
+        self.__chunker = None
         self.__parameter_index = {}
         self.__step_index = OrderedDict()
         self.__step_name_index = OrderedDict()
@@ -148,6 +150,12 @@ class Pypeline():
             The global context containing shared dataframes.
         """
         return self.__globalcontext
+    
+    @property
+    def chunker(self):
+        """
+        """
+        return self.__chunker
 
     @target_extractor.setter
     def target_extractor(self, extractor):
@@ -198,6 +206,12 @@ class Pypeline():
             globalcontext: The new global context object.
         """
         self.__globalcontext = globalcontext
+
+    @chunker.setter
+    def chunker(self, chunker):
+        """
+        """
+        self.__chunker = chunker
 
     def update_parameter_index(self, parameter, value):
         """
@@ -328,6 +342,7 @@ class Pypeline():
         Side Effects:
             Updates the internal step indices and logs the operations.
         """
+        self.checked_targets = True
         if self.mode != "TEST":  # In test mode, targets may not be required.
             self.targets_found(_raise=True)
         if self.target_extractor:
@@ -391,7 +406,7 @@ class Pypeline():
         for param in step.params_list:
             if param == "chunk_coordinates":
                 param_value = self.chunker.dequeue()
-            else if param != "context":
+            elif param != "context":
                 input_value = step.input_params.get(param)
                 curr_value = self.parameter_index.get(param)
                 default_value = step.default_params.get(param)
@@ -580,14 +595,16 @@ class Pypeline():
             use_cache (bool): Whether to use caching to resume execution.
                               Defaults to True.
         """
-
-        self.add_targets_to_steps()
+        #check if targets are already in steps
+        if not self.checked_targets:
+            self.add_targets_to_steps()
         
-        if (not (chunker is None) and not(self.chunker is None)):
+        if ((not (chunker is None)) and (self.chunker is None)):
             #need to check that passed chunker is of chunker abstract class
+            reset_cache = self.reset_cache(delete_directory=True)
+            self.add_step(reset_cache)
             self.chunker = chunker(self.step_index)
-            self.chunker.save(self.parameter_index, self.globalcontext)
-            #save cache?
+            self.chunker.save(parameter_index = self.parameter_index, globalcontext = self.globalcontext)
             
         step_keys = list(self.step_index.keys())
         start_index = 0 if not use_cache else self.load_from_cache(step_keys)
@@ -605,13 +622,12 @@ class Pypeline():
             if step_output:
                 self.parse_step_output(step_output, step_key)
 
-            if use_cache:
+            if use_cache and (not isinstance(self.step_index[step_key], ResetCache)):
                 self.store_in_cache(step_key)
             self.logger.info("Step: %s completed...", step_name)
 
         if (self.chunker.keep_executing):
             self.parameter_index, self.globalcontext = self.chunker.reload()
-            #reload cache
             self.execute(use_cache=use_cache, chunker=chunker)
         else:
             end_time = time.time()  # End timer
