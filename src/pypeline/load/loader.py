@@ -90,3 +90,17 @@ class Loader(Step):
         Returns:
             The mapped behavior for handling existing data.
         """
+
+class MultiLoader(Step):
+    def __init__(self, step_name, type, exists='append'):
+        super().__init__(step_name=step_name, func=self.func)
+        self.loaders = []
+        self.type = type
+        self.exists = exists
+
+    def add_loaders(self, it, **kwargs):
+        for item in it:
+            self.loaders.append(self.type(source=item, exists=self.exists, **kwargs))
+
+    def func(self):
+        pass

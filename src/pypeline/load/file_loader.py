@@ -5,7 +5,6 @@ from abc import abstractmethod
 from ..utils.utils import check_directory
 from ..load.loader import Loader
 
-
 class FileLoader(Loader):
     """
     file loader class

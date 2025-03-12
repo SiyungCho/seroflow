@@ -8,7 +8,7 @@ directory. The file write mode is determined by the 'exists' parameter.
 
 import os
 from ..load.file_loader import FileLoader
-
+from ..load.loader import MultiLoader
 
 class CSVLoader(FileLoader):
     """
@@ -76,3 +76,9 @@ class CSVLoader(FileLoader):
             kwargs (dict): Additional keyword arguments for pandas.DataFrame.to_csv.
         """
         df.to_csv(target_file_path, mode=self.map_exists_parameter(), **kwargs)
+
+class MultiCSVLoader(MultiLoader):
+    def __init__(self, source, exists='append', **kwargs):
+        super().__init__(step_name="MultiCSVExtractor", type=CSVLoader, exists=exists)
+
+        self.add_extractors(self.file_paths, **kwargs)
