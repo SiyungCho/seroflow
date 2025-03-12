@@ -585,6 +585,8 @@ class Pypeline():
         
         if (not (chunker is None) and not(self.chunker is None)):
             self.chunker = chunker(self.step_index)
+            self.chunker.save(self.parameter_index, self.globalcontext)
+            #save cache?
             
         step_keys = list(self.step_index.keys())
         start_index = 0 if not use_cache else self.load_from_cache(step_keys)
@@ -607,7 +609,7 @@ class Pypeline():
             self.logger.info("Step: %s completed...", step_name)
 
         if (self.chunker.keep_executing):
-            #reload original state using chunker
+            self.parameter_index, self.globalcontext = self.chunker.reload()
             #reload cache
             self.execute(use_cache=use_cache, chunker=chunker)
         else:
