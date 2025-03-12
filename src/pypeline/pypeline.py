@@ -584,6 +584,7 @@ class Pypeline():
         self.add_targets_to_steps()
         
         if (not (chunker is None) and not(self.chunker is None)):
+            #need to check that passed chunker is of chunker abstract class
             self.chunker = chunker(self.step_index)
             self.chunker.save(self.parameter_index, self.globalcontext)
             #save cache?
