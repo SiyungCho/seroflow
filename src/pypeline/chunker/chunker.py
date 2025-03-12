@@ -156,11 +156,12 @@ class Chunker:
       self.keep_executing = True
 
     def enqueue(self, value):
-        self.coordinate_queue.put(value)
+      self.coordinate_queue.put(value)
 
     def dequeue(self):
-        self.coordinate_queue.get()
-        self.check_keep_executing()
+      value = self.coordinate_queue.get()
+      self.check_keep_executing()
+      return value
 
     @abstractmethod
     def calculate_chunks(self):
