@@ -161,3 +161,8 @@ class Chunker:
     @abstractmethod
     def reload(self):
         pass
+      
+    @abstractmethod
+    def save(self):
+        pass
+      
