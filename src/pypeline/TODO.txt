@@ -34,3 +34,5 @@ future
 - add REST compatible e/l
 - use other container types (numpy, spark dataframes)
 - optimized data viz
+- conditional steps
+- looped steps
