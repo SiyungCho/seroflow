@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from queue import Queue
 from ..types import is_extractor, is_loader
 """
 TODO: 
@@ -144,7 +145,15 @@ class Chunker:
                     raise ValueError("All loaders must have 'append' as the 'exists' parameter when using chunking")
         self.calculate_chunks()
         self.keep_executing = False
-        self.coordinate_queue = {}
+        self.coordinate_queue = Queue()
+
+    def check_queue_empty(self):
+      return self.coordinate_queue.empty()
+
+    def check_keep_executing(self):
+      if check_queue_empty:
+        self.keep_executing = False
+      self.keep_executing = True
 
     @abstractmethod
     def calculate_chunks(self):
