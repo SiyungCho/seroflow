@@ -140,7 +140,9 @@ class Chunker:
 		self.chunk_index = OrderedDict()
 		for step_key, step in step_index.items():
 			if hasattr(step, 'chunk_size') and is_extractor(step, _raise=False):
-				self.chunk_index[step_key] = (step.chunk_size, 0, step.get_max_row_count(), False)
+				if not(step.chunk_size is None):
+					print(step.get_max_row_count())
+					self.chunk_index[step_key] = (step.chunk_size, 0, step.get_max_row_count(), False)
 				
 			if is_loader(step, _raise=False) and hasattr(step, 'exists'):
 				if step.exists != 'append':
@@ -149,9 +151,9 @@ class Chunker:
 		self.coordinate_queue = Queue()
 		self.saved_state = {}
 		self.calculate_chunks()
-
-	# def check_queue_empty(self):
-	# 	return self.coordinate_queue.qsize()
+		print("Coordinate queue:")
+		self.print_coordinate_queue()
+		print("\n")
 
 	def check_keep_executing(self):
 		if self.coordinate_queue.qsize() == 0:
@@ -172,7 +174,21 @@ class Chunker:
 	def save(self, **kwargs):
 		for key, value in kwargs.items():
 			self.saved_state[key] = deepcopy(value)
-		
+
+	def print_coordinate_queue(self):
+		"""
+		Print the current state of the coordinate queue, including the total number of items
+		and each individual coordinate in order.
+		"""
+		queue_size = self.coordinate_queue.qsize()
+		print(f"Coordinate Queue (Total items: {queue_size}):")
+		if self.coordinate_queue.empty():
+			print("The coordinate queue is empty.")
+		else:
+			# Access the underlying deque and print each coordinate.
+			for idx, coordinate in enumerate(list(self.coordinate_queue.queue), start=1):
+				print(f"  {idx}: {coordinate}")
+
 	@abstractmethod
 	def calculate_chunks(self):
 		pass
