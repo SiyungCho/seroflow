@@ -389,7 +389,9 @@ class Pypeline():
         step = self.step_index[step_key]
 
         for param in step.params_list:
-            if param != "context":
+            if param == "chunk_coordinates":
+                param_value = self.chunker.dequeue()
+            else if param != "context":
                 input_value = step.input_params.get(param)
                 curr_value = self.parameter_index.get(param)
                 default_value = step.default_params.get(param)
@@ -578,10 +580,12 @@ class Pypeline():
             use_cache (bool): Whether to use caching to resume execution.
                               Defaults to True.
         """
-        if not (chunker is None):
-            self.chunker = chunker(self.step_index)
-        self.add_targets_to_steps()
 
+        self.add_targets_to_steps()
+        
+        if (not (chunker is None) and not(self.chunker is None)):
+            self.chunker = chunker(self.step_index)
+            
         step_keys = list(self.step_index.keys())
         start_index = 0 if not use_cache else self.load_from_cache(step_keys)
 
@@ -601,10 +605,16 @@ class Pypeline():
             if use_cache:
                 self.store_in_cache(step_key)
             self.logger.info("Step: %s completed...", step_name)
-        end_time = time.time()  # End timer
-        self.logger.info("ETL Execution Finished at time: %s ...", end_time)
-        elapsed_time = end_time - start_time
-        self.logger.info("Total Execution Time: %.2f seconds", elapsed_time)
+
+        if (self.chunker.keep_executing):
+            #reload original state using chunker
+            #reload cache
+            self.execute(use_cache=use_cache, chunker=chunker)
+        else:
+            end_time = time.time()  # End timer
+            self.logger.info("ETL Execution Finished at time: %s ...", end_time)
+            elapsed_time = end_time - start_time
+            self.logger.info("Total Execution Time: %.2f seconds", elapsed_time)
 
     def __str__(self):
         """
