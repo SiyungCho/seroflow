@@ -157,3 +157,7 @@ class Chunker:
     @abstractmethod
     def dequeue(self):
         pass
+
+    @abstractmethod
+    def reload(self):
+        pass
