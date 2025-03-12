@@ -143,7 +143,17 @@ class Chunker:
                 if step.exists != 'append':
                     raise ValueError("All loaders must have 'append' as the 'exists' parameter when using chunking")
         self.calculate_chunks()
+        self.keep_executing = False
+        self.coordinate_queue = {}
 
     @abstractmethod
     def calculate_chunks(self):
+        pass
+
+    @abstractmethod
+    def enqueue(self):
+        pass
+
+    @abstractmethod
+    def dequeue(self):
         pass
