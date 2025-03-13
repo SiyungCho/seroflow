@@ -387,7 +387,8 @@ class Pypeline():
                 if param != "context" and param not in self.parameter_index:
                     self.update_parameter_index(param, None)
         if step.dataframes:
-            for dataframe_name in step.dataframes:
+            dataframes = step.dataframes if isinstance(step.dataframes, list) else [step.dataframes]
+            for dataframe_name in dataframes:
                 self.update_dataframe_index(step_key, dataframe_name)
         return step_key
 

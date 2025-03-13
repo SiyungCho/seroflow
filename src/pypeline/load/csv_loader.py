@@ -1,63 +1,20 @@
 """
-Module for loading pandas DataFrames to CSV files.
-
-This module defines the CSVLoader class, which extends the Loader base class.
-CSVLoader writes DataFrames from a given context to CSV files in a specified target
-directory. The file write mode is determined by the 'exists' parameter.
 """
 
 import os
-from ..load.file_loader import FileLoader
-from ..load.loader import MultiLoader
+from ..load.file_loader import FileLoader, MultiFileLoader
 
 class CSVLoader(FileLoader):
     """
-    Loader for writing pandas DataFrames to CSV files.
-
-    The CSVLoader extracts DataFrames from a context and writes each DataFrame to a CSV file
-    in the target directory. The file name is derived from the DataFrame key with a ".csv"
-    extension. The file write mode (append, fail, or replace) is determined by the 'exists'
-    parameter.
     """
 
-    def __init__(self, target, step_name="CSVLoader", dataframes=None, exists="append", **kwargs):
+    def __init__(self, target, dataframes=None, exists="append", step_name="CSVLoader", **kwargs):
         """
-        Initialize a CSVLoader instance.
-
-        This method verifies that the target directory exists and sets up the necessary parameters
-        for writing CSV files.
-
-        Args:
-            target (str): The target directory where CSV files will be saved.
-            step_name (str, optional): The name of this loader step. Defaults to "CSVLoader".
-            dataframes (list or dict, optional): The DataFrames to load. Defaults to an empty list.
-            exists (str, optional): Behavior when a file already exists; 
-                                    must be 'append', 'fail', or 'replace'. Defaults to "append".
-            **kwargs: Additional keyword arguments to pass to pandas.DataFrame.to_csv.
-
-        Raises:
-            Exception: If the target directory is not found.
         """
-        super().__init__(step_name=step_name,
-                         target=target,
-                         dataframes = [] if dataframes is None else dataframes,
-                         exists=exists,
-                         func=self.func,
-                         kwargs=kwargs)
+        super().__init__(target=target, dataframes=dataframes, exists=exists, func=self.func, step_name=step_name, kwargs=kwargs)
 
     def func(self, context):
         """
-        Execute the CSV loading process.
-
-        Iterates over the DataFrames in the provided context 
-        and writes each to a CSV file in the target directory.
-        The file name is created by appending ".csv" to the DataFrame's key.
-
-        Args:
-            context: The context object containing DataFrames to be loaded.
-
-        Returns:
-            None
         """
         for key, df in context.dataframes.items():
             target_file_path = os.path.join(self.target_dir, key + ".csv")
@@ -65,20 +22,9 @@ class CSVLoader(FileLoader):
 
     def __to_csv(self, df, target_file_path, kwargs):
         """
-        Write a pandas DataFrame to a CSV file.
-
-        Uses pandas.DataFrame.to_csv to write the DataFrame to the specified file path.
-        The file mode is determined by the mapped value from the 'exists' parameter.
-
-        Args:
-            df (pd.DataFrame): The DataFrame to write.
-            target_file_path (str): The full file path for the output CSV file.
-            kwargs (dict): Additional keyword arguments for pandas.DataFrame.to_csv.
         """
         df.to_csv(target_file_path, mode=self.map_exists_parameter(), **kwargs)
 
-class MultiCSVLoader(MultiLoader):
-    def __init__(self, source, exists='append', **kwargs):
-        super().__init__(step_name="MultiCSVExtractor", type=CSVLoader, exists=exists)
-
-        self.add_extractors(self.file_paths, **kwargs)
+class MultiCSVLoader(MultiFileLoader):
+    def __init__(self, target, dataframes, exists='append', **kwargs):
+        super().__init__(target=target, dataframes=dataframes, exists=exists, type=CSVLoader, step_name="MultiCSVLoader", kwargs=kwargs)
