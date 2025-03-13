@@ -5,18 +5,8 @@ v3
 - add 'ignore' parameter to extractors
 - add 'rename' parameter to loaders
 - test recursive chunking logic
-- add pre-made custom steps
-    - add/delete dataframe
-    - add/delete/update internal variable
-    - perform sql query on dataframe or entire context (ie all dataframes)
-    - convert dataframe column type
-    - change variable name
-    - change dataframe name/properties
-    - template for adding custom context/dataframes
-    - transpose dataframe
-    - get mean/median/mode of dataframe column and store in variable
-    - string column manipulation (remove char, remove list of chars, count number of time char appears etc)
-    - skip step on condition
+- cache has 'on_finish' property
+- skip step on condition
 
 v4
 - fix logger and turn logger off and on

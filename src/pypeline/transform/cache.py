@@ -11,7 +11,7 @@ transformation function.
 """
 
 from copy import deepcopy
-from ..transform.transformation import Transformation
+from .transformation import Transformation
 
 class CacheState(Transformation):
     """

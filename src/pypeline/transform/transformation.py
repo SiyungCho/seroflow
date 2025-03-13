@@ -24,7 +24,7 @@ class Transformation(Step):
         (Attributes are inherited from the base 'step' class.)
     """
 
-    def __init__(self, step_name, func):
+    def __init__(self, step_name, func, dataframes=None):
         """
         Initialize a new transformation instance.
 
@@ -32,7 +32,7 @@ class Transformation(Step):
             step_name (str): The name of the transformation step.
             func (callable): The function implementing the transformation logic.
         """
-        super().__init__(step_name=step_name, func=func)
+        super().__init__(step_name=step_name, func=func, dataframes=dataframes)
 
     def start_step(self):
         """
