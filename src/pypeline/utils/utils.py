@@ -235,6 +235,13 @@ def check_file(path):
     """
     return find_file(path)
 
+def check_str_is_file(path):
+    if check_file(path):
+        return True
+    if '.' in path or check_directory(path):
+        return False
+    return True
+
 
 def create_directory(path):
     """

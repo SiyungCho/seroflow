@@ -48,7 +48,6 @@ def is_multiextractor(multiextractor, _raise=False):
         return False
     return True
 
-
 def is_loader(loader, _raise=False):
     """
     Check if the provided object is an instance of the base_loader class.

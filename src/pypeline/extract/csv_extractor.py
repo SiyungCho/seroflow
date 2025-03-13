@@ -10,7 +10,7 @@ class CSVExtractor(FileExtractor):
     def __init__(self, source, step_name="CSVExtractor", chunk_size=None, **kwargs):
         """
         """
-        super().__init__(source=source, step_name=step_name, func = self.func if chunk_size is None else self.chunk_func, chunk_size=chunk_size, kwargs=kwargs)
+        super().__init__(source=source, step_name=step_name, func = self.func if chunk_size is None else self.chunk_func, chunk_size=chunk_size, **kwargs)
 
     def func(self, context):
         """
@@ -55,4 +55,4 @@ class MultiCSVExtractor(MultiFileExtractor):
     def __init__(self, source, chunk_size=None, **kwargs):
         """
         """
-        super().__init__(source=source, step_name="MultiCSVExtractor", type=CSVExtractor, chunk_size=chunk_size, kwargs=kwargs)
+        super().__init__(source=source, step_name="MultiCSVExtractor", type=CSVExtractor, extension_type='csv', chunk_size=chunk_size, **kwargs)

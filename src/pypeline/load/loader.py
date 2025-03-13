@@ -42,26 +42,3 @@ class Loader(Step):
     def map_exists_parameter(self):
         """
         """
-
-class MultiLoader(Step):
-    """
-    """
-    def __init__(self, target, step_name, type, exists):
-        """
-        """
-        super().__init__(step_name=step_name, func=self.func)
-        self.loaders = []
-        self.type = type
-        self.exists = exists
-        self.target = target
-
-    def add_loaders(self, it, **kwargs):
-        """
-        """
-        for item in it:
-            self.loaders.append(self.type(target=self.target, exists=self.exists, dataframes=item, **kwargs))
-
-    def func(self):
-        """
-        """
-        pass

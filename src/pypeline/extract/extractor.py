@@ -50,7 +50,7 @@ class MultiExtractor(Step):
         self.chunk_size = chunk_size
         self.type = type
 
-    def add_extractors(self, it, **kwargs):
+    def add_extractors(self, it, kwargs):
         """
         """
         for item in it:

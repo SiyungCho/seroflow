@@ -2,15 +2,9 @@ TODO:
 
 v3
 - fix adl e/l
-- fix group extractors (make new class specifically for grouped types)
-- need to split single vs multi extractors (eg multicsvextractor can grab csv files from multiple directories and 'ignore' certain files) and loaders
-- fix all loaders and extractors
-- fix recursive chunking logic
-- add chunking
-    - Batching data
-    - intermediate checkpoints
-        - probably do combination of both, so when you batch data, you can add a checkpoint step to chunk up to a certain point then process normally or continue batching?
-        - try using other libraries as per the pandas documentation 
+- add 'ignore' parameter to extractors
+- add 'rename' parameter to loaders
+- test recursive chunking logic
 - add pre-made custom steps
     - add/delete dataframe
     - add/delete/update internal variable
@@ -23,7 +17,6 @@ v3
     - get mean/median/mode of dataframe column and store in variable
     - string column manipulation (remove char, remove list of chars, count number of time char appears etc)
     - skip step on condition
-- look into adding other pandas compatible APIs (https://pandas.pydata.org/community/ecosystem.html#out-of-core)
 
 v4
 - fix logger and turn logger off and on
@@ -40,4 +33,5 @@ future
 - use other container types (numpy, spark dataframes)
 - optimized data viz
 - conditional steps
+- intermediate chunking checkpoints
 - looped steps

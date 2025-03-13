@@ -150,9 +150,9 @@ class Chunker:
 		self.coordinate_queue = Queue()
 		self.saved_state = {}
 		self.calculate_chunks()
-		print("Coordinate queue:")
-		self.print_coordinate_queue()
-		print("\n")
+		# print("Coordinate queue:")
+		# self.print_coordinate_queue()
+		# print("\n")
 
 	def check_keep_executing(self):
 		if self.coordinate_queue.qsize() == 0:

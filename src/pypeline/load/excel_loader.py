@@ -1,31 +1,56 @@
 """
 """
-
+import pandas as pd
 import os
-from ..load.file_loader import FileLoader, MultiFileLoader
+from ..load.file_loader import FileLoader
 
 class ExcelLoader(FileLoader):
     """
     """
 
-    def __init__(self, target, file_extension=".xlsx", dataframes=None, exists="append", step_name="CSVLoader", **kwargs):
+    def __init__(self, target, dataframe, file_extension=".xlsx", exists="append", step_name="ExcelLoader", **kwargs):
         """
         """
-        super().__init__(target=target, dataframes=dataframes, exists=exists, func=self.func, step_name=step_name, kwargs=kwargs)
-        self.file_extension = file_extension
+        super().__init__(target=target, dataframe=dataframe, exists=exists, func=self.func, step_name=step_name, file_extension=file_extension, **kwargs)
 
     def func(self, context):
         """
         """
         for key, df in context.dataframes.items():
-            target_file_path = os.path.join(self.target_dir, key + self.file_extension)
+            if self.target_file_path is None:
+                target_file_path = os.path.join(self.target, key + self.file_extension)
+            else:
+                target_file_path = self.target_file_path
             self.__to_excel(df, target_file_path, self.kwargs)
 
     def __to_excel(self, df, target_file_path, kwargs):
-        """
-        """
-        df.to_excel(target_file_path, mode=self.map_exists_parameter(), **kwargs)
+        directory = os.path.dirname(target_file_path)
+        if not os.path.exists(directory):
+            os.makedirs(directory, exist_ok=True)
+        if self.file_extension == '.xls':
+            engine = 'xlrd'
+        elif self.file_extension == '.xlsx':
+            engine = 'openpyxl'
 
-class MultiExcelLoader(MultiFileLoader):
-    def __init__(self, target, dataframes, exists='append', **kwargs):
-        super().__init__(target=target, dataframes=dataframes, exists=exists, type=ExcelLoader, step_name="MultiExcelLoader", kwargs=kwargs)
+        if os.path.exists(target_file_path):
+            with pd.ExcelWriter(target_file_path, engine=engine, mode='a', if_sheet_exists=self.map_exists_parameter()) as f:
+                df.to_excel(f, **kwargs)
+        else:
+            with pd.ExcelWriter(target_file_path, engine=engine, mode='w') as f:
+                df.to_excel(f, **kwargs)
+
+    def map_exists_parameter(self):
+        """
+        """
+        if self.exists == "append":
+            return 'overlay'
+        if self.exists == "fail":
+            return 'error'
+        if self.exists == "replace":
+            return 'replace'
+        return None
+    
+
+class MultiExcelLoader(ExcelLoader):
+    def __init__(self, target, dataframes=None, file_extension=".xlsx", exists="append", step_name="MultiExcelLoader", **kwargs):
+        super().__init__(target=target, dataframe=dataframes, file_extension=file_extension, exists=exists, step_name=step_name, **kwargs)

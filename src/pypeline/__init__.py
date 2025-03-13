@@ -22,9 +22,7 @@ from .extract import ExcelExtractor
 from .extract import MultiExcelExtractor
 from .extract import SQLServerExtractor
 from .load import Loader
-from .load import MultiLoader
 from .load import FileLoader
-from .load import MultiFileLoader
 from .load import CSVLoader
 from .load import MultiCSVLoader
 from .load import ExcelLoader
@@ -57,6 +55,7 @@ from .utils import create_directory
 from .utils import create_file
 from .utils import split_last_delimiter
 from .utils import remove_extension
+from .utils import check_str_is_file
 from .wrappers import timer
 from .wrappers import log_error
 

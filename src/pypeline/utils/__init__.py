@@ -15,3 +15,4 @@ from .utils import create_directory
 from .utils import create_file
 from .utils import split_last_delimiter
 from .utils import remove_extension
+from .utils import check_str_is_file

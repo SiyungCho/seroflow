@@ -11,7 +11,7 @@ class ExcelExtractor(FileExtractor):
     def __init__(self, source, step_name="ExcelExtractor", chunk_size=None, **kwargs):
         """
         """
-        super().__init__(source=source, step_name=step_name, func = self.func if chunk_size is None else self.chunk_func, chunk_size=chunk_size, kwargs=kwargs)
+        super().__init__(source=source, step_name=step_name, func = self.func if chunk_size is None else self.chunk_func, chunk_size=chunk_size, **kwargs)
 
     def func(self, context):
         """
@@ -57,6 +57,36 @@ class ExcelExtractor(FileExtractor):
         """
         """
         max_rows = 0
+        if self.file_path.endswith('.xlsx'):
+            from openpyxl import load_workbook
+            wb = load_workbook(filename=self.file_path, read_only=True)
+            ws = wb.active  # use the first (active) sheet
+            rows_count = ws.max_row
+            wb.close()
+        elif self.file_path.endswith('.xls'):
+            import xlrd
+            wb = xlrd.open_workbook(self.file_path, on_demand=True)
+            ws = wb.sheet_by_index(0)
+            rows_count = ws.nrows
+            wb.release_resources()
+        else:
+            raise ValueError(f"Unsupported file format: {self.file_path}")
+            
+        max_rows = max(max_rows, rows_count)
+        return max_rows
+
+class MultiExcelExtractor(MultiFileExtractor):
+    """
+    """
+    def __init__(self, source, chunk_size=None, **kwargs):
+        """
+        """
+        super().__init__(source=source, step_name="MultiExcelExtractor", type=ExcelExtractor, extension_type='excel', chunk_size=chunk_size, **kwargs)
+    
+    def get_max_row_count(self):
+        """
+        """
+        max_rows = 0
         for file in self.file_paths:
             if file.endswith('.xlsx'):
                 from openpyxl import load_workbook
@@ -76,11 +106,3 @@ class ExcelExtractor(FileExtractor):
             max_rows = max(max_rows, rows_count)
         
         return max_rows
-
-class MultiExcelExtractor(MultiFileExtractor):
-    """
-    """
-    def __init__(self, source, chunk_size=None, **kwargs):
-        """
-        """
-        super().__init__(source=source, step_name="MultiExcelExtractor", type=ExcelExtractor, chunk_size=chunk_size, kwargs=kwargs)

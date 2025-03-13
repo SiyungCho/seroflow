@@ -4,8 +4,6 @@
 from abc import abstractmethod
 from ..utils.utils import check_directory, check_file, gather_files, remove_extension
 from ..extract.extractor import Extractor, MultiExtractor
-from ..extract.csv_extractor import CSVExtractor
-from ..extract.excel_extractor import ExcelExtractor
 
 class FileExtractor(Extractor):
     """
@@ -43,7 +41,7 @@ class FileExtractor(Extractor):
 class MultiFileExtractor(MultiExtractor):
     """
     """
-    def __init__(self, source, type, chunk_size, step_name="MultiFileExtractor", **kwargs):
+    def __init__(self, source, type, extension_type, chunk_size, step_name="MultiFileExtractor", **kwargs):
         """
         """
         super().__init__(step_name=step_name, type=type, chunk_size=chunk_size)
@@ -51,16 +49,16 @@ class MultiFileExtractor(MultiExtractor):
             raise FileNotFoundError("Error directory not found")
 
         self.source = source
-        extension = self.identify_type(type)
+        extension = self.identify_type(extension_type)
         self.file_paths, self.file_names = gather_files(self.source, extension)
 
-        self.add_extractors(self.file_paths, **kwargs)
+        self.add_extractors(self.file_paths, kwargs)
 
-    def identify_type(self, type):
+    def identify_type(self, extension_type):
         """
         """
-        if isinstance(type, CSVExtractor):
+        if extension_type == 'csv':
             return ["csv"]
-        elif isinstance(type, ExcelExtractor):
+        elif extension_type == 'excel':
             return ["xlsx", "xls"]
         raise ValueError("Invalid file type")
