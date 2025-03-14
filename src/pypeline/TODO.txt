@@ -6,22 +6,30 @@ v3
 - add 'rename' parameter to loaders
 - test recursive chunking logic
 - cache has 'on_finish' property
-- skip step on condition
+- fix variable predefined steps
+- fix aggregation predefined steps
 
 v4
 - fix logger and turn logger off and on
-- add universal engine
+- fix display steps
 - implement different 'modes' for pypeline (and maybe for steps) 
     - (in dev mode, executes all steps but doesnot actually release exports detailed review of global context) 
     - (in test mode: executes the entire pypeline, but only on random sampled values, exports detailed review of global context and detailed review of execution, but only for random sampled values) 
     - (in prod mode, executes entire pypeline on whole dataset, generates detailed review of execution on all data)
 - implement 'on_fail' functionality (ignore, log, raise)
 
+post v4 TODO:
+- pylint
+- documentation
+- pytests
+- upload to pip
+
 future
+- add universal engine
 - add MT and MP
 - add REST compatible e/l
 - use other container types (numpy, spark dataframes)
 - optimized data viz
-- conditional steps
+- conditional steps (ie skip step, perform step)
 - intermediate chunking checkpoints
 - looped steps
