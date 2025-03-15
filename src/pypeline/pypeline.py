@@ -482,7 +482,7 @@ class Pypeline():
         """
         if not isinstance(step_output, tuple):
             step_output = [step_output]
-
+        
         if (self.step_index[step_key].return_list == []) and (step_output[0] is None):
             return None
         if len(self.step_index[step_key].return_list) != len(step_output):

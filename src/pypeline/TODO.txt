@@ -6,8 +6,9 @@ v3
 - add 'rename' parameter to loaders
 - test recursive chunking logic
 - cache has 'on_finish' property
-- fix variable predefined steps
-- fix aggregation predefined steps
+- createcolfromvar
+- add optional 'on_error' property to all steps
+- loader does not need to have df
 
 v4
 - fix logger and turn logger off and on

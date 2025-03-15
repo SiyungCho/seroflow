@@ -1,6 +1,8 @@
 import pandasql as sqldf
 from .transformation import Transformation
 
+#might want to change so that result is in a variable too
+
 class SQLQuery(Transformation):
     """
     Executes a SQL query using pandasql on the dataframes in the context.

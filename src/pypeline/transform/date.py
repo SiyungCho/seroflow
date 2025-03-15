@@ -5,17 +5,22 @@ class ConvertToDateTime(Transformation):
     """
     Converts a column to datetime format.
     """
-    def __init__(self, dataframe_name, column, format=None, step_name="ConvertToDateTime"):
-        self.dataframe_name = dataframe_name
+    def __init__(self, dataframe, column, format=None, step_name="ConvertToDateTime"):
+        self.dataframe = dataframe
         self.column = column
         self.format = format
-        super().__init__(step_name=step_name, func=self.func)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe)
         
     def func(self, context):
-        df = context.dataframes[self.dataframe_name]
+        df = context.dataframes[self.dataframe]
+        context.set_dataframe(self.dataframe, self.__convert_to_datetime(df))
+        return context
+    
+    def __convert_to_datetime(self, df):
         if self.format:
             df[self.column] = pd.to_datetime(df[self.column], format=self.format)
         else:
             df[self.column] = pd.to_datetime(df[self.column])
-        context.set_dataframe(self.dataframe_name, df)
-        return context
+        return df
+
+# class ExtractDateTime(Transformation):

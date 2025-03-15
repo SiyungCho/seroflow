@@ -4,26 +4,25 @@ class AddDataFrame(Transformation):
     """
     Adds a new dataframe to the context.
     """
-    def __init__(self, dataframe_name, dataframe, step_name="AddDataFrame"):
-        self.dataframe_name = dataframe_name
+    def __init__(self, dataframe, name, step_name="AddDataFrame"):
         self.dataframe = dataframe
+        self.name = name
         super().__init__(step_name=step_name, func=self.func)
 
     def func(self, context):
-        context.set_dataframe(self.dataframe_name, self.dataframe)
+        context.add_dataframe(self.name, self.dataframe)
         return context
 
 class DeleteDataFrame(Transformation):
     """
     Deletes a dataframe from the context.
     """
-    def __init__(self, dataframe_name, step_name="DeleteDataFrame"):
-        self.dataframe_name = dataframe_name
-        super().__init__(step_name=step_name, func=self.func)
+    def __init__(self, dataframe, step_name="DeleteDataFrame"):
+        self.dataframe = dataframe
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe)
 
     def func(self, context):
-        if self.dataframe_name in context.dataframes:
-            del context.dataframes[self.dataframe_name]
+        del context.dataframes[self.dataframe]
         return context
 
 class RenameDataFrame(Transformation):
@@ -33,7 +32,7 @@ class RenameDataFrame(Transformation):
     def __init__(self, old_name, new_name, step_name="RenameDataFrame"):
         self.old_name = old_name
         self.new_name = new_name
-        super().__init__(step_name=step_name, func=self.func)
+        super().__init__(step_name=step_name, func=self.func, dataframes=old_name)
 
     def func(self, context):
         if self.old_name in context.dataframes:
@@ -45,12 +44,12 @@ class CopyDataFrame(Transformation):
     """
     Creates a copy of an existing dataframe under a new name.
     """
-    def __init__(self, source_dataframe_name, target_dataframe_name, step_name="CopyDataFrame"):
-        self.source_dataframe_name = source_dataframe_name
-        self.target_dataframe_name = target_dataframe_name
-        super().__init__(step_name=step_name, func=self.func)
+    def __init__(self, source_dataframe, target_dataframe, step_name="CopyDataFrame"):
+        self.source_dataframe = source_dataframe
+        self.target_dataframe = target_dataframe
+        super().__init__(step_name=step_name, func=self.func, dataframes=source_dataframe)
 
     def func(self, context):
-        df = context.dataframes[self.source_dataframe_name].copy()
-        context.set_dataframe(self.target_dataframe_name, df)
+        df = context.dataframes[self.source_dataframe].copy()
+        context.set_dataframe(self.target_dataframe, df)
         return context
