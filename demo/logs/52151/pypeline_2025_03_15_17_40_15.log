@@ -1,0 +1,1 @@
+2025-03-15 17:40:15,759 - ERROR - Error Cache must be an instance of AbstractCache; Occurred at: wrap; On line number: return func(*args, **kwargs); Exception Pypeline.cache() missing 1 required positional argument: 'cache'

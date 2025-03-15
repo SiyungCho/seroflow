@@ -36,7 +36,7 @@ def timer(func):
         return result
     return wrap
 
-def log_error(err_msg, logger, log_only=False):
+def log_error(err_msg, logger=None, log_only=False):
     """
     Decorator generator that logs errors occurring in a function.
     Optionally re-raises the exception.
@@ -67,10 +67,21 @@ def log_error(err_msg, logger, log_only=False):
             except Exception as e:
                 tb_last_frame = traceback.extract_tb(e.__traceback__)[-1]
                 _, _, function_name, code_line = tb_last_frame
-                logger.error("Error %s; Occurred at: %s; On line number: %s; Exception %s",
-                             err_msg, function_name, code_line, e)
+                if logger:
+                    logger.error("Error %s; Occurred at: %s; On line number: %s; Exception %s", err_msg, function_name, code_line, e)
+                else:
+                    args[0].logger.error("Error %s; Occurred at: %s; On line number: %s; Exception %s", err_msg, function_name, code_line, e)
                 if not log_only:
                     raise Exception(err_msg) from e
                 return None
         return wrap
     return log_error_inner
+
+def log_msg(msg):
+    def log_msg_inner(func):
+        @wraps(func)
+        def wrap(*args, **kwargs):
+            args[0].logger.info(msg)
+            return func(*args, **kwargs)
+        return wrap
+    return log_msg_inner

@@ -1,10 +1,5 @@
 TODO:
 
-v3
-- fix adl e/l
-- test recursive chunking logic
-- cache has 'on_finish' property
-
 v4
 - fix logger and turn logger off and on
 - fix display steps
@@ -15,6 +10,7 @@ v4
 - implement 'on_error' functionality (ignore, log, raise)
 
 post v4 TODO:
+- fix adl e/l
 - pylint
 - documentation
 - pytests

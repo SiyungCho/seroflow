@@ -15,9 +15,10 @@ class Step(AbstractStep):
         """
         self.step_name = step_name
         self.input_params = {} if params is None else params
-        self.dataframes = dataframes
+        self.dataframes = dataframes if dataframes is not None else []
         self.params = None
         self.on_error = on_error
+        self.needs_context = False
 
         if 'func' in kwargs:
             self.step_func = kwargs['func']
@@ -45,6 +46,9 @@ class Step(AbstractStep):
         """
         self.step_signature = inspect.signature(self.step_func)
         self.params_list = list(self.step_signature.parameters.keys())
+        if 'context' in self.params_list:
+            self.needs_context = True
+            self.params_list.remove('context')
         self.default_params = self.get_default_params(self.step_signature)
         self.return_list = get_return_elements(self.step_func)
 

@@ -1,9 +1,4 @@
-"""Module that implements a Least Frequently Used (LFU) cache.
-
-This module defines the LFUCache class, which provides a caching mechanism
-that evicts the least frequently used items when the cache reaches its capacity.
-It also includes functionality to persist and load the cache state to/from
-disk, as well as to maintain a configuration of processing steps.
+"""
 """
 
 import os
@@ -17,48 +12,31 @@ from .abstract_cache import AbstractCache
 
 
 class LFUCache(AbstractCache):
-    """LFUCache implements a least frequently used caching strategy.
-
-    The cache evicts the item with the lowest access frequency when its
-    capacity is exceeded. Additionally, LFUCache supports persisting its
-    state and configuration to disk.
+    """
     """
 
-    def __init__(self, capacity=3, cache_dir=None):
+    def __init__(self, capacity=3, cache_dir=None, on_finish='delete'):
         """
-        Initialize a new LFUCache instance.
-
-        Args:
-            capacity (int, optional): Maximum number of items in the cache.
-                Defaults to 3.
-            cache_dir (str, optional): Directory path for storing cache files.
-                If None, a default '.cache' directory in the current working
-                directory will be used.
         """
         self.capacity = capacity
         self.min_freq = 0
         self.key_to_val_freq = {}
         self.freq_to_keys = defaultdict(OrderedDict)
+        self.on_finish = on_finish
 
         self.__source_directory = os.path.abspath(os.getcwd())
         self.__cache_directory_path, self.__cache_config_path = self.init_directory(cache_dir)
 
+    def __def__(self):
+        """
+        """
+        if self.on_finish == 'delete':
+            for file in os.listdir(self.__cache_directory_path):
+                file_path = os.path.join(self.__cache_directory_path, file)
+                os.remove(file_path)
+
     def init_directory(self, cache_dir):
         """
-        Initialize the cache directory and configuration file.
-
-        This method determines the appropriate directory for cache storage.
-        If a cache directory is provided, it uses that directory and looks for an
-        existing JSON configuration file; otherwise, it creates a default '.cache'
-        directory in the current working directory and creates a new configuration file.
-
-        Args:
-            cache_dir (str or None): Custom directory for cache storage. If None,
-                the default directory is used.
-
-        Returns:
-            tuple: A tuple containing the cache directory path and the cache
-            configuration file path.
         """
         if cache_dir is not None:
             cache_directory_path = cache_dir
@@ -79,16 +57,6 @@ class LFUCache(AbstractCache):
 
     def get(self, key):
         """
-        Retrieve a value from the cache and update its access frequency.
-
-        If the key is not present, returns (None, None). Otherwise, the method
-        increments the frequency count of the key and returns its associated value.
-
-        Args:
-            key: The cache key to retrieve.
-
-        Returns:
-            The value associated with the key if it exists; otherwise, (None, None).
         """
         if key not in self.key_to_val_freq:
             return (None, None)
@@ -107,15 +75,6 @@ class LFUCache(AbstractCache):
 
     def put(self, value):
         """
-        Add a value to the cache, evicting the least frequently used item if necessary.
-
-        If the value is a dictionary containing "parameter_index" and "globalcontext",
-        it converts it into a tuple. If the key already exists, it updates the value
-        and its frequency. Otherwise, if the cache is full, the least frequently used
-        entry is evicted before inserting the new value.
-
-        Args:
-            value: The value to be cached.
         """
         if self.capacity <= 0:
             return
@@ -143,13 +102,6 @@ class LFUCache(AbstractCache):
 
     def read_config(self):
         """
-        Read and return the cache configuration from the configuration file.
-
-        If the configuration file is missing or contains invalid JSON,
-        an empty dictionary is returned.
-
-        Returns:
-            dict: The cache configuration.
         """
         try:
             with open(self.__cache_config_path, 'r', encoding="utf-8") as config_file:
@@ -160,20 +112,12 @@ class LFUCache(AbstractCache):
 
     def write_config(self, conf):
         """
-        Write the provided configuration dictionary to the configuration file.
-
-        Args:
-            conf (dict): The configuration data to be written.
         """
         with open(self.__cache_config_path, 'w', encoding="utf-8") as config_file:
             json.dump(conf, config_file, indent=4)
 
     def delete_cached_file(self, step_key):
         """
-        Delete the cached file associated with the given step key, if it exists.
-
-        Args:
-            step_key: The key identifying the cached checkpoint file to delete.
         """
         file_to_delete = os.path.join(self.__cache_directory_path, f"{step_key}.pkl.gz")
         if os.path.exists(file_to_delete):
@@ -181,16 +125,6 @@ class LFUCache(AbstractCache):
 
     def update_config(self, step_func, step_key, step_num):
         """
-        Update the cache configuration with information about a processing step.
-
-        This method updates the configuration file to record the last completed step,
-        and maintains an ordered list of steps with their source code and function hash.
-        If an existing step's function code has changed, the corresponding cached file is deleted.
-
-        Args:
-            step_func (callable): The function associated with the step.
-            step_key: The unique identifier for the step.
-            step_num (int): The index of the step in the processing sequence.
         """
         conf = self.read_config()
         conf['last_completed_step'] = step_key
@@ -218,16 +152,6 @@ class LFUCache(AbstractCache):
 
     def compare_function_code(self, conf, step_key, func):
         """
-        Compare the source code and hash of a function against the configuration.
-
-        Args:
-            conf (dict): The current cache configuration.
-            step_key: The key identifying the step in the configuration.
-            func (callable): The function to compare.
-
-        Returns:
-            bool: True if the function's source code and hash match those stored
-                  in the configuration; otherwise, False.
         """
         current_source_code, current_hash_code = get_function_hash(func)
         conf_source_code = conf['steps'][step_key].get("source_code")
@@ -240,20 +164,6 @@ class LFUCache(AbstractCache):
 
     def get_cached_checkpoint(self, step_index):
         """
-        Retrieve the key of the latest valid checkpoint based on the configuration.
-
-        The method compares the stored configuration with the provided step index mapping.
-        It returns:
-            - The last completed step if no changes are detected,
-            - The previous step if a change is detected,
-            - None if the first step was modified.
-
-        Args:
-            step_index (dict): A mapping of step keys to step objects, where each
-                step object has an attribute 'step_func'.
-
-        Returns:
-            The step key of the valid checkpoint, or None if no valid checkpoint exists.
         """
         conf = self.read_config()
         if conf == OrderedDict():
@@ -277,17 +187,6 @@ class LFUCache(AbstractCache):
 
     def store(self, step_index, parameter_index, global_context, step_key):
         """
-        Store the current cache state to a checkpoint file.
-
-        This method updates the configuration with the current step's function
-        information, then saves the cache state along with the provided parameter_index
-        and global_context using gzip and dill.
-
-        Args:
-            step_index (dict): A mapping of step keys to step objects.
-            parameter_index: The parameter index data to store.
-            global_context: The global context data to store.
-            step_key: The key identifying the current step.
         """
         step_num = list(step_index.keys()).index(step_key)
         self.update_config(step_index[step_key].step_func, step_key, step_num)
@@ -303,17 +202,6 @@ class LFUCache(AbstractCache):
 
     def load(self, step_key):
         """
-        Load a cached checkpoint and restore the cache state.
-
-        This method loads the checkpoint file identified by step_key, restores
-        the cache state, and returns the parameter_index and global_context that
-        were stored in the checkpoint.
-
-        Args:
-            step_key: The key identifying the checkpoint to load.
-
-        Returns:
-            tuple: A tuple containing parameter_index and global_context.
         """
         checkpoint_file = os.path.join(self.__cache_directory_path, f"{step_key}.pkl.gz")
         with gzip.open(checkpoint_file, 'rb') as f:
@@ -328,14 +216,6 @@ class LFUCache(AbstractCache):
 
     def reset(self, delete_directory=False):
         """
-        Reset the cache to an empty state.
-
-        This method clears the in-memory cache data. If delete_directory is True,
-        it also deletes all files in the cache directory.
-
-        Args:
-            delete_directory (bool, optional): If True, delete all files in the
-                cache directory. Defaults to False.
         """
         self.min_freq = 0
         self.key_to_val_freq = {}
