@@ -13,6 +13,7 @@ from .column import AddColumn
 from .column import MergeColumns
 from .column import SplitColumn
 from .column import ExplodeColumn
+from .column import CreateColumnFromVariable
 from .internal import AddDataFrame
 from .internal import DeleteDataFrame
 from .internal import RenameDataFrame

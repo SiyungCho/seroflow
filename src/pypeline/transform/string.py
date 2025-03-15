@@ -4,11 +4,11 @@ class RemoveCharacterFromColumn(Transformation):
     """
     Removes all occurrences of a specific character from a string column.
     """
-    def __init__(self, dataframe, column, char_to_remove, step_name="RemoveCharacterFromColumn"):
+    def __init__(self, dataframe, column, char_to_remove, step_name="RemoveCharacterFromColumn", on_error=None):
         self.dataframe = dataframe
         self.column = column
         self.char_to_remove = char_to_remove
-        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe, on_error=on_error)
         
     def func(self, context):
         df = context.dataframes[self.dataframe]
@@ -23,11 +23,11 @@ class RemoveCharactersFromColumn(Transformation):
     """
     Removes a list of characters from a string column.
     """
-    def __init__(self, dataframe, column, chars_to_remove, step_name="RemoveCharactersFromColumn"):
+    def __init__(self, dataframe, column, chars_to_remove, step_name="RemoveCharactersFromColumn", on_error=None):
         self.dataframe = dataframe
         self.column = column
         self.chars_to_remove = chars_to_remove  # list or iterable of characters
-        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe, on_error=on_error)
         
     def func(self, context):
         df = context.dataframes[self.dataframe]
@@ -45,12 +45,12 @@ class ReplaceStringInColumn(Transformation):
     """
     Replaces occurrences of a substring with another string in a column.
     """
-    def __init__(self, dataframe, column, to_replace, replacement, step_name="ReplaceStringInColumn"):
+    def __init__(self, dataframe, column, to_replace, replacement, step_name="ReplaceStringInColumn", on_error=None):
         self.dataframe = dataframe
         self.column = column
         self.to_replace = to_replace
         self.replacement = replacement
-        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe, on_error=on_error)
         
     def func(self, context):
         df = context.dataframes[self.dataframe]

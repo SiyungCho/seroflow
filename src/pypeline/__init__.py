@@ -43,6 +43,7 @@ from .transform import AddColumn
 from .transform import MergeColumns
 from .transform import SplitColumn
 from .transform import ExplodeColumn
+from .transform import CreateColumnFromVariable
 from .transform import AddDataFrame
 from .transform import DeleteDataFrame
 from .transform import RenameDataFrame

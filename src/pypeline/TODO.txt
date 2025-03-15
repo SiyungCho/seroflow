@@ -2,13 +2,8 @@ TODO:
 
 v3
 - fix adl e/l
-- add 'ignore' parameter to extractors
-- add 'rename' parameter to loaders
 - test recursive chunking logic
 - cache has 'on_finish' property
-- createcolfromvar
-- add optional 'on_error' property to all steps
-- loader does not need to have df
 
 v4
 - fix logger and turn logger off and on
@@ -17,7 +12,7 @@ v4
     - (in dev mode, executes all steps but doesnot actually release exports detailed review of global context) 
     - (in test mode: executes the entire pypeline, but only on random sampled values, exports detailed review of global context and detailed review of execution, but only for random sampled values) 
     - (in prod mode, executes entire pypeline on whole dataset, generates detailed review of execution on all data)
-- implement 'on_fail' functionality (ignore, log, raise)
+- implement 'on_error' functionality (ignore, log, raise)
 
 post v4 TODO:
 - pylint

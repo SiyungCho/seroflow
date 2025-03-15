@@ -10,13 +10,14 @@ class Step(AbstractStep):
     """
     """
 
-    def __init__(self, step_name=None, params=None, dataframes=None, **kwargs):
+    def __init__(self, step_name=None, params=None, dataframes=None, on_error='raise', **kwargs):
         """
         """
         self.step_name = step_name
         self.input_params = {} if params is None else params
         self.dataframes = dataframes
         self.params = None
+        self.on_error = on_error
 
         if 'func' in kwargs:
             self.step_func = kwargs['func']
@@ -102,7 +103,15 @@ class Step(AbstractStep):
         """
         """
         self.start_step()
-        step_output = self.step_func(**self.params)
+        try:
+            step_output = self.step_func(**self.params)
+        except Exception as e:
+            if self.on_error == 'raise':
+                raise e
+            elif self.on_error == 'print': #change later to 'log'
+                print(e)
+            elif self.on_error == 'ignore':
+                step_output = None
         self.stop_step()
         return step_output
 

@@ -1,11 +1,11 @@
 from .transformation import Transformation
 
 class GetColMean(Transformation):
-    def __init__(self, column, dataframe, variable=None, step_name="GetColMean"):
+    def __init__(self, column, dataframe, variable=None, step_name="GetColMean", on_error=None):
         self.column = column
         self.variable = variable if variable else column + "_mean"
         self.dataframe_name = dataframe
-        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe, on_error=on_error)
         self.override_return_list(self.variable)
 
     def func(self, context):
@@ -17,11 +17,11 @@ class GetColMean(Transformation):
         return df[column].mean()
     
 class GetColMedian(Transformation):
-    def __init__(self, column, dataframe, variable=None, step_name="GetColMedian"):
+    def __init__(self, column, dataframe, variable=None, step_name="GetColMedian", on_error=None):
         self.column = column
         self.variable = variable if variable else column + "_median"
         self.dataframe_name = dataframe
-        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe, on_error=on_error)
         self.override_return_list(self.variable)
     
     def func(self, context):
@@ -33,11 +33,11 @@ class GetColMedian(Transformation):
         return df[column].median()
     
 class GetColMode(Transformation):
-    def __init__(self, column, dataframe, variable=None, step_name="GetColMode"):
+    def __init__(self, column, dataframe, variable=None, step_name="GetColMode", on_error=None):
         self.column = column
         self.variable = variable if variable else column + "_mode"
         self.dataframe_name = dataframe
-        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe, on_error=on_error)
         self.override_return_list(self.variable)
     
     def func(self, context):
@@ -49,11 +49,11 @@ class GetColMode(Transformation):
         return df[column].mode()[0]
     
 class GetColStd(Transformation):
-    def __init__(self, column, dataframe, variable=None, step_name="GetColStd"):
+    def __init__(self, column, dataframe, variable=None, step_name="GetColStd", on_error=None):
         self.column = column
         self.variable = variable if variable else column + "_std"
         self.dataframe_name = dataframe
-        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe, on_error=on_error)
         self.override_return_list(self.variable)
     
     def func(self, context):
@@ -65,11 +65,11 @@ class GetColStd(Transformation):
         return df[column].std()
     
 class GetColSum(Transformation):
-    def __init__(self, column, dataframe, variable=None, step_name="GetColSum"):
+    def __init__(self, column, dataframe, variable=None, step_name="GetColSum", on_error=None):
         self.column = column
         self.variable = variable if variable else column + "_sum"
         self.dataframe_name = dataframe
-        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe, on_error=on_error)
         self.override_return_list(self.variable)
     
     def func(self, context):
@@ -81,11 +81,11 @@ class GetColSum(Transformation):
         return df[column].sum()
     
 class GetColVariance(Transformation):
-    def __init__(self, column, dataframe, variable=None, step_name="GetColVariance"):
+    def __init__(self, column, dataframe, variable=None, step_name="GetColVariance", on_error=None):
         self.column = column
         self.variable = variable if variable else column + "_variance"
         self.dataframe_name = dataframe
-        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe, on_error=on_error)
         self.override_return_list(self.variable)
     
     def func(self, context):
@@ -97,12 +97,12 @@ class GetColVariance(Transformation):
         return df[column].var()
     
 class GetColQuantile(Transformation):
-    def __init__(self, column, dataframe, quantile, variable=None, step_name="GetColQuantile"):
+    def __init__(self, column, dataframe, quantile, variable=None, step_name="GetColQuantile", on_error=None):
         self.column = column
         self.quantile = quantile
         self.variable = variable if variable else column + "_quantile_" + str(quantile)
         self.dataframe_name = dataframe
-        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe, on_error=on_error)
         self.override_return_list(self.variable)
     
     def func(self, context):
@@ -114,12 +114,12 @@ class GetColQuantile(Transformation):
         return df[column].quantile(quantile)
     
 class GetColCorrelation(Transformation):
-    def __init__(self, column1, column2, dataframe, variable=None, step_name="GetColCorrelation"):
+    def __init__(self, column1, column2, dataframe, variable=None, step_name="GetColCorrelation", on_error=None):
         self.column1 = column1
         self.column2 = column2
         self.variable = variable if variable else column1 + "_" + column2 + "_correlation"
         self.dataframe_name = dataframe
-        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe, on_error=on_error)
         self.override_return_list(self.variable)
     
     def func(self, context):
@@ -131,12 +131,12 @@ class GetColCorrelation(Transformation):
         return df[column1].corr(df[column2])
     
 class GetColCovariance(Transformation):
-    def __init__(self, column1, column2, dataframe, variable=None, step_name="GetColCovariance"):
+    def __init__(self, column1, column2, dataframe, variable=None, step_name="GetColCovariance", on_error=None):
         self.column1 = column1
         self.column2 = column2
         self.variable = variable if variable else column1 + "_" + column2 + "_covariance"
         self.dataframe_name = dataframe
-        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe, on_error=on_error)
         self.override_return_list(self.variable)
     
     def func(self, context):
@@ -148,11 +148,11 @@ class GetColCovariance(Transformation):
         return df[column1].cov(df[column2])
     
 class GetColSkew(Transformation):
-    def __init__(self, column, dataframe, variable=None, step_name="GetColSkew"):
+    def __init__(self, column, dataframe, variable=None, step_name="GetColSkew", on_error=None):
         self.column = column
         self.variable = variable if variable else column + "_skew"
         self.dataframe_name = dataframe
-        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe, on_error=on_error)
         self.override_return_list(self.variable)
     
     def func(self, context):

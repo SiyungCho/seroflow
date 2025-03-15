@@ -5,11 +5,11 @@ class ConvertColumnType(Transformation):
     """
     Converts a specified column of a dataframe to a new data type.
     """
-    def __init__(self, dataframe, column, new_type, step_name="ConvertColumnType"):
+    def __init__(self, dataframe, column, new_type, step_name="ConvertColumnType", on_error=None):
         self.dataframe = dataframe
         self.column = column
         self.new_type = new_type
-        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe, on_error=on_error)
 
     def func(self, context):
         df = context.dataframes[self.dataframe]
@@ -24,10 +24,10 @@ class RenameColumns(Transformation):
     """
     Renames one or more columns in a dataframe based on a mapping.
     """
-    def __init__(self, dataframe, columns_mapping, step_name="RenameColumns"):
+    def __init__(self, dataframe, columns_mapping, step_name="RenameColumns", on_error=None):
         self.dataframe = dataframe
         self.columns_mapping = columns_mapping
-        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe, on_error=on_error)
 
     def func(self, context):
         df = context.dataframes[self.dataframe]
@@ -41,10 +41,10 @@ class DropColumn(Transformation):
     """
     Drops a specified column from a dataframe.
     """
-    def __init__(self, dataframe, column, step_name="DropColumn"):
+    def __init__(self, dataframe, column, step_name="DropColumn", on_error=None):
         self.dataframe = dataframe
         self.column = column
-        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe, on_error=on_error)
 
     def func(self, context):
         df = context.dataframes[self.dataframe]
@@ -55,10 +55,10 @@ class DropColumn(Transformation):
         return df.drop(columns=[self.column])
 
 class DropColumns(Transformation):
-    def __init__(self, dataframe, columns, step_name="DropColumns"):
+    def __init__(self, dataframe, columns, step_name="DropColumns", on_error=None):
         self.dataframe = dataframe
         self.columns = columns
-        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe, on_error=on_error)
 
     def func(self, context):
         df = context.dataframes[self.dataframe]
@@ -72,11 +72,11 @@ class AddColumn(Transformation):
     """
     Adds a new column to a dataframe computed from a function.
     """
-    def __init__(self, dataframe, column, compute_func, step_name="AddColumn"):
+    def __init__(self, dataframe, column, compute_func, step_name="AddColumn", on_error=None):
         self.dataframe = dataframe
         self.column = column
         self.compute_func = compute_func  # function that receives a dataframe and returns a Series
-        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe, on_error=on_error)
 
     def func(self, context):
         df = context.dataframes[self.dataframe]
@@ -91,12 +91,12 @@ class MergeColumns(Transformation):
     """
     Merges multiple columns into a single column by concatenating their string representations.
     """
-    def __init__(self, dataframe, columns, new_column, separator=" ", step_name="MergeColumns"):
+    def __init__(self, dataframe, columns, new_column, separator=" ", step_name="MergeColumns", on_error=None):
         self.dataframe = dataframe
         self.columns = columns
         self.new_column = new_column
         self.separator = separator
-        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe, on_error=on_error)
         
     def func(self, context):
         df = context.dataframes[self.dataframe]
@@ -111,12 +111,12 @@ class SplitColumn(Transformation):
     """
     Splits a single column into multiple columns based on a delimiter.
     """
-    def __init__(self, dataframe, column, new_columns, delimiter=" ", step_name="SplitColumn"):
+    def __init__(self, dataframe, column, new_columns, delimiter=" ", step_name="SplitColumn", on_error=None):
         self.dataframe = dataframe
         self.column = column
         self.new_columns = new_columns
         self.delimiter = delimiter
-        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe, on_error=on_error)
         
     def func(self, context):
         df = context.dataframes[self.dataframe]
@@ -133,10 +133,10 @@ class ExplodeColumn(Transformation):
     """
     Explodes a column of lists into multiple rows.
     """
-    def __init__(self, dataframe, column, step_name="ExplodeColumn"):
+    def __init__(self, dataframe, column, step_name="ExplodeColumn", on_error=None):
         self.dataframe = dataframe
         self.column = column
-        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe, on_error=on_error)
     
     def func(self, context):
         df = context.dataframes[self.dataframe]
@@ -145,3 +145,21 @@ class ExplodeColumn(Transformation):
     
     def __explode_column(self, df):
         return df.explode(self.column)
+    
+class CreateColumnFromVariable(Transformation):
+    """
+    Creates a new column in a dataframe with a constant value.
+    """
+    def __init__(self, dataframe, column, variable, step_name="CreateColumnFromVariable", on_error=None):
+        self.dataframe = dataframe
+        self.column = column
+        self.variable = variable
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframe, on_error=on_error)
+        self.update_return_list(self.variable)
+        self.update_params_list(self.variable)
+    
+    def func(self, context, **kwargs):
+        df = context.dataframes[self.dataframe]
+        df[self.column] = kwargs[self.variable]
+        context.set_dataframe(self.dataframe, df)
+        return context
