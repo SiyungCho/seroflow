@@ -71,7 +71,7 @@ class GetColSum(Transformation):
         self.dataframe_name = dataframe
         super().__init__(step_name=step_name, func=self.func, dataframes=dataframe, on_error=on_error)
         self.override_return_list(self.variable)
-    
+
     def func(self, context):
         df = context.dataframes[self.dataframe_name]
         sum = self.__get_column_sum(df, self.column)

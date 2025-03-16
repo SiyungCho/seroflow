@@ -4,32 +4,29 @@
 import time
 from collections import OrderedDict
 from tqdm import tqdm
+import logging
 
 from .log import CustomLogger
+from .cache import AbstractCache, LFUCache
+from .context import Context as base_context
+from .transform import CacheState, ReloadCacheState, ResetCache
+from .chunker import Chunker
 from .wrappers import log_error
 from .utils import generate_key
 from .types import is_extractor, is_multiextractor, is_loader, is_step, is_context, is_context_object
-from .cache import AbstractCache, LFUCache
-from .context import Context as base_context
-from .transform import CacheState
-from .transform import ReloadCacheState
-from .transform import ResetCache
-from .chunker import Chunker
 
 class Pypeline():
     """
     """
 
-    def __init__(self, use_cache=False, cache=None, logger=None, mode="DEV"):
+    def __init__(self, cache=False, logger=False, mode="DEV"):
         """
         """
-        self.logger = CustomLogger("pypeline").logger if logger is None else logger
+        self.logger = logger
         self.mode = mode # DEV, TEST, PROD
         self.checked_targets = False
-        self.target_extractor_set = False
         self.globalcontext = base_context("globalcontext")
-        self.use_cache = use_cache
-        self.cache = (use_cache, cache)
+        self.cache = cache
         self.__target_extractor = None
         self.__target_loader = None
         self.__chunker = None
@@ -37,7 +34,6 @@ class Pypeline():
         self.__step_index = OrderedDict()
         self.__step_name_index = OrderedDict()
         self.__dataframe_index = {}
-        self.__chunker = None
 
     def __del__(self):
         """
@@ -56,6 +52,20 @@ class Pypeline():
         print("Dataframe Index:")
         print(self.dataframe_index)
         return "-----------------------"
+    
+    def __display_message(self, message, _print=False):
+        """
+        """
+        if self.logger_is_set():
+            self.logger.info(message)
+        if _print:
+            print(message)
+    
+    @property
+    def logger(self):
+        """
+        """
+        return self.__logger
 
     @property
     def target_extractor(self):
@@ -122,6 +132,22 @@ class Pypeline():
         """
         """
         return self.__chunker
+    
+    @logger.setter
+    @log_error("Logger must be a logging object")
+    def logger(self, logger):
+        """
+        """
+        if not logger:
+            self.__logger = None
+        elif isinstance(logger, logging.Logger):
+            self.__logger = logger
+            self.__display_message("Logger set...")
+        elif logger == True:
+            self.__logger = CustomLogger("pypeline").logger
+            self.__display_message("Logger set...")
+        else:
+            raise TypeError("Logger must be a logging object")
 
     @target_extractor.setter
     @log_error("Target extractor must be an extractor or multiextractor")
@@ -134,8 +160,7 @@ class Pypeline():
             self.__target_extractor = extractor
         else:
             raise TypeError("Target extractor must be an extractor or multiextractor")
-        self.target_extractor_set = True
-        self.logger.info("Target extractor set...")
+        self.__display_message("Target extractor set...")
 
     @target_loader.setter
     @log_error("Target extractor must be an extractor or multiextractor")
@@ -144,7 +169,7 @@ class Pypeline():
         """
         if is_loader(loader, True):
             self.__target_loader = loader
-            self.logger.info("Target loader set...")
+            self.__display_message("Target loader set...")
 
     @parameter_index.setter
     @log_error("Parameter index must be a dictionary")
@@ -164,27 +189,22 @@ class Pypeline():
             raise TypeError("Global context must be a context object")
         self.__globalcontext = globalcontext
 
-    @chunker.setter
-    @log_error("Chunker must be of chunker class type")
-    def chunker(self, chunker):
-        """
-        """
-        if not isinstance(chunker, AbstractCache):
-            raise TypeError("Chunker must be of chunker class type")
-        self.__chunker = chunker
-
     @cache.setter
     @log_error("Cache must be an instance of AbstractCache")
-    def cache(self, cache_tuple):
+    def cache(self, cache):
         """
         """
-        use_cache, cache = cache_tuple
-        if use_cache:
-            if (cache is not None) and (not isinstance(cache, AbstractCache)):
-                raise TypeError("Cache must be an instance of AbstractCache")
-            self.__cache = LFUCache() if cache is None else cache
-        else:
+        if not cache:
             self.__cache = None
+            self.__display_message("Cache not set...")
+        elif isinstance(cache, AbstractCache):
+            self.__cache = cache
+            self.__display_message("Cache set...")
+        elif cache == True:
+            self.__cache = LFUCache()
+            self.__display_message("Cache set...")
+        else:
+            raise TypeError("Cache must be an instance of AbstractCache, True, or False")
 
     @mode.setter
     @log_error("Mode must be either DEV, TEST, or PROD")
@@ -204,12 +224,33 @@ class Pypeline():
         """
         if not isinstance(chunker, Chunker):
             raise TypeError("Chunker must be of Chunker class type")
-        if self.use_cache:
+        if self.__cache_is_set():
             self.add_step(self.reset_cache(delete_directory=True))
         if self.chunker is None:
             self.__chunker = chunker(self.step_index)
             self.__chunker.save(parameter_index=self.parameter_index, globalcontext=self.globalcontext)
-            self.logger.info("Chunker initialized...")
+            self.__display_message("Chunker initialized...")
+
+    def logger_is_set(self):
+        """
+        """
+        if not self.logger:
+            return False
+        return True
+
+    def __cache_is_set(self):
+        """
+        """
+        if not self.cache:
+            return False
+        return True
+    
+    def __chunker_is_set(self):
+        """
+        """
+        if not self.chunker:
+            return False
+        return True
 
     def __update_parameter_index(self, parameter, value):
         """
@@ -255,7 +296,7 @@ class Pypeline():
     def __update_cache(self, step_key):
         """
         """
-        if self.use_cache and (not isinstance(self.step_index[step_key], ResetCache)):
+        if self.__cache_is_set() and (not isinstance(self.step_index[step_key], ResetCache)):
             self.__store_in_cache(step_key)
 
     def __check_parsed_parameters(self, kwargs):
@@ -312,7 +353,7 @@ class Pypeline():
         target_key = self.__parse_step(target)
         self.step_index.move_to_end(target_key, last=last)
         self.step_name_index.move_to_end(target_key, last=last)
-        self.logger.info("Successfully added step with key: %s", target_key)
+        self.__display_message("Successfully added step with key: " + str(target_key))
 
     @log_error("Error adding targets to step index")
     def __add_targets(self):
@@ -320,7 +361,7 @@ class Pypeline():
         """
         if not self.checked_targets:
             self.checked_targets = True
-            if (self.mode != "TEST") and (not self.target_extractor_set):
+            if (self.mode != "TEST") and (not self.target_extractor):
                 raise ValueError("Target extractor must be set before executing pypeline")
             if self.target_extractor:
                 if is_multiextractor(self.target_extractor):
@@ -330,7 +371,7 @@ class Pypeline():
                     self.__add_target_to_step(self.target_extractor, last=False)
             if self.target_loader:
                 self.__add_target_to_step(self.target_loader, last=True)
-            self.logger.info("Successfully added targets to steps")
+            self.__display_message("Successfully added targets to steps")
 
     @log_error("Error Parsing Step")
     def __parse_step(self, step):
@@ -374,9 +415,11 @@ class Pypeline():
         """
         """
         checked_output = self.__check_step_output(step_output, step_key)
+        if checked_output is None:
+            return
         for param, value in zip(self.step_index[step_key].return_list, checked_output):
             if is_context(value):
-                self.__update_globalcontext(value)  # Update context index if value is a context.
+                self.__update_globalcontext(value)
             elif is_context_object(value):
                 for _, item in value.items():
                     self.__update_globalcontext(item)
@@ -391,18 +434,16 @@ class Pypeline():
         if cached_checkpoint and (cached_checkpoint in step_keys):
             self.parameter_index, self.globalcontext = self.cache.load(cached_checkpoint)
             start_index = step_keys.index(cached_checkpoint) + 1
-            self.logger.info("Resuming execution from checkpoint: %s", cached_checkpoint)
-            print("Resuming execution from: " + str(cached_checkpoint))
+            self.__display_message("Resuming execution from checkpoint: " + str(cached_checkpoint), True)
         else:
-            self.logger.info("No valid checkpoint found, starting from the beginning...")
-            print("No checkpoint found...")
+            self.__display_message("No valid checkpoint found, starting from the beginning...", True)
         return start_index
 
     def __store_in_cache(self, step_key):
         """
         """
         self.cache.store(self.step_index, self.parameter_index, self.globalcontext, step_key)
-        self.logger.info("Checkpoint stored for step: %s", step_key)
+        self.__display_message("Checkpoint stored for step: " + str(step_key))
 
     @log_error("add_steps method requires a list of step objects")
     def add_steps(self, steps):
@@ -422,7 +463,7 @@ class Pypeline():
                 self.add_step(extractor)
         if is_step(step, _raise=True):
             step_key = self.__parse_step(step)
-            self.logger.info("Successfully added step: %s with key: %s", step.step_name, step_key)
+            self.__display_message("Successfully added step: " + str(step.step_name) + " with key: " +  str(step_key))
 
     def cache_state(self, step_name="cache_state"):
         """
@@ -452,7 +493,8 @@ class Pypeline():
             cache=self.cache,
             delete_directory=delete_directory
         )
-    
+
+    @log_error("Error executing pypeline...")
     def execute(self, chunker=None):
         """
         """
@@ -461,23 +503,22 @@ class Pypeline():
             self.chunker = chunker
 
         step_keys = self.__get_step_keys()
-        start_index = 0 if not self.use_cache else self.__load_from_cache(step_keys)
+        start_index = 0 if not self.__cache_is_set() else self.__load_from_cache(step_keys)
 
         start_time = time.time()  # Start timer
-        self.logger.info("Beginning ETL Execution at time: %s ...", start_time)
+        self.__display_message("Beginning ETL Execution at time: " + str(start_time) + " ...")
 
         total_steps = self.__get_number_of_steps() - start_index
         with tqdm(total=total_steps, desc="Executing Pypeline") as pbar:
             for step_key in step_keys[start_index:]:
-                tqdm.write("Executing Step: " + str(self.step_name_index[step_key]))
-                self.logger.info("Executing Step: %s", self.step_name_index[step_key])
+                self.__display_message("Executing Step: " + str(self.step_name_index[step_key]), True)
 
                 step_params = self.__parse_parameters(step_key)
-                step_output = (self.step_index[step_key](**step_params))
+                step_output = self.step_index[step_key](**step_params)
                 self.__parse_step_output(step_output, step_key)
                 self.__update_cache(step_key)
-                
-                self.logger.info("Step: %s completed...", self.step_name_index[step_key])
+
+                self.__display_message("Step: " + self.step_name_index[step_key] + " completed...", True)
                 pbar.update(1)
 
         if self.chunker is not None:
@@ -486,6 +527,6 @@ class Pypeline():
                 self.execute(chunker=chunker)
         else:
             end_time = time.time()  # End timer
-            self.logger.info("ETL Execution Finished at time: %s ...", end_time)
+            self.__display_message("ETL Execution Finished at time: " + str(end_time) + " ...")
             elapsed_time = end_time - start_time
-            self.logger.info("Total Execution Time: %.2f seconds", elapsed_time)
+            self.__display_message("Total Execution Time: " + str(end_time) + " seconds")

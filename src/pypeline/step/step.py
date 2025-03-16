@@ -36,6 +36,8 @@ class Step(AbstractStep):
             self.init_step_func_params()
             return self
         self.params = {param: None for param in self.params_list}
+        if self.needs_context:
+            self.params['context'] = None
         self.create_kwargs_params(args, kwargs)
         if 'kwargs' in self.params:
             self.params.pop('kwargs')
@@ -76,7 +78,7 @@ class Step(AbstractStep):
         """
         """
         for param, value in params.items():
-            if param not in self.params:
+            if (param not in self.params):
                 if 'kwargs' not in self.params:
                     raise ValueError("Error parameter given not found in function signature")
                 self.params[param] = value
@@ -112,9 +114,8 @@ class Step(AbstractStep):
         except Exception as e:
             if self.on_error == 'raise':
                 raise e
-            elif self.on_error == 'print': #change later to 'log'
-                print(e)
             elif self.on_error == 'ignore':
+                print(f"Error in {self.step_name} was ignored: {e}")
                 step_output = None
         self.stop_step()
         return step_output

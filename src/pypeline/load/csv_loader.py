@@ -7,10 +7,10 @@ class CSVLoader(FileLoader):
     """
     """
 
-    def __init__(self, target, dataframe, exists="append", step_name="CSVLoader", **kwargs):
+    def __init__(self, target, dataframe, exists="append", step_name="CSVLoader", on_error=None, **kwargs):
         """
         """
-        super().__init__(target=target, dataframe=dataframe, exists=exists, func=self.func, file_extension=".csv", step_name=step_name, **kwargs)
+        super().__init__(target=target, dataframe=dataframe, exists=exists, func=self.func, file_extension=".csv", step_name=step_name, on_error=on_error, **kwargs)
 
     def func(self, context):
         """
@@ -39,5 +39,5 @@ class CSVLoader(FileLoader):
         return None
 
 class MultiCSVLoader(CSVLoader):
-    def __init__(self, target, dataframes=None, exists="append", step_name="MultiCSVLoader", **kwargs):
-        super().__init__(target=target, dataframe=dataframes, exists=exists, step_name=step_name, **kwargs)
+    def __init__(self, target, dataframes=None, exists="append", step_name="MultiCSVLoader", on_error=None, **kwargs):
+        super().__init__(target=target, dataframe=dataframes, exists=exists, step_name=step_name, on_error=on_error, **kwargs)

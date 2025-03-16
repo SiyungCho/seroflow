@@ -8,10 +8,10 @@ from ..extract.extractor import Extractor, MultiExtractor
 class FileExtractor(Extractor):
     """
     """
-    def __init__(self, source, func, chunk_size, step_name="FileExtractor", **kwargs):
+    def __init__(self, source, func, chunk_size, on_error, step_name="FileExtractor", **kwargs):
         """
         """
-        super().__init__(step_name=step_name, func=func, chunk_size=chunk_size)
+        super().__init__(step_name=step_name, func=func, chunk_size=chunk_size, on_error=on_error)
         if not check_file(source):
             raise FileNotFoundError("Error directory not found")
         
@@ -41,10 +41,10 @@ class FileExtractor(Extractor):
 class MultiFileExtractor(MultiExtractor):
     """
     """
-    def __init__(self, source, type, extension_type, chunk_size, step_name="MultiFileExtractor", **kwargs):
+    def __init__(self, source, type, extension_type, chunk_size, on_error, step_name="MultiFileExtractor", **kwargs):
         """
         """
-        super().__init__(step_name=step_name, type=type, chunk_size=chunk_size)
+        super().__init__(step_name=step_name, type=type, chunk_size=chunk_size, on_error=on_error)
         if not check_directory(source): 
             raise FileNotFoundError("Error directory not found")
 

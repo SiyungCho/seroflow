@@ -8,10 +8,10 @@ class ExcelExtractor(FileExtractor):
     """
     """
 
-    def __init__(self, source, step_name="ExcelExtractor", chunk_size=None, **kwargs):
+    def __init__(self, source, step_name="ExcelExtractor", chunk_size=None, on_error=None, **kwargs):
         """
         """
-        super().__init__(source=source, step_name=step_name, func = self.func if chunk_size is None else self.chunk_func, chunk_size=chunk_size, **kwargs)
+        super().__init__(source=source, step_name=step_name, func = self.func if chunk_size is None else self.chunk_func, chunk_size=chunk_size, on_error=on_error, **kwargs)
 
     def func(self, context):
         """
@@ -78,10 +78,10 @@ class ExcelExtractor(FileExtractor):
 class MultiExcelExtractor(MultiFileExtractor):
     """
     """
-    def __init__(self, source, chunk_size=None, **kwargs):
+    def __init__(self, source, chunk_size=None, on_error=None, **kwargs):
         """
         """
-        super().__init__(source=source, step_name="MultiExcelExtractor", type=ExcelExtractor, extension_type='excel', chunk_size=chunk_size, **kwargs)
+        super().__init__(source=source, step_name="MultiExcelExtractor", type=ExcelExtractor, extension_type='excel', chunk_size=chunk_size, on_error=on_error, **kwargs)
     
     def get_max_row_count(self):
         """

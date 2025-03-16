@@ -67,11 +67,14 @@ def log_error(err_msg, logger=None, log_only=False):
             except Exception as e:
                 tb_last_frame = traceback.extract_tb(e.__traceback__)[-1]
                 _, _, function_name, code_line = tb_last_frame
-                if logger:
-                    logger.error("Error %s; Occurred at: %s; On line number: %s; Exception %s", err_msg, function_name, code_line, e)
-                else:
+                # if logger:
+                #     logger.error("Error %s; Occurred at: %s; On line number: %s; Exception %s", err_msg, function_name, code_line, e)
+                # else:
+                if args[0].logger_is_set():
                     args[0].logger.error("Error %s; Occurred at: %s; On line number: %s; Exception %s", err_msg, function_name, code_line, e)
-                if not log_only:
+                    if not log_only:
+                        raise Exception(err_msg) from e
+                else:
                     raise Exception(err_msg) from e
                 return None
         return wrap

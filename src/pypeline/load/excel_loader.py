@@ -8,10 +8,10 @@ class ExcelLoader(FileLoader):
     """
     """
 
-    def __init__(self, target, dataframe, file_extension=".xlsx", exists="append", step_name="ExcelLoader", **kwargs):
+    def __init__(self, target, dataframe, file_extension=".xlsx", exists="append", step_name="ExcelLoader", on_error=None, **kwargs):
         """
         """
-        super().__init__(target=target, dataframe=dataframe, exists=exists, func=self.func, step_name=step_name, file_extension=file_extension, **kwargs)
+        super().__init__(target=target, dataframe=dataframe, exists=exists, func=self.func, step_name=step_name, file_extension=file_extension, on_error=on_error, **kwargs)
 
     def func(self, context):
         """
@@ -52,5 +52,5 @@ class ExcelLoader(FileLoader):
     
 
 class MultiExcelLoader(ExcelLoader):
-    def __init__(self, target, dataframes=None, file_extension=".xlsx", exists="append", step_name="MultiExcelLoader", **kwargs):
-        super().__init__(target=target, dataframe=dataframes, file_extension=file_extension, exists=exists, step_name=step_name, **kwargs)
+    def __init__(self, target, dataframes=None, file_extension=".xlsx", exists="append", step_name="MultiExcelLoader", on_error=None, **kwargs):
+        super().__init__(target=target, dataframe=dataframes, file_extension=file_extension, exists=exists, step_name=step_name, on_error=on_error, **kwargs)
