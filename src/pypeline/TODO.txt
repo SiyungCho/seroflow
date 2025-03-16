@@ -1,12 +1,5 @@
 TODO:
 
-v4
-- fix display steps
-- implement different 'modes' for pypeline (and maybe for steps) 
-    - (in dev mode, executes all steps but doesnot actually release exports detailed review of global context) 
-    - (in test mode: executes the entire pypeline, but only on random sampled values, exports detailed review of global context and detailed review of execution, but only for random sampled values) 
-    - (in prod mode, executes entire pypeline on whole dataset, generates detailed review of execution on all data)
-
 post v4 TODO:
 - fix adl e/l
 - pylint

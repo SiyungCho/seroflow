@@ -1,6 +1,7 @@
 from .transformation import Transformation
 
 #Need to configure to work with logger
+#Need to have save_to_variable property
 
 class DisplayInfo(Transformation):
     def __init__(self, dataframes, step_name="DisplayInfo"):
@@ -8,7 +9,7 @@ class DisplayInfo(Transformation):
 
     def func(self, context):
         for dataframe_name, df in context.dataframes.items():
-            print(f"--- Info for DataFrame '{dataframe_name}' ---")
+            print(f"------------ Info for DataFrame '{dataframe_name}' ------------")
             print(f"Shape: {df.shape}")
             print("Columns and Data Types:")
             print(df.dtypes)
@@ -20,7 +21,7 @@ class DisplayColumns(Transformation):
 
     def func(self, context):
         for dataframe_name, df in context.dataframes.items():
-            print(f"DataFrame '{dataframe_name}' Columns:")
+            print(f"------------ DataFrame '{dataframe_name}' Columns: ------------")
             print(list(df.columns))
             print("-" * 50)
 
@@ -31,7 +32,7 @@ class DisplayHead(Transformation):
 
     def func(self, context):
         for dataframe_name, df in context.dataframes.items():
-            print(f"DataFrame '{dataframe_name}' Head (first {self.n} rows):")
+            print(f"------------ DataFrame '{dataframe_name}' Head (first {self.n} rows): ------------")
             print(df.head(self.n))
             print("-" * 50)
 
@@ -42,7 +43,7 @@ class DisplayTail(Transformation):
 
     def func(self, context):
         for dataframe_name, df in context.dataframes.items():
-            print(f"DataFrame '{dataframe_name}' Tail (last {self.n} rows):")
+            print(f"------------ DataFrame '{dataframe_name}' Tail (last {self.n} rows): ------------")
             print(df.tail(self.n))
             print("-" * 50)
 
@@ -55,10 +56,10 @@ class DisplayColumnMean(Transformation):
         for dataframe_name, df in context.dataframes.items():
             col_name = self.__resolve_column(df)
             if col_name is None or col_name not in df.columns:
-                print(f"[{dataframe_name}] Column '{self.column}' not found.")
+                print(f"------------ [{dataframe_name}] Column '{self.column}' not found. ------------")
             else:
                 mean_value = df[col_name].mean()
-                print(f"[{dataframe_name}] Mean of column '{col_name}': {mean_value}")
+                print(f"------------ [{dataframe_name}] Mean of column '{col_name}': {mean_value} ------------")
 
     def __resolve_column(self, df):
         if isinstance(self.column, int):
@@ -74,10 +75,10 @@ class DisplayColumnMedian(Transformation):
         for dataframe_name, df in context.dataframes.items():
             col_name = self.__resolve_column(df)
             if col_name is None or col_name not in df.columns:
-                print(f"[{dataframe_name}] Column '{self.column}' not found.")
+                print(f"------------ [{dataframe_name}] Column '{self.column}' not found. ------------")
             else:
                 median_value = df[col_name].median()
-                print(f"[{dataframe_name}] Median of column '{col_name}': {median_value}")
+                print(f"------------ [{dataframe_name}] Median of column '{col_name}': {median_value} ------------")
 
     def __resolve_column(self, df):
         if isinstance(self.column, int):
@@ -93,11 +94,11 @@ class DisplayColumnMode(Transformation):
         for dataframe_name, df in context.dataframes.items():
             col_name = self.__resolve_column(df)
             if col_name is None or col_name not in df.columns:
-                print(f"[{dataframe_name}] Column '{self.column}' not found.")
+                print(f"------------ [{dataframe_name}] Column '{self.column}' not found. ------------")
             else:
                 mode_series = df[col_name].mode()
                 # Convert mode values to a list for clear printing.
-                print(f"[{dataframe_name}] Mode of column '{col_name}': {list(mode_series)}")
+                print(f"------------ [{dataframe_name}] Mode of column '{col_name}': {list(mode_series)} ------------")
 
     def __resolve_column(self, df):
         if isinstance(self.column, int):
@@ -113,10 +114,10 @@ class DisplayColumnVariance(Transformation):
         for dataframe_name, df in context.dataframes.items():
             col_name = self.__resolve_column(df)
             if col_name is None or col_name not in df.columns:
-                print(f"[{dataframe_name}] Column '{self.column}' not found.")
+                print(f"------------ [{dataframe_name}] Column '{self.column}' not found. ------------")
             else:
                 variance_value = df[col_name].var()
-                print(f"[{dataframe_name}] Variance of column '{col_name}': {variance_value}")
+                print(f"------------ [{dataframe_name}] Variance of column '{col_name}': {variance_value} ------------")
 
     def __resolve_column(self, df):
         if isinstance(self.column, int):
@@ -137,10 +138,10 @@ class DisplayColumnStdDev(Transformation):
         for dataframe_name, df in context.dataframes.items():
             col = self.__resolve_column(df)
             if col is None or col not in df.columns:
-                print(f"[{dataframe_name}] Column '{self.column}' not found.")
+                print(f"------------ [{dataframe_name}] Column '{self.column}' not found. ------------")
             else:
                 std_dev = df[col].std()
-                print(f"[{dataframe_name}] Standard Deviation of column '{col}': {std_dev}")
+                print(f"------------ [{dataframe_name}] Standard Deviation of column '{col}': {std_dev} ------------")
 
     def __resolve_column(self, df):
         if isinstance(self.column, int):
@@ -156,10 +157,10 @@ class DisplayColumnSum(Transformation):
         for dataframe_name, df in context.dataframes.items():
             col = self.__resolve_column(df)
             if col is None or col not in df.columns:
-                print(f"[{dataframe_name}] Column '{self.column}' not found.")
+                print(f"------------ [{dataframe_name}] Column '{self.column}' not found. ------------")
             else:
                 col_sum = df[col].sum()
-                print(f"[{dataframe_name}] Sum of column '{col}': {col_sum}")
+                print(f"------------ [{dataframe_name}] Sum of column '{col}': {col_sum} ------------")
 
     def __resolve_column(self, df):
         if isinstance(self.column, int):
@@ -175,10 +176,10 @@ class DisplayColumnMin(Transformation):
         for dataframe_name, df in context.dataframes.items():
             col = self.__resolve_column(df)
             if col is None or col not in df.columns:
-                print(f"[{dataframe_name}] Column '{self.column}' not found.")
+                print(f"------------ [{dataframe_name}] Column '{self.column}' not found. ------------")
             else:
                 col_min = df[col].min()
-                print(f"[{dataframe_name}] Minimum of column '{col}': {col_min}")
+                print(f"------------ [{dataframe_name}] Minimum of column '{col}': {col_min} ------------")
 
     def __resolve_column(self, df):
         if isinstance(self.column, int):
@@ -194,10 +195,10 @@ class DisplayColumnMax(Transformation):
         for dataframe_name, df in context.dataframes.items():
             col = self.__resolve_column(df)
             if col is None or col not in df.columns:
-                print(f"[{dataframe_name}] Column '{self.column}' not found.")
+                print(f"------------ [{dataframe_name}] Column '{self.column}' not found. ------------")
             else:
                 col_max = df[col].max()
-                print(f"[{dataframe_name}] Maximum of column '{col}': {col_max}")
+                print(f"------------ [{dataframe_name}] Maximum of column '{col}': {col_max} ------------")
 
     def __resolve_column(self, df):
         if isinstance(self.column, int):
@@ -213,10 +214,10 @@ class DisplayColumnCount(Transformation):
         for df_name, df in context.dataframes.items():
             col = self.__resolve_column(df)
             if col is None or col not in df.columns:
-                print(f"[{df_name}] Column '{self.column}' not found.")
+                print(f"------------ [{df_name}] Column '{self.column}' not found. ------------")
             else:
                 count_val = df[col].count()
-                print(f"[{df_name}] Count (non-null) for column '{col}': {count_val}")
+                print(f"------------ [{df_name}] Count (non-null) for column '{col}': {count_val} ------------")
 
     def __resolve_column(self, df):
         if isinstance(self.column, int):
@@ -232,10 +233,10 @@ class DisplayColumnUnique(Transformation):
         for df_name, df in context.dataframes.items():
             col = self.__resolve_column(df)
             if col is None or col not in df.columns:
-                print(f"[{df_name}] Column '{self.column}' not found.")
+                print(f"------------ [{df_name}] Column '{self.column}' not found. ------------")
             else:
                 unique_vals = df[col].unique()
-                print(f"[{df_name}] Unique values in column '{col}': {list(unique_vals)}")
+                print(f"------------ [{df_name}] Unique values in column '{col}': {list(unique_vals)} ------------")
 
     def __resolve_column(self, df):
         if isinstance(self.column, int):
@@ -251,10 +252,10 @@ class DisplayColumnNUnique(Transformation):
         for df_name, df in context.dataframes.items():
             col = self.__resolve_column(df)
             if col is None or col not in df.columns:
-                print(f"[{df_name}] Column '{self.column}' not found.")
+                print(f"------------ [{df_name}] Column '{self.column}' not found. ------------")
             else:
                 n_unique = df[col].nunique()
-                print(f"[{df_name}] Number of unique values in column '{col}': {n_unique}")
+                print(f"------------ [{df_name}] Number of unique values in column '{col}': {n_unique} ------------")
 
     def __resolve_column(self, df):
         if isinstance(self.column, int):
@@ -270,10 +271,10 @@ class DisplayColumnDType(Transformation):
         for df_name, df in context.dataframes.items():
             col = self.__resolve_column(df)
             if col is None or col not in df.columns:
-                print(f"[{df_name}] Column '{self.column}' not found.")
+                print(f"------------ [{df_name}] Column '{self.column}' not found. ------------")
             else:
                 dtype_val = df[col].dtype
-                print(f"[{df_name}] Data type for column '{col}': {dtype_val}")
+                print(f"------------ [{df_name}] Data type for column '{col}': {dtype_val} ------------")
 
     def __resolve_column(self, df):
         if isinstance(self.column, int):
@@ -289,10 +290,10 @@ class DisplayStringCount(Transformation):
         for dataframe_name, df in context.dataframes.items():
             col = self.__resolve_column(df)
             if col is None or col not in df.columns:
-                print(f"[{dataframe_name}] Column '{self.column}' not found.")
+                print(f"------------ [{dataframe_name}] Column '{self.column}' not found. ------------")
             else:
                 counts = df[col].value_counts()
-                print(f"[{dataframe_name}] Value counts for column '{col}':")
+                print(f"------------ [{dataframe_name}] Value counts for column '{col}': ------------")
                 print(counts)
 
     def __resolve_column(self, df):
@@ -309,13 +310,13 @@ class DisplayMostFrequentString(Transformation):
         for dataframe_name, df in context.dataframes.items():
             col = self.__resolve_column(df)
             if col is None or col not in df.columns:
-                print(f"[{dataframe_name}] Column '{self.column}' not found.")
+                print(f"------------ [{dataframe_name}] Column '{self.column}' not found. ------------")
             else:
                 mode_series = df[col].mode()
                 if mode_series.empty:
-                    print(f"[{dataframe_name}] No mode found for column '{col}'.")
+                    print(f"------------ [{dataframe_name}] No mode found for column '{col}'. ------------")
                 else:
-                    print(f"[{dataframe_name}] Most frequent item(s) in column '{col}': {list(mode_series)}")
+                    print(f"------------ [{dataframe_name}] Most frequent item(s) in column '{col}': {list(mode_series)} ------------")
 
     def __resolve_column(self, df):
         if isinstance(self.column, int):
@@ -331,10 +332,10 @@ class DisplayAllCategories(Transformation):
         for dataframe_name, df in context.dataframes.items():
             col = self.__resolve_column(df)
             if col is None or col not in df.columns:
-                print(f"[{dataframe_name}] Column '{self.column}' not found.")
+                print(f"------------ [{dataframe_name}] Column '{self.column}' not found. ------------")
             else:
                 categories = df[col].unique()
-                print(f"[{dataframe_name}] Unique categories in column '{col}': {list(categories)}")
+                print(f"------------ [{dataframe_name}] Unique categories in column '{col}': {list(categories)} ------------")
 
     def __resolve_column(self, df):
         if isinstance(self.column, int):
@@ -351,11 +352,11 @@ class DisplaySubstringOccurrence(Transformation):
         for dataframe_name, df in context.dataframes.items():
             col = self.__resolve_column(df)
             if col is None or col not in df.columns:
-                print(f"[{dataframe_name}] Column '{self.column}' not found.")
+                print(f"------------ [{dataframe_name}] Column '{self.column}' not found. ------------")
             else:
                 # Convert entries to strings and count occurrences of the substring per row.
                 total_count = df[col].astype(str).apply(lambda x: x.count(self.substring)).sum()
-                print(f"[{dataframe_name}] Total occurrences of '{self.substring}' in column '{col}': {total_count}")
+                print(f"------------ [{dataframe_name}] Total occurrences of '{self.substring}' in column '{col}': {total_count} ------------")
 
     def __resolve_column(self, df):
         if isinstance(self.column, int):

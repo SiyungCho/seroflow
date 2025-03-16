@@ -1,10 +1,12 @@
 """
 """
-
+import logging
 import time
 from collections import OrderedDict
+import os
+from datetime import datetime
 from tqdm import tqdm
-import logging
+import pandas as pd
 
 from .log import CustomLogger
 from .cache import AbstractCache, LFUCache
@@ -387,15 +389,45 @@ class Pypeline():
             self.__update_dataframe_index(step_key, dataframe)
         return step_key
 
+    # @log_error("Error Parsing Parameters, proper parameter value not found")
+    # def __parse_parameters(self, step_key):
+    #     """
+    #     """
+    #     kwargs = {}
+    #     step = self.step_index[step_key]
+
+    #     if step.needs_context:
+    #         subcontext = self.__create_subcontext(step, step_key)
+    #         kwargs["context"] = subcontext
+
+    #     for param in step.params_list:
+    #         if param == "chunk_coordinates":
+    #             param_value = self.chunker.dequeue()
+    #         else:
+    #             input_value = step.input_params.get(param)
+    #             curr_value = self.parameter_index.get(param)
+    #             default_value = step.default_params.get(param)
+    #             param_value = input_value or curr_value or default_value
+    #         kwargs[param] = param_value
+    #     self.__check_parsed_parameters(kwargs)
+    #     return kwargs
+
     @log_error("Error Parsing Parameters, proper parameter value not found")
     def __parse_parameters(self, step_key):
         """
+        Parse parameters for a step.
+        In TEST mode, if a parameter is a DataFrame, sample it.
         """
         kwargs = {}
         step = self.step_index[step_key]
 
         if step.needs_context:
             subcontext = self.__create_subcontext(step, step_key)
+            if self.mode == "TEST":
+                for df_name in subcontext.get_dataframe_names():
+                    df = subcontext.get_dataframe(df_name)
+                    if isinstance(df, pd.DataFrame):
+                        subcontext.set_dataframe(df_name, df.sample(frac=0.1, random_state=42))
             kwargs["context"] = subcontext
 
         for param in step.params_list:
@@ -406,9 +438,12 @@ class Pypeline():
                 curr_value = self.parameter_index.get(param)
                 default_value = step.default_params.get(param)
                 param_value = input_value or curr_value or default_value
+            if self.mode == "TEST" and isinstance(param_value, pd.DataFrame):
+                param_value = param_value.sample(frac=0.1, random_state=42)
             kwargs[param] = param_value
         self.__check_parsed_parameters(kwargs)
         return kwargs
+
 
     @log_error("Error Parsing Step Output")
     def __parse_step_output(self, step_output, step_key):
@@ -494,6 +529,16 @@ class Pypeline():
             delete_directory=delete_directory
         )
 
+    def __perform_step(self, step_key):
+        """
+        """
+        if is_loader(self.step_index[step_key], _raise=False) and self.mode == "DEV":
+            return
+        step_params = self.__parse_parameters(step_key)
+        step_output = self.step_index[step_key](**step_params)
+        self.__parse_step_output(step_output, step_key)
+        self.__update_cache(step_key)
+
     @log_error("Error executing pypeline...")
     def execute(self, chunker=None):
         """
@@ -505,20 +550,15 @@ class Pypeline():
         step_keys = self.__get_step_keys()
         start_index = 0 if not self.__cache_is_set() else self.__load_from_cache(step_keys)
 
-        start_time = time.time()  # Start timer
+        start_time = time.time()
         self.__display_message("Beginning ETL Execution at time: " + str(start_time) + " ...")
 
         total_steps = self.__get_number_of_steps() - start_index
         with tqdm(total=total_steps, desc="Executing Pypeline") as pbar:
             for step_key in step_keys[start_index:]:
                 self.__display_message("Executing Step: " + str(self.step_name_index[step_key]), True)
-
-                step_params = self.__parse_parameters(step_key)
-                step_output = self.step_index[step_key](**step_params)
-                self.__parse_step_output(step_output, step_key)
-                self.__update_cache(step_key)
-
-                self.__display_message("Step: " + self.step_name_index[step_key] + " completed...", True)
+                self.__perform_step(step_key)
+                self.__display_message("Step: " + self.step_name_index[step_key] + " completed...")
                 pbar.update(1)
 
         if self.chunker is not None:
@@ -526,7 +566,86 @@ class Pypeline():
                 self.parameter_index, self.globalcontext = self.chunker.reload()
                 self.execute(chunker=chunker)
         else:
-            end_time = time.time()  # End timer
+            end_time = time.time()
             self.__display_message("ETL Execution Finished at time: " + str(end_time) + " ...")
             elapsed_time = end_time - start_time
-            self.__display_message("Total Execution Time: " + str(end_time) + " seconds")
+            self.__display_message("Total Execution Time: " + str(elapsed_time) + " seconds")
+            # self._generate_review()
+    
+    # def _generate_review(self):
+    #     """
+    
+    #     """
+    #     review_details = {}
+    #     review_details['mode'] = self.mode
+    #     review_details['global_context'] = str(self.globalcontext)
+    #     review_details['parameters'] = str(self.parameter_index)
+        
+    #     message_lines = []
+        
+    #     if self.mode == "DEV":
+    #         message_lines.append("DEV Mode: Global Context Detailed Review:")
+    #         message_lines.append("Global Context:")
+    #         message_lines.append(str(self.globalcontext))
+    #         message_lines.append("\nParameter Index:")
+    #         message_lines.append(str(self.parameter_index))
+            
+    #     elif self.mode == "TEST":
+    #         message_lines.append("TEST Mode: Detailed Review for Sampled Data:")
+    #         message_lines.append("Global Context (Sampled):")
+    #         message_lines.append(str(self.globalcontext))
+    #         message_lines.append("\nParameter Index (Sampled):")
+    #         message_lines.append(str(self.parameter_index))
+    #         # Include step-level metrics if collected.
+    #         if hasattr(self, "step_metrics"):
+    #             message_lines.append("\nStep Execution Metrics:")
+    #             message_lines.append(str(self.step_metrics))
+    #             review_details['step_metrics'] = self.step_metrics
+                
+    #     elif self.mode == "PROD":
+    #         message_lines.append("PROD Mode: Detailed Execution Review:")
+    #         message_lines.append("Global Context:")
+    #         message_lines.append(str(self.globalcontext))
+    #         message_lines.append("\nParameter Index:")
+    #         message_lines.append(str(self.parameter_index))
+    #         if hasattr(self, "step_metrics"):
+    #             message_lines.append("\nStep Execution Metrics:")
+    #             message_lines.append(str(self.step_metrics))
+    #             review_details['step_metrics'] = self.step_metrics
+    #         if self.__cache_is_set():
+    #             message_lines.append("\nCache Details:")
+    #             message_lines.append(str(self.cache))
+    #             review_details['cache'] = str(self.cache)
+        
+    #     # Combine the review message.
+    #     message = "\n".join(message_lines)
+    #     review_details['message'] = message
+        
+    #     # Display the detailed review using the pipeline's logger.
+    #     self.__display_message(message)
+        
+    #     # Determine the log folder from the logger's file handler.
+    #     log_folder = None
+    #     for handler in self.logger.handlers:
+    #         if hasattr(handler, 'baseFilename'):
+    #             log_folder = os.path.dirname(handler.baseFilename)
+    #             break
+    #     # Fallback if no file handler is found.
+    #     if log_folder is None:
+    #         log_folder = os.path.join(os.getcwd(), "logs")
+        
+    #     # Create a unique review filename with a timestamp.
+    #     review_filename = os.path.join(
+    #         log_folder, f"pypeline_review_{datetime.now():%Y_%m_%d_%H_%M_%S}.log"
+    #     )
+        
+    #     # Export the review to the determined file.
+    #     try:
+    #         with open(review_filename, "a") as review_file:
+    #             review_file.write("\n" + message + "\n")
+    #         self.__display_message(f"Review exported to: {review_filename}")
+    #     except Exception as e:
+    #         self.__display_message("Warning: Could not export review to file. " + str(e))
+        
+    #     # Optionally, return the review details if needed elsewhere.
+    #     return review_details
