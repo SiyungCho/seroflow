@@ -1,6 +1,40 @@
 """
-Version:
-    1.0.0
+Package: Pypeline
+Version: 1.0.0
+
+This package provides a comprehensive toolkit for building and managing ETL (Extract, Transform, Load)
+pipelines. It encompasses a wide range of modules and classes to support the various stages of data
+processing, including caching, chunking, context management, data extraction, loading, transformation,
+and logging. The design emphasizes modularity, flexibility, and robustness, enabling developers to
+easily construct scalable data workflows.
+
+Key Components:
+    - Cache: Implements caching mechanisms to store intermediate pypeline states.
+        AbstractCache, LFUCache
+    - Chunker: Provides strategies for partitioning large tasks.
+        Chunker, DirectChunker, RecursiveChunker
+    - Context: Manages shared data and dataframes across the pypeline through the Context class.
+    - Engine: Supports database connectivity and operations using engines.
+        SQLAlchemyEngine, PyodbcEngine, UniversalEngine(WIP)
+    - Exceptions: Defines custom exceptions for improved error handling.
+        CustomException(WIP)
+    - Extract: Offers various extractor classes to facilitate data ingestion from multiple sources.
+        Extractor, MultiExtractor, FileExtractor, CSVExtractor, ExcelExtractor, SQLServerExtractor
+    - Load: Contains loader classes for loading data into target systems.
+        (Loader, FileLoader, CSVLoader, ExcelLoader, SQLServerLoader, etc.)
+    - Log: Provides a customizable logging solution.
+        CustomLogger
+    - Step: Defines the structure for pypeline steps to encapsulate individual processing tasks.
+        AbstractStep, Step
+    - Transform: Includes a diverse set of transformation utilities to process and modify data.
+        Many...
+    - Types: Offers type-checking utilities.
+    - Utils: Provides helper functions for common tasks and operations.
+    - Wrappers: Contains decorators to facilitate performance monitoring and error handling.
+      (timer, log_error)
+
+This package is designed to enable robust, error-resilient, and scalable ETL processes, supporting
+a variety of use cases from simple file processing to complex, database-driven workflows.
 """
 
 from .cache import AbstractCache

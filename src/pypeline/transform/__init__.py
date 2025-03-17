@@ -1,5 +1,51 @@
 """
-Module for transform implementations.
+Module: transform
+
+This module implements a suite of predefined data transformation operations.
+It defines a wide range of data transformation tasks including:
+
+    - Base Transformation (Base class for creating predefined transformation steps):
+        * Transformation
+    - Cache Management (Classes to manage and revert cache states during transformations):
+        * CacheState, ReloadCacheState, ResetCache
+    - Column Operations (Functions to modify and manage dataframe columns):
+        * DropColumn, DropColumns, ConvertColumnType,
+          RenameColumns, AddColumn, MergeColumns,
+          SplitColumn, ExplodeColumn, CreateColumnFromVariable
+    - DataFrame Internal Operations (Functions to manage dataframes within a context):
+        * AddDataFrame, DeleteDataFrame, RenameDataFrame, CopyDataFrame
+    - Advanced DataFrame Manipulations (Functions for in-depth dataframe restructuring and cleaning):
+        * TransposeDataFrame, PivotDataFrame, MeltDataFrame,
+          GroupByAggregate, FilterRows, SortDataFrame,
+          DropDuplicates, SelectColumns, FillNAValues, 
+          ReplaceValues, MergeDataFrames, JoinDataFrames,
+          ApplyFunction, ApplyMap, MapValues, OneHotEncode
+    - Date and Time Conversions (Utility for converting columns to datetime objects):
+        * ConvertToDateTime
+    - Display Utilities (Functions for summarizing and visualizing dataframe contents):
+        * DisplayInfo, DisplayColumns, DisplayHead,
+          DisplayTail, DisplayColumnMean, DisplayColumnMedian,
+          DisplayColumnMode, DisplayColumnVariance, DisplayColumnStdDev,
+          DisplayColumnSum, DisplayColumnMin, DisplayColumnMax,
+          DisplayColumnCount, DisplayColumnUnique, DisplayColumnNUnique,
+          DisplayColumnDType, DisplayStringCount, DisplayMostFrequentString,
+          DisplayAllCategories, DisplaySubstringOccurrence
+    - Indexing Operations (Utilities to modify dataframe indices):
+        * SetIndex, ResetIndex
+    - SQL Integration (Class to execute SQL-based transformations on data):
+        * SQLQuery
+    - String Manipulations (Functions to handle text cleaning in columns):
+        * RemoveCharacterFromColumn, RemoveCharactersFromColumn, ReplaceStringInColumn
+    - Variable Operations (Functions to create and manipulate pipeline variables):
+        * CreateVariable, UpdateVariable, DecrementVariable, 
+          IncrementVariable, MultiplyVariable, DivideVariable, CopyVariable
+    - Aggregation Functions (Statistical functions to aggregate and summarize data):
+        * GetColMean, GetColMedian, GetColMode,
+          GetColStd, GetColSum, GetColVariance,
+          GetColQuantile, GetColCorrelation, GetColCovariance, GetColSkew
+
+The module is designed to be extensible and integrative, allowing for flexible pipeline construction
+and effective data manipulation.
 """
 from .transformation import Transformation
 from .cache import CacheState

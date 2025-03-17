@@ -2,7 +2,9 @@ TODO:
 
 post v4 TODO:
 - fix adl e/l
-- pylint
+- fix sql e/l
+- finish linting
+
 - documentation
 - pytests
 - upload to pip

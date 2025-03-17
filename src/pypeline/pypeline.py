@@ -1,10 +1,23 @@
 """
+Module: pypeline
+
+This module implements an ETL pipeline framework using the Pypeline class.
+It provides functionality for managing and executing a sequence of data processing
+steps with support for caching, logging, parameter management, and execution chunking.
+
+The module integrates with several sub-components such as custom logging, caching,
+context management, transformation utilities, chunking, and type validation
+to offer a robust and extensible pipeline architecture.
+
+Classes:
+    Pypeline: Core class to construct, manage, and execute an ETL pipeline.
+              It enables the addition of steps, manages dependencies via a
+              global context and parameter index, and supports various execution modes.
 """
 import logging
 import time
 from collections import OrderedDict
 from tqdm import tqdm
-import pandas as pd
 
 from .log import CustomLogger
 from .cache import AbstractCache, LFUCache
@@ -18,10 +31,75 @@ from .types import is_loader, is_context, is_context_object
 
 class Pypeline():
     """
+    Pypeline Class
+
+    The Pypeline class provides a framework for constructing and executing ETL pipelines with built-in support 
+    for state caching, logging, and chunked execution. It allows dynamic addition of processing steps while 
+    managing inter-step dependencies through a global context and parameter index. The pypeline can operate in 
+    different modes ("DEV", "TEST", "PROD") which alter its execution behavior (e.g., skipping loader steps in DEV mode).
+
+    Key Features:
+        - Dynamically add individual or multiple steps to the pipeline.
+        - Manage shared parameters and dataframes across steps via a global context.
+        - Support for caching intermediate states to enable execution resumption.
+        - Integration with custom or user-defined logging mechanisms to record pipeline events.
+        - Optional support for chunking, allowing segmented processing of large datasets.
+        - Automatic validation and indexing of extractors, loaders, and step outputs.
+        - Flexible configuration through properties and setters ensuring type safety and proper initialization.
+
+    Usage Example:
+        >>> from pypeline import Pypeline
+        >>> pipeline = Pypeline(cache=True, logger=True, mode="DEV")
+        >>> pipeline.add_step(my_step)
+        >>> pipeline.execute()
+
+    Attributes:
+        logger (logging.Logger or None): 
+            Logger instance used for tracking pipeline execution details.
+        mode (str): 
+            The current execution mode ("DEV", "TEST", or "PROD") that affects how steps are processed.
+        cache (AbstractCache or None): 
+            Caching mechanism for storing intermediate pipeline states.
+        parameter_index (dict): 
+            Dictionary for storing parameters and variables shared across steps.
+        step_index (OrderedDict): 
+            Ordered dictionary mapping unique step keys to their corresponding step objects.
+        step_name_index (OrderedDict): 
+            Ordered dictionary mapping unique step keys to the step names.
+        dataframe_index (dict): 
+            Dictionary mapping step keys to requested dataframe names.
+        globalcontext (Context): 
+            Global context object that holds all dataframes used throughout the pipeline.
+        chunker (Chunker or None): 
+            Optional chunker object to partition and manage segmented execution.
     """
 
     def __init__(self, cache=False, logger=False, mode="DEV"):
         """
+        Pypeline Object Constructor method.
+        Initializes Pypeline Object with necessary parameters (cache, logger and mode).
+
+        Args: 
+            logger (python.logging, Bool): 
+                Default: False
+                    Does not instantiate a logger, no logging used.
+                True:
+                    Instantiates default logger: CustomLogger
+                python.logging:
+                    User defined python.logging object.
+            cache (AbstractCache subclass, Bool):
+                Default: False
+                    Does not instantiate a cache, no cache used.
+                True:
+                    Instantiates default cache: LFUCache
+                AbstractCache subclass:
+                    User defined Cache object must be derived from AbstractCache class.
+            mode (str: ["DEV", "PROD"]):
+                Default: "DEV"
+                    Instantiates Pypeline as Development Mode
+                "PROD":
+                    Instantiates Pypeline as Production Mode
+
         """
         self.logger = logger
         self.mode = mode # DEV, TEST, PROD
@@ -38,10 +116,14 @@ class Pypeline():
 
     def __del__(self):
         """
+        Pypeline Object Destructor method.
+        Deletes necessary components on Program Completion or Object Deletion.
         """
 
     def __str__(self):
         """
+        Pypeline Object Custom Print method.
+        Used to display internal Parameter Index, Step Index and Dataframe Index.
         """
         print("----Pypeline Object----")
         print(f"Parameters Index: {self.parameter_index}")
@@ -52,6 +134,17 @@ class Pypeline():
 
     def __display_message(self, message, _print=False):
         """
+        Custom display method.
+        Used to display messages, if necessary or log messages if logger is initialized.
+
+        Args:
+            message (str): 
+                Formatted message to be printed, logged or both.
+            _print (bool):
+                True:
+                    Message is printed.
+                False:
+                    Message is not printed.
         """
         if self.logger_is_set():
             self.logger.info(message)
@@ -61,66 +154,187 @@ class Pypeline():
     @property
     def logger(self):
         """
+        Logger Property Getter Method.
+        Logger Property (Optional):
+        Used to continuously log any execution info or errors.
+        Works with @log_error() wrapper to wrap callable in try-except and log any errors.
+
+        Returns:
+            self.__logger
         """
         return self.__logger
 
     @property
     def target_extractor(self):
         """
+        Target Extractor Property Getter Method.
+        Target Extractor Property (Required):
+        Used to verify that pypeline execution always begins on an Extract Step.
+        Ensures that there is always some data in execution of the pypeline object.
+
+        Returns:
+            self.__target_extractor
         """
         return self.__target_extractor
 
     @property
     def target_loader(self):
         """
+        Target Loader Property Getter Method.
+        Target Loader Property (Optional):
+        Used to verify that data is loaded as final step.
+
+        Returns:
+            self.__target_loader
         """
         return self.__target_loader
 
     @property
     def cache(self):
         """
+        Cache Property Getter Method.
+        Cache Property (Optional):
+        Stores cache object.
+        Used to cache any steps in development or in execution.
+        In execution, cache can be used to 'branch' steps by saving the current state.
+        In development, cache is used to store the state on a completed step so that
+        on rerun, execution continues from last completed step.
+
+        Returns:
+            self.__cache
         """
         return self.__cache
 
     @property
     def parameter_index(self):
         """
+        Parameter Index Property Getter Method.
+        Parameter Index Property (Required):
+        Used to store parameters/variables to be used across steps.
+        Step Functions can pass variables to be saved through the return statement.
+        Pypeline object will read the return statement,
+        then save/update the value of the variable inside parameter index.
+        * Steps are not required to have parameters
+
+        Mapping:
+            {
+                Parameter name: Parameter value,
+                ...
+            }
+
+        Returns:
+            self.__parameter_index
         """
         return self.__parameter_index
 
     @property
     def step_index(self):
         """
+        Step Index Property Getter Method.
+        Step Index Property (Required):
+        Used to store Step Objects.
+        Step Objects are added using the add_step() or add_steps() public methods.
+        Step Objects are then verified, and pass through the parse_step() public method.
+        Unique Step key is created by hashing: step name (often function name) and step num.
+        Step Object and Key is then stored for future use in step index.
+        * All Step Objects are required to be added to step index.
+
+        Mapping:
+            {
+                Step Key: Step Object,
+                ...
+            }
+
+        Returns:
+            self.__step_index
         """
         return self.__step_index
 
     @property
     def step_name_index(self):
         """
+        Step Name Index Property Getter Method.
+        Step Name Index Property (Required):
+        Used to Map Step Names to Step Keys.
+        Unique Step key is created by hashing: step name (often function name) and step num.
+        Step Name and Key is then stored for future use in step name index.
+        * All Step Objects are required to be added to step name index.
+
+        Mapping:
+            {
+                Step Key: Step Name,
+                ...
+            }
+
+        Returns:
+            self.__step_name_index
         """
         return self.__step_name_index
 
     @property
     def dataframe_index(self):
         """
+        DataFrame Index Property Getter Method.
+        DataFrame Index Property (Required):
+        Used to Map Step Keys with their requested Dataframes.
+        Step Key and corresponding list of dataFrame names is stored.
+        * Steps are not required to list dataframes needed, 
+        * however, if 'context' argument is found in step function signature then global context is given.
+
+        Mapping:
+            {
+                Step Key: [DataFrame Name, DataFrame Name, ...],
+                ...
+            }
+
+        Returns:
+            self.__dataframe_index
         """
         return self.__dataframe_index
 
     @property
     def globalcontext(self):
         """
+        Global Context Property Getter Method.
+        Global Context Property (Required):
+        Stores context object.
+        Used to store all dataframes in single context object.
+        Pypeline will retrieve requested dataframe from global context if specified by step.
+        Or, will return entire global context (ie all dataframes).
+
+        Returns:
+            self.__globalcontext
         """
         return self.__globalcontext
 
     @property
     def chunker(self):
         """
+        Chunker Property Getter Method.
+        Chunker Property (Optional):
+        Stores chunker object.
+        Used to store/initialize necessary properties to perform chunking on pypeline execution.
+        Chunker is passed in the pypeline.execute() method.
+
+        Returns:
+            self.__chunker
         """
         return self.__chunker
 
     @property
     def mode(self):
         """
+        Mode Property Getter Method.
+        Mode Property (Optional):
+        Used to determine current execution Mode: "DEV" or "PROD"
+        Pypeline Execution will change depending on mode.
+        DEV:
+            Loader Steps are skipped so that data can first be tested without actually loading.
+        PROD:
+            All Loader Steps are executed.
+
+        Returns:
+            self.__mode
         """
         return self.__mode
 
@@ -128,6 +342,22 @@ class Pypeline():
     @log_error("Logger must be a logging object")
     def logger(self, logger):
         """
+        Logger Property Setter Method.
+        Receives argument logger.
+        Verifies that argument logger is type Bool or python.logging.
+
+        Args:
+            logger (python.logging, Bool):
+                True:
+                    Default CustomLogger is initialized.
+                False:
+                    No logger is initialized.
+                python.logging:
+                    Predefined logger is initialized.
+
+        Raises:
+            TypeError:
+                Argument logger is not of type Bool or python.logging.
         """
         if not logger:
             self.__logger = None
@@ -144,6 +374,17 @@ class Pypeline():
     @log_error("Verify Extractor Type")
     def target_extractor(self, extractor):
         """
+        Target Extractor Property Setter Method.
+        Receives argument extractor.
+        Verifies that argument extractor is type Extractor or MultiExtractor.
+
+        Args:
+            extractor (Extractor, MultiExtractor):
+                Initializes Target Extractor property.
+
+        Raises:
+            TypeError:
+                Argument extractor is not of type Extractor or MultiExtractor.
         """
         if is_extractor(extractor, _raise=False):
             self.__target_extractor = extractor
@@ -157,8 +398,19 @@ class Pypeline():
     @log_error("Verify Loader Type")
     def target_loader(self, loader):
         """
+        Target Loader Property Setter Method.
+        Receives argument loader.
+        Verifies that argument loader is type Loader.
+
+        Args:
+            loader (Loader):
+                Initializes Target Loader property.
+
+        Raises:
+            TypeError:
+                Argument loader is not of type Loader.
         """
-        if is_loader(loader, True):
+        if is_loader(loader, _raise=True):
             self.__target_loader = loader
             self.__display_message("Target loader set...")
 
@@ -166,6 +418,17 @@ class Pypeline():
     @log_error("Parameter index must be a dictionary")
     def parameter_index(self, parameter_index):
         """
+        Parameter Index Property Setter Method.
+        Receives argument parameter_index.
+        Verifies that parameter_index loader is type Dict.
+
+        Args:
+            parameter_index (Dict):
+                Initializes Parameter Index property.
+
+        Raises:
+            TypeError:
+                Argument parameter_index is not of type Dict.
         """
         if not isinstance(parameter_index, dict):
             raise TypeError("Parameter index must be a dictionary")
@@ -175,15 +438,42 @@ class Pypeline():
     @log_error("Global context must be a context object")
     def globalcontext(self, globalcontext):
         """
+        Global Context Property Setter Method.
+        Receives argument globalcontext.
+        Verifies that globalcontext is type Context.
+
+        Args:
+            globalcontext (Context):
+                Initializes Global Context property.
+
+        Raises:
+            TypeError:
+                Argument globalcontext is not of type Context.
         """
         if not is_context(globalcontext):
-            raise TypeError("Global context must be a context object")
+            raise TypeError("Global context must be a Context object")
         self.__globalcontext = globalcontext
 
     @cache.setter
     @log_error("Cache must be an instance of AbstractCache")
     def cache(self, cache):
         """
+        Cache Property Setter Method.
+        Receives argument cache.
+        Verifies that argument cache is type Bool or subclass to AbstractCache.
+
+        Args:
+            cache (subclass to AbstractCache, Bool):
+                True:
+                    Default LFUCache is initialized.
+                False:
+                    No cache is initialized.
+                subclass to AbstractCache:
+                    Predefined cache is initialized.
+
+        Raises:
+            TypeError:
+                Argument cache is not of type Bool or subclass to AbstractCache.
         """
         if not cache:
             self.__cache = None
@@ -201,6 +491,22 @@ class Pypeline():
     @log_error("Mode must be either DEV, TEST, or PROD")
     def mode(self, mode):
         """
+        Mode Property Setter Method.
+        Receives argument mode.
+        Verifies that mode is type string and value: "DEV", "TEST" or "PROD".
+
+        Args:
+            mode (str):
+                "DEV":
+                    Initializes Mode to value "DEV".
+                "TEST":
+                    Initializes Mode to value "TEST".
+                "PROD":
+                    Initializes Mode to value "PROD".
+
+        Raises:
+            TypeError:
+                Argument mode is not of type str or has value: "DEV", "TEST" or "PROD".
         """
         if not isinstance(mode, str):
             raise TypeError("Mode must be a string")
@@ -212,6 +518,21 @@ class Pypeline():
     @log_error("Chunker must be of Chunker class type")
     def chunker(self, chunker):
         """
+        Chunker Property Setter Method.
+        Receives argument chunker.
+        Verifies that argument chunker or subclass to class Chunker.
+        Adds a reset cache step if a cache is also initialized.
+        Adding Reset ensures that cache is not used on chunks.
+        Saves current state of global context and parameter index.
+
+        Args:
+            chunker (subclass to class Chunker):
+                subclass to Chunker:
+                    Predefined chunker is initialized.
+
+        Raises:
+            TypeError:
+                Argument cache is not of subclass to class Chunker.
         """
         if not isinstance(chunker, Chunker):
             raise TypeError("Chunker must be of Chunker class type")
@@ -225,6 +546,15 @@ class Pypeline():
 
     def logger_is_set(self):
         """
+        Public Method: logger_is_set()
+        Verifies if logger is initialized.
+        Must be public as wrapper, @log_error() uses method.
+
+        Returns (Bool):
+            True:
+                Logger is initialized.
+            False:
+                Logger is not initialized.
         """
         if not self.logger:
             return False
@@ -232,6 +562,14 @@ class Pypeline():
 
     def __cache_is_set(self):
         """
+        Private Method: __cache_is_set()
+        Verifies if cache is initialized.
+
+        Returns (Bool):
+            True:
+                Cache is initialized.
+            False:
+                Cache is not initialized.
         """
         if not self.cache:
             return False
@@ -239,27 +577,66 @@ class Pypeline():
 
     def __update_parameter_index(self, parameter, value):
         """
+        Private Method: __update_parameter_index()
+        Updates parameter index values.
+
+        Arguments:
+            parameter (string):
+                Parameter Name to be updated.
+            value (Any):
+                Parameter value to add/update.
         """
         self.parameter_index[parameter] = value
 
     def __add_new_parameter(self, parameter):
         """
+        Private Method: __add_new_parameter()
+        Adds new empty parameter to parameter index.
+        Used in __parse_step() method.
+
+        Arguments:
+            parameter (string):
+                Parameter Name to be added.
         """
         if parameter not in self.parameter_index:
             self.parameter_index[parameter] = None
 
     def __update_step_index(self, step_key, step):
         """
+        Private Method: __update_step_index()
+        Updates step index values.
+
+        Arguments:
+            step_key (string):
+                Step Key to be updated.
+            step (Step Object):
+                Step Object to add/update.
         """
         self.step_index[step_key] = step
 
     def __update_step_name_index(self, step_key, step_name):
         """
+        Private Method: __update_step_name_index()
+        Updates step name index values.
+
+        Arguments:
+            step_key (string):
+                Step Key to be updated.
+            step_name (string):
+                Step Name to add/update.
         """
         self.step_name_index[step_key] = step_name
 
     def __update_dataframe_index(self, step_key, dataframe_name):
         """
+        Private Method: __update_dataframe_index()
+        Updates dataframe index values.
+
+        Arguments:
+            step_key (string):
+                Step Key to be updated.
+            dataframe_name (string):
+                Dataframe name to add/update.
         """
         if step_key not in self.dataframe_index:
             self.dataframe_index[step_key] = []
@@ -267,6 +644,14 @@ class Pypeline():
 
     def __update_globalcontext(self, subcontext):
         """
+        Private Method: __update_globalcontext()
+        Updates global context dataframes.
+        Either Updates internal dataframe.
+        Or, Adds new dataframe to global context.
+
+        Arguments:
+            subcontext (Context):
+                Subcontext, contains dataframes to update in global context.
         """
         for dataframe_name in subcontext.get_dataframe_names():
             if dataframe_name in self.globalcontext.get_dataframe_names():
@@ -280,12 +665,26 @@ class Pypeline():
 
     def __update_cache(self, step_key):
         """
+        Private Method: __update_cache()
+        Updates cache values.
+        Once step is completed, cache is then used to store current state of pypeline.
+
+        Arguments:
+            step_key (string):
+                Parameter Name to be updated.
         """
         if self.__cache_is_set() and (not isinstance(self.step_index[step_key], ResetCache)):
             self.__store_in_cache(step_key)
 
     def __check_parsed_parameters(self, kwargs):
         """
+        Private Method: __check_parsed_parameters()
+        Validates created kwargs to be passed in step function.
+        Ensures parameters do not contain empty values.
+
+        Arguments:
+            kwargs (dict):
+                Mapped parameters and values to be passed into step function.
         """
         for key, value in kwargs.items():
             if value is None:
@@ -294,6 +693,26 @@ class Pypeline():
 
     def __check_step_output(self, step_output, step_key):
         """
+        Private Method: __check_step_output()
+        Validates step output with intended step return list.
+        Ensures number of returned values matches expected number of returned values.
+        Returns step output as list or None.
+
+        Arguments:
+            step_output (tuple):
+                Output generated by step function.
+            step_key (string):
+                Step Key for corresponding step function that was just executed.
+
+        Returns:
+            step_output (list):
+                Verified step output as a list.
+            None:
+                if no return statement then nothing should be returned.
+        Raises:
+            ValueError:
+                Number of Elements returned by step function 
+                does not match expected number of return elements.
         """
         if not isinstance(step_output, tuple):
             step_output = [step_output]
@@ -305,6 +724,22 @@ class Pypeline():
         return step_output
 
     def __create_subcontext(self, step, step_key):
+        """
+        Private Method: __create_subcontext()
+        Creates subcontext to be passed to step function.
+        Subcontext contains only the dataframes needed from the global context.
+        If step is of extractor type, then blank subcontext is returned.
+
+        Arguments:
+            step (Step Object):
+                Step Object requesting dataframes.
+            step_key (string):
+                Step Key for corresponding step.
+
+        Returns:
+            subcontext (Context):
+                Context object containing only the requested dataframes.
+        """
         step_name = self.step_name_index[step_key]
         subcontext = base_context(step_name + "_subcontext")
         if not is_extractor(step, _raise=False):
@@ -321,21 +756,54 @@ class Pypeline():
 
     def __get_current_step_number(self):
         """
+        Private Method: __get_current_step_number()
+        Calculates the step number for newest step.
+
+        Returns:
+            (Int):
+                Number of Steps + 1, or 0 if No steps have been added.
         """
         return self.__get_number_of_steps() + 1 if self.step_index else 0
 
     def __get_number_of_steps(self):
         """
+        Private Method: __get_number_of_steps()
+        Calculates the number of steps.
+
+        Returns:
+            (Int):
+                Number of Steps.
         """
         return len(self.__get_step_keys())
 
     def __get_step_keys(self):
         """
+        Private Method: __get_step_keys()
+        Gathers all step keys.
+
+        Returns:
+            (List):
+                List of step keys.
         """
         return list(self.step_index.keys())
 
     @log_error("Error adding target to step index")
     def __add_target_to_step(self, target, last=False):
+        """
+        Private Method: __add_target_to_step()
+        Adds targets to step index.
+
+        Arguments:
+            target (Extractor, Loader):
+                Target Extractor/Loader to be added to step index.
+            last (Bool):
+                True:
+                    target is added to end of step index.
+                    Intended to be used with target loader.
+                False:
+                    target is added to beginning of step index.
+                    Intended to be used with target extractor.
+        """
         target_key = self.__parse_step(target)
         self.step_index.move_to_end(target_key, last=last)
         self.step_name_index.move_to_end(target_key, last=last)
@@ -344,10 +812,19 @@ class Pypeline():
     @log_error("Error adding targets to step index")
     def __add_targets(self):
         """
+        Private Method: __add_targets()
+        Verifies Targets before adding them to step index.
+        If targets have already been checked then method returns.
+        In "DEV" Mode target loader and extractor do not have to be set.
+        Ensures that MultiExtractors are parsed, by adding single extractor steps.
+
+        Raises:
+            ValueError:
+                If in "PROD" mode then extractor must be set.
         """
         if not self.checked_targets:
             self.checked_targets = True
-            if (self.mode != "TEST") and (not self.target_extractor):
+            if (self.mode != "DEV") and (not self.target_extractor):
                 raise ValueError("Target extractor must be set before executing")
             if self.target_extractor:
                 if is_multiextractor(self.target_extractor):
@@ -362,6 +839,17 @@ class Pypeline():
     @log_error("Error Parsing Step")
     def __parse_step(self, step):
         """
+        Private Method: __parse_step()
+        Creates step key and adds new step to step index and step name index.
+        Updates parameter and dataframe index with new values.
+        
+        Arguments:
+            step (Step Object):
+                New step object to be added to indexes.
+
+        Returns:
+            step_key (string):
+                Newly generated unique key for added step.
         """
         key_index = self.__get_current_step_number()
         step_key = generate_key(f"{step.step_name}_{key_index}")
@@ -373,45 +861,31 @@ class Pypeline():
             self.__update_dataframe_index(step_key, dataframe)
         return step_key
 
-    # @log_error("Error Parsing Parameters, proper parameter value not found")
-    # def __parse_parameters(self, step_key):
-    #     """
-    #     """
-    #     kwargs = {}
-    #     step = self.step_index[step_key]
-
-    #     if step.needs_context:
-    #         subcontext = self.__create_subcontext(step, step_key)
-    #         kwargs["context"] = subcontext
-
-    #     for param in step.params_list:
-    #         if param == "chunk_coordinates":
-    #             param_value = self.chunker.dequeue()
-    #         else:
-    #             input_value = step.input_params.get(param)
-    #             curr_value = self.parameter_index.get(param)
-    #             default_value = step.default_params.get(param)
-    #             param_value = input_value or curr_value or default_value
-    #         kwargs[param] = param_value
-    #     self.__check_parsed_parameters(kwargs)
-    #     return kwargs
-
     @log_error("Error Parsing Parameters, proper parameter value not found")
     def __parse_parameters(self, step_key):
         """
-        Parse parameters for a step.
-        In TEST mode, if a parameter is a DataFrame, sample it.
+        Private Method: __parse_parameters()
+        Retrieves needed parameters and subcontext for step function.
+        If chunker is used, then chunking coordinates (ie start and stop positions)
+        for current chunk is retrieved.
+        Gathers parameter value using hierarchy:
+            1. Inputted value set in step object instantiation.
+            2. Current value inside parameter index.
+            3. Default value set in step object instantiation.
+
+        Arguments:
+            step_key (string):
+                Step Key for current step function about to be executed.
+
+        Returns:
+            kwargs (dict):
+                Mapped parameter values and subcontext requested by step function.
         """
         kwargs = {}
         step = self.step_index[step_key]
 
         if step.needs_context:
             subcontext = self.__create_subcontext(step, step_key)
-            if self.mode == "TEST":
-                for df_name in subcontext.get_dataframe_names():
-                    df = subcontext.get_dataframe(df_name)
-                    if isinstance(df, pd.DataFrame):
-                        subcontext.set_dataframe(df_name, df.sample(frac=0.1, random_state=42))
             kwargs["context"] = subcontext
 
         for param in step.params_list:
@@ -422,15 +896,55 @@ class Pypeline():
                 curr_value = self.parameter_index.get(param)
                 default_value = step.default_params.get(param)
                 param_value = input_value or curr_value or default_value
-            if self.mode == "TEST" and isinstance(param_value, pd.DataFrame):
-                param_value = param_value.sample(frac=0.1, random_state=42)
             kwargs[param] = param_value
         self.__check_parsed_parameters(kwargs)
         return kwargs
 
+    # @log_error("Error Parsing Parameters, proper parameter value not found")
+    # def __parse_parameters(self, step_key):
+    #     """
+    #     Private Method: __parse_parameters()
+    #     Retrieves needed parameters and subcontext for step function.
+    #     In TEST mode, if a parameter is a DataFrame, sample it.
+    #     """
+    #     kwargs = {}
+    #     step = self.step_index[step_key]
+
+    #     if step.needs_context:
+    #         subcontext = self.__create_subcontext(step, step_key)
+    #         if self.mode == "TEST":
+    #             for df_name in subcontext.get_dataframe_names():
+    #                 df = subcontext.get_dataframe(df_name)
+    #                 if isinstance(df, pd.DataFrame):
+    #                     subcontext.set_dataframe(df_name, df.sample(frac=0.1, random_state=42))
+    #         kwargs["context"] = subcontext
+
+    #     for param in step.params_list:
+    #         if param == "chunk_coordinates":
+    #             param_value = self.chunker.dequeue()
+    #         else:
+    #             input_value = step.input_params.get(param)
+    #             curr_value = self.parameter_index.get(param)
+    #             default_value = step.default_params.get(param)
+    #             param_value = input_value or curr_value or default_value
+    #         if self.mode == "TEST" and isinstance(param_value, pd.DataFrame):
+    #             param_value = param_value.sample(frac=0.1, random_state=42)
+    #         kwargs[param] = param_value
+    #     self.__check_parsed_parameters(kwargs)
+    #     return kwargs
+
     @log_error("Error Parsing Step Output")
     def __parse_step_output(self, step_output, step_key):
         """
+        Private Method: __parse_step_output()
+        Receives step outputs, validates step output, then updates indexes.
+        Updates global context and parameter index.
+
+        Arguments:
+            step_output (tuple):
+                Output generated by step function.
+            step_key (string):
+                Step Key for corresponding step function that was just executed.
         """
         checked_output = self.__check_step_output(step_output, step_key)
         if checked_output is None:
@@ -446,6 +960,19 @@ class Pypeline():
 
     def __load_from_cache(self, step_keys):
         """
+        Private Method: __load_from_cache()
+        On pypeline execution, if a cache is set then,
+        the state of the pypeline object at the last cached completed step is loaded.
+        The starting step's index is returned.
+        If cache is not set or there is no cached checkpoint, execution starts at step 0.
+
+        Arguments:
+            step_keys (list):
+                List of step keys currently in step index.
+
+        Returns:
+            start_index (int):
+                position of first step to be executed.
         """
         start_index = 0
         cached_checkpoint = self.cache.get_cached_checkpoint(self.step_index)
@@ -459,6 +986,13 @@ class Pypeline():
 
     def __store_in_cache(self, step_key):
         """
+        Private Method: __store_in_cache()
+        If cache is set, then once a step has fully completed,
+        the state of execution at that point is cached.
+
+        Arguments:
+            step_key (string):
+                Step Key for completed step
         """
         self.cache.store(self.step_index, self.parameter_index, self.globalcontext, step_key)
         self.__display_message(f"Checkpoint stored for step: {step_key}")
@@ -466,6 +1000,16 @@ class Pypeline():
     @log_error("add_steps method requires a list of step objects")
     def add_steps(self, steps):
         """
+        Public Method: add_steps()
+        Adds list of steps to pypeline indexes.
+
+        Arguments:
+            steps (list):
+                list of step objects to be addded.
+
+        Raises:
+            TypeError:
+                steps argument must be of type list.
         """
         if not isinstance(steps, list):
             raise TypeError("try using a list...")
@@ -475,6 +1019,17 @@ class Pypeline():
     @log_error("add_step method requires a step object")
     def add_step(self, step):
         """
+        Public Method: add_step()
+        Adds single step to pypeline indexes.
+        If a multiextractor step is added then verifies internal steps.
+
+        Arguments:
+            step (Step Object):
+                step object to be addded.
+
+        Raises:
+            TypeError:
+                step argument must be of type Step.
         """
         if is_multiextractor(step):
             for extractor in step.extractors:
@@ -485,6 +1040,19 @@ class Pypeline():
 
     def cache_state(self, step_name="cache_state"):
         """
+        Public Method: cache_state()
+        Intended to be used as a step itself and added using public method, add_step() or add_step().
+        Caches the current state of pypeline object in execution.
+        Can be used to 'branch' steps.
+
+        Arguments:
+            step_name (string):
+                Default: "cache_state"
+                Name for added cache state step.
+
+        Returns:
+            CacheState predefined step, compatible with any cache object 
+            derived from AbstractCache class.
         """
         return CacheState(
             step_name=step_name,
@@ -495,6 +1063,21 @@ class Pypeline():
 
     def reload_cached_state(self, cache_key, step_name="reload_cached_state"):
         """
+        Public Method: reload_cached_state()
+        Intended to be used as a step itself and added using public method, add_step() or add_step().
+        Reloads the state of cached state in pypeline execution.
+        Can be used to 'branch' steps.
+
+        Arguments:
+            step_name (string):
+                Default: "reload_cached_state"
+                Name for added reload cache state step.
+            cache_key (int):
+                index for cached state, configuration depends on cache class used.
+
+        Returns:
+            ReloadCacheState predefined step, compatible with any cache object 
+            derived from AbstractCache class.
         """
         return ReloadCacheState(
             step_name=step_name,
@@ -505,6 +1088,23 @@ class Pypeline():
 
     def reset_cache(self, step_name="reset_cache", delete_directory=False):
         """
+        Public Method: reset_cache()
+        Intended to be used as a step itself and added using public method, add_step() or add_step().
+        Resets the cache in execution.
+
+        Arguments:
+            step_name (String):
+                Default: "reset_cache"
+                Name for added reset cache step.
+            delete_directory (Bool):
+                True:
+                    cache directory is deleted.
+                False:
+                    cache directory is not deleted.
+
+        Returns:
+            ResetCache predefined step, compatible with any cache object 
+            derived from AbstractCache class.
         """
         return ResetCache(
             step_name=step_name,
@@ -514,6 +1114,15 @@ class Pypeline():
 
     def __perform_step(self, step_key):
         """
+        Private Method: __perform_step()
+        Executes the current step, by retrieving necessary parameters 
+        and updating indexes with returned values.
+        Skips loader steps if pypeline mode is set to "DEV"
+        Updates Cache if set.
+
+        Arguments:
+            step_key (string):
+                Step key for current step
         """
         if is_loader(self.step_index[step_key], _raise=False) and self.mode == "DEV":
             return
@@ -525,6 +1134,14 @@ class Pypeline():
     @log_error("Error executing pypeline...")
     def execute(self, chunker=None):
         """
+        Public Method: execute()
+        Initializes Pypeline Execution, performing validation on:
+        targets, chunker, cache, logger.
+        Displays execution messages, times total execution of all steps.
+
+        Arguments:
+            chunker (subclass to Chunker):
+                Chunker objects which partitions execution depending on Chunker Type.
         """
         self.__add_targets()
         if chunker is not None:
