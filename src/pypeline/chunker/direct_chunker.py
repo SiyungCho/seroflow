@@ -27,9 +27,10 @@ class DirectChunker(Chunker):
                         finished_calculating = True
 
             self.coordinate_queue.put((start_idx, stop_idx))
-            self.chunk_index[key] = (chunk_size, current_chunk + (1 if not finished_calculating else 0), num_rows, finished_calculating)
+            new_current_chunk = current_chunk + (1 if not finished_calculating else 0)
+            self.chunk_index[key] = (chunk_size, new_current_chunk, num_rows, finished_calculating)
         #pad the final output
-        while(self.coordinate_queue.qsize() % num_keys != 0):
+        while self.coordinate_queue.qsize() % num_keys != 0:
             self.coordinate_queue.put((None, None))
 
     def __str__(self):

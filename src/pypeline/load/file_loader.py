@@ -1,7 +1,6 @@
 """
 """
 from abc import abstractmethod
-import os
 from ..utils.utils import check_directory, check_str_is_file
 from ..load.loader import Loader
 
@@ -9,10 +8,22 @@ class FileLoader(Loader):
     """
     """
 
-    def __init__(self, target, dataframe, exists, func, file_extension, on_error, step_name="FileLoader", **kwargs):
+    def __init__(self,
+                 target,
+                 dataframe,
+                 exists,
+                 func,
+                 file_extension,
+                 on_error,
+                 step_name="FileLoader",
+                 **kwargs):
         """
         """
-        super().__init__(step_name=step_name, dataframes=dataframe, exists=exists, func=func, on_error=on_error)
+        super().__init__(step_name=step_name,
+                         dataframes=dataframe,
+                         exists=exists,
+                         func=func,
+                         on_error=on_error)
 
         if check_str_is_file(target):
             self.target_file_path = target
@@ -28,4 +39,3 @@ class FileLoader(Loader):
     def func(self, context):
         """
         """
-        pass

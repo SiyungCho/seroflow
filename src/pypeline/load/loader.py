@@ -9,10 +9,18 @@ class Loader(Step):
     """
     """
 
-    def __init__(self, step_name, dataframes, exists, func, on_error):
+    def __init__(self,
+                 step_name,
+                 dataframes,
+                 exists,
+                 func,
+                 on_error):
         """
         """
-        super().__init__(step_name=step_name, dataframes=dataframes if isinstance(dataframes, list) else [dataframes], func=func, on_error=on_error)
+        super().__init__(step_name=step_name,
+                         dataframes=dataframes if isinstance(dataframes, list) else [dataframes],
+                         func=func,
+                         on_error=on_error)
         self.exists = self._check_exists_parameter(exists)
 
     def _check_exists_parameter(self, exists):

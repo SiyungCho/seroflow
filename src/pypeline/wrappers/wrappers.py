@@ -1,12 +1,4 @@
 """
-This module provides decorators for function instrumentation.
-
-It includes:
-    - timer:
-    A decorator that measures and logs the execution time of a function.
-    - log_error:
-    A decorator generator that logs errors occurring in a function. 
-    Optionally re-raises the exception.
 """
 
 from functools import wraps
@@ -36,28 +28,8 @@ def timer(func):
         return result
     return wrap
 
-def log_error(err_msg, logger=None, log_only=False):
+def log_error(err_msg, log_only=False):
     """
-    Decorator generator that logs errors occurring in a function.
-    Optionally re-raises the exception.
-
-    When the decorated function raises an exception, 
-    the decorator logs an error message that includes:
-        - A custom error message (err_msg).
-        - The function name and line number where the error occurred.
-        - The exception details.
-    If log_only is False, the exception is re-raised after logging.
-
-    Args:
-        err_msg (str): A custom error message to include in the log.
-        logger (logging.Logger): 
-            The logger instance used to log error messages.
-        log_only (bool, optional): 
-            If True, the error is logged without re-raising the exception.
-            Defaults to False.
-
-    Returns:
-        function: A decorator that wraps the target function with error logging.
     """
     def log_error_inner(func):
         @wraps(func)
@@ -67,24 +39,14 @@ def log_error(err_msg, logger=None, log_only=False):
             except Exception as e:
                 tb_last_frame = traceback.extract_tb(e.__traceback__)[-1]
                 _, _, function_name, code_line = tb_last_frame
-                # if logger:
-                #     logger.error("Error %s; Occurred at: %s; On line number: %s; Exception %s", err_msg, function_name, code_line, e)
-                # else:
                 if args[0].logger_is_set():
-                    args[0].logger.error("Error %s; Occurred at: %s; On line number: %s; Exception %s", err_msg, function_name, code_line, e)
+                    raised_msg = f"Error Occurred at: {function_name}; On line: {code_line};"
+                    args[0].logger.error(raised_msg)
                     if not log_only:
+                        args[0].logger.error(f"Exception {e}")
                         raise Exception(err_msg) from e
                 else:
                     raise Exception(err_msg) from e
                 return None
         return wrap
     return log_error_inner
-
-def log_msg(msg):
-    def log_msg_inner(func):
-        @wraps(func)
-        def wrap(*args, **kwargs):
-            args[0].logger.info(msg)
-            return func(*args, **kwargs)
-        return wrap
-    return log_msg_inner

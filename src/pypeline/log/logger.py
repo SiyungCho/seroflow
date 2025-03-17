@@ -11,7 +11,6 @@ import logging
 import datetime
 from ..utils.utils import create_directory
 
-
 class CustomLogger():
     """
     Custom logger for managing application logs.

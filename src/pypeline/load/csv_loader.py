@@ -7,17 +7,31 @@ class CSVLoader(FileLoader):
     """
     """
 
-    def __init__(self, target, dataframe, exists="append", step_name="CSVLoader", on_error=None, **kwargs):
+    def __init__(self,
+                 target,
+                 dataframe,
+                 exists="append",
+                 step_name="CSVLoader",
+                 on_error=None,
+                 **kwargs):
         """
         """
-        super().__init__(target=target, dataframe=dataframe, exists=exists, func=self.func, file_extension=".csv", step_name=step_name, on_error=on_error, **kwargs)
+        super().__init__(target=target,
+                         dataframe=dataframe,
+                         exists=exists,
+                         func=self.func,
+                         file_extension=".csv",
+                         step_name=step_name,
+                         on_error=on_error,
+                         **kwargs)
 
     def func(self, context):
         """
         """
         for key, df in context.dataframes.items():
             if self.target_file_path is None:
-                target_file_path = os.path.join(self.target, key + self.file_extension)
+                file_path = key + self.file_extension
+                target_file_path = os.path.join(self.target, file_path)
             else:
                 target_file_path = self.target_file_path
             self.__to_csv(df, target_file_path, self.kwargs)
@@ -39,5 +53,18 @@ class CSVLoader(FileLoader):
         return None
 
 class MultiCSVLoader(CSVLoader):
-    def __init__(self, target, dataframes=None, exists="append", step_name="MultiCSVLoader", on_error=None, **kwargs):
-        super().__init__(target=target, dataframe=dataframes, exists=exists, step_name=step_name, on_error=on_error, **kwargs)
+    def __init__(self,
+                 target,
+                 dataframes=None,
+                 exists="append",
+                 step_name="MultiCSVLoader",
+                 on_error=None,
+                 **kwargs):
+        """
+        """
+        super().__init__(target=target,
+                         dataframe=dataframes,
+                         exists=exists,
+                         step_name=step_name,
+                         on_error=on_error,
+                         **kwargs)

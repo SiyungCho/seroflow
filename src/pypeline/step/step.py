@@ -5,12 +5,16 @@ import inspect
 from .base_step import AbstractStep
 from ..utils.utils import get_return_elements
 
-
 class Step(AbstractStep):
     """
     """
 
-    def __init__(self, step_name=None, params=None, dataframes=None, on_error='raise', **kwargs):
+    def __init__(self,
+                 step_name=None,
+                 params=None,
+                 dataframes=None,
+                 on_error='raise',
+                 **kwargs):
         """
         """
         self.step_name = step_name
@@ -78,7 +82,7 @@ class Step(AbstractStep):
         """
         """
         for param, value in params.items():
-            if (param not in self.params):
+            if param not in self.params:
                 if 'kwargs' not in self.params:
                     raise ValueError("Error parameter given not found in function signature")
                 self.params[param] = value
@@ -113,10 +117,9 @@ class Step(AbstractStep):
             step_output = self.step_func(**self.params)
         except Exception as e:
             if self.on_error == 'raise':
-                raise e
-            elif self.on_error == 'ignore':
-                print(f"Error in {self.step_name} was ignored: {e}")
-                step_output = None
+                raise RuntimeError("Error in step Execution")
+            print(f"Error in {self.step_name} was ignored: {e}")
+            step_output = None
         self.stop_step()
         return step_output
 
@@ -125,7 +128,7 @@ class Step(AbstractStep):
         """
         print(self.input_params)
         return self.step_name
-    
+
     def update_return_list(self, variable):
         """
         """
@@ -133,7 +136,7 @@ class Step(AbstractStep):
             self.return_list = [variable]
         else:
             self.return_list.append(variable)
-        
+
     def override_return_list(self, variable):
         """
         """
@@ -147,7 +150,7 @@ class Step(AbstractStep):
             self.params_list = [variable]
         else:
             self.params_list.append(variable)
-    
+
     def override_params_list(self, variable):
         """
         """

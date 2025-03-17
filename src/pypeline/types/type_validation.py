@@ -42,6 +42,8 @@ def is_extractor(extractor, _raise=False):
     return True
 
 def is_multiextractor(multiextractor, _raise=False):
+    """
+    """
     if not isinstance(multiextractor, base_multiextractor):
         if _raise:
             raise TypeError("Not of type multiextractor")

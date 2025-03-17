@@ -59,4 +59,3 @@ class MultiExtractor(Step):
     def func(self):
         """
         """
-        pass

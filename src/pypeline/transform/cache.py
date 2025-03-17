@@ -8,10 +8,17 @@ class CacheState(Transformation):
     """
     """
 
-    def __init__(self, cache, parameter_index, globalcontext, step_name="cache_state", on_error=None):
+    def __init__(self,
+                 cache,
+                 parameter_index,
+                 globalcontext,
+                 step_name="cache_state",
+                 on_error=None):
         """
         """
-        super().__init__(step_name=step_name, func=self.func, on_error=on_error)
+        super().__init__(step_name=step_name,
+                         func=self.func,
+                         on_error=on_error)
         self.cache = cache
         self.parameter_index = parameter_index
         self.globalcontext = globalcontext
@@ -40,15 +47,21 @@ class CacheState(Transformation):
         """
         return f"{self.cache}"
 
-
 class ReloadCacheState(Transformation):
     """
     """
 
-    def __init__(self, cache_key, cache, pypeline, step_name="reload_cached_state", on_error=None):
+    def __init__(self,
+                 cache_key,
+                 cache,
+                 pypeline,
+                 step_name="reload_cached_state",
+                 on_error=None):
         """
         """
-        super().__init__(step_name=step_name, func=self.func, on_error=on_error)
+        super().__init__(step_name=step_name,
+                         func=self.func,
+                         on_error=on_error)
         self.cache_key = cache_key
         self.cache = cache
         self.pypeline = pypeline
@@ -75,15 +88,20 @@ class ReloadCacheState(Transformation):
         """
         return f"{self.cache}"
 
-
 class ResetCache(Transformation):
     """
     """
 
-    def __init__(self, cache, step_name="reset_cache", delete_directory=False, on_error=None):
+    def __init__(self,
+                 cache,
+                 step_name="reset_cache",
+                 delete_directory=False,
+                 on_error=None):
         """
         """
-        super().__init__(step_name=step_name, func=self.func, on_error=on_error)
+        super().__init__(step_name=step_name,
+                         func=self.func,
+                         on_error=on_error)
         self.cache = cache
         self.delete_directory = delete_directory
 
