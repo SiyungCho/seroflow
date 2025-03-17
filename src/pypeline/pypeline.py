@@ -76,10 +76,13 @@ class Pypeline():
 
     def __init__(self, cache=False, logger=False, mode="DEV"):
         """
-        Pypeline Object Constructor method.
-        Initializes Pypeline Object with necessary parameters (cache, logger and mode).
+        Pypeline Class Constructor method.
+        Initializes Pypeline Object with necessary parameters
+            - cache
+            - logger
+            - mode
 
-        Args: 
+        Arguments: 
             logger (python.logging, Bool): 
                 Default: False
                     Does not instantiate a logger, no logging used.
@@ -137,7 +140,7 @@ class Pypeline():
         Custom display method.
         Used to display messages, if necessary or log messages if logger is initialized.
 
-        Args:
+        Arguments:
             message (str): 
                 Formatted message to be printed, logged or both.
             _print (bool):
@@ -346,7 +349,7 @@ class Pypeline():
         Receives argument logger.
         Verifies that argument logger is type Bool or python.logging.
 
-        Args:
+        Arguments:
             logger (python.logging, Bool):
                 True:
                     Default CustomLogger is initialized.
@@ -378,7 +381,7 @@ class Pypeline():
         Receives argument extractor.
         Verifies that argument extractor is type Extractor or MultiExtractor.
 
-        Args:
+        Arguments:
             extractor (Extractor, MultiExtractor):
                 Initializes Target Extractor property.
 
@@ -402,7 +405,7 @@ class Pypeline():
         Receives argument loader.
         Verifies that argument loader is type Loader.
 
-        Args:
+        Arguments:
             loader (Loader):
                 Initializes Target Loader property.
 
@@ -422,7 +425,7 @@ class Pypeline():
         Receives argument parameter_index.
         Verifies that parameter_index loader is type Dict.
 
-        Args:
+        Arguments:
             parameter_index (Dict):
                 Initializes Parameter Index property.
 
@@ -442,7 +445,7 @@ class Pypeline():
         Receives argument globalcontext.
         Verifies that globalcontext is type Context.
 
-        Args:
+        Arguments:
             globalcontext (Context):
                 Initializes Global Context property.
 
@@ -462,7 +465,7 @@ class Pypeline():
         Receives argument cache.
         Verifies that argument cache is type Bool or subclass to AbstractCache.
 
-        Args:
+        Arguments:
             cache (subclass to AbstractCache, Bool):
                 True:
                     Default LFUCache is initialized.
@@ -495,7 +498,7 @@ class Pypeline():
         Receives argument mode.
         Verifies that mode is type string and value: "DEV", "TEST" or "PROD".
 
-        Args:
+        Arguments:
             mode (str):
                 "DEV":
                     Initializes Mode to value "DEV".
@@ -525,7 +528,7 @@ class Pypeline():
         Adding Reset ensures that cache is not used on chunks.
         Saves current state of global context and parameter index.
 
-        Args:
+        Arguments:
             chunker (subclass to class Chunker):
                 subclass to Chunker:
                     Predefined chunker is initialized.

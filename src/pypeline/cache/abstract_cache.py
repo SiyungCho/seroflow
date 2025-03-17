@@ -1,51 +1,92 @@
-"""Module that defines an abstract caching interface using the AbstractCache class.
+"""
+Module: abstract_cache
 
-This module provides an abstract base class for caching mechanisms. The
-AbstractCache class outlines the necessary methods that concrete caching
-implementations should provide.
+This module defines the AbstractCache class, an abstract base class that specifies the required interface 
+for caching mechanisms used within the ETL pipeline framework. Any concrete cache implementation must 
+inherit from AbstractCache and implement the methods for inserting, retrieving, storing, loading, and resetting 
+cache items. This ensures consistent cache behavior across different caching strategies.
 """
 
 from abc import ABC, abstractmethod
 
 class AbstractCache(ABC):
-    """Abstract base class for caching mechanisms.
+    """
+    AbstractCache
 
-    This class defines the required methods for any caching implementation.
-    Concrete implementations must override the abstract methods to provide 
-    functionality for adding, retrieving, storing, loading, and resetting the cache.
+    An abstract base class for implementing caching mechanisms within the ETL pipeline framework.
+    Derived classes must implement the following methods to handle caching operations:
+      - put: Insert or update an item in the cache.
+      - get: Retrieve an item from the cache using a key.
+      - store: Cache the current state of the pipeline, including step and parameter indexes and global context.
+      - load: Reload a cached state using a specific step key.
+      - reset: Reset the cache, with the option to delete the underlying cache directory.
     """
 
     @abstractmethod
     def put(self, value):
-        """Insert an item into the cache.
+        """
+        Abstract Method: put()
+        Ensures inherited class instantiates a put method.
+        Used to Cache items in Execution.
+        Put method inserts/updates a cached item.
 
-        Implementations should provide the logic to add an item to the cache.
+        Arguments:
+            value (Any):
+                Value to cache.
         """
 
     @abstractmethod
     def get(self, key):
-        """Retrieve an item from the cache.
+        """
+        Abstract Method: get()
+        Ensures inherited class instantiates a get method.
+        Used to retrieve items in Execution.
+        Get method retrieves a cached item using the corresponding key.
 
-        Implementations should provide the logic to retrieve an item from the cache.
+        Arguments:
+            key (string):
+                Key for cached state to retrieve.
         """
 
     @abstractmethod
     def store(self, step_index, parameter_index, global_context, step_key):
-        """Store the current state of the cache.
+        """
+        Abstract Method: store()
+        Ensures inherited class instantiates a store method.
+        Store method caches the current state including any properties or items desired.
 
-        Implementations should provide the logic to persist the cache state.
+        Arguments:
+            step_index (OrderedDict):
+                Index containing all steps instantiated in pypeline object.
+            parameter_index (dict):
+                Current state of parameter index.
+            global_context (Context):
+                Current state of pypeline global context.
+            step_key (string):
+                Step Key for step to cache.
         """
 
     @abstractmethod
     def load(self, step_key):
-        """Load a previously stored cache state.
+        """
+        Abstract Method: load()
+        Ensures inherited class instantiates a load method.
+        Load method reloades a cached state using the provided step key.
 
-        Implementations should provide the logic to restore the cache state.
+        Arguments:
+            step_key (string):
+                Step Key for cached state to reload.
         """
 
     @abstractmethod
     def reset(self, delete_directory=False):
-        """Reset the cache to its initial state.
+        """
+        Abstract Method: reset()
+        Ensures inherited class instantiates a reset method.
+        Used to reset cache to desired state.
 
-        Implementations should clear all items from the cache and restore any default settings.
+        Arguments:
+            delete_directory (Bool):
+                True: .cache directory is deleted on reset
+                False: .cache directory is not deleted on reset
         """

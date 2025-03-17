@@ -1,10 +1,18 @@
+"""
+"""
 from .chunker import Chunker
 
 class DirectChunker(Chunker):
+    """
+    """
     def __init__(self, step_index):
+        """
+        """
         super().__init__(step_index)
 
     def calculate_chunks(self):
+        """
+        """
         chunk_keys = list(self.chunk_index.keys())
         num_keys = len(chunk_keys)
         it = 0
@@ -32,10 +40,3 @@ class DirectChunker(Chunker):
         #pad the final output
         while self.coordinate_queue.qsize() % num_keys != 0:
             self.coordinate_queue.put((None, None))
-
-    def __str__(self):
-        print(self.keep_executing)
-        print(self.coordinate_queue)
-        print(self.saved_state)
-        print(self.chunk_index)
-        return ""
