@@ -1,43 +1,42 @@
 """
-Module that defines the AbstractStep interface.
+Module: abstract_step
 
-This module provides the AbstractStep abstract base class, which outlines the essential
-methods for any step in a processing pipeline. Subclasses must implement the methods to
-start, stop, and execute the step.
+This module defines the AbstractStep class for creating steps.
+AbstractStep provides a common interface for initializing, 
+cleaning up, and executing Pypeline steps. Subclasses must implement 
+the abstract methods start_step(), stop_step(), and execute() 
+to provide step-specific functionality.
 """
 
 from abc import ABC, abstractmethod
 
-
 class AbstractStep(ABC):
     """
-    Abstract base class for a processing step.
+    AbstractStep
 
-    This class defines the required interface for processing steps. Any subclass must implement
-    the `start_step`, `stop_step`, and `execute` methods to manage the lifecycle and operation
-    of a step.
+    An abstract class for defining the structure of a step. This class extends the ABC class
+    and provides a common interface for starting, stopping, and executing the main 
+    functionality of a step. Subclasses must implement the abstract methods start_step(),
+    stop_step(), and execute() to provide step-specific functionality.
     """
 
     @abstractmethod
     def start_step(self):
         """
-        Start or initialize the step.
-
-        This method should contain logic to prepare or initialize the step before execution.
+        Abstract method: start_step()
+        This method should contain logic to initialize the step before execution.
         """
 
     @abstractmethod
     def stop_step(self):
         """
-        Stop or finalize the step.
-
-        This method should contain logic to clean up or finalize the step after execution.
+        Abstract method: stop_step()
+        This method should contain logic to clean up the step after execution has completed.
         """
 
     @abstractmethod
     def execute(self):
         """
-        Execute the main functionality of the step.
-
-        This method should contain the core logic of the step's processing operation.
+        Abstract method: execute()
+        This method should contain the main functionality of the step.
         """

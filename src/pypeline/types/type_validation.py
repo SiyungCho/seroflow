@@ -1,16 +1,11 @@
 """
-This module provides utility functions to validate the types of ETL pipeline components.
+Module: type_validation.py
+
+This module provides utility functions for type validation.
 
 The functions in this module check whether a given object is an instance of a specific
 base class for various ETL components (Extractor, Loader, Step, Context) or, in the case
 of context objects, a dictionary of valid Context instances.
-
-Functions:
-    is_extractor(extractor, _raise=False)
-    is_loader(loader, _raise=False)
-    is_step(step, _raise=False)
-    is_context(context, _raise=False)
-    is_context_object(context, _raise=False)
 """
 
 from ..step.step import Step as base_step
@@ -24,7 +19,7 @@ def is_extractor(extractor, _raise=False):
     """
     Check if the provided object is an instance of the base_extractor class.
 
-    Args:
+    Arguments:
         extractor (object): The object to check.
         _raise (bool, optional): If True, raise a TypeError when the check fails.
             Defaults to False.
@@ -43,6 +38,18 @@ def is_extractor(extractor, _raise=False):
 
 def is_multiextractor(multiextractor, _raise=False):
     """
+    Check if the provided object is an instance of the base_multiextractor class.
+
+    Arguments:
+        multiextractor (object): The object to check.
+        _raise (bool, optional): If True, raise a TypeError when the check fails.
+            Defaults to False.
+
+    Returns:
+        bool: True if the object is an instance of base_multiextractor, otherwise False.
+
+    Raises:
+        TypeError: If _raise is True and the object is not an instance of base_multiextractor.
     """
     if not isinstance(multiextractor, base_multiextractor):
         if _raise:
@@ -54,7 +61,7 @@ def is_loader(loader, _raise=False):
     """
     Check if the provided object is an instance of the base_loader class.
 
-    Args:
+    Arguments:
         loader (object): The object to check.
         _raise (bool, optional): If True, raise a TypeError when the check fails.
             Defaults to False.
@@ -76,7 +83,7 @@ def is_step(step, _raise=False):
     """
     Check if the provided object is an instance of the base_step class.
 
-    Args:
+    Arguments:
         step (object): The object to check.
         _raise (bool, optional): If True, raise a TypeError when the check fails.
             Defaults to False.
@@ -98,7 +105,7 @@ def is_context(context, _raise=False):
     """
     Check if the provided object is an instance of the base_context class.
 
-    Args:
+    Arguments:
         context (object): The object to check.
         _raise (bool, optional): If True, raise a TypeError when the check fails.
             Defaults to False.
@@ -123,7 +130,7 @@ def is_context_object(context, _raise=False):
     A valid context object is defined as a dictionary where each value is an instance
     of the base_context class.
 
-    Args:
+    Arguments:
         context (object): The object to check. It should be a dictionary.
         _raise (bool, optional): If True, raise a TypeError when the check fails.
             Defaults to False.

@@ -18,10 +18,10 @@ class Chunker:
     Chunker
 
     The Chunker class is responsible for dividing a large dataset into smaller chunks for processing.
-    It examines the pipeline's step index for steps that have a defined 'chunk_size' and, if applicable,
+    It examines the Pypeline's step index for steps that have a defined 'chunk_size' and, if applicable,
     calculates the coordinates for each chunk. It also manages a coordinate queue for chunk processing
     and provides methods for saving and reloading the state of the chunker.
-    
+
     In addition, the class validates that any loader steps used in chunking are configured to append data.
     """
     def __init__(self, step_index):
@@ -35,7 +35,7 @@ class Chunker:
             - A starting index (initially 0).
             - The maximum row count as provided by step.get_max_row_count().
             - A flag (initially False) indicating completion status.
-        
+
         Also validates that any loader step (identified via is_loader) has its 'exists' attribute set to 'append',
         as required when using chunking.
         Finally, it initializes a queue for managing chunk coordinates, a state dictionary for saving the chunker state,

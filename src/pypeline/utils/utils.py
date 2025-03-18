@@ -1,4 +1,6 @@
 """
+Module: utils.py
+
 This module provides utility functions for various common operations such as:
 
     - Generating hash keys from strings.
@@ -10,8 +12,6 @@ This module provides utility functions for various common operations such as:
     - Gathering files from a directory based on file extensions.
     - Checking and creating files and directories.
     - Splitting strings by the last delimiter and removing file extensions.
-
-These utilities are useful in the context of ETL pipelines and other automated workflows.
 """
 
 import os

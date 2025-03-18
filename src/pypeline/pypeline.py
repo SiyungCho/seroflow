@@ -886,7 +886,7 @@ class Pypeline():
         """
         kwargs = {}
         step = self.step_index[step_key]
-
+        print(step)
         if step.needs_context:
             subcontext = self.__create_subcontext(step, step_key)
             kwargs["context"] = subcontext

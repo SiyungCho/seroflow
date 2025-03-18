@@ -1,5 +1,12 @@
 """
+Module: step
+
+This module implements the Step class, a concrete implementation of AbstractStep that encapsulates a single
+operation or transformation. The Step class provides functionality to initialize the step
+function, manage input parameters and default values, execute the function, and handle errors according to a
+specified strategy. It also supports dynamic updates to the list of return values and parameters.
 """
+
 
 import inspect
 from .base_step import AbstractStep
@@ -7,6 +14,11 @@ from ..utils.utils import get_return_elements
 
 class Step(AbstractStep):
     """
+    Step
+
+    A concrete implementation of a step that encapsulates the logic for executing a function with
+    specified parameters and DataFrames. The Step class allows for configuration of function parameters,
+    extraction of default values, and error handling based on a defined strategy.
     """
 
     def __init__(self,
@@ -16,6 +28,20 @@ class Step(AbstractStep):
                  on_error='raise',
                  **kwargs):
         """
+        Step Class Constructor
+        Initializes the Step object.
+
+        Arguments:
+            step_name (str): 
+                The name of the step
+            params (dict): 
+                The parameters to be passed to the function
+            dataframes (DataFrame): 
+                The DataFrame to be used in the step
+            on_error (str): 
+                The error handling strategy
+            **kwargs: 
+                Additional keyword arguments for the function
         """
         self.step_name = step_name
         self.input_params = {} if params is None else params
@@ -26,18 +52,31 @@ class Step(AbstractStep):
 
         if 'func' in kwargs:
             self.step_func = kwargs['func']
-            self.init_step_func_params()
+            self.__init_step_func_params()
         else:
             self.step_func = None
 
     def __call__(self, *args, **kwargs):
         """
+        Call method for Step class
+        This method is called when the Step object is called as a function.
+        When creating a custom step, the first call should be the decorated function.
+        This will initialize the step function and its parameters.
+        Subsequent calls will execute the step function with the given parameters.
+        Arguments and keyword arguments are passed to the function and saved inside the Step object.
+        The argument 'context' is reserved for the context object and should not be passed as a parameter.
+
+        Arguments:
+            *args: 
+                The arguments to be passed to the function
+            **kwargs: 
+                The keyword arguments to be passed to the function
         """
         if self.step_func is None:
             if not (len(args) == 1 and callable(args[0]) and not kwargs):
                 raise TypeError("First call after init should be decorated function")
             self.step_func = args[0]
-            self.init_step_func_params()
+            self.__init_step_func_params()
             return self
         self.params = {param: None for param in self.params_list}
         if self.needs_context:
@@ -47,8 +86,15 @@ class Step(AbstractStep):
             self.params.pop('kwargs')
         return self.execute()
 
-    def init_step_func_params(self):
+    def __init_step_func_params(self):
         """
+        Private method: __init_step_func_params()
+        Initializes the parameters of the step function.
+        Gets the signature of the step function and extracts the parameter names.
+        If the function has a 'context' parameter, it is removed from the list.
+        The default parameters are extracted from the signature.
+        The return elements of the function are extracted.
+        The step name is set to the name of the function if not provided.
         """
         self.step_signature = inspect.signature(self.step_func)
         self.params_list = list(self.step_signature.parameters.keys())
@@ -63,6 +109,16 @@ class Step(AbstractStep):
 
     def get_default_params(self, sig):
         """
+        Public method: get_default_params()
+        Gets the default parameters of the step function.
+
+        Arguments:
+            sig (Signature): 
+                The signature of the step function
+
+        Returns:
+            dict: 
+                The default parameters of the step function
         """
         default_params = {
             param_name: default_value.default
@@ -73,6 +129,14 @@ class Step(AbstractStep):
 
     def check_params(self):
         """
+        Public method: check_params()
+        Checks if any of the parameters are None.
+        This method is called before executing the step function.
+        If any parameter is None, a ValueError is raised
+
+        Raises:
+            ValueError: 
+                If any parameter is None
         """
         for param, value in self.params.items():
             if value is None:
@@ -80,6 +144,18 @@ class Step(AbstractStep):
 
     def add_params(self, params):
         """
+        Public method: add_params()
+        Adds parameters to the step function.
+        If the parameter is not in the function signature, a ValueError is raised.
+        If the parameter is already set, it is not overwritten.
+
+        Arguments:
+            params (dict): 
+                The parameters to be added to the step function
+
+        Raises:
+            ValueError: 
+                If the parameter is not in the function signature
         """
         for param, value in params.items():
             if param not in self.params:
@@ -91,6 +167,19 @@ class Step(AbstractStep):
 
     def create_kwargs_params(self, args, kwargs):
         """
+        Public method: create_kwargs_params()
+        Creates the parameters dictionary for the step function.
+        Arguments are passed to the function based on their order.
+        Keyword arguments are passed to the function based on their name.
+        If the function has a 'context' parameter, it is added to the parameters dictionary.
+        The input parameters are added to the parameters dictionary.
+        The default parameters are added to the parameters dictionary.
+
+        Arguments:
+            args: 
+                The arguments to be passed to the function
+            kwargs: 
+                The keyword arguments to be passed to the
         """
         for index, value in enumerate(args):
             kwargs[list(self.params.keys())[index]] = value
@@ -101,16 +190,34 @@ class Step(AbstractStep):
 
     def start_step(self):
         """
+        Public method: start_step()
+        Validates that the inputted context is of the correct type
         """
         self.check_params()
 
     def stop_step(self):
         """
+        Public method: stop_step()
+        Clears the parameters dictionary so that the step can be executed again
         """
         self.params.clear()
 
     def execute(self):
         """
+        Public method: execute()
+        Executes the step function with the given parameters.
+        If an error occurs during execution, the error is caught and handled based on the on_error parameter.
+        If the on_error parameter is set to 'raise', the error is raised.
+        If the on_error parameter is set to 'ignore', the error is printed and the step output is set to None.
+
+        Returns:
+            Any: 
+                The output of the step function
+
+        Raises:
+            RuntimeError: 
+                If the on_error parameter is set to 'raise' and an error occurs during
+                the execution of the step function
         """
         self.start_step()
         try:
@@ -125,12 +232,29 @@ class Step(AbstractStep):
 
     def __str__(self):
         """
+        Public method: __str__()
+        Returns the name of the step and the input parameters.
+        When the Step object is printed, this method is called.
+        Or when the object is converted to a string, this method is called.
+
+        Returns:
+            str: 
+                The name of the step and the input parameters
         """
         print(self.input_params)
         return self.step_name
 
     def update_return_list(self, variable):
         """
+        Public method: update_return_list()
+        Updates the return list with the given variable
+        If the return list is empty, the variable is added to the list.
+        Otherwise, the variable is appended to the list.
+        Used externally to explicitly set the return list.
+
+        Arguments:
+            variable: 
+                The variable to be added to the return list
         """
         if self.return_list == [None]:
             self.return_list = [variable]
@@ -139,11 +263,27 @@ class Step(AbstractStep):
 
     def override_return_list(self, variable):
         """
+        Public method: override_return_list()
+        Overrides the return list with the given variable.
+        Used externally to explicitly set the return list.
+
+        Arguments:
+            variable: 
+                The variable to be added to the return list
         """
         self.return_list = [variable]
 
     def update_params_list(self, variable):
         """
+        Public method: update_params_list()
+        Updates the params list with the given variable.
+        If the params list is empty, the variable is added to the list.
+        Otherwise, the variable is appended to the list.
+        Used externally to explicitly set the params list
+
+        Arguments:
+            variable: 
+                The variable to be added to the params list
         """
         self.params_list.remove("kwargs")
         if self.params_list == [None]:
@@ -153,6 +293,13 @@ class Step(AbstractStep):
 
     def override_params_list(self, variable):
         """
+        Public method: override_params_list()
+        Overrides the params list with the given variable.
+        Used externally to explicitly set the params list.
+
+        Arguments:
+            variable: 
+                The variable to be added to the params list
         """
         self.params_list.remove("kwargs")
         self.params_list = [variable]

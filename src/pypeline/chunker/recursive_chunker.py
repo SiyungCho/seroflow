@@ -1,18 +1,46 @@
 """
+Module: recursive_chunker
+
+This module implements the RecursiveChunker class, a concrete subclass of the Chunker abstract base class.
+RecursiveChunker calculates chunk coordinates using a recursive strategy. It computes the total number of chunks
+by multiplying the number of chunks available for each step and then evenly distributes rows among those chunks.
+This approach ensures a balanced allocation of rows across all chunks for efficient parallel or segmented processing.
 """
+
 import math
 from .chunker import Chunker
 
 class RecursiveChunker(Chunker):
     """
+    RecursiveChunker
+
+    A concrete implementation of the Chunker class that calculates chunk coordinates using a recursive strategy.
+    Instead of processing chunks in a round-robin manner, this chunker computes the total number of chunks based on
+    the individual chunk sizes of the steps and then calculates the start and end indices for each chunk, ensuring an
+    even distribution of rows.
     """
     def __init__(self, step_index):
         """
+        Recursive Chunker Class Constructor
+        Initializes the RecursiveChunker object by invoking the parent class constructor
+        and then invoking the calculate_chunks() method to populate the coordinate queue.
+
+        Arguments:
+            step_index (OrderedDict): 
+                An ordered dictionary mapping step keys to step objects in the pipeline.
         """
         super().__init__(step_index)
 
     def calculate_chunks(self):
         """
+        Public method: calculate_chunks()
+        Calculates the chunk coordinates for each step in the chunk index.
+        The chunk coordinates are added to the coordinate queue.
+        Recusive Chunker calculates the chunk coordinates by first calculating the total number of chunks
+        and then iterating through each chunk to calculate the start and end index for each chunk.
+        By using the total number of chunks, the method calculates the base number of rows per chunk and the remainder.
+        This way, the method can distribute the remainder among the chunks.
+        ie the chunks will have an even distribution of rows.
         """
         chunk_keys = list(self.chunk_index.keys())
 
