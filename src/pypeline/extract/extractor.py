@@ -4,7 +4,7 @@ Module: extractor
 This module defines abstract classes for data extraction steps.
 It includes two primary classes:
     - Extractor: An abstract base class for reading data from a single source and adding the resulting DataFrame
-                 to the pipeline context. It defines the interface for full reads, chunked reads, and obtaining the
+                 to the pypeline context. It defines the interface for full reads, chunked reads, and obtaining the
                  maximum number of rows from the source.
     - MultiExtractor: A concrete extractor that aggregates multiple extractor instances to handle multiple sources.
                       It facilitates the creation and management of multiple extractors using a specified extractor type.

@@ -36,7 +36,7 @@ It defines a wide range of data transformation tasks including:
         * SQLQuery
     - String Manipulations (Functions to handle text cleaning in columns):
         * RemoveCharacterFromColumn, RemoveCharactersFromColumn, ReplaceStringInColumn
-    - Variable Operations (Functions to create and manipulate pipeline variables):
+    - Variable Operations (Functions to create and manipulate pypeline variables):
         * CreateVariable, UpdateVariable, DecrementVariable, 
           IncrementVariable, MultiplyVariable, DivideVariable, CopyVariable
     - Aggregation Functions (Statistical functions to aggregate and summarize data):
@@ -44,7 +44,7 @@ It defines a wide range of data transformation tasks including:
           GetColStd, GetColSum, GetColVariance,
           GetColQuantile, GetColCorrelation, GetColCovariance, GetColSkew
 
-The module is designed to be extensible and integrative, allowing for flexible pipeline construction
+The module is designed to be extensible and integrative, allowing for flexible pypeline construction
 and effective data manipulation.
 """
 from .transformation import Transformation

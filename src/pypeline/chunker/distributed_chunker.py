@@ -1,8 +1,8 @@
 """
-Module: recursive_chunker
+Module: distributed_chunker
 
-This module implements the RecursiveChunker class, a concrete subclass of the Chunker abstract base class.
-RecursiveChunker calculates chunk coordinates using a recursive strategy. It computes the total number of chunks
+This module implements the DistributedChunker class, a concrete subclass of the Chunker abstract base class.
+DistributedChunker calculates chunk coordinates using a distributed strategy. It computes the total number of chunks
 by multiplying the number of chunks available for each step and then evenly distributes rows among those chunks.
 This approach ensures a balanced allocation of rows across all chunks for efficient parallel or segmented processing.
 """
@@ -10,24 +10,24 @@ This approach ensures a balanced allocation of rows across all chunks for effici
 import math
 from .chunker import Chunker
 
-class RecursiveChunker(Chunker):
+class DistributedChunker(Chunker):
     """
-    RecursiveChunker
+    DistributedChunker
 
-    A concrete implementation of the Chunker class that calculates chunk coordinates using a recursive strategy.
+    A concrete implementation of the Chunker class that calculates chunk coordinates using a distributed strategy.
     Instead of processing chunks in a round-robin manner, this chunker computes the total number of chunks based on
     the individual chunk sizes of the steps and then calculates the start and end indices for each chunk, ensuring an
     even distribution of rows.
     """
     def __init__(self, step_index):
         """
-        Recursive Chunker Class Constructor
-        Initializes the RecursiveChunker object by invoking the parent class constructor
+        Distributed Chunker Class Constructor
+        Initializes the DistributedChunker object by invoking the parent class constructor
         and then invoking the calculate_chunks() method to populate the coordinate queue.
 
         Arguments:
             step_index (OrderedDict): 
-                An ordered dictionary mapping step keys to step objects in the pipeline.
+                An ordered dictionary mapping step keys to step objects in the pypeline.
         """
         super().__init__(step_index)
 

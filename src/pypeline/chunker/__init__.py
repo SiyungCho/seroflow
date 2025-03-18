@@ -9,9 +9,9 @@ Any custom chunker created should derive from the Chunker class.
 Key Components:
     - Chunker: Base class that outlines the common interface and behavior for all chunking strategies.
     - DirectChunker: Implements a straightforward approach to splitting tasks directly into discrete chunks.
-    - RecursiveChunker: Employs a recursive strategy to further subdivide tasks into smaller chunks, useful for complex or nested data processing scenarios.
+    - DistributedChunker: Employs a distributed strategy to further subdivide tasks into smaller chunks, useful for complex or nested data processing scenarios.
 """
 
 from .chunker import Chunker
 from .direct_chunker import DirectChunker
-from .recursive_chunker import RecursiveChunker
+from .distributed_chunker import DistributedChunker

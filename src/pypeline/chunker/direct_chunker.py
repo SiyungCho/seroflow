@@ -26,7 +26,7 @@ class DirectChunker(Chunker):
 
         Arguments:
             step_index (OrderedDict): 
-                An ordered dictionary mapping step keys to step objects in the pipeline.
+                An ordered dictionary mapping step keys to step objects in the pypeline.
         """
         super().__init__(step_index)
 

@@ -29,7 +29,7 @@ class GetColMean(Transformation):
     GetColMean Class
 
     Computes the mean of a specified column in a DataFrame and returns the result.
-    The resulting mean can be stored in the pipeline context under a designated variable name.
+    The resulting mean can be stored in the pypeline context under a designated variable name.
 
     Attributes:
         column (str): Name of the column to compute the mean.
@@ -95,7 +95,7 @@ class GetColMedian(Transformation):
     GetColMedian Class
 
     Computes the median of a specified column in a DataFrame and returns the result.
-    The resulting median is stored in the pipeline context under a designated variable name.
+    The resulting median is stored in the pypeline context under a designated variable name.
 
     Attributes:
         column (str): Name of the column to compute the median.
@@ -161,7 +161,7 @@ class GetColMode(Transformation):
     GetColMode Class
 
     Computes the mode of a specified column in a DataFrame and returns the result.
-    The resulting mode is stored in the pipeline context under a designated variable name.
+    The resulting mode is stored in the pypeline context under a designated variable name.
 
     Attributes:
         column (str): Name of the column to compute the mode.
@@ -228,7 +228,7 @@ class GetColStd(Transformation):
     GetColStd Class
 
     Computes the standard deviation of a specified column in a DataFrame and returns the result.
-    The resulting standard deviation is stored in the pipeline context under a designated variable name.
+    The resulting standard deviation is stored in the pypeline context under a designated variable name.
 
     Attributes:
         column (str): Name of the column to compute the standard deviation.
@@ -295,7 +295,7 @@ class GetColSum(Transformation):
     GetColSum Class
 
     Computes the sum of a specified column in a DataFrame and returns the result.
-    The resulting sum is stored in the pipeline context under a designated variable name.
+    The resulting sum is stored in the pypeline context under a designated variable name.
 
     Attributes:
         column (str): Name of the column to compute the sum.
@@ -362,7 +362,7 @@ class GetColVariance(Transformation):
     GetColVariance Class
 
     Computes the variance of a specified column in a DataFrame and returns the result.
-    The computed variance is stored in the pipeline context under a designated variable name.
+    The computed variance is stored in the pypeline context under a designated variable name.
 
     Attributes:
         column (str): Name of the column to compute the variance.
@@ -429,7 +429,7 @@ class GetColQuantile(Transformation):
     GetColQuantile Class
 
     Computes a specified quantile of a column in a DataFrame and returns the result.
-    The computed quantile is stored in the pipeline context under a designated variable name.
+    The computed quantile is stored in the pypeline context under a designated variable name.
 
     Attributes:
         column (str): Name of the column for which the quantile is computed.
@@ -501,7 +501,7 @@ class GetColCorrelation(Transformation):
     GetColCorrelation Class
 
     Computes the correlation between two specified columns in a DataFrame and returns the result.
-    The computed correlation is stored in the pipeline context under a designated variable name.
+    The computed correlation is stored in the pypeline context under a designated variable name.
 
     Attributes:
         column1 (str): Name of the first column.
@@ -573,7 +573,7 @@ class GetColCovariance(Transformation):
     GetColCovariance Class
 
     Computes the covariance between two specified columns in a DataFrame and returns the result.
-    The computed covariance is stored in the pipeline context under a designated variable name.
+    The computed covariance is stored in the pypeline context under a designated variable name.
 
     Attributes:
         column1 (str): Name of the first column.
@@ -645,7 +645,7 @@ class GetColSkew(Transformation):
     GetColSkew Class
 
     Computes the skewness of a specified column in a DataFrame and returns the result.
-    The computed skewness is stored in the pipeline context under a designated variable name.
+    The computed skewness is stored in the pypeline context under a designated variable name.
 
     Attributes:
         column (str): Name of the column to compute the skewness.

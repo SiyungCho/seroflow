@@ -3,7 +3,7 @@ Package: Pypeline
 Version: 1.0.0
 
 This package provides a comprehensive toolkit for building and managing ETL (Extract, Transform, Load)
-pipelines. It encompasses a wide range of modules and classes to support the various stages of data
+pypelines. It encompasses a wide range of modules and classes to support the various stages of data
 processing, including caching, chunking, context management, data extraction, loading, transformation,
 and logging. The design emphasizes modularity, flexibility, and robustness, enabling developers to
 easily construct scalable data workflows.
@@ -12,7 +12,7 @@ Key Components:
     - Cache: Implements caching mechanisms to store intermediate pypeline states.
         AbstractCache, LFUCache
     - Chunker: Provides strategies for partitioning large tasks.
-        Chunker, DirectChunker, RecursiveChunker
+        Chunker, DirectChunker, DistributedChunker
     - Context: Manages shared data and dataframes across the pypeline through the Context class.
     - Engine: Supports database connectivity and operations using engines.
         SQLAlchemyEngine, PyodbcEngine, UniversalEngine(WIP)
@@ -41,7 +41,7 @@ from .cache import AbstractCache
 from .cache import LFUCache
 from .chunker import Chunker
 from .chunker import DirectChunker
-from .chunker import RecursiveChunker
+from .chunker import DistributedChunker
 from .context import Context
 # from .engine import PyodbcEngine
 from .engine import SQLAlchemyEngine

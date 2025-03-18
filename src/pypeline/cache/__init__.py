@@ -4,7 +4,7 @@ Module: cache
 This module implements caching functionalities. It provides an abstract caching 
 interface and a concrete implementation using the Least Frequently Used (LFU) strategy. 
 These caching mechanisms allow for efficient storage and retrieval of 
-global or intermediate pipeline states, facilitating execution resumption and branching.
+global or intermediate pypeline states, facilitating execution resumption and branching.
 Any custom caching implementation should derive from the AbstractCache class.
 
 Key Components:

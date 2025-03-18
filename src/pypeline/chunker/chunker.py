@@ -43,7 +43,7 @@ class Chunker:
 
         Arguments:
             step_index (OrderedDict): 
-                An ordered dictionary mapping step keys to step objects in the pipeline.
+                An ordered dictionary mapping step keys to step objects in the pypeline.
         """
         self.chunk_index = OrderedDict()
         for step_key, step in step_index.items():

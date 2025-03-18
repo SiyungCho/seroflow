@@ -2,7 +2,7 @@
 Module: abstract_cache
 
 This module defines the AbstractCache class, an abstract base class that specifies the required interface 
-for caching mechanisms used within the ETL pipeline framework. Any concrete cache implementation must 
+for caching mechanisms used within the ETL pypeline framework. Any concrete cache implementation must 
 inherit from AbstractCache and implement the methods for inserting, retrieving, storing, loading, and resetting 
 cache items. This ensures consistent cache behavior across different caching strategies.
 """
@@ -13,11 +13,11 @@ class AbstractCache(ABC):
     """
     AbstractCache
 
-    An abstract base class for implementing caching mechanisms within the ETL pipeline framework.
+    An abstract base class for implementing caching mechanisms within the ETL pypeline framework.
     Derived classes must implement the following methods to handle caching operations:
       - put: Insert or update an item in the cache.
       - get: Retrieve an item from the cache using a key.
-      - store: Cache the current state of the pipeline, including step and parameter indexes and global context.
+      - store: Cache the current state of the pypeline, including step and parameter indexes and global context.
       - load: Reload a cached state using a specific step key.
       - reset: Reset the cache, with the option to delete the underlying cache directory.
     """

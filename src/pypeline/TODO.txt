@@ -3,8 +3,6 @@ TODO:
 post v4 TODO:
 - fix adl e/l
 - fix sql e/l
-- finish linting
-- rename recursive chunker to something else, like distributed chunker
 - when chunk_size is specified without chunker then normal single chunk execution is used (ie basic pandas chunking)
 - when chunk_size is used with chunker then chunk_func() is used. we can then probably get rid of chunk_func and instead pass the proper chunking parameters in the chunker side instead of calculating it on the extractor side.
 

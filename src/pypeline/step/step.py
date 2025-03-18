@@ -241,7 +241,6 @@ class Step(AbstractStep):
             str: 
                 The name of the step and the input parameters
         """
-        print(self.input_params)
         return self.step_name
 
     def update_return_list(self, variable):

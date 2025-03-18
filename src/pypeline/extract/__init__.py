@@ -18,7 +18,7 @@ Key Components:
     - ExcelExtractor & MultiExcelExtractor: Specialized extractors for retrieving data from Excel files.
     - SQLServerExtractor: Extractor for connecting to and extracting data from SQL Server databases.
 
-These extractor classes facilitate robust and flexible data ingestion into the pipeline, ensuring seamless 
+These extractor classes facilitate robust and flexible data ingestion into the pypeline, ensuring seamless 
 integration with various data sources.
 """
 

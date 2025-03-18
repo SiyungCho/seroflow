@@ -17,7 +17,7 @@ class ExcelExtractor(FileExtractor):
     ExcelExtractor
 
     A concrete extractor for reading data from an Excel file. This class extends FileExtractor and provides
-    methods to read an entire Excel file or a chunk of it, and to add the resulting DataFrame to the pipeline context.
+    methods to read an entire Excel file or a chunk of it, and to add the resulting DataFrame to the pypeline context.
     It supports both .xls and .xlsx formats using the appropriate engines.
     """
 

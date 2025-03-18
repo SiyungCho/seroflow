@@ -306,7 +306,7 @@ class LFUCache(AbstractCache):
 
         Arguments:
             step_index (OrderedDict):
-                Step Index of the Pipeline.
+                Step Index of the pypeline.
 
         Returns:
             None:
@@ -342,11 +342,11 @@ class LFUCache(AbstractCache):
 
         Arguments:
             step_index (OrderedDict):
-                Step Index of the Pipeline.
+                Step Index of the pypeline.
             parameter_index (dict):
-                Parameter Index of the Pipeline.
+                Parameter Index of the pypeline.
             global_context (dict):
-                Global Context of the Pipeline.
+                Global Context of the pypeline.
             step_key (string):
                 Key of the step to be stored in cache.
         """
@@ -374,9 +374,9 @@ class LFUCache(AbstractCache):
 
         Returns:
             parameter_index (dict):
-                Parameter Index of the Pipeline.
+                Parameter Index of the pypeline.
             global_context (dict):
-                Global Context of the Pipeline
+                Global Context of the pypeline
         """
         checkpoint_file = os.path.join(self.__cache_directory_path, f"{step_key}.pkl.gz")
         with gzip.open(checkpoint_file, 'rb') as f:

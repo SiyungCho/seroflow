@@ -1,16 +1,16 @@
 """
 Module: pypeline
 
-This module implements an ETL pipeline framework using the Pypeline class.
+This module implements an ETL pypeline framework using the Pypeline class.
 It provides functionality for managing and executing a sequence of data processing
 steps with support for caching, logging, parameter management, and execution chunking.
 
 The module integrates with several sub-components such as custom logging, caching,
 context management, transformation utilities, chunking, and type validation
-to offer a robust and extensible pipeline architecture.
+to offer a robust and extensible pypeline architecture.
 
 Classes:
-    Pypeline: Core class to construct, manage, and execute an ETL pipeline.
+    Pypeline: Core class to construct, manage, and execute an ETL pypeline.
               It enables the addition of steps, manages dependencies via a
               global context and parameter index, and supports various execution modes.
 """
@@ -33,33 +33,33 @@ class Pypeline():
     """
     Pypeline Class
 
-    The Pypeline class provides a framework for constructing and executing ETL pipelines with built-in support 
+    The Pypeline class provides a framework for constructing and executing ETL pypelines with built-in support 
     for state caching, logging, and chunked execution. It allows dynamic addition of processing steps while 
     managing inter-step dependencies through a global context and parameter index. The pypeline can operate in 
     different modes ("DEV", "TEST", "PROD") which alter its execution behavior (e.g., skipping loader steps in DEV mode).
 
     Key Features:
-        - Dynamically add individual or multiple steps to the pipeline.
+        - Dynamically add individual or multiple steps to the pypeline.
         - Manage shared parameters and dataframes across steps via a global context.
         - Support for caching intermediate states to enable execution resumption.
-        - Integration with custom or user-defined logging mechanisms to record pipeline events.
+        - Integration with custom or user-defined logging mechanisms to record pypeline events.
         - Optional support for chunking, allowing segmented processing of large datasets.
         - Automatic validation and indexing of extractors, loaders, and step outputs.
         - Flexible configuration through properties and setters ensuring type safety and proper initialization.
 
     Usage Example:
         >>> from pypeline import Pypeline
-        >>> pipeline = Pypeline(cache=True, logger=True, mode="DEV")
-        >>> pipeline.add_step(my_step)
-        >>> pipeline.execute()
+        >>> pypeline = Pypeline(cache=True, logger=True, mode="DEV")
+        >>> pypeline.add_step(my_step)
+        >>> pypeline.execute()
 
     Attributes:
         logger (logging.Logger or None): 
-            Logger instance used for tracking pipeline execution details.
+            Logger instance used for tracking pypeline execution details.
         mode (str): 
             The current execution mode ("DEV", "TEST", or "PROD") that affects how steps are processed.
         cache (AbstractCache or None): 
-            Caching mechanism for storing intermediate pipeline states.
+            Caching mechanism for storing intermediate pypeline states.
         parameter_index (dict): 
             Dictionary for storing parameters and variables shared across steps.
         step_index (OrderedDict): 
@@ -69,7 +69,7 @@ class Pypeline():
         dataframe_index (dict): 
             Dictionary mapping step keys to requested dataframe names.
         globalcontext (Context): 
-            Global context object that holds all dataframes used throughout the pipeline.
+            Global context object that holds all dataframes used throughout the pypeline.
         chunker (Chunker or None): 
             Optional chunker object to partition and manage segmented execution.
     """
@@ -1153,8 +1153,8 @@ class Pypeline():
         step_keys = self.__get_step_keys()
         start_index = 0 if not self.__cache_is_set() else self.__load_from_cache(step_keys)
 
-        start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
-        self.__display_message(f"Beginning ETL Execution at time: {start_time} ...")
+        start_time = time.time()
+        self.__display_message(f"Beginning ETL Execution at time: {time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(start_time))} ...", True)
 
         total_steps = self.__get_number_of_steps() - start_index
         with tqdm(total=total_steps, desc="Executing Pypeline") as pbar:
@@ -1169,10 +1169,11 @@ class Pypeline():
                 self.parameter_index, self.globalcontext = self.chunker.reload()
                 self.execute(chunker=chunker)
         else:
-            end_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
-            self.__display_message(f"ETL Execution Finished at time: {end_time} ...")
+            end_time = time.time()
+            self.__display_message(f"ETL Execution Finished at time: {time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(end_time))} ...", True)
             elapsed_time = end_time - start_time
-            self.__display_message(f"Total Execution Time: {elapsed_time} seconds")
+            if elapsed_time > 1.0:
+                self.__display_message(f"Total Execution Time: {time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(elapsed_time))} seconds", True)
             # self._generate_review()
 
     # def _generate_review(self):
@@ -1224,7 +1225,7 @@ class Pypeline():
     #     message = "\n".join(message_lines)
     #     review_details['message'] = message
 
-    #     # Display the detailed review using the pipeline's logger.
+    #     # Display the detailed review using the pypeline's logger.
     #     self.__display_message(message)
 
     #     # Determine the log folder from the logger's file handler.
