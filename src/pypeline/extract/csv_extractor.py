@@ -46,7 +46,7 @@ class CSVExtractor(FileExtractor):
         """
         super().__init__(source=source,
                          step_name=step_name,
-                         func = self.func if chunk_size is None else self.chunk_func, # this is bad
+                         func = self.func,
                          chunk_size=chunk_size,
                          on_error=on_error,
                          **kwargs)
@@ -67,24 +67,6 @@ class CSVExtractor(FileExtractor):
         context.add_dataframe(self.file_name, self.__read_csv(self.file_path, self.kwargs))
         return context
 
-    def chunk_func(self, context, chunk_coordinates):
-        """
-        Public method: chunk_func()
-        Reads the CSV file in chunks and adds the DataFrame to the context
-
-        Arguments:
-            context (Context): 
-                Blank context object where the DataFrame will be added
-            chunk_coordinates (tuple): 
-                The start and stop indices of the chunk to read
-
-        Returns:
-            Context: 
-                The context object with the DataFrame added
-        """
-        context.add_dataframe(self.file_name, self.__read_csv_chunk(self.file_path, chunk_coordinates, self.kwargs))
-        return context
-
     def __read_csv(self, file, kwargs):
         """
         Private method: __read_csv()
@@ -101,30 +83,6 @@ class CSVExtractor(FileExtractor):
                 The DataFrame read from the CSV file
         """
         return pd.read_csv(file, **kwargs)
-
-    def __read_csv_chunk(self, file, chunk_coordinates, kwargs):
-        """
-        Private method: __read_csv_chunk()
-        Reads a chunk of the CSV file
-
-        Arguments:
-            file (str): 
-                The path to the CSV file
-            chunk_coordinates (tuple): 
-                The start and stop indices of the chunk to read
-            kwargs (dict): 
-                Additional keyword arguments for the read_csv() method
-
-        Returns:
-            DataFrame: 
-                The DataFrame read from the CSV file
-        """
-        start_idx, stop_idx = chunk_coordinates
-        if start_idx is None:
-            return pd.DataFrame()
-
-        nrows = stop_idx - start_idx
-        return pd.read_csv(file, skiprows=start_idx, nrows=nrows, **kwargs)
 
     def get_max_row_count(self):
         """

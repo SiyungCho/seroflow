@@ -20,7 +20,6 @@ class Extractor(Step):
     An abstract base class for reading data from a single source. Subclasses of Extractor must implement
     the abstract methods:
         - func(): to read the source entirely and add the resulting DataFrame to the context.
-        - chunk_func(): to read a chunk of the source and add the resulting DataFrame to the context.
         - get_max_row_count(): to return the total number of rows in the source.
     
     This class also manages an optional chunk_size attribute that, if provided, enables chunked reading.
@@ -65,23 +64,6 @@ class Extractor(Step):
         Arguments:
             context (Context): 
                 Blank context object where the DataFrame will be added
-
-        Returns:
-            Context: 
-                The context object with the DataFrame added
-        """
-
-    @abstractmethod
-    def chunk_func(self, context, chunk_coordinates):
-        """
-        Abstract method: chunk_func()
-        Reads the source in chunks and adds the DataFrame to the context
-
-        Arguments:
-            context (Context): 
-                Blank context object where the DataFrame will be added
-            chunk_coordinates (tuple): 
-                The start and stop indices of the chunk to read
 
         Returns:
             Context: 

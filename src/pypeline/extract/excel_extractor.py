@@ -45,7 +45,7 @@ class ExcelExtractor(FileExtractor):
         """
         super().__init__(source=source,
                          step_name=step_name,
-                         func = self.func if chunk_size is None else self.chunk_func,
+                         func = self.func,
                          chunk_size=chunk_size,
                          on_error=on_error,
                          **kwargs)
@@ -64,24 +64,6 @@ class ExcelExtractor(FileExtractor):
                 The context object with the DataFrame added
         """
         context.add_dataframe(self.file_name, self.__read_excel(self.file_path, self.kwargs))
-        return context
-
-    def chunk_func(self, context, chunk_coordinates):
-        """
-        Public method: chunk_func()
-        Reads the Excel file in chunks and adds the DataFrame to the context
-
-        Arguments:
-            context (Context): 
-                Blank context object where the DataFrame will be added
-            chunk_coordinates (tuple): 
-                The start and stop indices for the chunk
-
-        Returns:
-            Context: 
-                The context object with the DataFrame added
-        """
-        context.add_dataframe(self.file_name, self.__read_excel_chunk(self.file_path, chunk_coordinates, self.kwargs))
         return context
 
     def __read_excel(self, file, kwargs):
@@ -103,48 +85,14 @@ class ExcelExtractor(FileExtractor):
             ValueError: 
                 If the file format is not supported
         """
+        if 'skiprows' in kwargs:
+            if kwargs['skiprows'] is None:
+                return pd.DataFrame()
         if file.endswith('.xls'):
             return pd.read_excel(file, engine='xlrd', **kwargs)
         if file.endswith('.xlsx'):
             return pd.read_excel(file, engine='openpyxl', **kwargs)
         raise ValueError(f"Unsupported file format: {file}")
-
-    def __read_excel_chunk(self, file, chunk_coordinates, kwargs):
-        """
-        Private method: __read_excel_chunk()
-        Reads a chunk of the Excel file
-
-        Arguments:
-            file (str): 
-                The path to the Excel file
-            chunk_coordinates (tuple): 
-                The start and stop indices for the chunk
-            kwargs (dict): 
-                Additional keyword arguments for the read_excel() method
-
-        Returns:
-            DataFrame: 
-                The DataFrame read from the Excel file
-
-        Raises:
-            ValueError: 
-                If the file format is not supported
-        """
-        start_idx, stop_idx = chunk_coordinates
-        if start_idx is None:
-            return pd.DataFrame()
-
-        nrows = stop_idx - start_idx
-
-        if file.endswith('.xls'):
-            engine = 'xlrd'
-        elif file.endswith('.xlsx'):
-            engine = 'openpyxl'
-        else:
-            raise ValueError(f"Unsupported file format: {file}")
-
-        nrows = stop_idx - start_idx
-        return pd.read_excel(file, skiprows=start_idx, nrows=nrows, engine=engine, **kwargs)
 
     def get_max_row_count(self):
         """

@@ -523,22 +523,21 @@ class Pypeline():
         """
         Chunker Property Setter Method.
         Receives argument chunker.
-        Verifies that argument chunker or subclass to class Chunker.
+        Verifies that argument chunker is a class and a subclass of Chunker.
         Adds a reset cache step if a cache is also initialized.
         Adding Reset ensures that cache is not used on chunks.
         Saves current state of global context and parameter index.
 
         Arguments:
-            chunker (subclass to class Chunker):
-                subclass to Chunker:
-                    Predefined chunker is initialized.
+            chunker (subclass of Chunker):
+                A class that is a subclass of Chunker.
 
         Raises:
             TypeError:
-                Argument cache is not of subclass to class Chunker.
+                If the provided chunker is not a subclass of Chunker.
         """
-        if not isinstance(chunker, Chunker):
-            raise TypeError("Chunker must be of Chunker class type")
+        if not (isinstance(chunker, type) and issubclass(chunker, Chunker)):
+            raise TypeError("Chunker must be a subclass of Chunker")
         if self.__cache_is_set():
             self.add_step(self.reset_cache(delete_directory=True))
         if self.chunker is None:
@@ -575,6 +574,21 @@ class Pypeline():
                 Cache is not initialized.
         """
         if not self.cache:
+            return False
+        return True
+    
+    def __chunker_is_set(self):
+        """
+        Private Method: __chunker_is_set()
+        Verifies if chunker is initialized.
+
+        Returns (Bool):
+            True:
+                Chunker is initialized.
+            False:
+                Chunker is not initialized.
+        """
+        if not self.chunker:
             return False
         return True
 
@@ -869,7 +883,7 @@ class Pypeline():
         """
         Private Method: __parse_parameters()
         Retrieves needed parameters and subcontext for step function.
-        If chunker is used, then chunking coordinates (ie start and stop positions)
+        If chunker is used, then chunking coordinates (ie start position and nrows)
         for current chunk is retrieved.
         Gathers parameter value using hierarchy:
             1. Inputted value set in step object instantiation.
@@ -886,19 +900,21 @@ class Pypeline():
         """
         kwargs = {}
         step = self.step_index[step_key]
-        print(step)
+
         if step.needs_context:
             subcontext = self.__create_subcontext(step, step_key)
             kwargs["context"] = subcontext
 
+        if ((self.__chunker_is_set()) and (is_extractor(step, _raise=False)) and (hasattr(step, "chunk_size"))):
+            skiprows, nrows = self.chunker.dequeue()
+            step.kwargs['skiprows'] = skiprows
+            step.kwargs['nrows'] = nrows
+
         for param in step.params_list:
-            if param == "chunk_coordinates":
-                param_value = self.chunker.dequeue()
-            else:
-                input_value = step.input_params.get(param)
-                curr_value = self.parameter_index.get(param)
-                default_value = step.default_params.get(param)
-                param_value = input_value or curr_value or default_value
+            input_value = step.input_params.get(param)
+            curr_value = self.parameter_index.get(param)
+            default_value = step.default_params.get(param)
+            param_value = input_value or curr_value or default_value
             kwargs[param] = param_value
         self.__check_parsed_parameters(kwargs)
         return kwargs

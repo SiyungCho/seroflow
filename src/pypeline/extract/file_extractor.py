@@ -80,23 +80,6 @@ class FileExtractor(Extractor):
         """
 
     @abstractmethod
-    def chunk_func(self, context, chunk_coordinates):
-        """
-        Abstract method: chunk_func()
-        Reads the file in chunks and adds the DataFrame to the context
-
-        Arguments:
-            context (Context):
-                Blank context object where the DataFrame will be added
-            chunk_coordinates (tuple):
-                The start and stop indices of the chunk to read
-
-        Returns:
-            Context:
-                The context object with the DataFrame added
-        """
-
-    @abstractmethod
     def get_max_row_count(self):
         """
         Abstract method: get_max_row_count()

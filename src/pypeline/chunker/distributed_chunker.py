@@ -36,11 +36,13 @@ class DistributedChunker(Chunker):
         Public method: calculate_chunks()
         Calculates the chunk coordinates for each step in the chunk index.
         The chunk coordinates are added to the coordinate queue.
-        Recusive Chunker calculates the chunk coordinates by first calculating the total number of chunks
-        and then iterating through each chunk to calculate the start and end index for each chunk.
+        Recursive Chunker calculates the chunk coordinates by first calculating the total number of chunks
+        and then iterating through each chunk to calculate the start index and number of rows for each chunk.
         By using the total number of chunks, the method calculates the base number of rows per chunk and the remainder.
-        This way, the method can distribute the remainder among the chunks.
-        ie the chunks will have an even distribution of rows.
+        This way, the method can distribute the remainder among the chunks,
+        resulting in an even distribution of rows.
+        
+        This version produces tuples of (start_index, nrows) for compatibility with pandas read_csv.
         """
         chunk_keys = list(self.chunk_index.keys())
 
@@ -60,6 +62,7 @@ class DistributedChunker(Chunker):
                 remainder = num_rows % total_chunks
                 start_idx = chunk * base + min(chunk, remainder)
                 end_idx = start_idx + base + (1 if chunk < remainder else 0)
-                if start_idx == end_idx:
+                nrows = end_idx - start_idx
+                if nrows == 0:
                     break
-                self.coordinate_queue.put((start_idx, end_idx))
+                self.coordinate_queue.put((start_idx, nrows))
