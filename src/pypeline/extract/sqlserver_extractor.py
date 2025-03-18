@@ -1,88 +1,157 @@
 """
-Module for extracting SQL Server tables and loading them into a context as pandas DataFrames.
+Module: sqlserver_extractor.py
 
-This module defines the SQLServerExtractor class, which extends the Extractor base class.
-It retrieves tables from a SQL Server database using a provided engine and adds them to a context.
+This module provides concrete implementations for extracting data from SQL server tables.
+It defines two classes:
+    - SQLServerExtractor: Extracts a DataFrame from a single SQL server table, supporting both full table reads and chunked reads.
+    - MultiSQLServerExtractor: Extracts DataFrames from multiple SQL server tables.
+These classes extend from the base extractor classes and leverage pandas along sqlalchemy engines to read data.
 """
-
 import pandas as pd
+from sqlalchemy import MetaData, Table
 from ..extract.extractor import Extractor
 
 
 class SQLServerExtractor(Extractor):
     """
-    An extractor for SQL Server tables.
-
-    The SQLServerExtractor class retrieves data from SQL Server tables using a given
-    database engine and loads the data as pandas DataFrames into a context.
+    Extractor for SQL Server databases. Connects to a SQL Server engine,
+    reads tables into pandas DataFrames, and retrieves metadata such as row counts.
     """
 
-    def __init__(self, source, engine, step_name="SQLServerExtractor", chunk_size=None, **kwargs):
+    def __init__(self,
+                 source,
+                 engine,
+                 step_name="SQLServerExtractor",
+                 chunk_size=None,
+                 on_error=None,
+                 **kwargs):
         """
-        Initialize an SQLServerExtractor instance.
+        Initialize the SQLServerExtractor.
 
-        Args:
-            source (str or list): A table name or a list of table names to extract.
-            engine: The database engine instance used for connection and table verification.
-                    It is assumed to have methods like `table_exists` and attributes such as
-                    `schema` and `engine` (the latter being an SQLAlchemy engine instance).
-            step_name (str, optional): 
-                The name of the extraction step. Defaults to "SQLServerExtractor".
-            **kwargs: Additional keyword arguments to pass to pandas.read_sql_table.
-        
-        Note:
-            This initializer does not enforce a type check on the engine; it is expected
-            that the engine provided is valid.
+        Arguments:
+            source (str): Table name to extract data from.
+            engine: An object containing the database engine and schema attributes.
+            step_name (str): Name of the extraction step.
+            chunk_size (int, optional): Number of rows per chunk for chunked extraction (not used when skiprows/nrows are provided).
+            on_error (callable, optional): Error handling strategy.
+            **kwargs: Additional keyword arguments for the SQL query. When using chunking,
+                      'skiprows' and 'nrows' are used. Optionally, 'order_by' can be provided.
         """
-        super().__init__(step_name=step_name, func=self.func, chunk_size=chunk_size)
-        # Optionally, validate that engine is a proper engine instance here.
-        self.source = [source] if not isinstance(source, list) else source
+        super().__init__(step_name=step_name,
+                         func=self.func,
+                         chunk_size=chunk_size,
+                         on_error=on_error)
+        self.source = source
         self.engine = engine
         self.kwargs = kwargs
 
     def func(self, context):
         """
-        Execute the SQL Server extraction process.
+        Execute the extraction function.
 
-        Iterates over the list of table names, checks if each table exists using the engine,
-        reads the table into a pandas DataFrame, and adds it to the provided context.
+        If both 'skiprows' and 'nrows' are provided in kwargs, only the specified chunk
+        of rows is retrieved using an OFFSET/FETCH query. Otherwise, the full table is read.
 
-        Args:
-            context: The context object to which the DataFrames will be added.
+        Arguments:
+            context: An object that holds the data and state throughout the extraction process.
 
         Returns:
-            The updated context object containing the added DataFrames.
+            Updated context with the added DataFrame.
         """
-        for table_name in self.source:
-            if not self.engine.table_exists(table_name):
-                # If the table does not exist, skip to the next table.
-                continue
-            context.add_dataframe(
-                table_name,
-                self.__read_sqlserver_table(
-                    table_name, self.engine.schema, self.engine.engine, self.kwargs
-                )
+        if "skiprows" in self.kwargs and "nrows" in self.kwargs:
+            skiprows = self.kwargs.pop("skiprows")
+            nrows = self.kwargs.pop("nrows")
+            df = self.__read_sqlserver_table_chunk(
+                self.source,
+                self.engine.schema,
+                self.engine.engine,
+                skiprows,
+                nrows,
+                self.kwargs
             )
+        else:
+            df = self.__read_sqlserver_table(
+                self.source,
+                self.engine.schema,
+                self.engine.engine,
+                self.kwargs
+            )
+        context.add_dataframe(self.source, df)
         return context
-    
-    def chunk_func(self, context, chunk_coordinates):
-        return
 
     def __read_sqlserver_table(self, table_name, schema, engine, kwargs):
         """
-        Read a SQL Server table into a pandas DataFrame.
+        Read an entire SQL Server table into a pandas DataFrame.
 
-        This private helper method connects to the database using the provided engine,
-        reads the specified table with the given schema using pandas.read_sql_table, and
-        returns the resulting DataFrame.
-
-        Args:
-            table_name (str): The name of the table to read.
-            schema (str): The schema in which the table resides.
-            engine: The SQLAlchemy engine instance used for the database connection.
-            kwargs (dict): Additional keyword arguments to pass to pandas.read_sql_table.
+        Arguments:
+            table_name (str): Name of the table to read.
+            schema (str): Database schema where the table resides.
+            engine: Database engine used to establish a connection.
+            kwargs: Additional keyword arguments for pd.read_sql_table.
 
         Returns:
-            pd.DataFrame: A DataFrame containing the data from the specified SQL Server table.
+            DataFrame containing the table data.
         """
         return pd.read_sql_table(table_name, schema=schema, con=engine.connect(), **kwargs)
+
+    def __read_sqlserver_table_chunk(self, table_name, schema, engine, skiprows, nrows, kwargs):
+        """
+        Read a chunk of a SQL Server table into a pandas DataFrame using OFFSET/FETCH.
+
+        Constructs a SQL query to return only a subset of rows based on the provided
+        skiprows and nrows parameters. 'order_by' clause attempts to default to the
+        primary key or the first column of the table.
+
+        Arguments:
+            table_name (str): Name of the table to read.
+            schema (str): Database schema where the table resides.
+            engine: Database engine used to establish a connection.
+            skiprows (int): Number of rows to skip (offset).
+            nrows (int): Number of rows to fetch.
+            kwargs: Additional keyword arguments;
+
+        Returns:
+            DataFrame containing the specified chunk of table data.
+        """
+        full_table_name = f"{schema}.{table_name}" if schema else table_name
+        order_by = self.__get_default_order_by(table_name, schema, engine)
+        query = (f"SELECT * FROM {full_table_name} "
+                 f"ORDER BY {order_by} "
+                 f"OFFSET {skiprows} ROWS FETCH NEXT {nrows} ROWS ONLY")
+        return pd.read_sql_query(query, con=engine.connect())
+
+    def __get_default_order_by(self, table_name, schema, engine):
+        """
+        Determine a default ORDER BY column using the table's primary key or first column.
+
+        Reflects the table using SQLAlchemy. If the table has a primary key, returns the
+        name of the first primary key column. Otherwise, returns the name of the first column.
+
+        Arguments:
+            table_name (str): Name of the table.
+            schema (str): Schema of the table.
+            engine: Database engine used to establish a connection.
+
+        Returns:
+            str: Column name to be used in the ORDER BY clause.
+        """
+        metadata = MetaData(schema=schema)
+        table = Table(table_name, metadata, autoload_with=engine)
+        pk = list(table.primary_key.columns)
+        if pk:
+            return pk[0].name
+        return list(table.columns)[0].name
+
+    def get_max_row_count(self):
+        """
+        Retrieve the maximum number of rows in the SQL Server table without loading the entire table.
+
+        Returns:
+            int: Total row count in the table.
+        """
+        with self.engine.engine.connect() as conn:
+            full_table_name = f"{self.engine.schema}.{self.source}" if self.engine.schema else self.source
+            query = f"SELECT COUNT(*) as count FROM {full_table_name}"
+            result = conn.execute(query)
+            row_count = result.scalar()
+        return row_count
