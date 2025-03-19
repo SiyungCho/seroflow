@@ -1,4 +1,4 @@
-# Aggregation Module Documentation
+# Aggregation Transformations Documentation
 
 This module implements a suite of transformation classes that compute various statistical metrics on columns of a DataFrame. Each transformation class extends the base `Transformation` class and is designed to operate on a specified DataFrame stored in the Pypeline context. The available transformations include:
 
@@ -15,181 +15,287 @@ This module implements a suite of transformation classes that compute various st
 
 Each class is initialized with the name of the column(s) to be processed, the DataFrame name, an optional variable name for storing the result (defaulting to a suffix based on the column name), and an error handling strategy. The transformation is executed by calling its `func()` method, which retrieves the DataFrame from the context and computes the desired statistic.
 
----
-
-## Common Characteristics
-
-- **Initialization**:  
-  Each transformation class receives parameters such as the column name, the DataFrame name, an optional variable name (if not provided, a default is set based on the column name), the step name (defaulting to the transformation class name), and an optional error handling strategy.
-
-- **Execution**:  
-  The transformation is executed by calling the `func(context)` method. This method retrieves the target DataFrame from the provided `context` (which stores all DataFrames) and computes the statistic for the specified column(s).
-
-- **Result Storage**:  
-  Each class calls `override_return_list()` with the variable name, ensuring that the computed statistic is stored in the Pypeline context under a designated variable name.
-
----
-
-## Transformation Classes
+## Aggregation Transformation Classes
 
 ### GetColMean
 
 - **Purpose**: Computes the mean of a specified column.
-- **Usage**:
-  - **Constructor Arguments**:
-    - `column` (str): Column to compute the mean.
-    - `dataframe` (str): Name of the DataFrame.
-    - `variable` (str, optional): Variable name to store the mean result. Defaults to `"<column>_mean"`.
-  - **Method**:
-    - `func(context)`: Retrieves the DataFrame from `context` and returns the mean of the specified column.
+- **Parameters**:
+  - `column` (str): Column Name to compute the mean.
+  - `dataframe` (str): Name of the DataFrame.
+  - `variable` (str, optional): Variable name to store the mean result. Defaults to `"<column>_mean"`.
+
+#### GetColMean Example
+
+Below is an example demonstrating how to use the Transformation `GetColMean`:
+
+```python
+  import pandas as pd
+  from pypeline import Pypeline
+  from pypeline.transform import GetColMean
+
+  pypeline = Pypeline()
+  pypeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'sales_data' with a 'price' column
+
+  get_mean = GetColMean(column="price", dataframe="sales_data", variable="mean_price") # Initialize the GetColMean to compute the mean of the 'price' column
+
+  pypeline.add_steps([get_mean])
+  pypeline.execute()
+```
 
 ---
 
 ### GetColMedian
 
 - **Purpose**: Computes the median of a specified column.
-- **Usage**:
-  - **Constructor Arguments**:
-    - `column` (str): Column to compute the median.
-    - `dataframe` (str): Name of the DataFrame.
-    - `variable` (str, optional): Variable name to store the median result. Defaults to `"<column>_median"`.
-  - **Method**:
-    - `func(context)`: Retrieves the DataFrame from `context` and returns the median of the specified column.
+- **Parameters**:
+  - `column` (str): Column to compute the median.
+  - `dataframe` (str): Name of the DataFrame.
+  - `variable` (str, optional): Variable name to store the median result. Defaults to `"<column>_median"`.
+
+#### GetColMedian Example
+
+Below is an example demonstrating how to use the Transformation `GetColMedian`:
+
+```python
+  import pandas as pd
+  from pypeline import Pypeline
+  from pypeline.transform import GetColMedian
+
+  pypeline = Pypeline()
+  pypeline.target_extractor = ...  # Extractor loads a DataFrame named 'sales_data' with a 'price' column
+
+  get_median = GetColMedian(column="price", dataframe="sales_data", variable="median_price") # Initialize the GetColMedian to compute the median of the 'price' column
+
+  pypeline.add_steps([get_median])
+  pypeline.execute()
+```
 
 ---
 
 ### GetColMode
 
 - **Purpose**: Computes the mode of a specified column.
-- **Usage**:
-  - **Constructor Arguments**:
-    - `column` (str): Column to compute the mode.
-    - `dataframe` (str): Name of the DataFrame.
-    - `variable` (str, optional): Variable name to store the mode result. Defaults to `"<column>_mode"`.
-  - **Method**:
-    - `func(context)`: Retrieves the DataFrame from `context` and returns the mode (first mode if multiple exist) of the specified column.
+- **Parameters**:
+  - `column` (str): Column to compute the mode.
+  - `dataframe` (str): Name of the DataFrame.
+  - `variable` (str, optional): Variable name to store the mode result. Defaults to `"<column>_mode"`.
+
+#### GetColMode Example
+
+Below is an example demonstrating how to use the Transformation `GetColMode`:
+
+```python
+  import pandas as pd
+  from pypeline import Pypeline
+  from pypeline.transform import GetColMode
+
+  pypeline = Pypeline()
+  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
+
+  get_mode = GetColMode(column="price", dataframe="sales_data", variable="mode_price") # Initialize the GetColMode to compute the mode of the 'price' column
+
+  pypeline.add_steps([get_mode])
+  pypeline.execute()
+```
 
 ---
 
 ### GetColStd
 
 - **Purpose**: Computes the standard deviation of a specified column.
-- **Usage**:
-  - **Constructor Arguments**:
-    - `column` (str): Column to compute the standard deviation.
-    - `dataframe` (str): Name of the DataFrame.
-    - `variable` (str, optional): Variable name to store the result. Defaults to `"<column>_std"`.
-  - **Method**:
-    - `func(context)`: Retrieves the DataFrame from `context` and returns the standard deviation of the specified column.
+- **Parameters**:
+  - `column` (str): Column to compute the standard deviation.
+  - `dataframe` (str): Name of the DataFrame.
+  - `variable` (str, optional): Variable name to store the result. Defaults to `"<column>_std"`.
+
+#### GetColStd Example
+
+Below is an example demonstrating how to use the Transformation `GetColStd`:
+
+```python
+  import pandas as pd
+  from pypeline import Pypeline
+  from pypeline.transform import GetColStd
+
+  pypeline = Pypeline()
+  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
+
+  get_std = GetColStd(column="price", dataframe="sales_data", variable="price_std") # Initialize the GetColStd to compute the standard deviation of the 'price' column
+
+  pypeline.add_steps([get_std])
+  pypeline.execute()
+```
 
 ---
 
 ### GetColSum
 
 - **Purpose**: Computes the sum of a specified column.
-- **Usage**:
-  - **Constructor Arguments**:
-    - `column` (str): Column to compute the sum.
-    - `dataframe` (str): Name of the DataFrame.
-    - `variable` (str, optional): Variable name to store the sum result. Defaults to `"<column>_sum"`.
-  - **Method**:
-    - `func(context)`: Retrieves the DataFrame from `context` and returns the sum of the specified column.
+- **Parameters**:
+  - `column` (str): Column to compute the sum.
+  - `dataframe` (str): Name of the DataFrame.
+  - `variable` (str, optional): Variable name to store the sum result. Defaults to `"<column>_sum"`.
+
+#### GetColSum Example
+
+Below is an example demonstrating how to use the Transformation `GetColSum`:
+
+```python
+  import pandas as pd
+  from pypeline import Pypeline
+  from pypeline.transform import GetColSum
+
+  pypeline = Pypeline()
+  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
+
+  get_sum = GetColSum(column="price", dataframe="sales_data", variable="price_sum") # Initialize the GetColSum to compute the sum of the 'price' column
+
+  pypeline.add_steps([get_sum])
+  pypeline.execute()
+```
 
 ---
 
 ### GetColVariance
 
 - **Purpose**: Computes the variance of a specified column.
-- **Usage**:
-  - **Constructor Arguments**:
-    - `column` (str): Column to compute the variance.
-    - `dataframe` (str): Name of the DataFrame.
-    - `variable` (str, optional): Variable name to store the variance result. Defaults to `"<column>_variance"`.
-  - **Method**:
-    - `func(context)`: Retrieves the DataFrame from `context` and returns the variance of the specified column.
+- **Parameters**:
+  - `column` (str): Column to compute the variance.
+  - `dataframe` (str): Name of the DataFrame.
+  - `variable` (str, optional): Variable name to store the variance result. Defaults to `"<column>_variance"`.
+
+#### GetColVariance Example
+
+Below is an example demonstrating how to use the Transformation `GetColVariance`:
+
+```python
+  import pandas as pd
+  from pypeline import Pypeline
+  from pypeline.transform import GetColVariance
+
+  pypeline = Pypeline()
+  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
+
+  get_variance = GetColVariance(column="price", dataframe="sales_data", variable="price_variance") # Initialize the GetColVariance to compute the variance of the 'price' column
+
+  pypeline.add_steps([get_variance])
+  pypeline.execute()
+```
 
 ---
 
 ### GetColQuantile
 
 - **Purpose**: Computes a specified quantile of a column.
-- **Usage**:
-  - **Constructor Arguments**:
-    - `column` (str): Column for which to compute the quantile.
-    - `dataframe` (str): Name of the DataFrame.
-    - `quantile` (float): The quantile to compute (e.g., 0.5 for the median).
-    - `variable` (str, optional): Variable name to store the quantile result. Defaults to `"<column>_quantile_<quantile>"`.
-  - **Method**:
-    - `func(context)`: Retrieves the DataFrame from `context` and returns the computed quantile of the specified column.
+- **Parameters**:
+  - `column` (str): Column for which to compute the quantile.
+  - `dataframe` (str): Name of the DataFrame.
+  - `quantile` (float): The quantile to compute (e.g., 0.5 for the median).
+  - `variable` (str, optional): Variable name to store the quantile result. Defaults to `"<column>_quantile_<quantile>"`.
+
+#### GetColQuantile Example
+
+Below is an example demonstrating how to use the Transformation `GetColQuantile`:
+
+```python
+  import pandas as pd
+  from pypeline import Pypeline
+  from pypeline.transform import GetColQuantile
+
+  pypeline = Pypeline()
+  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
+
+  get_quantile = GetColQuantile(column="price", dataframe="sales_data", quantile=0.75, variable="price_quantile_0.75") # Initialize the GetColQuantile to compute the quantile of the 'price' column
+
+  pypeline.add_steps([get_quantile])
+  pypeline.execute()
+```
 
 ---
 
 ### GetColCorrelation
 
 - **Purpose**: Computes the correlation between two specified columns.
-- **Usage**:
-  - **Constructor Arguments**:
-    - `column1` (str): First column.
-    - `column2` (str): Second column.
-    - `dataframe` (str): Name of the DataFrame containing the columns.
-    - `variable` (str, optional): Variable name to store the correlation result. Defaults to `"<column1>_<column2>_correlation"`.
-  - **Method**:
-    - `func(context)`: Retrieves the DataFrame from `context` and returns the correlation between the two columns.
+- **Parameters**:
+  - `column1` (str): First column.
+  - `column2` (str): Second column.
+  - `dataframe` (str): Name of the DataFrame containing the columns.
+  - `variable` (str, optional): Variable name to store the correlation result. Defaults to `"<column1>_<column2>_correlation"`.
+
+#### GetColCorrelation Example
+
+Below is an example demonstrating how to use the Transformation `GetColCorrelation`:
+
+```python
+  import pandas as pd
+  from pypeline import Pypeline
+  from pypeline.transform import GetColCorrelation
+
+  pypeline = Pypeline()
+  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with 'price' and 'quantity' columns
+
+  get_corr = GetColCorrelation(column1="price", column2="quantity", dataframe="sales_data", variable="price_quantity_correlation") # Initialize the GetColCorrelation to compute the correlation of the 'price' column to the 'quantity' column
+
+  pypeline.add_steps([get_corr])
+  pypeline.execute()
+```
 
 ---
 
 ### GetColCovariance
 
 - **Purpose**: Computes the covariance between two specified columns.
-- **Usage**:
-  - **Constructor Arguments**:
-    - `column1` (str): First column.
-    - `column2` (str): Second column.
-    - `dataframe` (str): Name of the DataFrame containing the columns.
-    - `variable` (str, optional): Variable name to store the covariance result. Defaults to `"<column1>_<column2>_covariance"`.
-  - **Method**:
-    - `func(context)`: Retrieves the DataFrame from `context` and returns the covariance between the two columns.
+- **Parameters**:
+  - `column1` (str): First column.
+  - `column2` (str): Second column.
+  - `dataframe` (str): Name of the DataFrame containing the columns.
+  - `variable` (str, optional): Variable name to store the covariance result. Defaults to `"<column1>_<column2>_covariance"`.
+
+#### GetColCovariance Example
+
+Below is an example demonstrating how to use the Transformation `GetColCovariance`:
+
+```python
+  import pandas as pd
+  from pypeline import Pypeline
+  from pypeline.transform import GetColCovariance
+
+  pypeline = Pypeline()
+  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with 'price' and 'quantity' columns
+
+  get_cov = GetColCovariance(column1="price", column2="quantity", dataframe="sales_data", variable="price_quantity_covariance") # Initialize the GetColCovariance to compute the covariance of the 'price' column to the 'quantity' column
+
+  pypeline.add_steps([get_cov])
+  pypeline.execute()
+```
 
 ---
 
 ### GetColSkew
 
 - **Purpose**: Computes the skewness of a specified column.
-- **Usage**:
-  - **Constructor Arguments**:
-    - `column` (str): Column to compute the skewness.
-    - `dataframe` (str): Name of the DataFrame.
-    - `variable` (str, optional): Variable name to store the skewness result. Defaults to `"<column>_skew"`.
-  - **Method**:
-    - `func(context)`: Retrieves the DataFrame from `context` and returns the skewness of the specified column.
+- **Parameters**:
+  - `column` (str): Column to compute the skewness.
+  - `dataframe` (str): Name of the DataFrame.
+  - `variable` (str, optional): Variable name to store the skewness result. Defaults to `"<column>_skew"`.
 
----
+#### GetColSkew Example
 
-## Usage Example
-
-Below is an example demonstrating how to use one of the transformation classes (e.g., `GetColMean`) within a pypeline context:
+Below is an example demonstrating how to use the Transformation `GetColSkew`:
 
 ```python
-import pandas as pd
-from aggregation import GetColMean
+  import pandas as pd
+  from pypeline import Pypeline
+  from pypeline.transform import GetColSkew
 
-# Create a sample DataFrame
-df_sample = pd.DataFrame({
-    'price': [10, 20, 30, 40, 50],
-    'quantity': [1, 2, 3, 4, 5]
-})
+  pypeline = Pypeline()
+  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
 
-# Assume we have a Pypeline context with dataframes
-class DummyContext:
-    def __init__(self):
-        self.dataframes = {"sales_data": df_sample}
+  get_skew = GetColSkew(column="price", dataframe="sales_data", variable="price_skew") # Initialize the GetColSkew to compute the skew of the 'price' column
 
-# Create an instance of the DummyContext
-context = DummyContext()
+  pypeline.add_steps([get_skew])
+  pypeline.execute()
+```
 
-# Initialize the GetColMean transformation to compute the mean of the 'price' column
-get_mean = GetColMean(column="price", dataframe="sales_data")
-
-# Execute the transformation
-mean_value = get_mean.func(context)
-print("Mean of 'price':", mean_value)
+---
