@@ -61,19 +61,6 @@ Subsequent steps that request a variable will be passed the value most recently 
   
 ## Initialization
 
-Arguments:
-            step_name (str): 
-                The name of the step
-            params (dict): 
-                The parameters to be passed to the function
-            dataframes (List): 
-                The DataFrames to be used in the step
-            on_error (str): 
-                The error handling strategy
-            **kwargs: 
-                Additional keyword arguments for the function
-
-
 - **`__init__(self, step_name=None, params=None, dataframes=None, on_error='raise', **kwargs)`**  
   Initializes a new `Step` instance.
   
@@ -92,18 +79,6 @@ Arguments:
   - `**kwargs` *(Any)*: 
     - Any key word arguments needed to be passed. 
     - When creating a custom `Step` via inheritance of the `Step` class, the `func` key word argument is used to initialize the step function.
-
-#### Initialization Example
-
-Below is a simple example that shows how to initialize a `Pypeline` object:
-
-```python
-  from pypeline import Pypeline
-  from pypeline.cache import LFUCache
-
-  # Initialize a pypeline with caching and logging enabled in development mode.
-  pypeline = Pypeline(cache=LFUCache, logger=True, mode="DEV")
-```
 
 ## Creating Custom Steps via the Step Class
 There are 3 main ways to create custom `Step` Objects to use within the `Pypeline` execution. For most basic and quick step creation the wrapper method is recommended. For more complex transformations and operations, inheriting the `Step` or `Transformation` Class is recommended.
