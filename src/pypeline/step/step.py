@@ -36,8 +36,8 @@ class Step(AbstractStep):
                 The name of the step
             params (dict): 
                 The parameters to be passed to the function
-            dataframes (DataFrame): 
-                The DataFrame to be used in the step
+            dataframes (List): 
+                The DataFrames to be used in the step
             on_error (str): 
                 The error handling strategy
             **kwargs: 
