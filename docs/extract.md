@@ -383,7 +383,7 @@ Please Review the [Engine](engine.md) documentation for further information on `
     - The number of rows to process at a time. If provided, enables chunked reading.
   - `**kwargs` *(Any)*: 
     - Additional keyword arguments for `SQL` queries (e.g., for chunked extraction using skiprows and nrows).
-  
+
 #### Initialization Example
 
 Below is a simple example that shows how to initialize a `Pypeline` object with an `MultiSQLServerExtractor`:
