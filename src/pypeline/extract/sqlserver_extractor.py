@@ -21,6 +21,7 @@ class SQLServerExtractor(Extractor):
     def __init__(self,
                  source,
                  engine,
+                 schema=None,
                  step_name="SQLServerExtractor",
                  chunk_size=None,
                  on_error=None,
@@ -44,6 +45,7 @@ class SQLServerExtractor(Extractor):
         self.source = source
         self.engine = engine
         self.kwargs = kwargs
+        self.schema = schema if not hasattr(engine, "schema") else engine.schema
 
     def func(self, context):
         """
@@ -63,7 +65,7 @@ class SQLServerExtractor(Extractor):
             nrows = self.kwargs.pop("nrows")
             df = self.__read_sqlserver_table_chunk(
                 self.source,
-                self.engine.schema,
+                self.schema,
                 self.engine.engine,
                 skiprows,
                 nrows,
@@ -72,7 +74,7 @@ class SQLServerExtractor(Extractor):
         else:
             df = self.__read_sqlserver_table(
                 self.source,
-                self.engine.schema,
+                self.schema,
                 self.engine.engine,
                 self.kwargs
             )
@@ -150,7 +152,7 @@ class SQLServerExtractor(Extractor):
             int: Total row count in the table.
         """
         with self.engine.engine.connect() as conn:
-            full_table_name = f"{self.engine.schema}.{self.source}" if self.engine.schema else self.source
+            full_table_name = f"{self.schema}.{self.source}" if self.schema else self.source
             query = f"SELECT COUNT(*) as count FROM {full_table_name}"
             result = conn.execute(query)
             row_count = result.scalar()

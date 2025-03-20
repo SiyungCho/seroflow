@@ -2,8 +2,6 @@ TODO:
 
 post v4 TODO:
 - fix adl e/l
-- fix sql e/l
-- create general file e/l
 - odbc e/l
 
 - documentation

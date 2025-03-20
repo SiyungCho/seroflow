@@ -2,8 +2,9 @@
 """
 
 import pyodbc
+from .engine import Engine
 
-class PyodbcEngine:
+class PyodbcEngine(Engine):
     """
     """
 
@@ -28,7 +29,7 @@ class PyodbcEngine:
             except Exception as e:
                 raise RuntimeError("Error retrieving connection details") from e
 
-    def __create_engine(self):
+    def create_engine(self):
         """
         """
         try:
@@ -45,7 +46,7 @@ class PyodbcEngine:
         except pyodbc.Error as e:
             raise RuntimeError("Error establishing connection to the database") from e
     
-    def __test_engine(self):
+    def test_engine(self):
         """
         """
         try:

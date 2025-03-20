@@ -20,13 +20,13 @@ class AbstractEngine(ABC):
         """
 
     @abstractmethod
-    def __create_engine(self):
+    def create_engine(self):
         """
         Create a connection engine based on the connection settings.
         """
 
     @abstractmethod
-    def __test_engine(self, engine):
+    def test_engine(self):
         """
         Test the connection engine by executing a simple query.
         """
@@ -42,9 +42,9 @@ class Engine(AbstractEngine):
         self.engine_type = engine_type
         self.kwargs = kwargs
         self.unpack_connection_settings(connection_settings)
-        self.engine = self.__create_engine()
+        self.engine = self.create_engine()
         if test_engine:
-            self.__test_engine(self.engine)
+            self.test_engine()
 
     def unpack_connection_settings(self, connection_settings):
         """Unpack connection settings into instance attributes."""
@@ -90,9 +90,9 @@ class Engine(AbstractEngine):
         )
     
     @abstractmethod
-    def __create_engine(self):
+    def create_engine(self):
         """Abstract method to create the connection engine."""
 
     @abstractmethod
-    def __test_engine(self, engine):
+    def test_engine(self):
         """Abstract method to test the connection engine."""

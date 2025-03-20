@@ -23,6 +23,7 @@ class SQLServerLoader(Loader):
                  target,
                  engine,
                  dataframe,
+                 schema=None,
                  step_name="SQLServerLoader",
                  exists="append",
                  on_error=None,
@@ -55,6 +56,7 @@ class SQLServerLoader(Loader):
         self.target = [target] if not isinstance(target, list) else target
         self.engine = engine
         self.kwargs = kwargs
+        self.schema = schema if not hasattr(engine, "schema") else engine.schema
 
     def func(self, context):
         """
@@ -66,7 +68,7 @@ class SQLServerLoader(Loader):
                 The context object containing the dataframes to be written to the target 
         """
         for target, (_, df) in zip(self.target, context.dataframes.items()):
-            full_schema = f"{self.engine.database}.{self.engine.schema}"
+            full_schema = f"{self.engine.database}.{self.schema}"
             self.__to_sql(df, target, full_schema, self.engine.engine, self.kwargs)
 
 

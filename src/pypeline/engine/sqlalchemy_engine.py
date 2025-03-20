@@ -2,8 +2,8 @@
 """
 
 from .engine import Engine
-from sqlalchemy import create_engine, text, URL
-
+from sqlalchemy import create_engine, text
+from sqlalchemy.engine import URL
 
 class SQLAlchemyEngine(Engine):
     """
@@ -38,13 +38,13 @@ class SQLAlchemyEngine(Engine):
         }
         super().__init__(schema, connection_settings, "sqlalchemy", **kwargs)
 
-    def __create_engine(self):
+    def create_engine(self):
         """
         """
         self.url = self.create_url()
         return self.create_alchemy_engine()
     
-    def __test_engine(self):
+    def test_engine(self):
         """
         """
         test_query = text(
