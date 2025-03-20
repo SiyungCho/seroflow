@@ -7,12 +7,7 @@ The modules documented here define the base structure and a concrete implementat
 This documentation covers two modules:
 
 - **abstract_cache**:  
-  Defines the `AbstractCache` abstract class, which specifies the interface for creating caches. Subclasses must implement the abstract methods:
-  - `put(value)`
-  - `get(key)`
-  - `store(step_index, parameter_index, global_context, step_key)`
-  - `load(step_key)`
-  - `reset(delete_directory=False)`
+  Defines the `AbstractCache` abstract class, which specifies the interface for creating caches.
 
 - **lfu_cache**:  
   The Least Frequently Used (LFU), `LFUCache` class implements the `AbstractCache` interface to store, retrieve, and manage states within the Pypeline execution. It supports caching of pypeline parameters and global context, along with mechanisms to evict the least frequently used items when the cache capacity is exceeded, persist cache state to disk, and restore the state from saved checkpoints.
@@ -21,35 +16,54 @@ This documentation covers two modules:
 
 `AbstractCache` is an abstract base class (inheriting from `ABC`) for implementing caching mechanisms within the Pypeline framework. Derived classes must implement all the abstract methods below to handle caching operations. This design enforces a standardized interface and behavior across different caching strategies.
 
+**Subclasses must override:**
+- `put(self, value)`
+- `get(self, key)`
+- `store(self, step_index, parameter_index, global_context, step_key)`
+- `load(self, step_key)`
+- `reset(self, delete_directory=False)`
+
+## Methods 
 - **`put(self, value)`**  
   *Abstract Method*  
   Insert or update an item in the cache.
 
-  Parameter: `value` (*Any*): The value to be cached.
+  **Parameters:**
+  `value` (*Any*): The value to be cached.
 
 - **`get(self, key)`**  
   *Abstract Method*  
   Retrieve an item from the cache using the provided key.
 
-  Parameter: `key` (*str*): The key corresponding to the cached state to retrieve.
+  **Parameters:**
+  `key` (*str*): The key corresponding to the cached state to retrieve.
 
 - **`store(self, step_index, parameter_index, global_context, step_key)`**  
   *Abstract Method*  
   Cache the current state of the pypeline. This method stores the step index, parameter index, global context, and a specific step key that marks the current execution checkpoint.
 
-  Parameter: `step_index` (*OrderedDict*): An index containing all steps instantiated in the pypeline object. `parameter_index` (*dict*): The current state of the parameter index. `global_context` (*Context*): The current state of the pypeline global context. `step_key` (*str*): The step key used for caching the current state.
+  **Parameters:**
+  `step_index` (*OrderedDict*): An index containing all steps instantiated in the pypeline object. 
+  
+  `parameter_index` (*dict*): The current state of the parameter index. 
+  
+  `global_context` (*Context*): The current state of the pypeline global context. 
+  
+  `step_key` (*str*): The step key used for caching the current state.
 
 - **`load(self, step_key)`**  
   *Abstract Method*  
   Reload a cached state using the provided step key.
 
-  Parameter: `step_key` (*str*): The step key corresponding to the cached state to reload.
+  **Parameters:**
+  `step_key` (*str*): The step key corresponding to the cached state to reload.
 
 - **`reset(self, delete_directory=False)`**  
   *Abstract Method*  
   Reset the cache to the desired state. Optionally, delete the underlying cache directory.
 
-  Parameter: `delete_directory` (*bool*), when `True`: Delete the cache directory on reset, when `False`: Do not delete the cache directory on reset.
+  **Parameters:**
+  `delete_directory` (*bool*), when `True`: Delete the cache directory on reset, when `False`: Do not delete the cache directory on reset.
 
 #### Usage Example
 
@@ -133,134 +147,160 @@ Below is a simple example that shows how to initialize a `Pypeline` object with 
 
 ## LFUCache Methods 
 
-## Directory and Configuration Initialization
+### Directory and Configuration Initialization
 
-### `__init_directory(self, cache_dir)`
+- **`__init_directory(self, cache_dir)`**
 
-- **Parameters:**
-  - `cache_dir` (*str*):  
-    The specified cache directory or `None` to use the default directory.
-- **Returns:**
-  - A tuple `(cache_directory_path, cache_config_file_path)` where:
+  **Parameters:**
+  `cache_dir` (*str*): The specified cache directory or `None` to use the default directory.
+
+  **Returns:**
+  A tuple `(cache_directory_path, cache_config_file_path)` where:
     - `cache_directory_path` is the path to the cache directory.
     - `cache_config_file_path` is the path to the configuration JSON file.
-- **Behavior:**
-  - If `cache_dir` is provided, it checks for an existing JSON configuration file; otherwise, it creates a default `.cache` directory and a `config.json` file within it.
-  - Uses helper functions `create_directory` and `create_file` to ensure the required paths exist.
 
-## Cache Operations
+  **Behavior:**
+  If `cache_dir` is provided, it checks for an existing JSON configuration file; otherwise, it creates a default `.cache` directory and a `config.json` file within it. Uses helper functions `create_directory` and `create_file` to ensure the required paths exist.
 
-### `get(self, key)`
+### Cache Operations
 
-- **Purpose:**  
+- **`get(self, key)`**
+
+  **Purpose:**  
   Retrieves a value from the cache using the specified key and increments its usage frequency.
-- **Parameters:**
-  - `key` (*int*): The key used to retrieve the cached value.
-- **Returns:**  
-  - The cached value if found; otherwise, returns `(None, None)`.
 
-### `put(self, value)`
+  **Parameters:**
+  `key` (*int*): The key used to retrieve the cached value.
 
-- **Purpose:**  
+  **Returns:**  
+  The cached value if found; otherwise, returns `(None, None)`.
+
+- **`put(self, value)`**
+
+  **Purpose:**  
   Inserts a new value into the cache. If the cache is full, the least frequently used item is evicted.
-- **Parameters:**
-  - `value` (*Any*): The value to be inserted into the cache.
-- **Behavior:**
-  - If `value` is a dictionary containing `"parameter_index"` and `"globalcontext"`, it stores the tuple `(parameter_index, globalcontext)`.
-  - Uses the current length of `key_to_val_freq` as a key if the key is not already present.
-  - Updates frequency counts by invoking `get(key)` when a duplicate key is found.
-  - Evicts the least frequently used item if the cache capacity is exceeded.
+  
+  **Parameters:**
+  `value` (*Any*): The value to be inserted into the cache.
+  
+  **Behavior:**
+  If `value` is a dictionary containing `"parameter_index"` and `"globalcontext"`, it stores the tuple `(parameter_index, globalcontext)`.
+  Uses the current length of `key_to_val_freq` as a key if the key is not already present.
+  Updates frequency counts by invoking `get(key)` when a duplicate key is found.
+  Evicts the least frequently used item if the cache capacity is exceeded.
 
-## Configuration Methods
+### Configuration Methods
 
-### `read_config(self)`
+- **`read_config(self)`**
 
-- **Purpose:**  
+  **Purpose:**  
   Reads the cache configuration from the `config.json` file.
-- **Returns:**  
-  - A dictionary representing the cache configuration; returns an empty dictionary if the file is not found or cannot be decoded.
+  
+  **Returns:**  
+  A dictionary representing the cache configuration; returns an empty dictionary if the file is not found or cannot be decoded.
 
-### `write_config(self, conf)`
+- **`write_config(self, conf)`**
 
-- **Purpose:**  
+  **Purpose:**  
   Writes the provided configuration dictionary to the `config.json` file.
-- **Parameters:**
-  - `conf` (*dict*): The cache configuration to be saved.
+  
+  **Parameters:**
+  `conf` (*dict*): The cache configuration to be saved.
 
-### `delete_cached_file(self, step_key)`
+- **`delete_cached_file(self, step_key)`**
 
-- **Purpose:**  
+  **Purpose:**  
   Deletes a cached checkpoint file corresponding to the given step key.
-- **Parameters:**
-  - `step_key` (*str*): The key of the step whose cache file should be deleted.
+  
+  **Parameters:**
+  `step_key` (*str*): The key of the step whose cache file should be deleted.
 
-### `update_config(self, step_func, step_key, step_num)`
+- **`update_config(self, step_func, step_key, step_num)`**
 
-- **Purpose:**  
+  **Purpose:**  
   Updates the cache configuration with new step information.
-- **Parameters:**
-  - `step_func` (*function*): The step function to be stored in the configuration.
-  - `step_key` (*str*): The key for the step.
-  - `step_num` (*int*): The index of the step in the pypeline.
-- **Behavior:**
-  - Reads the current configuration.
-  - Updates the configuration with the latest completed step and step-specific function hash and source code (obtained via `get_function_hash`).
-  - Rewrites the configuration to disk.
+  **Parameters:**
+  `step_func` (*function*): The step function to be stored in the configuration.
 
-### `compare_function_code(self, conf, step_key, func)`
+  `step_key` (*str*): The key for the step.
 
-- **Purpose:**  
+  `step_num` (*int*): The index of the step in the pypeline.
+  
+  **Behavior:**
+  Reads the current configuration.
+  Updates the configuration with the latest completed step and step-specific function hash and source code (obtained via `get_function_hash`).
+  Rewrites the configuration to disk.
+
+- **`compare_function_code(self, conf, step_key, func)`**
+
+  **Purpose:**  
   Compares the function code of a given function with the stored configuration for a specific step.
-- **Parameters:**
-  - `conf` (*dict*): The cache configuration.
-  - `step_key` (*str*): The key of the step to compare.
-  - `func` (*function*): The function to compare.
-- **Returns:**  
-  - `True` if the function's current hash and source code match the configuration; otherwise, `False`.
+  
+  **Parameters:**
+  `conf` (*dict*): The cache configuration.
+  
+  `step_key` (*str*): The key of the step to compare.
+  
+  `func` (*function*): The function to compare.
+  
+  **Returns:**  
+  `True` if the function's current hash and source code match the configuration; otherwise, `False`.
 
-### `get_cached_checkpoint(self, step_index)`
+- **`get_cached_checkpoint(self, step_index)`**
 
-- **Purpose:**  
+  **Purpose:**  
   Retrieves the last completed step from the cache configuration, comparing function code for consistency.
-- **Parameters:**
-  - `step_index` (*OrderedDict*): The current step index of the pypeline.
-- **Returns:**  
-  - The key of the last completed step if available; otherwise, `None`.
+  
+  **Parameters:**
+  `step_index` (*OrderedDict*): The current step index of the pypeline.
+  
+  **Returns:**  
+  The key of the last completed step if available; otherwise, `None`.
 
-## State Persistence Methods
+### State Persistence Methods
 
-### `store(self, step_index, parameter_index, global_context, step_key)`
+- **`store(self, step_index, parameter_index, global_context, step_key)`**
 
-- **Purpose:**  
+  **Purpose:**  
   Stores the current cache state to a checkpoint file.
-- **Parameters:**
-  - `step_index` (*OrderedDict*): The pypeline's step index.
-  - `parameter_index` (*dict*): The current parameter index.
-  - `global_context` (*dict*): The current global context.
-  - `step_key` (*str*): The step key for which to store the checkpoint.
-- **Behavior:**
-  - Updates the configuration using `update_config`.
-  - Serializes the cache state along with the provided parameters using `dill` and writes it to a gzip-compressed file named `{step_key}.pkl.gz`.
+  
+  **Parameters:**
+  `step_index` (*OrderedDict*): The pypeline's step index.
+  
+  `parameter_index` (*dict*): The current parameter index.
+  
+  `global_context` (*dict*): The current global context.
+  
+  `step_key` (*str*): The step key for which to store the checkpoint.
 
-### `load(self, step_key)`
+  **Behavior:**
+  Updates the configuration using `update_config`.
+  Serializes the cache state along with the provided parameters using `dill` and writes it to a gzip-compressed file named `{step_key}.pkl.gz`.
 
-- **Purpose:**  
+- **`load(self, step_key)`**
+
+  **Purpose:**  
   Loads the cached state from a checkpoint file.
-- **Parameters:**
-  - `step_key` (*str*): The step key of the checkpoint to load.
-- **Returns:**  
-  - A tuple `(parameter_index, global_context)` representing the cached state.
-- **Behavior:**
-  - Reads the checkpoint file, updates internal cache state (e.g., capacity, min frequency, key mappings), and returns the cached parameters and global context.
 
-### `reset(self, delete_directory=False)`
+  **Parameters:**
+  `step_key` (*str*): The step key of the checkpoint to load.
 
-- **Purpose:**  
+  **Returns:**  
+  A tuple `(parameter_index, global_context)` representing the cached state.
+
+  **Behavior:**
+  Reads the checkpoint file, updates internal cache state (e.g., capacity, min frequency, key mappings), and returns the cached parameters and global context.
+
+- **`reset(self, delete_directory=False)`**
+
+  **Purpose:**  
   Resets the cache state.
-- **Parameters:**
-  - `delete_directory` (*bool*):  
+  
+  **Parameters:**
+  `delete_directory` (*bool*):  
     - `False` (default): Clears the cache state without deleting the cache directory.
     - `True`: Deletes all files in the cache directory.
-- **Behavior:**
-  - Resets internal data structures (`min_freq`, `key_to_val_freq`, `freq_to_keys`).
-  - Optionally deletes cache files from the cache directory.
+
+  **Behavior:**
+  Resets internal data structures (`min_freq`, `key_to_val_freq`, `freq_to_keys`).
+  Optionally deletes cache files from the cache directory.
