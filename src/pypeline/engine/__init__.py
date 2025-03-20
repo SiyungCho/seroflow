@@ -8,5 +8,5 @@ The module currently includes the SQLAlchemyEngine and a PyodbcEngine.
 """
 from .engine import AbstractEngine
 from .engine import Engine
-# from .pyodbc_engine import PyodbcEngine
+from .pyodbc_engine import PyodbcEngine
 from .sqlalchemy_engine import SQLAlchemyEngine
