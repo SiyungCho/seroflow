@@ -11,9 +11,9 @@ class ODBCExtractor(Extractor):
 
     def __init__(
         self,
-        source: str,
-        connection,
-        schema: str = None,
+        source,
+        engine,
+        schema,
         step_name: str = "ODBCExtractor",
         chunk_size: int = None,
         on_error=None,
@@ -21,7 +21,7 @@ class ODBCExtractor(Extractor):
     ):
         super().__init__(step_name=step_name, func=self.func, chunk_size=chunk_size, on_error=on_error)
         self.source = source
-        self.conn = connection
+        self.conn = engine
         self.schema = schema
         self.kwargs = kwargs
 

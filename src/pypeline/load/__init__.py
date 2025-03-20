@@ -22,3 +22,4 @@ from .csv_loader import MultiCSVLoader
 from .excel_loader import ExcelLoader
 from .excel_loader import MultiExcelLoader
 from .sqlserver_loader import SQLServerLoader
+from .odbc_loader import ODBCLoader

@@ -1,9 +1,6 @@
 TODO:
 
 post v4 TODO:
-- fix adl e/l
-- odbc e/l
-
 - documentation
 - pytests
 - upload to pip

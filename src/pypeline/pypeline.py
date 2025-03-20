@@ -1137,7 +1137,7 @@ class Pypeline():
         start_index = 0 if not self.__cache_is_set() else self.__load_from_cache(step_keys)
 
         start_time = time.time()
-        self.__display_message(f"Beginning ETL Execution at time: {time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(start_time))} ...", True)
+        self.__display_message(f"Beginning ETL Execution at time: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(start_time))} ...", True)
 
         total_steps = self.__get_number_of_steps() - start_index
         with tqdm(total=total_steps, desc="Executing Pypeline") as pbar:
@@ -1153,7 +1153,7 @@ class Pypeline():
                 self.execute(chunker=chunker)
         else:
             end_time = time.time()
-            self.__display_message(f"ETL Execution Finished at time: {time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(end_time))} ...", True)
+            self.__display_message(f"ETL Execution Finished at time: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(end_time))} ...", True)
             elapsed_time = end_time - start_time
             if elapsed_time > 1.0:
-                self.__display_message(f"Total Execution Time: {time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(elapsed_time))} seconds", True)
+                self.__display_message(f"Total Execution Time: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(elapsed_time))} seconds", True)

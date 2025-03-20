@@ -31,3 +31,4 @@ from .csv_extractor import MultiCSVExtractor
 from .excel_extractor import ExcelExtractor
 from .excel_extractor import MultiExcelExtractor
 from .sqlserver_extractor import SQLServerExtractor
+from .odbc_extractor import ODBCExtractor
