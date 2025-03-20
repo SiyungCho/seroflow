@@ -66,7 +66,7 @@ pip install -r requirements.txt
 ## Documentation
 Below are some links to the documentation provided for the various components in the Pypeline package. It is recommended that users review some of these components prior to using the package.
 
-- [Getting Started](docs/-getting_started.md)
+- [Getting Started](docs/getting_started.md)
 - [Pypeline](docs/pypeline.md)
 - [Step](docs/step.md)
 - [Transformations](docs/transformations/transformation.md)

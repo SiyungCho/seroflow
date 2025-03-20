@@ -347,6 +347,10 @@ Below is a simple example that shows how to initialize a `Pypeline` object with 
 
 The `SQLServerLoader` class is a concrete loader for writing a DataFrame to SQL Server table(s). It extends the `Loader` class and leverages pandas’ `to_sql()` method. The loader accepts target table names (as a single string or list), an `Engine` object containing database connection details, and schema information. The existence parameter is passed directly to the `if_exists` argument of `to_sql()`, ensuring the appropriate behavior (append, fail, or replace).
 
+**Note**: A `SQLAlchemy` `Engine` object must be created and passed to use with the `SQLServerLoader` in the `engine` parameter.
+
+Please Review the [Engine](engine.md) documentation for further information on `Engine` Objects.
+
 ## Initialization
 
 - **`__init__(target, engine, dataframe, step_name="SQLServerLoader", exists="append", on_error=None, **kwargs)`**  
