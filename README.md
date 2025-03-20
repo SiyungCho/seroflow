@@ -3,6 +3,13 @@
 Welcome to **Pypeline**! This repository contains the source code, documentation, and examples to help you get started and contribute to this project.
 
 ## Overview
+`Pypeline` is a powerful Python package designed to help users build and execute efficient ETL (or ELT) data pipelines. ETL stands for Extract, Transform, and Load — a process that extracts data from various sources, transforms it into a suitable format, and then loads it into a destination system. 
+
+With `Pypeline`, each phase of your data pipeline is broken down into concrete steps: `Extractor` steps for data extraction, `Transformation` steps for data manipulation, and `Loader` steps for data loading. Think of it like assembling a Lego set—pypeline provides all the essential bricks, and you simply pick and add the desired step objects sequentially into a `Pypeline` object, then run pypeline.execute() to run your entire process. 
+
+Additionally, the package supports seamless creation of custom `Extractors`, `Loaders`, and `Transformations` through its intuitive interfaces, along with robust features like logging, caching, and chunking. Plus, it comes preloaded with over 70+ predefined transformations, making it an indispensable tool for data pipeline creation and execution.
+
+To Get Started using Pypeline head over to our [Get Started](docs/getting_started.md) Page.
 
 ## Table of Contents
 
