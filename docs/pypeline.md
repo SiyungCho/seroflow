@@ -163,7 +163,7 @@ In this example, execution of steps will occur in this order:
   pypeline.execute()
 ```
 
-## Chunking (Add image depicting chunking logic?)
+## Chunking
 Chunking is an essential technique which can be used to efficiently and safely process large datasets. The `Pypeline` Object enables chunking by passing A `Chunker` Class into the `chunker` parameter when using the `pypeline.execute(chunker=ChunkerClass)` method. 
 
 Once a `Chunker` Class is passed, all Extractor steps containing the keyword argument `chunk_size` will be analyzed and chunking indexes (ie the start index and number of rows for each chunk) will be calculated using the **`calculate_chunks()`** method. Then, `Pypeline` execution will be partitioned horizontally, until all chunks are processed.

@@ -8,10 +8,10 @@ The `Context` class is designed to facilitate the organization of DataFrames alo
 
 ## Dataclass: Context
 
-context_name (str): The name of the context.
-        dataframes (Dict[str, pd.DataFrame]): A dictionary mapping names to DataFrame objects.
-        metadata (Dict[str, Any]): A dictionary to store metadata about the context.
-        dataframe_addr (Dict[str, id]): Dictionary mapping DataFrame names to their ids.
+- `context_name` (str): The name of the context.
+- `dataframes` (Dict[str, pd.DataFrame]): A dictionary mapping names to DataFrame objects.
+- `metadata` (Dict[str, Any]): A dictionary to store metadata about the context.
+- `dataframe_addr` (Dict[str, id]): Dictionary mapping DataFrame names to their ids.
 
 ## Initialization
   **Parameters:**
