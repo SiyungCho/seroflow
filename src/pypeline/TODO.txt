@@ -1,7 +1,6 @@
 TODO:
 
 post v4 TODO:
-- documentation
 - pytests
 - upload to pip
 

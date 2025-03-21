@@ -5,7 +5,7 @@ Welcome to **Pypeline**! This repository contains the source code, documentation
 ## Overview
 `Pypeline` is a powerful Python package designed to help users build and execute efficient ETL (or ELT) data pipelines. ETL stands for Extract, Transform, and Load — a process that extracts data from various sources, transforms it into a suitable format, and then loads it into a destination system. 
 
-With `Pypeline`, each phase of your data pipeline is broken down into concrete steps: `Extractor` steps for data extraction, `Transformation` steps for data manipulation, and `Loader` steps for data loading. Think of it like assembling a Lego set—pypeline provides all the essential bricks, and you simply pick and add the desired step objects sequentially into a `Pypeline` object, then run pypeline.execute() to run your entire process. 
+With `Pypeline`, each phase of your data pipeline is broken down into concrete steps: `Extractor` steps for data extraction, `Transformation` steps for data manipulation, and `Loader` steps for data loading. Think of it like assembling a Lego set—pypeline provides all the essential bricks, and you simply pick and add the desired step objects sequentially into a `Pypeline` object, then run `pypeline.execute()` to run your entire process. 
 
 Additionally, the package supports seamless creation of custom `Extractors`, `Loaders`, and `Transformations` through its intuitive interfaces, along with robust features like logging, caching, and chunking. Plus, it comes preloaded with over 70+ predefined transformations, making it an indispensable tool for data pipeline creation and execution.
 
@@ -36,6 +36,7 @@ python -m pip install --upgrade pip
 - **Virtual Environment (Recommended):** Use venv or virtualenv to create an isolated environment.
 ```bash
 python -m venv venv_name
+
 venv_name\Scripts\activate # For Windows OS use
 source venv_name/bin/activate  # For macOS use
 ```
@@ -54,8 +55,8 @@ pip install pypeline
 If you want to install the package directly from the source code, follow these steps:
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/custom-python-package.git
-cd custom-python-package
+git clone https://github.com/.../pypeline.git
+cd pypeline
 ```
 
 2. Install dependencies:
