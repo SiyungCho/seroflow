@@ -13,7 +13,8 @@ This documentation covers:
 - **ExcelLoader**: A concrete loader for writing a single DataFrame to an Excel file. It implements Excel-specific logic including target file path determination, selection of Excel writing engines, and mapping of the existence parameter.
 - **MultiExcelLoader**: A concrete loader for writing multiple DataFrames to separate Excel files within a target directory. It reuses ExcelLoader functionality to handle each DataFrame individually.
 - **SQLServerLoader**: A concrete loader for writing a DataFrame to a SQL Server table using pandas’ to_sql() functionality. It supports writing data into an SQL table while handling schema information and file mode mapping.
-
+- **ODBCLoader**: A concrete loader for writing a DataFrame to a ODBC‑accessible target. Inserts a pandas DataFrame into a database table via ODBC.
+- 
 ## Class: Loader
 
 The `Loader` class is an abstract base class for writing a `pandas` DataFrame (or multiple DataFrames) to a target destination. It extends a base `Step` class and defines a common interface for output operations.
@@ -347,13 +348,13 @@ Below is a simple example that shows how to initialize a `Pypeline` object with 
 
 The `SQLServerLoader` class is a concrete loader for writing a DataFrame to SQL Server table(s). It extends the `Loader` class and leverages pandas’ `to_sql()` method. The loader accepts target table names (as a single string or list), an `Engine` object containing database connection details, and schema information. The existence parameter is passed directly to the `if_exists` argument of `to_sql()`, ensuring the appropriate behavior (append, fail, or replace).
 
-**Note**: A `SQLAlchemy` `Engine` object must be created and passed to use with the `SQLServerLoader` in the `engine` parameter.
+**Note**: An `Engine` object must be created and passed to use with the `SQLServerLoader` in the `engine` parameter.
 
 Please Review the [Engine](engine.md) documentation for further information on `Engine` Objects.
 
 ## Initialization
 
-- **`__init__(target, engine, dataframe, step_name="SQLServerLoader", exists="append", on_error=None, **kwargs)`**  
+- **`__init__(target, engine, dataframe, schema=None, step_name="SQLServerLoader", exists="append", on_error=None, **kwargs)`**  
   Initializes a new `SQLServerLoader` instance.
   
   **Parameters:**
@@ -361,9 +362,13 @@ Please Review the [Engine](engine.md) documentation for further information on `
   - `target` (str):
     - The target SQL Server table name(s) where the DataFrame will be written.
   - `engine` (Engine Object):
-    - An object containing the `SQLAlchemy` engine, database, and schema attributes.
+    - Any `Engine` Object. (Including `SQLAlchemy` Engine, `ODBCEngine`, `Pyodbc` Engine)
   - `dataframe` (str):
     - The DataFrame Name to be written.
+  - `schema` *(str, optional)*:
+    - Database Schema Name.
+    - If `Engine` object contains `.schema` attribute then `schema` is optional.
+    - If `Engine` object does not contain `.schema` attribute then `schema` is mandatory.
   - `exists` ("append", "fail", or "replace"):
     - `"append"`: File exists data will be appended to end of File.
     - `"fail"`: File exists `Step` execution will end, raising `Exception`.
@@ -394,4 +399,59 @@ Below is a simple example that shows how to initialize a `Pypeline` object with 
     sqlserver_loader = SQLServerLoader(target="Table Name", dataframe="...", engine=engine)
     pypeline.target_loader = sqlserver_loader # Or add it using the add_step(s) methods
     pypeline.execute()
+```
+
+## Class: ODBCLoader
+
+The `ODBCLoader` class is a concrete loader for writing a DataFrame to into an ODBC-accessible database (e.g., SQL Server) using raw SQL executed via a pyodbc.Connection. The loader accepts a single target table name, an `Engine` object containing database connection details, and schema information. The existence parameter is defined, ensuring the appropriate behavior (append, fail, or replace).
+
+**Note**: An `Engine` object must be created and passed to use with the `ODBCLoader` in the `engine` parameter.
+
+Please Review the [Engine](engine.md) documentation for further information on `Engine` Objects.
+
+## Initialization
+
+- **`__init__(target, engine, dataframe, schema, step_name="ODBCLoader", exists="append", on_error=None, **kwargs)`**  
+  Initializes a new `ODBCLoader` instance.
+  
+  **Parameters:**
+
+  - `target` (str):
+    - Name of the destination table.
+  - `engine` (Engine Object):
+    - A `Pyodbc Engine` object.
+  - `dataframe` (str):
+    - The DataFrame Name to be written.
+  - `schema` *(str)*:
+    - Database Schema Name.
+  - `exists` ("append", "fail", or "replace"):
+    - `"append"`: File exists data will be appended to end of File.
+    - `"fail"`: File exists `Step` execution will end, raising `Exception`.
+    - `"replace"`: File exists, File will be overwritten with new data.
+    - Default: `append`
+  - `on_error` *("raises", "ignore", optional)*: 
+    - `"raises"`: Raises Exceptions terminating `Pypeline` execution.
+    - `"ignore"`: Ignores Exceptions terminating the `ODBCLoader` without terminating the `Pypeline` execution.
+  - `step_name` (str, optional):
+    - The name of the loader step 
+    - Default: `ODBCLoader`"
+  - `**kwargs`:
+    - Additional keyword arguments for the DataFrame writing function.
+  
+#### Initialization Example
+
+Below is a simple example that shows how to initialize a `Pypeline` object with an `ODBCLoader`:
+
+```python
+  from pypeline import Pypeline
+  from pypeline.load import ODBCLoader
+  import pyodbc
+
+  pypeline = Pypeline(...)
+  pypeline.target_extractor = ... # Set Extractor to gather data
+  engine = pyodbc.connect(...)
+
+  odbc_loader = ODBCLoader(target="Table Name", dataframe="...", engine=engine, schema="Schema Name")
+  pypeline.target_loader = odbc_loader # Or add it using the add_step(s) methods
+  pypeline.execute()
 ```

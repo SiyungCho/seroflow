@@ -4,13 +4,11 @@ Module: sqlserver_extractor.py
 This module provides concrete implementations for extracting data from SQL server tables.
 It defines two classes:
     - SQLServerExtractor: Extracts a DataFrame from a single SQL server table, supporting both full table reads and chunked reads.
-    - MultiSQLServerExtractor: Extracts DataFrames from multiple SQL server tables.
 These classes extend from the base extractor classes and leverage pandas along sqlalchemy engines to read data.
 """
 import pandas as pd
 from sqlalchemy import MetaData, Table
 from ..extract.extractor import Extractor
-
 
 class SQLServerExtractor(Extractor):
     """
@@ -31,7 +29,8 @@ class SQLServerExtractor(Extractor):
 
         Arguments:
             source (str): Table name to extract data from.
-            engine: An object containing the database engine and schema attributes.
+            engine: An object containing the database engine attributes.
+            schema (str, optional): Database schema where the table resides.
             step_name (str): Name of the extraction step.
             chunk_size (int, optional): Number of rows per chunk for chunked extraction (not used when skiprows/nrows are provided).
             on_error (callable, optional): Error handling strategy.
@@ -46,6 +45,8 @@ class SQLServerExtractor(Extractor):
         self.engine = engine
         self.kwargs = kwargs
         self.schema = schema if not hasattr(engine, "schema") else engine.schema
+        if not self.schema:
+            raise ValueError("Schema must be provided for SQLServerExtractor")
 
     def func(self, context):
         """

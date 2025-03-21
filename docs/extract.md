@@ -15,7 +15,7 @@ This documentation covers:
 - **ExcelExtractor**: Single Excel File data extractor. Extracts data within a single Excel File.
 - **MultiExcelExtractor**: Multi Excel File data extractor. Extracts data from multiple Excel Files given a directory path.
 - **SQLServerExtractor**: Single SQL Server Table data extractor. Extracts data within a single SQL Server Table.
-- **MultiSQLServerExtractor**: Multi QL Server Table data extractor. Extracts data from multiple QL Server Tables given a list of table names.
+- **ODBCExtractor**: Single ODBC Source Table data extractor. Extracts data within a single ODBC Source Table.
 
 ## Class: Extractor
 
@@ -64,27 +64,27 @@ The `Extractor` class is an abstract base class that provides the common structu
 Below is an example demonstrating how a concrete extract implementation might inherit from `Extractor` and implement its methods:
 
 ```python
-    from pypeline import Pypeline
-    from pypeline.extract import Extractor
+  from pypeline import Pypeline
+  from pypeline.extract import Extractor
 
-    class MyCustomExtractor(Extractor):
-        def __init__(self, source, chunk_size=None, **kwargs):
-            super().__init__(step_name="MyCustomExtractor", func=self.func, on_error="raises", chunk_size=chunk_size)
-            self.source = source
+  class MyCustomExtractor(Extractor):
+      def __init__(self, source, chunk_size=None, **kwargs):
+          super().__init__(step_name="MyCustomExtractor", func=self.func, on_error="raises", chunk_size=chunk_size)
+          self.source = source
 
-        def func(self, context):
-            df = ...  # Obtain a pandas DataFrame here
-            context.add_dataframe("custom", df)
-            return context
+      def func(self, context):
+          df = ...  # Obtain a pandas DataFrame here
+          context.add_dataframe("custom", df)
+          return context
 
-        def get_max_row_count(self):
-            num_rows = ... # Custom logic to determine the number of rows
-            return num_rows
+      def get_max_row_count(self):
+          num_rows = ... # Custom logic to determine the number of rows
+          return num_rows
 
-    pypeline = Pypeline(...)
-    custom_extractor = MyCustomExtractor(...)
-    pypeline.target_extractor = custom_extractor # Or add it using the add_step(s) methods
-    pypeline.execute()
+  pypeline = Pypeline(...)
+  custom_extractor = MyCustomExtractor(...)
+  pypeline.target_extractor = custom_extractor # Or add it using the add_step(s) methods
+  pypeline.execute()
 ```
 
 ## Class: FileExtractor
@@ -139,27 +139,27 @@ The `FileExtractor` class extends `Extractor` and provides a template for file-b
 Below is an example demonstrating how a concrete extract implementation might inherit from `FileExtractor` and implement its methods:
 
 ```python
-    from pypeline import Pypeline
-    from pypeline.extract import FileExtractor
+  from pypeline import Pypeline
+  from pypeline.extract import FileExtractor
 
-    class MyCustomFileExtractor(FileExtractor):
-        def __init__(self, source, chunk_size=None, **kwargs):
-            super().__init__(step_name="MyCustomFileExtractor", func=self.func, on_error="raises", chunk_size=chunk_size)
-            self.source = source
+  class MyCustomFileExtractor(FileExtractor):
+      def __init__(self, source, chunk_size=None, **kwargs):
+          super().__init__(step_name="MyCustomFileExtractor", func=self.func, on_error="raises", chunk_size=chunk_size)
+          self.source = source
 
-        def func(self, context):
-            df = ...  # Obtain a pandas DataFrame here
-            context.add_dataframe("custom", df)
-            return context
+      def func(self, context):
+          df = ...  # Obtain a pandas DataFrame here
+          context.add_dataframe("custom", df)
+          return context
 
-        def get_max_row_count(self):
-            num_rows = ... # Custom logic to determine the number of rows
-            return num_rows
+      def get_max_row_count(self):
+          num_rows = ... # Custom logic to determine the number of rows
+          return num_rows
 
-    pypeline = Pypeline(...)
-    custom_file_extractor = MyCustomFileExtractor(...)
-    pypeline.target_extractor = custom_file_extractor # Or add it using the add_step(s) methods
-    pypeline.execute()
+  pypeline = Pypeline(...)
+  custom_file_extractor = MyCustomFileExtractor(...)
+  pypeline.target_extractor = custom_file_extractor # Or add it using the add_step(s) methods
+  pypeline.execute()
 ```
 
 ## Class: CSVExtractor
@@ -191,13 +191,13 @@ The `CSVExtractor` class is a concrete implementation for extracting data from a
 Below is a simple example that shows how to initialize a `Pypeline` object with an `CSVExtractor`:
 
 ```python
-    from pypeline import Pypeline
-    from pypeline.extract import CSVExtractor
+  from pypeline import Pypeline
+  from pypeline.extract import CSVExtractor
 
-    pypeline = Pypeline(...)
-    csv_extractor = CSVExtractor(source="path_to_csv_file")
-    pypeline.target_extractor = csv_extractor # Or add it using the add_step(s) methods
-    pypeline.execute()
+  pypeline = Pypeline(...)
+  csv_extractor = CSVExtractor(source="path_to_csv_file")
+  pypeline.target_extractor = csv_extractor # Or add it using the add_step(s) methods
+  pypeline.execute()
 ```
 
 ## Class: MultiCSVExtractor
@@ -226,13 +226,13 @@ The `MultiCSVExtractor` class handles the extraction of data from multiple CSV f
 Below is a simple example that shows how to initialize a `Pypeline` object with an `MultiCSVExtractor`:
 
 ```python
-    from pypeline import Pypeline
-    from pypeline.extract import MultiCSVExtractor
+  from pypeline import Pypeline
+  from pypeline.extract import MultiCSVExtractor
 
-    pypeline = Pypeline(...)
-    multi_csv_extractor = MultiCSVExtractor(source="path_to_directory", chunk_size=100)
-    pypeline.target_extractor = multi_csv_extractor # Or add it using the add_step(s) methods
-    pypeline.execute(chunker=...)
+  pypeline = Pypeline(...)
+  multi_csv_extractor = MultiCSVExtractor(source="path_to_directory", chunk_size=100)
+  pypeline.target_extractor = multi_csv_extractor # Or add it using the add_step(s) methods
+  pypeline.execute(chunker=...)
 ```
 
 ## Class: ExcelExtractor
@@ -264,13 +264,13 @@ The `ExcelExtractor` class is a concrete implementation for reading data from a 
 Below is a simple example that shows how to initialize a `Pypeline` object with an `ExcelExtractor`:
 
 ```python
-    from pypeline import Pypeline
-    from pypeline.extract import ExcelExtractor
+  from pypeline import Pypeline
+  from pypeline.extract import ExcelExtractor
 
-    pypeline = Pypeline(...)
-    excel_extractor = ExcelExtractor(source="path_to_excel_file")
-    pypeline.target_extractor = excel_extractor # Or add it using the add_step(s) methods
-    pypeline.execute()
+  pypeline = Pypeline(...)
+  excel_extractor = ExcelExtractor(source="path_to_excel_file")
+  pypeline.target_extractor = excel_extractor # Or add it using the add_step(s) methods
+  pypeline.execute()
 ```
 
 ## Class: MultiExcelExtractor
@@ -299,26 +299,26 @@ The `MultiExcelExtractor` class processes multiple Excel files from a specified 
 Below is a simple example that shows how to initialize a `Pypeline` object with an `MultiExcelExtractor`:
 
 ```python
-    from pypeline import Pypeline
-    from pypeline.extract import MultiExcelExtractor
+  from pypeline import Pypeline
+  from pypeline.extract import MultiExcelExtractor
 
-    pypeline = Pypeline(...)
-    multi_excel_extractor = MultiExcelExtractor(source="path_to_directory", on_error="ignore")
-    pypeline.target_extractor = multi_excel_extractor # Or add it using the add_step(s) methods
-    pypeline.execute()
+  pypeline = Pypeline(...)
+  multi_excel_extractor = MultiExcelExtractor(source="path_to_directory", on_error="ignore")
+  pypeline.target_extractor = multi_excel_extractor # Or add it using the add_step(s) methods
+  pypeline.execute()
 ```
 
 ## Class: SQLServerExtractor
 
 The `SQLServerExtractor` class is a concrete extractor for reading data from a `SQL Server` table. It uses `SQLAlchemy` to connect to the database and `pandas` to load the table data into a DataFrame. This extractor supports both full table reads and chunked reads by constructing `SQL` queries with `OFFSET/FETCH` clauses. It also provides a method to obtain the total number of rows in the table without reading the entire dataset.
 
-**Note**: A `SQLAlchemy` `Engine` object must be created and passed to use with the `SQLServerExtractor` in the `engine` parameter.
+**Note**: An `Engine` object must be created and passed to use with the `SQLServerExtractor` in the `engine` parameter.
 
 Please Review the [Engine](engine.md) documentation for further information on `Engine` Objects.
 
 ## Initialization
 
-- **`__init__(source, engine, step_name="SQLServerExtractor", chunk_size=None, on_error=None, **kwargs)`**  
+- **`__init__(source, engine, schema=None, step_name="SQLServerExtractor", chunk_size=None, on_error=None, **kwargs)`**  
   Initializes a new `SQLServerExtractor` instance.
   
   **Parameters:**
@@ -326,7 +326,11 @@ Please Review the [Engine](engine.md) documentation for further information on `
   - `source` *(str)*: 
     - The name of the SQL Server table.
   - `engine` *(Engine Object)*: 
-    - An object that holds the `SQLAlchemy` engine and schema information.
+    - Any `Engine` Object. (Including `SQLAlchemy` Engine, `ODBCEngine`, `Pyodbc` Engine)
+  - `schema` *(str, optional)*:
+    - Database Schema Name.
+    - If `Engine` object contains `.schema` attribute then `schema` is optional.
+    - If `Engine` object does not contain `.schema` attribute then `schema` is mandatory.
   - `step_name` *(str, optional)*: 
     - The name of the extraction step.
     - Default: `SQLServerExtractor`.
@@ -343,59 +347,63 @@ Please Review the [Engine](engine.md) documentation for further information on `
 Below is a simple example that shows how to initialize a `Pypeline` object with an `SQLServerExtractor`:
 
 ```python
-    from pypeline import Pypeline
-    from pypeline.extract import SQLServerExtractor
-    from pypeline.engine import SQLAlchemyEngine # Select preferred Engine
+  from pypeline import Pypeline
+  from pypeline.extract import SQLServerExtractor
+  from pypeline.engine import SQLAlchemyEngine # Select preferred Engine
 
-    pypeline = Pypeline(...)
-    engine = SQLAlchemyEngine(...)
-    sqlserver_extractor = SQLServerExtractor(source="Table Name", engine=engine)
-    pypeline.target_extractor = sqlserver_extractor # Or add it using the add_step(s) methods
-    pypeline.execute()
+  pypeline = Pypeline(...)
+  engine = SQLAlchemyEngine(...)
+  sqlserver_extractor = SQLServerExtractor(source="Table Name", engine=engine)
+  pypeline.target_extractor = sqlserver_extractor # Or add it using the add_step(s) methods
+  pypeline.execute()
 ```
 
-## Class: MultiSQLServerExtractor
+## Class: ODBCExtractor
 
-The `MultiSQLServerExtractor` class is designed for extracting data from multiple `SQL Server` tables. It follows similar principles to the single table extractor but iterates over a list of table names to create and manage multiple `SQLServerExtractor` instances. This allows users to load data from several tables in one extraction step.
+The `ODBCExtractor` class is a concrete extractor for reading data from a `ODBC Data source` tables. Uses a `pyodbc.Connection` to execute SQL queries and returns pandas DataFrames. Supports full-table extraction or chunked extraction via OFFSET/FETCH for batching large tables.
 
-**Note**: A `SQLAlchemy` `Engine` object must be created and passed to use with the `SQLServerExtractor` in the `engine` parameter.
+**Note**: An `Engine` object must be created and passed to use with the `ODBCExtractor` in the `engine` parameter.
 
 Please Review the [Engine](engine.md) documentation for further information on `Engine` Objects.
 
 ## Initialization
 
-- **`__init__(source, engine, step_name="MultiSQLServerExtractor", chunk_size=None, on_error=None, **kwargs)`**  
-  Initializes a new `MultiSQLServerExtractor` instance.
+- **`__init__(source, engine, schema, step_name="ODBCExtractor", chunk_size=None, on_error=None, **kwargs)`**  
+  Initializes a new `ODBCExtractor` instance.
   
   **Parameters:**
   
-  - `source` *(list[str])*: 
-    - A list of SQL Server table names.
+  - `source` *(str)*: 
+    - Name of the table or view to read.
   - `engine` *(Engine Object)*: 
-    - An object that holds the `SQLAlchemy` engine and schema information.
+    - A `Pyodbc Engine` object.
+  - `schema` *(str, optional)*:
+    - Database Schema Name.
+    - If `Engine` object contains `.schema` attribute then `schema` is optional.
+    - If `Engine` object does not contain `.schema` attribute then `schema` is mandatory.
   - `step_name` *(str, optional)*: 
     - The name of the extraction step.
-    - Default: `SQLServerExtractor`.
+    - Default: `ODBCExtractor`.
   - `on_error` *("raises", "ignore", optional)*: 
     - `"raises"`: Raises Exceptions terminating `Pypeline` execution.
-    - `"ignore"`: Ignores Exceptions terminating the `SQLServerExtractor` without terminating the `Pypeline` execution.
+    - `"ignore"`: Ignores Exceptions terminating the `ODBCExtractor` without terminating the `Pypeline` execution.
   - `chunk_size` *(int, optional)*: 
     - The number of rows to process at a time. If provided, enables chunked reading.
   - `**kwargs` *(Any)*: 
-    - Additional keyword arguments for `SQL` queries (e.g., for chunked extraction using skiprows and nrows).
+    - Additional keyword arguments for `SQL` queries 
 
 #### Initialization Example
 
-Below is a simple example that shows how to initialize a `Pypeline` object with an `MultiSQLServerExtractor`:
+Below is a simple example that shows how to initialize a `Pypeline` object with an `ODBCExtractor`:
 
 ```python
     from pypeline import Pypeline
-    from pypeline.extract import MultiSQLServerExtractor
-    from pypeline.engine import SQLAlchemyEngine # Select preferred Engine
+    from pypeline.extract import ODBCExtractor
+    import pyodbc
 
     pypeline = Pypeline(...)
-    engine = SQLAlchemyEngine(...)
-    multi_sqlserver_extractor = MultiSQLServerExtractor(source=["Table Name", "Table Name", ... ], engine=engine)
-    pypeline.target_extractor = multi_sqlserver_extractor # Or add it using the add_step(s) methods
+    engine = pyodbc.connect(...)
+    odbc_extractor = ODBCExtractor(source="Table Name", engine=engine, schema="Schema Name")
+    pypeline.target_extractor = odbc_extractor # Or add it using the add_step(s) methods
     pypeline.execute()
 ```

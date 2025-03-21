@@ -37,6 +37,8 @@ class SQLServerLoader(Loader):
                 The target SQL server table names
             engine (Engine subclass): 
                 An object containing the database engine and schema attributes.
+            schema (str, optional): 
+                Database schema where the table resides.
             dataframe (DataFrame): 
                 The DataFrame to be written to the SQL server table
             exists (str): 
@@ -57,6 +59,8 @@ class SQLServerLoader(Loader):
         self.engine = engine
         self.kwargs = kwargs
         self.schema = schema if not hasattr(engine, "schema") else engine.schema
+        if not self.schema:
+            raise ValueError("Schema must be provided for SQLServerLoader")
 
     def func(self, context):
         """
