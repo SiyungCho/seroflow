@@ -122,6 +122,31 @@ class Context:
         self.set_dataframe(name, df)
         self.added_dataframe_update_metadata()
 
+    def delete_dataframe(self, name: str) -> bool:
+        """
+        Delete a DataFrame from the context by its name and update metadata accordingly.
+
+        Args:
+            name (str): The name of the DataFrame to delete.
+        
+        Returns:
+            bool: True if the DataFrame was successfully deleted, False otherwise.
+        """
+        if name in self.dataframes:
+            # Remove the DataFrame from the main dictionary
+            del self.dataframes[name]
+            
+            # Remove the DataFrame address if it exists
+            if name in self.dataframe_addr:
+                del self.dataframe_addr[name]
+            
+            # Update the metadata count of DataFrames
+            self.added_dataframe_update_metadata()
+            return True
+        else:
+            print(f"DataFrame with name '{name}' does not exist.")
+            return False
+
     def __str__(self):
         """
         Return a string representation of the Context.

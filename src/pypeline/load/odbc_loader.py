@@ -66,6 +66,9 @@ class ODBCLoader(Loader):
         df = context.get_dataframe(self.dataframe)
         full_name = f"[{self.schema}].[{self.target}]" if self.schema else f"[{self.target}]"
 
+        if not self._table_exists(full_name):
+            self._create_table(full_name, df)
+
         if self.exists == "replace":
             self._drop_table_if_exists(full_name)
             self._create_table(full_name, df)
@@ -163,3 +166,13 @@ class ODBCLoader(Loader):
         cursor.executemany(sql, data)
         self.conn.commit()
         cursor.close()
+
+    def map_exists_parameter(self):
+        """
+        Public method: map_exists_parameter()
+        Maps the exists parameter, No mapping required for this instance
+
+        Returns:
+            str (['error', 'replace', 'append'], None): 
+        """
+        return self.exists
