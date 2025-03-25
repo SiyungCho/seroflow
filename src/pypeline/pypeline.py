@@ -1156,4 +1156,4 @@ class Pypeline():
             self.__display_message(f"ETL Execution Finished at time: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(end_time))} ...", True)
             elapsed_time = end_time - start_time
             if elapsed_time > 1.0:
-                self.__display_message(f"Total Execution Time: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(elapsed_time))} seconds", True)
+                self.__display_message(f"Total Execution Time: {elapsed_time} seconds", True)
