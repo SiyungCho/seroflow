@@ -17,7 +17,7 @@ Classes:
 import logging
 import time
 from collections import OrderedDict
-from tqdm import tqdm
+from tqdm.auto import tqdm
 
 from .log import CustomLogger
 from .cache import AbstractCache, LFUCache
