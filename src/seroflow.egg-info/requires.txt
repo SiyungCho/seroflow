@@ -1,0 +1,9 @@
+pandas
+sqlalchemy
+pyodbc
+pandasql
+dill
+xlrd
+tqdm
+pylint
+openpyxl

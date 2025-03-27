@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "seroflow"
+version = "1.0.1"
+authors = [
+  { name="Frank Siyung Cho", email="siyungcho@gmail.com" },
+]
+description = "Seroflow is a Python package designed to help users build and execute efficient data pipelines."
+readme = "README.md"
+requires-python = ">=3.7"
+license = { file="LICENSE" }
+dependencies = [
+    "pandas",
+    "sqlalchemy",
+    "pyodbc",
+    "pandasql",
+    "dill",
+    "xlrd",
+    "tqdm",
+    "pylint",
+    "openpyxl"
+]
+
+[project.urls]
+Homepage = "https://github.com/SiyungCho/seroflow"
