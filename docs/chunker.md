@@ -1,6 +1,6 @@
 # Chunker Documentation
 
-The modules documented here define the base structure and a concrete implementation for Pypeline partitioning (chunking). They provide a common interface to calculating chunk coordinates, managing a queue of chunking coordinates, and saving/restoring the chunker's state. This ensures consistent chunker behavior across different chunking strategies.
+The modules documented here define the base structure and a concrete implementation for `Pipeline` partitioning (chunking). They provide a common interface to calculating chunk coordinates, managing a queue of chunking coordinates, and saving/restoring the chunker's state. This ensures consistent chunker behavior across different chunking strategies.
 
 ## Overview
 
@@ -8,7 +8,7 @@ This documentation covers three modules:
 
 - **chunker:**  
   The abstract base class that:
-  - Iterates through a pypeline's step index to identify steps supporting chunking.
+  - Iterates through a `Pipeline`'s step index to identify steps supporting chunking.
   - For each extractor step with a defined `chunk_size`, initializes chunk coordinates as a tuple:
     - `(chunk_size, 0, step.get_max_row_count(), False)`
   - Validates that loader steps are configured to append data (i.e., their `exists` attribute is set to `'append'`).
@@ -24,11 +24,11 @@ This documentation covers three modules:
 
 ## Class: Chunker
 
-`Chunker` is an abstract base class (inheriting from `ABC`) for implementing chunking mechanisms within the Pypeline framework. Derived classes must implement all the abstract methods below to handle chunking operations. This design enforces a standardized interface and behavior across different chunking strategies.
+`Chunker` is an abstract base class (inheriting from `ABC`) for implementing chunking mechanisms within the `Pipeline` framework. Derived classes must implement all the abstract methods below to handle chunking operations. This design enforces a standardized interface and behavior across different chunking strategies.
 
 - **`__init__(self, step_index)`**
   - **Parameters:**
-    - `step_index` (*OrderedDict*): An ordered dictionary mapping step keys to step objects in the pypeline.
+    - `step_index` (*OrderedDict*): An ordered dictionary mapping step keys to step objects in the `Pipeline`.
 
   - **Behavior:**
     - Iterates through the provided step index.
@@ -85,21 +85,21 @@ A concrete implementation of the `Chunker` class that calculates chunk coordinat
   Initializes a new `DirectChunker` instance.
   
   **Parameters:**
-    - `step_index` (*OrderedDict*): An ordered dictionary mapping step keys to step objects in the pypeline.
+    - `step_index` (*OrderedDict*): An ordered dictionary mapping step keys to step objects in the `Pipeline`.
   **Behavior:**
     - Calls the parent `Chunker` constructor.
     - Automatically invokes `calculate_chunks()` to populate the coordinate queue.
   
 #### Initialization Example
 
-Below is a simple example that shows how to initialize a `Pypeline` object with an `LFUCache`:
+Below is a simple example that shows how to initialize a `Pipeline` object with an `LFUCache`:
 
 ```python
-  from pypeline import Pypeline
-  from pypeline.chunker import DirectChunker
+  from pydra import Pipeline
+  from pydra.chunker import DirectChunker
 
-  pypeline = Pypeline()
-  pypeline.execute(chunker=DirectChunker) # Execute Pypeline with chunker
+  pipeline = Pipeline()
+  pipeline.execute(chunker=DirectChunker) # Execute Pipeline with chunker
 ```
 
 ## DirectChunker Methodology
@@ -107,8 +107,8 @@ The `DirectChunker` partitions each extractor’s dataset into fixed‑size bloc
 
 ### Key behaviors:
 - Fixed‑size chunks: Each chunk’s row count equals the extractor’s configured chunk_size, except the final chunk (which may be smaller if the total row count isn’t a multiple of chunk_size).
-- Round‑robin ordering: Execution cycles through extractors in pypeline order. On each cycle, it emits one chunk coordinate (start_index, nrows) for each extractor that still has rows remaining.
-- Skipping finished extractors: Once an extractor has emitted all of its chunks, subsequent cycles enqueue (None, None) for that step—telling Pypeline to skip it.
+- Round‑robin ordering: Execution cycles through extractors in `Pipeline` order. On each cycle, it emits one chunk coordinate (start_index, nrows) for each extractor that still has rows remaining.
+- Skipping finished extractors: Once an extractor has emitted all of its chunks, subsequent cycles enqueue (None, None) for that step—telling `Pipeline` to skip it.
 - Total iterations = sum of chunks across all extractors.
 
 #### DirectChunker Methodology Example
@@ -124,7 +124,7 @@ Imagine three extractors (A, B, C) with differing dataset sizes and chunk sizes:
 | **C**     |     5      |     4      |    2     | (0,4)<br/>(4,1)                 |
 
 The greatest # Chunks in this case belongs to extractor A.
-Therefore, the Pypeline will execute 3 seperate times:
+Therefore, the `Pipeline` will execute 3 seperate times:
 
 | Execution |       A       |       B       |       C       |
 |:---------:|:-------------:|:-------------:|:-------------:|
@@ -163,21 +163,21 @@ A concrete implementation of the `Chunker` class that calculates chunk coordinat
   Initializes a new `DistributedChunker` instance.
   
   **Parameters:**
-    - `step_index` (*OrderedDict*): An ordered dictionary mapping step keys to step objects in the pypeline.
+    - `step_index` (*OrderedDict*): An ordered dictionary mapping step keys to step objects in the `Pipeline`.
   **Behavior:**
     - Calls the parent `Chunker` constructor.
     - Automatically invokes `calculate_chunks()` to populate the coordinate queue.
   
 #### Initialization Example
 
-Below is a simple example that shows how to initialize a `Pypeline` object with an `LFUCache`:
+Below is a simple example that shows how to initialize a `Pipeline` object with an `LFUCache`:
 
 ```python
-  from pypeline import Pypeline
-  from pypeline.chunker import DistributedChunker
+  from pydra import Pipeline
+  from pydra.chunker import DistributedChunker
 
-  pypeline = Pypeline()
-  pypeline.execute(chunker=DistributedChunker) # Execute Pypeline with chunker
+  pipeline = Pipeline()
+  pipeline.execute(chunker=DistributedChunker) # Execute Pipeline with chunker
 ```
 
 ## DistributedChunker Methodology
@@ -211,7 +211,7 @@ Extractor Y: 60/6 = 10
 
 Extractor Z: 30/6 = 5
 
-Therefore, the Pypeline will execute 6 seperate times:
+Therefore, the `Pipeline` will execute 6 seperate times:
 
 | Execution |       X       |       Y       |       Z       |
 |:---------:|:-------------:|:-------------:|:-------------:|

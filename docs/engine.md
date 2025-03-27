@@ -1,15 +1,15 @@
 # Engine Documentation
 
-The modules documented here define the base structure and a concrete implementation for Pypeline compatible Engines. They provide a common interface to handle common connection setup, context‑management, and resource cleanup within an ETL pypeline.
+The modules documented here define the base structure and a concrete implementation for `Pipeline` compatible Engines. They provide a common interface to handle common connection setup, context‑management, and resource cleanup within a `Pipeline`.
 
-**It is important to note** that all `Pypeline` `Extractors` and `Loaders` that require an `Engine` can use the native `SQLAlchemy` or `Pyodbc` connection without implementing any of the defined `Engine` Classes offered with `Pypeline`. `Pypeline` offers an interface and concrete example of a compatible engine for abstraction and validity however it is **not** mandatory to use these unless specified. 
+**It is important to note** that all `Pipeline` `Extractors` and `Loaders` that require an `Engine` can use the native `SQLAlchemy` or `Pyodbc` connection without implementing any of the defined `Engine` Classes offered with `Pipeline`. `Pipeline` offers an interface and concrete example of a compatible engine for abstraction and validity however it is **not** mandatory to use these unless specified. 
 
 ## Overview
 
 This documentation covers three modules:
 
 - **AbstractEngine**:  
-  Defines the `AbstractEngine` abstract class, which specifies the interface for creating pypeline compatible engines.
+  Defines the `AbstractEngine` abstract class, which specifies the interface for creating `Pipeline` compatible engines.
 
 - **Engine**:  
   Implements the `Engine` class, a concrete subclass of `AbstractEngine` that encapsulates a single type of database connection engine. The `Engine` class manages connection initialization, default values, error handling, and other connection components.
@@ -19,7 +19,7 @@ This documentation covers three modules:
 
 ## Class: AbstractEngine
 
-`AbstractEngine` is an abstract base class that defines the interface for creating pypeline compatible engines. It extends Python’s `ABC` (Abstract Base Class) and enforces the implementation of the following methods:
+`AbstractEngine` is an abstract base class that defines the interface for creating `Pipeline` compatible engines. It extends Python’s `ABC` (Abstract Base Class) and enforces the implementation of the following methods:
 
 - **`create_engine()`**  
     *Abstract Method*  
@@ -120,7 +120,7 @@ After unpacking settings and creating the `Engine` object via its subclass’s `
 #### Example
 
 ```python
-from pypeline.engine import Engine
+from pydra.engine import Engine
 
 class DummyEngine(Engine):
     def create_engine(self):
@@ -177,51 +177,51 @@ On initialization, `SQLAlchemyEngine` constructs its URL, creates the engine, an
 #### Example
 
 ```python
-  from pypeline import Pypeline
-  from pypeline.extract import SQLServerExtractor
-  from pypeline.engine import SQLAlchemyEngine # Select preferred Engine
+  from pydra import Pipeline
+  from pydra.extract import SQLServerExtractor
+  from pydra.engine import SQLAlchemyEngine # Select preferred Engine
 
   engine = SQLAlchemyEngine(...)
 
-  pypeline = Pypeline(...)
+  pipeline = Pipeline(...)
   sqlserver_extractor = SQLServerExtractor(source="Table Name", engine=engine)
-  pypeline.target_extractor = sqlserver_extractor # Or add it using the add_step(s) methods
-  pypeline.execute()
+  pipeline.target_extractor = sqlserver_extractor # Or add it using the add_step(s) methods
+  pipeline.execute()
 ```
 
-## Instantiating Non Pypeline provided Engines
-As mentioned previously, it is entirely possible to bypass `Pypeline’s` classes entirely if you prefer a native approach:
+## Instantiating Non Pydra provided Engines
+As mentioned previously, it is entirely possible to bypass `Pipeline’s` classes entirely if you prefer a native approach:
 
 #### Example
-In the example below we create a native `sqlalchemy` based engine and use it in conjunction with a Loader Step in the `Pypeline`.
+In the example below we create a native `sqlalchemy` based engine and use it in conjunction with a Loader Step in the `Pipeline`.
 
 ```python
-  from pypeline import Pypeline
-  from pypeline.extract import SQLServerExtractor
+  from pydra import Pipeline
+  from pydra.extract import SQLServerExtractor
   from sqlalchemy import create_engine
   from sqlalchemy.engine import URL
 
   connection_url = URL.create(...)
   engine = create_engine(connection_url, ...)
 
-  pypeline = Pypeline(...)
+  pipeline = Pipeline(...)
   sqlserver_extractor = SQLServerExtractor(source="Table Name", engine=engine)
-  pypeline.target_extractor = sqlserver_extractor # Or add it using the add_step(s) methods
-  pypeline.execute()
+  pipeline.target_extractor = sqlserver_extractor # Or add it using the add_step(s) methods
+  pipeline.execute()
 ```
 
 #### Example
-In the example below we create a native `pyodbc` based engine and use it in conjunction with a Loader Step in the `Pypeline`.
+In the example below we create a native `pyodbc` based engine and use it in conjunction with a Loader Step in the `Pipeline`.
 
 ```python
-  from pypeline import Pypeline
-  from pypeline.extract import SQLServerExtractor
+  from pydra import Pipeline
+  from pydra.extract import SQLServerExtractor
   from pyodbc 
 
   engine = pyodbc.connect(...)
 
-  pypeline = Pypeline(...)
+  pipeline = Pipeline(...)
   sqlserver_extractor = SQLServerExtractor(source="Table Name", engine=engine)
-  pypeline.target_extractor = sqlserver_extractor # Or add it using the add_step(s) methods
-  pypeline.execute()
+  pipeline.target_extractor = sqlserver_extractor # Or add it using the add_step(s) methods
+  pipeline.execute()
 ```

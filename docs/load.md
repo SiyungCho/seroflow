@@ -24,7 +24,7 @@ The `Loader` class is an abstract base class for writing a `pandas` DataFrame (o
 - The file mode (or table existence behavior) through an exists parameter that must be one of `"append", "fail", or "replace"`.
 
 **Abstract methods that subclasses must implement:**
-- `func(self, context)`: Reads DataFrames from the provided `Pypeline` context and writes them to the target.
+- `func(self, context)`: Reads DataFrames from the provided `Pipeline` context and writes them to the target.
 - `map_exists_parameter(self)`: Maps the provided `exists` parameter to the file-mode (or SQL table mode) that is appropriate for the output format.
 
 ## Initialization
@@ -45,8 +45,8 @@ The `Loader` class is an abstract base class for writing a `pandas` DataFrame (o
   - `func` *(function)*: 
     - The function to execute for writing the DataFrame.
   - `on_error` *("raises", "ignore")*: 
-    - `"raises"`: Raises Exceptions terminating `Pypeline` execution.
-    - `"ignore"`: Ignores Exceptions terminating the `Loader` without terminating the `Pypeline` execution.
+    - `"raises"`: Raises Exceptions terminating `Pipeline` execution.
+    - `"ignore"`: Ignores Exceptions terminating the `Loader` without terminating the `Pipeline` execution.
 
 - **`func(self, context)`**  
   *Abstract Method*  
@@ -67,8 +67,8 @@ The `Loader` class is an abstract base class for writing a `pandas` DataFrame (o
 Below is an example demonstrating how a concrete load implementation might inherit from `Loader` and implement its methods:
 
 ```python
-    from pypeline import Pypeline
-    from pypeline.load import Loader
+    from pydra import Pipeline
+    from pydra.load import Loader
 
     class MyCustomLoader(Loader):
         def __init__(self, target, dataframe, exists="append", on_error="raise"):
@@ -86,12 +86,12 @@ Below is an example demonstrating how a concrete load implementation might inher
             # Map the exists parameter; for custom loaders this might be trivial
             return self.exists
 
-    pypeline = Pypeline(...)
-    pypeline.target_extractor = ... # Set Extractor to gather data
+    pipeline = Pipeline(...)
+    pipeline.target_extractor = ... # Set Extractor to gather data
 
     custom_loader = MyCustomLoader(...)
-    pypeline.target_loader = custom_loader # Or add it using the add_step(s) methods
-    pypeline.execute()
+    pipeline.target_loader = custom_loader # Or add it using the add_step(s) methods
+    pipeline.execute()
 ```
 
 ## Class: FileLoader
@@ -118,8 +118,8 @@ The `FileLoader` class is an abstract loader for file-based outputs. It extends 
   - `file_extension` (str):
     - The file extension to be used when writing the file.
   - `on_error` *("raises", "ignore", optional)*: 
-    - `"raises"`: Raises Exceptions terminating `Pypeline` execution.
-    - `"ignore"`: Ignores Exceptions terminating the `FileLoader` without terminating the `Pypeline` execution.
+    - `"raises"`: Raises Exceptions terminating `Pipeline` execution.
+    - `"ignore"`: Ignores Exceptions terminating the `FileLoader` without terminating the `Pipeline` execution.
   - `step_name` (str, optional):
     - The name of the loader step 
     - Default: `“FileLoader`"
@@ -131,8 +131,8 @@ The `FileLoader` class is an abstract loader for file-based outputs. It extends 
 Below is an example demonstrating how a concrete load implementation might inherit from `FileLoader` and implement its methods:
 
 ```python
-    from pypeline import Pypeline
-    from pypeline.load import FileLoader
+    from pydra import Pipeline
+    from pydra.load import FileLoader
 
     class MyCustomFileLoader(FileLoader):
         def __init__(self, target, dataframe, file_extension, exists="append", on_error="raise"):
@@ -150,12 +150,12 @@ Below is an example demonstrating how a concrete load implementation might inher
             # Map the exists parameter; for custom loaders this might be trivial
             return self.exists
 
-    pypeline = Pypeline(...)
-    pypeline.target_extractor = ... # Set Extractor to gather data
+    pipeline = Pipeline(...)
+    pipeline.target_extractor = ... # Set Extractor to gather data
 
     custom_file_loader = MyCustomFileLoader(...)
-    pypeline.target_loader = custom_file_loader # Or add it using the add_step(s) methods
-    pypeline.execute()
+    pipeline.target_loader = custom_file_loader # Or add it using the add_step(s) methods
+    pipeline.execute()
 ```
 
 ## Class: CSVLoader
@@ -179,8 +179,8 @@ The `CSVLoader` class is a concrete loader for writing a single DataFrame to a C
     - `"replace"`: File exists, File will be overwritten with new data.
     - Default: `append`
   - `on_error` *("raises", "ignore", optional)*: 
-    - `"raises"`: Raises Exceptions terminating `Pypeline` execution.
-    - `"ignore"`: Ignores Exceptions terminating the `CSVLoader` without terminating the `Pypeline` execution.
+    - `"raises"`: Raises Exceptions terminating `Pipeline` execution.
+    - `"ignore"`: Ignores Exceptions terminating the `CSVLoader` without terminating the `Pipeline` execution.
   - `step_name` (str, optional):
     - The name of the loader step 
     - Default: `CSVLoader`"
@@ -189,23 +189,23 @@ The `CSVLoader` class is a concrete loader for writing a single DataFrame to a C
   
 #### Initialization Example
 
-Below is a simple example that shows how to initialize a `Pypeline` object with an `CSVLoader`:
+Below is a simple example that shows how to initialize a `Pipeline` object with an `CSVLoader`:
 
 ```python
-    from pypeline import Pypeline
-    from pypeline.load import CSVLoader
+    from pydra import Pipeline
+    from pydra.load import CSVLoader
 
-    pypeline = Pypeline(...)
-    pypeline.target_extractor = ... # Set Extractor to gather data
+    pipeline = Pipeline(...)
+    pipeline.target_extractor = ... # Set Extractor to gather data
 
     csv_loader = CSVLoader(target="path_to_csv_destination", dataframe="...")
-    pypeline.target_loader = csv_loader # Or add it using the add_step(s) methods
-    pypeline.execute()
+    pipeline.target_loader = csv_loader # Or add it using the add_step(s) methods
+    pipeline.execute()
 ```
 
 ## Class: MultiCSVLoader
 
-The `MultiCSVLoader` class extends `CSVLoader` to handle writing multiple DataFrames to separate CSV files. It expects a list of DataFrames Names stored in the Pypeline Object and writes each DataFrame to its own file within the specified target directory.
+The `MultiCSVLoader` class extends `CSVLoader` to handle writing multiple DataFrames to separate CSV files. It expects a list of DataFrames Names stored in the `Pipeline` Object and writes each DataFrame to its own file within the specified target directory.
 
 ## Initialization
 
@@ -224,8 +224,8 @@ The `MultiCSVLoader` class extends `CSVLoader` to handle writing multiple DataFr
     - `"replace"`: File exists, File will be overwritten with new data.
     - Default: `append`
   - `on_error` *("raises", "ignore", optional)*: 
-    - `"raises"`: Raises Exceptions terminating `Pypeline` execution.
-    - `"ignore"`: Ignores Exceptions terminating the `MultiCSVLoader` without terminating the `Pypeline` execution.
+    - `"raises"`: Raises Exceptions terminating `Pipeline` execution.
+    - `"ignore"`: Ignores Exceptions terminating the `MultiCSVLoader` without terminating the `Pipeline` execution.
   - `step_name` (str, optional):
     - The name of the loader step 
     - Default: `MultiCSVLoader`"
@@ -234,18 +234,18 @@ The `MultiCSVLoader` class extends `CSVLoader` to handle writing multiple DataFr
   
 #### Initialization Example
 
-Below is a simple example that shows how to initialize a `Pypeline` object with an `MultiCSVLoader`:
+Below is a simple example that shows how to initialize a `Pipeline` object with an `MultiCSVLoader`:
 
 ```python
-    from pypeline import Pypeline
-    from pypeline.load import MultiCSVLoader
+    from pydra import Pipeline
+    from pydra.load import MultiCSVLoader
 
-    pypeline = Pypeline(...)
-    pypeline.target_extractor = ... # Set Extractor to gather data
+    pipeline = Pipeline(...)
+    pipeline.target_extractor = ... # Set Extractor to gather data
 
     multi_csv_loader = MultiCSVLoader(target="path_to_directory_destination", dataframes=["...", "..."])
-    pypeline.target_loader = multi_csv_loader # Or add it using the add_step(s) methods
-    pypeline.execute()
+    pipeline.target_loader = multi_csv_loader # Or add it using the add_step(s) methods
+    pipeline.execute()
 ```
 
 ## Class: ExcelLoader
@@ -272,8 +272,8 @@ The `ExcelLoader` class is a concrete loader for writing a single DataFrame to a
     - The file extension to use
     - Default: `.xlsx`
   - `on_error` *("raises", "ignore", optional)*: 
-    - `"raises"`: Raises Exceptions terminating `Pypeline` execution.
-    - `"ignore"`: Ignores Exceptions terminating the `ExcelLoader` without terminating the `Pypeline` execution.
+    - `"raises"`: Raises Exceptions terminating `Pipeline` execution.
+    - `"ignore"`: Ignores Exceptions terminating the `ExcelLoader` without terminating the `Pipeline` execution.
   - `step_name` (str, optional):
     - The name of the loader step 
     - Default: `ExcelLoader`"
@@ -282,18 +282,18 @@ The `ExcelLoader` class is a concrete loader for writing a single DataFrame to a
   
 #### Initialization Example
 
-Below is a simple example that shows how to initialize a `Pypeline` object with an `ExcelLoader`:
+Below is a simple example that shows how to initialize a `Pipeline` object with an `ExcelLoader`:
 
 ```python
-    from pypeline import Pypeline
-    from pypeline.load import ExcelLoader
+    from pydra import Pipeline
+    from v.load import ExcelLoader
 
-    pypeline = Pypeline(...)
-    pypeline.target_extractor = ... # Set Extractor to gather data
+    pipeline = Pipeline(...)
+    pipeline.target_extractor = ... # Set Extractor to gather data
 
     excel_loader = ExcelLoader(target="path_to_excel_destination", dataframe="...")
-    pypeline.target_loader = excel_loader # Or add it using the add_step(s) methods
-    pypeline.execute()
+    pipeline.target_loader = excel_loader # Or add it using the add_step(s) methods
+    pipeline.execute()
 ```
 
 ## Class: MultiExcelLoader
@@ -320,8 +320,8 @@ The `MultiExcelLoader` class extends `ExcelLoader` to handle multiple DataFrames
     - The file extension to use
     - Default: `.xlsx`
   - `on_error` *("raises", "ignore", optional)*: 
-    - `"raises"`: Raises Exceptions terminating `Pypeline` execution.
-    - `"ignore"`: Ignores Exceptions terminating the `MultiExcelLoader` without terminating the `Pypeline` execution.
+    - `"raises"`: Raises Exceptions terminating `Pipeline` execution.
+    - `"ignore"`: Ignores Exceptions terminating the `MultiExcelLoader` without terminating the `Pipeline` execution.
   - `step_name` (str, optional):
     - The name of the loader step 
     - Default: `MultiExcelLoader`"
@@ -330,18 +330,18 @@ The `MultiExcelLoader` class extends `ExcelLoader` to handle multiple DataFrames
   
 #### Initialization Example
 
-Below is a simple example that shows how to initialize a `Pypeline` object with an `MultiExcelLoader`:
+Below is a simple example that shows how to initialize a `Pipeline` object with an `MultiExcelLoader`:
 
 ```python
-    from pypeline import Pypeline
-    from pypeline.load import MultiExcelLoader
+    from pydra import Pipeline
+    from pydra.load import MultiExcelLoader
 
-    pypeline = Pypeline(...)
-    pypeline.target_extractor = ... # Set Extractor to gather data
+    pipeline = Pipeline(...)
+    pipeline.target_extractor = ... # Set Extractor to gather data
 
     multi_excel_loader = MultiExcelLoader(target="path_to_directory_destination", dataframes=["...", "..."])
-    pypeline.target_loader = multi_excel_loader # Or add it using the add_step(s) methods
-    pypeline.execute()
+    pipeline.target_loader = multi_excel_loader # Or add it using the add_step(s) methods
+    pipeline.execute()
 ```
 
 ## Class: SQLServerLoader
@@ -375,8 +375,8 @@ Please Review the [Engine](engine.md) documentation for further information on `
     - `"replace"`: File exists, File will be overwritten with new data.
     - Default: `append`
   - `on_error` *("raises", "ignore", optional)*: 
-    - `"raises"`: Raises Exceptions terminating `Pypeline` execution.
-    - `"ignore"`: Ignores Exceptions terminating the `SQLServerLoader` without terminating the `Pypeline` execution.
+    - `"raises"`: Raises Exceptions terminating `Pipeline` execution.
+    - `"ignore"`: Ignores Exceptions terminating the `SQLServerLoader` without terminating the `Pipeline` execution.
   - `step_name` (str, optional):
     - The name of the loader step 
     - Default: `SQLServerLoader`"
@@ -385,20 +385,20 @@ Please Review the [Engine](engine.md) documentation for further information on `
   
 #### Initialization Example
 
-Below is a simple example that shows how to initialize a `Pypeline` object with an `SQLServerLoader`:
+Below is a simple example that shows how to initialize a `Pipeline` object with an `SQLServerLoader`:
 
 ```python
-    from pypeline import Pypeline
-    from pypeline.load import SQLServerLoader
-    from pypeline.engine import SQLAlchemyEngine # Select preferred Engine
+    from pydra import Pipeline
+    from pydra.load import SQLServerLoader
+    from pydra.engine import SQLAlchemyEngine # Select preferred Engine
 
-    pypeline = Pypeline(...)
-    pypeline.target_extractor = ... # Set Extractor to gather data
+    pipeline = Pipeline(...)
+    pipeline.target_extractor = ... # Set Extractor to gather data
     engine = SQLAlchemyEngine(...)
 
     sqlserver_loader = SQLServerLoader(target="Table Name", dataframe="...", engine=engine)
-    pypeline.target_loader = sqlserver_loader # Or add it using the add_step(s) methods
-    pypeline.execute()
+    pipeline.target_loader = sqlserver_loader # Or add it using the add_step(s) methods
+    pipeline.execute()
 ```
 
 ## Class: ODBCLoader
@@ -430,8 +430,8 @@ Please Review the [Engine](engine.md) documentation for further information on `
     - `"replace"`: File exists, File will be overwritten with new data.
     - Default: `append`
   - `on_error` *("raises", "ignore", optional)*: 
-    - `"raises"`: Raises Exceptions terminating `Pypeline` execution.
-    - `"ignore"`: Ignores Exceptions terminating the `ODBCLoader` without terminating the `Pypeline` execution.
+    - `"raises"`: Raises Exceptions terminating `Pipeline` execution.
+    - `"ignore"`: Ignores Exceptions terminating the `ODBCLoader` without terminating the `Pipeline` execution.
   - `step_name` (str, optional):
     - The name of the loader step 
     - Default: `ODBCLoader`"
@@ -440,18 +440,18 @@ Please Review the [Engine](engine.md) documentation for further information on `
   
 #### Initialization Example
 
-Below is a simple example that shows how to initialize a `Pypeline` object with an `ODBCLoader`:
+Below is a simple example that shows how to initialize a `Pipeline` object with an `ODBCLoader`:
 
 ```python
-  from pypeline import Pypeline
-  from pypeline.load import ODBCLoader
+  from pydra import Pipeline
+  from pydra.load import ODBCLoader
   import pyodbc
 
-  pypeline = Pypeline(...)
-  pypeline.target_extractor = ... # Set Extractor to gather data
+  pipeline = Pipeline(...)
+  pipeline.target_extractor = ... # Set Extractor to gather data
   engine = pyodbc.connect(...)
 
   odbc_loader = ODBCLoader(target="Table Name", dataframe="...", engine=engine, schema="Schema Name")
-  pypeline.target_loader = odbc_loader # Or add it using the add_step(s) methods
-  pypeline.execute()
+  pipeline.target_loader = odbc_loader # Or add it using the add_step(s) methods
+  pipeline.execute()
 ```

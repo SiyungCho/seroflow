@@ -1,6 +1,6 @@
 # Cache Documentation
 
-The modules documented here define the base structure and a concrete implementation for Pypeline caching. They provide a common interface to inserting, retrieving, storing, loading, and resetting cache items. This ensures consistent cache behavior across different caching strategies.
+The modules documented here define the base structure and a concrete implementation for `Pipeline` caching. They provide a common interface to inserting, retrieving, storing, loading, and resetting cache items. This ensures consistent cache behavior across different caching strategies.
 
 ## Overview
 
@@ -10,13 +10,13 @@ This documentation covers two modules:
   Defines the `AbstractCache` abstract class, which specifies the interface for creating caches.
 
 - **lfu_cache**:  
-  The Least Frequently Used (LFU), `LFUCache` class implements the `AbstractCache` interface to store, retrieve, and manage states within the Pypeline execution. It supports caching of pypeline parameters and global context, along with mechanisms to evict the least frequently used items when the cache capacity is exceeded, persist cache state to disk, and restore the state from saved checkpoints.
+  The Least Frequently Used (LFU), `LFUCache` class implements the `AbstractCache` interface to store, retrieve, and manage states within the `Pipeline` execution. It supports caching of `Pipeline` parameters and global context, along with mechanisms to evict the least frequently used items when the cache capacity is exceeded, persist cache state to disk, and restore the state from saved checkpoints.
 
 ## Class: AbstractCache
 
-`AbstractCache` is an abstract base class (inheriting from `ABC`) for implementing caching mechanisms within the Pypeline framework. Derived classes must implement all the abstract methods below to handle caching operations. This design enforces a standardized interface and behavior across different caching strategies.
+`AbstractCache` is an abstract base class (inheriting from `ABC`) for implementing caching mechanisms within the `Pipeline` framework. Derived classes must implement all the abstract methods below to handle caching operations. This design enforces a standardized interface and behavior across different caching strategies.
 
-**Note**: It is important to consider how a custom cache will interact with the internal systems in the Pypeline Object. Please Review the [Cache Transformations](transformations/cache.md) documentation for further information on `CacheState`, `ReloadCacheState` and `ResetCache`.
+**Note**: It is important to consider how a custom cache will interact with the internal systems in the `Pipeline` Object. Please Review the [Cache Transformations](transformations/cache.md) documentation for further information on `CacheState`, `ReloadCacheState` and `ResetCache`.
 
 **Subclasses must override:**
 - `put(self, value)`
@@ -42,14 +42,14 @@ This documentation covers two modules:
 
 - **`store(self, step_index, parameter_index, global_context, step_key)`**  
   *Abstract Method*  
-  Cache the current state of the pypeline. This method stores the step index, parameter index, global context, and a specific step key that marks the current execution checkpoint.
+  Cache the current state of the `Pipeline`. This method stores the step index, parameter index, global context, and a specific step key that marks the current execution checkpoint.
 
   **Parameters:**
-  `step_index` (*OrderedDict*): An index containing all steps instantiated in the pypeline object. 
+  `step_index` (*OrderedDict*): An index containing all steps instantiated in the `Pipeline` object. 
   
   `parameter_index` (*dict*): The current state of the parameter index. 
   
-  `global_context` (*Context*): The current state of the pypeline global context. 
+  `global_context` (*Context*): The current state of the `Pipeline` global context. 
   
   `step_key` (*str*): The step key used for caching the current state.
 
@@ -137,14 +137,14 @@ The `LFUCache` class uses the Least Frequently Used (LFU) strategy to manage a c
   
 #### Initialization Example
 
-Below is a simple example that shows how to initialize a `Pypeline` object with an `LFUCache`:
+Below is a simple example that shows how to initialize a `Pipeline` object with an `LFUCache`:
 
 ```python
-  from pypeline import Pypeline
-  from pypeline.cache import LFUCache # Import LFUCache
+  from pydra import Pipeline
+  from pydra.cache import LFUCache # Import LFUCache
 
-  # Initialize a pypeline with caching 
-  pypeline = Pypeline(cache=LFUCache)
+  # Initialize a pipeline with caching 
+  pipeline = Pipeline(cache=LFUCache)
 ```
 
 ## LFUCache Methods 
@@ -226,7 +226,7 @@ Below is a simple example that shows how to initialize a `Pypeline` object with 
 
   `step_key` (*str*): The key for the step.
 
-  `step_num` (*int*): The index of the step in the pypeline.
+  `step_num` (*int*): The index of the step in the `Pipeline`.
   
   **Behavior:**
   Reads the current configuration.
@@ -254,7 +254,7 @@ Below is a simple example that shows how to initialize a `Pypeline` object with 
   Retrieves the last completed step from the cache configuration, comparing function code for consistency.
   
   **Parameters:**
-  `step_index` (*OrderedDict*): The current step index of the pypeline.
+  `step_index` (*OrderedDict*): The current step index of the `Pipeline`.
   
   **Returns:**  
   The key of the last completed step if available; otherwise, `None`.
@@ -267,7 +267,7 @@ Below is a simple example that shows how to initialize a `Pypeline` object with 
   Stores the current cache state to a checkpoint file.
   
   **Parameters:**
-  `step_index` (*OrderedDict*): The pypeline's step index.
+  `step_index` (*OrderedDict*): The `Pipeline`'s step index.
   
   `parameter_index` (*dict*): The current parameter index.
   

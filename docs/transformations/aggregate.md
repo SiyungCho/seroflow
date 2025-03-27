@@ -1,6 +1,6 @@
 # Aggregation Transformations Documentation
 
-This module implements a suite of transformation classes that compute various statistical metrics on columns of a DataFrame. Each transformation class extends the base `Transformation` class and is designed to operate on a specified DataFrame stored in the Pypeline context. The available transformations include:
+This module implements a suite of transformation classes that compute various statistical metrics on columns of a DataFrame. Each transformation class extends the base `Transformation` class and is designed to operate on a specified DataFrame stored in the `Pipeline` context. The available transformations include:
 
 - **GetColMean**: Computes the mean of a specified column.
 - **GetColMedian**: Computes the median of a specified column.
@@ -31,16 +31,16 @@ Below is an example demonstrating how to use the Transformation `GetColMean`:
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import GetColMean
+  from pydra import Pipeline
+  from pydra.transform import GetColMean
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'sales_data' with a 'price' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'sales_data' with a 'price' column
 
   get_mean = GetColMean(column="price", dataframe="sales_data", variable="mean_price") # Initialize the GetColMean to compute the mean of the 'price' column
 
-  pypeline.add_steps([get_mean])
-  pypeline.execute()
+  pipeline.add_steps([get_mean])
+  pipeline.execute()
 ```
 
 ---
@@ -59,16 +59,16 @@ Below is an example demonstrating how to use the Transformation `GetColMedian`:
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import GetColMedian
+  from pydra import Pipeline
+  from pydra.transform import GetColMedian
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads a DataFrame named 'sales_data' with a 'price' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads a DataFrame named 'sales_data' with a 'price' column
 
   get_median = GetColMedian(column="price", dataframe="sales_data", variable="median_price") # Initialize the GetColMedian to compute the median of the 'price' column
 
-  pypeline.add_steps([get_median])
-  pypeline.execute()
+  pipeline.add_steps([get_median])
+  pipeline.execute()
 ```
 
 ---
@@ -87,16 +87,16 @@ Below is an example demonstrating how to use the Transformation `GetColMode`:
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import GetColMode
+  from pydra import Pipeline
+  from pydra.transform import GetColMode
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
 
   get_mode = GetColMode(column="price", dataframe="sales_data", variable="mode_price") # Initialize the GetColMode to compute the mode of the 'price' column
 
-  pypeline.add_steps([get_mode])
-  pypeline.execute()
+  pipeline.add_steps([get_mode])
+  pipeline.execute()
 ```
 
 ---
@@ -115,16 +115,16 @@ Below is an example demonstrating how to use the Transformation `GetColStd`:
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import GetColStd
+  from pydra import Pipeline
+  from pydra.transform import GetColStd
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
 
   get_std = GetColStd(column="price", dataframe="sales_data", variable="price_std") # Initialize the GetColStd to compute the standard deviation of the 'price' column
 
-  pypeline.add_steps([get_std])
-  pypeline.execute()
+  pipeline.add_steps([get_std])
+  v.execute()
 ```
 
 ---
@@ -143,16 +143,16 @@ Below is an example demonstrating how to use the Transformation `GetColSum`:
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import GetColSum
+  from pydra import Pipeline
+  from pydra.transform import GetColSum
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
 
   get_sum = GetColSum(column="price", dataframe="sales_data", variable="price_sum") # Initialize the GetColSum to compute the sum of the 'price' column
 
-  pypeline.add_steps([get_sum])
-  pypeline.execute()
+  pipeline.add_steps([get_sum])
+  pipeline.execute()
 ```
 
 ---
@@ -171,16 +171,16 @@ Below is an example demonstrating how to use the Transformation `GetColVariance`
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import GetColVariance
+  from pydra import Pipeline
+  from pydra.transform import GetColVariance
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
 
   get_variance = GetColVariance(column="price", dataframe="sales_data", variable="price_variance") # Initialize the GetColVariance to compute the variance of the 'price' column
 
-  pypeline.add_steps([get_variance])
-  pypeline.execute()
+  pipeline.add_steps([get_variance])
+  pipeline.execute()
 ```
 
 ---
@@ -200,16 +200,16 @@ Below is an example demonstrating how to use the Transformation `GetColQuantile`
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import GetColQuantile
+  from pydra import Pipeline
+  from pydra.transform import GetColQuantile
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
 
   get_quantile = GetColQuantile(column="price", dataframe="sales_data", quantile=0.75, variable="price_quantile_0.75") # Initialize the GetColQuantile to compute the quantile of the 'price' column
 
-  pypeline.add_steps([get_quantile])
-  pypeline.execute()
+  pipeline.add_steps([get_quantile])
+  pipeline.execute()
 ```
 
 ---
@@ -229,16 +229,16 @@ Below is an example demonstrating how to use the Transformation `GetColCorrelati
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import GetColCorrelation
+  from pydra import Pipeline
+  from pydra.transform import GetColCorrelation
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with 'price' and 'quantity' columns
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' with 'price' and 'quantity' columns
 
   get_corr = GetColCorrelation(column1="price", column2="quantity", dataframe="sales_data", variable="price_quantity_correlation") # Initialize the GetColCorrelation to compute the correlation of the 'price' column to the 'quantity' column
 
-  pypeline.add_steps([get_corr])
-  pypeline.execute()
+  pipeline.add_steps([get_corr])
+  pipeline.execute()
 ```
 
 ---
@@ -258,16 +258,16 @@ Below is an example demonstrating how to use the Transformation `GetColCovarianc
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import GetColCovariance
+  from pydra import Pipeline
+  from pydra.transform import GetColCovariance
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with 'price' and 'quantity' columns
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' with 'price' and 'quantity' columns
 
   get_cov = GetColCovariance(column1="price", column2="quantity", dataframe="sales_data", variable="price_quantity_covariance") # Initialize the GetColCovariance to compute the covariance of the 'price' column to the 'quantity' column
 
-  pypeline.add_steps([get_cov])
-  pypeline.execute()
+  pipeline.add_steps([get_cov])
+  pipeline.execute()
 ```
 
 ---
@@ -286,16 +286,16 @@ Below is an example demonstrating how to use the Transformation `GetColSkew`:
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import GetColSkew
+  from pydra import Pipeline
+  from pydra.transform import GetColSkew
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
 
   get_skew = GetColSkew(column="price", dataframe="sales_data", variable="price_skew") # Initialize the GetColSkew to compute the skew of the 'price' column
 
-  pypeline.add_steps([get_skew])
-  pypeline.execute()
+  pipeline.add_steps([get_skew])
+  pipeline.execute()
 ```
 
 ---

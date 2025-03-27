@@ -1,6 +1,6 @@
 # Transformation Documentation
 
-The module documented here defines the base structure for creating a Transformation Step. Transformation Steps are simply subclasses of the Step class. However, it provide a common interface to creating operations that typically modify or analyze DataFrames and update the pypeline context accordingly. Subclasses simply need to implement the abstract method `func()` to define their specific transformation logic.
+The module documented here defines the base structure for creating a Transformation Step. Transformation Steps are simply subclasses of the Step class. However, it provide a common interface to creating operations that typically modify or analyze DataFrames and update the `Pipeline` context accordingly. Subclasses simply need to implement the abstract method `func()` to define their specific transformation logic.
 
 All predefined transformations, including those related to aggregations, column or string manipulations, variable management are derived from the Transformation class.
 
@@ -14,11 +14,11 @@ This documentation covers:
 
 ## Class: Transformation
 
-The `Transformation` class serves as an abstract base class (inheriting from `ABC`) designed to support transformation operations within the `Pypeline` framework. It establishes a uniform interface that all transformation classes must follow, ensuring consistency in how custom transformation logic is integrated and executed.
+The `Transformation` class serves as an abstract base class (inheriting from `ABC`) designed to support transformation operations within the `Pipeline` framework. It establishes a uniform interface that all transformation classes must follow, ensuring consistency in how custom transformation logic is integrated and executed.
 
 **Key Features**:
 - **Abstract Method Enforcement**:
-  - Derived classes must implement the abstract method `func()`, which is responsible for encapsulating the core transformation logic. This requirement guarantees that every transformation provides a concrete operation that can be executed within the pypeline.
+  - Derived classes must implement the abstract method `func()`, which is responsible for encapsulating the core transformation logic. This requirement guarantees that every transformation provides a concrete operation that can be executed within the `Pipeline`.
 - **Pre- and Post-Execution Hooks**:
   - The methods `start_step(...)` and `stop_step(...)` are available to allow developers to insert custom logic immediately before and after the main transformation operation. 
   - This feature is useful for tasks such as resource initialization, logging, or cleanup, providing more control over the execution flow of the transformation.
@@ -34,8 +34,8 @@ The `Transformation` class serves as an abstract base class (inheriting from `AB
 Below is a simple example that shows how to create a custom `Step` by inheriting the `Step` class:
 
 ```python
-  from pypeline import Pypeline
-  from pypeline.transform import Transformation  # Import the Transformation class
+  from pydra import Pipeline
+  from pydra.transform import Transformation  # Import the Transformation class
 
   class Add10toVariableAndDataFrameTransformation(Transformation):
     def __init__(self, dataframes, variable, step_name="Add10toVariableAndDataFrameTransformation", on_error="raise", **kwargs):
@@ -70,9 +70,9 @@ Below is a simple example that shows how to create a custom `Step` by inheriting
   # Create an instance of the custom transformation
   custom_transformation = Add10toVariableAndDataFrameTransformation(...)
 
-  # Initialize the Pypeline and add the custom transformation step
-  pypeline = Pypeline()
-  pypeline.add_step(custom_transformation)  # The custom Transformation is now part of the pipeline
+  # Initialize the Pipeline and add the custom transformation step
+  pipeline = Pipeline()
+  pipeline.add_step(custom_transformation)  # The custom Transformation is now part of the pipeline
 ```
 
 ## List of Predefined Transformations:

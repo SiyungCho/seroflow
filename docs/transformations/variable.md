@@ -1,6 +1,6 @@
 # Variable Transformations Documentation
 
-This module implements transformation classes for manipulating scalar variables within a Pypeline. Each class extends the base `Transformation` and performs a simple arithmetic or assignment operation on a named variable. The result of each transformation is returned and can be stored back into the Pypeline context.
+This module implements transformation classes for manipulating scalar variables within a `Pipeline`. Each class extends the base `Transformation` and performs a simple arithmetic or assignment operation on a named variable. The result of each transformation is returned and can be stored back into the `Pipeline` context.
 
 - **CopyVariable**: Copies the value of an existing variable under a new name.
 - **DivideVariable**: Divides a variable’s value by a specified divisor.
@@ -25,15 +25,15 @@ This module implements transformation classes for manipulating scalar variables 
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import CopyVariable
+  from pydra import Pipeline
+  from pydra.transform import CopyVariable
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... 
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... 
 
   cp_var = CopyVariable(variable="x", new_variable="x_copy")
-  pypeline.add_steps([cp_var])
-  pypeline.execute()
+  pipeline.add_steps([cp_var])
+  pipeline.execute()
 ```
 
 ---
@@ -49,15 +49,15 @@ This module implements transformation classes for manipulating scalar variables 
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import DivideVariable
+  from pydra import Pipeline
+  from pydra.transform import DivideVariable
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... 
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... 
 
   div_var = DivideVariable(variable="x", divide_by=2)
-  pypeline.add_steps([div_var])
-  pypeline.execute()
+  pipeline.add_steps([div_var])
+  pipeline.execute()
 ```
 
 ---
@@ -72,15 +72,15 @@ This module implements transformation classes for manipulating scalar variables 
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import MultiplyVariable
+  from pydra import Pipeline
+  from pydra.transform import MultiplyVariable
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... 
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... 
 
   mul_var = MultiplyVariable(variable="y", multiply_by=3)
-  pypeline.add_steps([mul_var])
-  pypeline.execute()
+  pipeline.add_steps([mul_var])
+  pipeline.execute()
 ```
 
 ---
@@ -95,15 +95,15 @@ This module implements transformation classes for manipulating scalar variables 
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import IncrementVariable
+  from pydra import Pipeline
+  from pydra.transform import IncrementVariable
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... 
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... 
 
   inc_var = IncrementVariable(variable="x", increment_by=10)
-  pypeline.add_steps([inc_var])
-  pypeline.execute()
+  pipeline.add_steps([inc_var])
+  pipeline.execute()
 ```
 
 ---
@@ -118,15 +118,15 @@ This module implements transformation classes for manipulating scalar variables 
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import DecrementVariable
+  from pydra import Pipeline
+  from pydra.transform import DecrementVariable
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... 
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... 
 
   dec_var = DecrementVariable(variable="y", decrement_by=5)
-  pypeline.add_steps([dec_var])
-  pypeline.execute()
+  pipeline.add_steps([dec_var])
+  pipeline.execute()
 ```
 
 ---
@@ -141,15 +141,15 @@ This module implements transformation classes for manipulating scalar variables 
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import CreateVariable
+  from pydra import Pipeline
+  from pydra.transform import CreateVariable
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... 
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... 
 
   create_var = CreateVariable(variable="z", value=42)
-  pypeline.add_steps([create_var])
-  pypeline.execute()
+  pipeline.add_steps([create_var])
+  pipeline.execute()
 ```
 
 ---
@@ -164,15 +164,15 @@ This module implements transformation classes for manipulating scalar variables 
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import UpdateVariable
+  from pydra import Pipeline
+  from pydra.transform import UpdateVariable
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... 
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... 
 
   update_var = UpdateVariable(variable="x", value=200)
-  pypeline.add_steps([update_var])
-  pypeline.execute()
+  pipeline.add_steps([update_var])
+  pipeline.execute()
 ```
 
 ---

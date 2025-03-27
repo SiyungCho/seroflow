@@ -1,6 +1,6 @@
 # String Transformations Documentation
 
-This module implements a suite of transformation classes that can perform String Manipulations on DataFrames in the Pypeline Context. Each transformation class extends the base `Transformation` class and is designed to operate with Pypeline Object. The available transformations include:
+This module implements a suite of transformation classes that can perform String Manipulations on DataFrames in the `Pipeline` Context. Each transformation class extends the base `Transformation` class and is designed to operate with `Pipeline` Object. The available transformations include:
 
 - **RemoveCharacterFromColumn**: Removes all occurrences of a specified character from a string column.
 - **RemoveCharactersFromColumn**: Removes all occurrences of a list of characters from a string column.
@@ -24,16 +24,16 @@ Below is an example demonstrating how to use the Transformation `RemoveCharacter
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import RemoveCharacterFromColumn
+  from pydra import Pipeline
+  from pydra.transform import RemoveCharacterFromColumn
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... # Add Extractor which gathers data
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... # Add Extractor which gathers data
 
   remove_char = RemoveCharacterFromColumn(dataframe="states", column="name", char_to_remove="&") # Initialize the RemoveCharacterFromColumn Step
 
-  pypeline.add_steps([remove_char])
-  pypeline.execute()
+  pipeline.add_steps([remove_char])
+  pipeline.execute()
 ```
 
 ---
@@ -54,16 +54,16 @@ Below is an example demonstrating how to use the Transformation `RemoveCharacter
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import RemoveCharactersFromColumn
+  from pydra import Pipeline
+  from pydra.transform import RemoveCharactersFromColumn
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... # Add Extractor which gathers data
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... # Add Extractor which gathers data
 
   remove_chars = RemoveCharactersFromColumn(dataframe="states", column="name", char_to_remove=["&", "#", "*"]) # Initialize the RemoveCharactersFromColumn Step
 
-  pypeline.add_steps([remove_chars])
-  pypeline.execute()
+  pipeline.add_steps([remove_chars])
+  pipeline.execute()
 ```
 
 ---
@@ -85,16 +85,16 @@ Below is an example demonstrating how to use the Transformation `ReplaceStringIn
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import ReplaceStringInColumn
+  from pydra import Pipeline
+  from pydra.transform import ReplaceStringInColumn
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... # Add Extractor which gathers data
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... # Add Extractor which gathers data
 
   replace_string = ReplaceStringInColumn(dataframe="states", column="name", to_replace="and", replacement="&") # Initialize the ReplaceStringInColumn Step
 
-  pypeline.add_steps([replace_string])
-  pypeline.execute()
+  pipeline.add_steps([replace_string])
+  pipeline.execute()
 ```
 
 ---

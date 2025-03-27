@@ -124,8 +124,8 @@ from type_validation import (
     is_context_object,
 )
 
-from pypeline.context import Context
-from pypeline.extract import ExcelExtractor
+from pydra.context import Context
+from pydra.extract import ExcelExtractor
 
 my_extractor = ExcelExtractor(...)
 my_context = Context(...)

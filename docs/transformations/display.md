@@ -1,6 +1,6 @@
 # Display Transformations Documentation
 
-This module implements a suite of transformation classes that displays key information of a DataFrame. Each transformation class extends the base `Transformation` class and is designed to operate on a specified DataFrame stored in the Pypeline context. The available transformations include:
+This module implements a suite of transformation classes that displays key information of a DataFrame. Each transformation class extends the base `Transformation` class and is designed to operate on a specified DataFrame stored in the `Pipeline` context. The available transformations include:
 
 - **DisplayInfo**: Prints basic information (shape, columns, and data types) for each DataFrame.
 - **DisplayColumns**: Prints the list of column names for each DataFrame.
@@ -40,16 +40,16 @@ Below is an example demonstrating how to use the Transformation `DisplayInfo`:
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import DisplayInfo
+  from pydra import Pipeline
+  from pydra.transform import DisplayInfo
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... # Add Extractor which gathers dataframes called 'states' and 'regions'
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... # Add Extractor which gathers dataframes called 'states' and 'regions'
 
   display_info = DisplayInfo(dataframes=['states', 'regions']) # Initialize the DisplayInfo Step
 
-  pypeline.add_steps([display_info])
-  pypeline.execute()
+  pipeline.add_steps([display_info])
+  pipeline.execute()
 ```
 
 ---
@@ -67,16 +67,16 @@ Below is an example demonstrating how to use the Transformation `DisplayColumns`
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import DisplayColumns
+  from pydra import Pipeline
+  from pydra.transform import DisplayColumns
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'sales'
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'sales'
 
   display_columns = DisplayColumns(dataframes='sales')  # Initialize the DisplayColumns step
 
-  pypeline.add_steps([display_columns])
-  pypeline.execute()
+  pipeline.add_steps([display_columns])
+  pipeline.execute()
 ```
 
 ---
@@ -95,16 +95,16 @@ Below is an example demonstrating how to use the Transformation `DisplayHead`:
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import DisplayHead
+  from pydra import Pipeline
+  from pydra.transform import DisplayHead
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'employees'
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'employees'
 
   display_head = DisplayHead(dataframes='employees', n=10)  # Initialize the DisplayHead step to show first 10 rows
 
-  pypeline.add_steps([display_head])
-  pypeline.execute()
+  pipeline.add_steps([display_head])
+  pipeline.execute()
 ```
 
 ---
@@ -123,16 +123,16 @@ Below is an example demonstrating how to use the Transformation `DisplayTail`:
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import DisplayTail
+  from pydra import Pipeline
+  from pydra.transform import DisplayTail
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'orders'
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'orders'
 
   display_tail = DisplayTail(dataframes='orders', n=5)  # Initialize the DisplayTail step
 
-  pypeline.add_steps([display_tail])
-  pypeline.execute()
+  pipeline.add_steps([display_tail])
+  pipeline.execute()
 ```
 
 ---
@@ -151,16 +151,16 @@ Below is an example demonstrating how to use the Transformation `DisplayColumnMe
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import DisplayColumnMean
+  from pydra import Pipeline
+  from pydra.transform import DisplayColumnMean
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'metrics' with a 'score' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'metrics' with a 'score' column
 
   display_mean = DisplayColumnMean(dataframes='metrics', column='score')  # Initialize the DisplayColumnMean step
 
-  pypeline.add_steps([display_mean])
-  pypeline.execute()
+  pipeline.add_steps([display_mean])
+  pipeline.execute()
 ```
 
 ---
@@ -179,16 +179,16 @@ Below is an example demonstrating how to use the Transformation `DisplayColumnMe
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import DisplayColumnMedian
+  from pydra import Pipeline
+  from pydra.transform import DisplayColumnMedian
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'data' with a 'age' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'data' with a 'age' column
 
   display_median = DisplayColumnMedian(dataframes='data', column='age')  # Initialize the DisplayColumnMedian step
 
-  pypeline.add_steps([display_median])
-  pypeline.execute()
+  pipeline.add_steps([display_median])
+  pipeline.execute()
 ```
 
 ---
@@ -207,16 +207,16 @@ Below is an example demonstrating how to use the Transformation `DisplayColumnMo
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import DisplayColumnMode
+  from pydra import Pipeline
+  from pydra.transform import DisplayColumnMode
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'survey' with a 'response' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'survey' with a 'response' column
 
   display_mode = DisplayColumnMode(dataframes='survey', column='response')  # Initialize the DisplayColumnMode step
 
-  pypeline.add_steps([display_mode])
-  pypeline.execute()
+  pipeline.add_steps([display_mode])
+  pipeline.execute()
 ```
 
 ---
@@ -235,16 +235,16 @@ Below is an example demonstrating how to use the Transformation `DisplayColumnVa
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import DisplayColumnVariance
+  from pydra import Pipeline
+  from pydra.transform import DisplayColumnVariance
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'finance' with a 'revenue' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'finance' with a 'revenue' column
 
   display_variance = DisplayColumnVariance(dataframes='finance', column='revenue')  # Initialize the DisplayColumnVariance step
 
-  pypeline.add_steps([display_variance])
-  pypeline.execute()
+  pipeline.add_steps([display_variance])
+  pipeline.execute()
 ```
 
 ---
@@ -263,16 +263,16 @@ Below is an example demonstrating how to use the Transformation `DisplayColumnSt
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import DisplayColumnStdDev
+  from pydra import Pipeline
+  from pydra.transform import DisplayColumnStdDev
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'stats' with a 'duration' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'stats' with a 'duration' column
 
   display_stddev = DisplayColumnStdDev(dataframes='stats', column='duration')  # Initialize the DisplayColumnStdDev step
 
-  pypeline.add_steps([display_stddev])
-  pypeline.execute()
+  pipeline.add_steps([display_stddev])
+  pipeline.execute()
 ```
 
 ---
@@ -291,16 +291,16 @@ Below is an example demonstrating how to use the Transformation `DisplayColumnSu
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import DisplayColumnSum
+  from pydra import Pipeline
+  from pydra.transform import DisplayColumnSum
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'transactions' with a 'amount' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'transactions' with a 'amount' column
 
   display_sum = DisplayColumnSum(dataframes='transactions', column='amount')  # Initialize the DisplayColumnSum step
 
-  pypeline.add_steps([display_sum])
-  pypeline.execute()
+  pipeline.add_steps([display_sum])
+  pipeline.execute()
 ```
 
 ---
@@ -319,16 +319,16 @@ Below is an example demonstrating how to use the Transformation `DisplayColumnMi
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import DisplayColumnMin
+  from pydra import Pipeline
+  from pydra.transform import DisplayColumnMin
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'inventory' with a 'price' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'inventory' with a 'price' column
 
   display_min = DisplayColumnMin(dataframes='inventory', column='price')  # Initialize the DisplayColumnMin step
 
-  pypeline.add_steps([display_min])
-  pypeline.execute()
+  pipeline.add_steps([display_min])
+  pipeline.execute()
 ```
 
 ---
@@ -347,16 +347,16 @@ Below is an example demonstrating how to use the Transformation `DisplayColumnMa
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import DisplayColumnMax
+  from pydra import Pipeline
+  from pydra.transform import DisplayColumnMax
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'inventory' with a 'price' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'inventory' with a 'price' column
 
   display_max = DisplayColumnMax(dataframes='inventory', column='price')  # Initialize the DisplayColumnMax step
 
-  pypeline.add_steps([display_max])
-  pypeline.execute()
+  pipeline.add_steps([display_max])
+  pipeline.execute()
 ```
 
 ---
@@ -375,16 +375,16 @@ Below is an example demonstrating how to use the Transformation `DisplayColumnCo
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import DisplayColumnCount
+  from pydra import Pipeline
+  from pydra.transform import DisplayColumnCount
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'customers' with a 'email' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'customers' with a 'email' column
 
   display_count = DisplayColumnCount(dataframes='customers', column='email')  # Initialize the DisplayColumnCount step
 
-  pypeline.add_steps([display_count])
-  pypeline.execute()
+  pipeline.add_steps([display_count])
+  pipeline.execute()
 ```
 
 ---
@@ -403,16 +403,16 @@ Below is an example demonstrating how to use the Transformation `DisplayColumnUn
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import DisplayColumnUnique
+  from pydra import Pipeline
+  from pydra.transform import DisplayColumnUnique
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'logs' with a 'user_id' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'logs' with a 'user_id' column
 
   display_unique = DisplayColumnUnique(dataframes='logs', column='user_id')  # Initialize the DisplayColumnUnique step
 
-  pypeline.add_steps([display_unique])
-  pypeline.execute()
+  pipeline.add_steps([display_unique])
+  pipeline.execute()
 ```
 
 ---
@@ -431,16 +431,16 @@ Below is an example demonstrating how to use the Transformation `DisplayColumnNU
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import DisplayColumnNUnique
+  from pydra import Pipeline
+  from pydra.transform import DisplayColumnNUnique
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'responses' with a 'answer' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'responses' with a 'answer' column
 
   display_nunique = DisplayColumnNUnique(dataframes='responses', column='answer')  # Initialize the DisplayColumnNUnique step
 
-  pypeline.add_steps([display_nunique])
-  pypeline.execute()
+  pipeline.add_steps([display_nunique])
+  pipeline.execute()
 ```
 
 ---
@@ -459,16 +459,16 @@ Below is an example demonstrating how to use the Transformation `DisplayColumnDT
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import DisplayColumnDType
+  from pydra import Pipeline
+  from pydra.transform import DisplayColumnDType
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'records' with a 'date' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'records' with a 'date' column
 
   display_dtype = DisplayColumnDType(dataframes='records', column='date')  # Initialize the DisplayColumnDType step
 
-  pypeline.add_steps([display_dtype])
-  pypeline.execute()
+  pipeline.add_steps([display_dtype])
+  pipeline.execute()
 ```
 
 ---
@@ -487,16 +487,16 @@ Below is an example demonstrating how to use the Transformation `DisplayStringCo
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import DisplayStringCount
+  from pydra import Pipeline
+  from pydra.transform import DisplayStringCount
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'reviews' with a 'comment' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'reviews' with a 'comment' column
 
   display_string_count = DisplayStringCount(dataframes='reviews', column='comment')  # Initialize the DisplayStringCount step
 
-  pypeline.add_steps([display_string_count])
-  pypeline.execute()
+  pipeline.add_steps([display_string_count])
+  pipeline.execute()
 ```
 
 ---
@@ -515,16 +515,16 @@ Below is an example demonstrating how to use the Transformation `DisplayMostFreq
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import DisplayMostFrequentString
+  from pydra import Pipeline
+  from pydra.transform import DisplayMostFrequentString
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'feedback' with a 'rating' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'feedback' with a 'rating' column
 
   display_most_frequent = DisplayMostFrequentString(dataframes='feedback', column='rating')  # Initialize the DisplayMostFrequentString step
 
-  pypeline.add_steps([display_most_frequent])
-  pypeline.execute()
+  pipeline.add_steps([display_most_frequent])
+  pipeline.execute()
 ```
 
 ---
@@ -543,16 +543,16 @@ Below is an example demonstrating how to use the Transformation `DisplayAllCateg
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import DisplayAllCategories
+  from pydra import Pipeline
+  from pydra.transform import DisplayAllCategories
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'products' with a 'category' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'products' with a 'category' column
 
   display_categories = DisplayAllCategories(dataframes='products', column='category')  # Initialize the DisplayAllCategories step
 
-  pypeline.add_steps([display_categories])
-  pypeline.execute()
+  pipeline.add_steps([display_categories])
+  pipeline.execute()
 ```
 
 ---
@@ -572,16 +572,16 @@ Below is an example demonstrating how to use the Transformation `DisplaySubstrin
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import DisplaySubstringOccurrence
+  from pydra import Pipeline
+  from pydra.transform import DisplaySubstringOccurrence
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'logs' with a 'message' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'logs' with a 'message' column
 
   display_substring = DisplaySubstringOccurrence(dataframes='logs', column='message', substring='error')  # Initialize the DisplaySubstringOccurrence step 
 
-  pypeline.add_steps([display_substring])
-  pypeline.execute()
+  pipeline.add_steps([display_substring])
+  pipeline.execute()
 ```
 
 ---

@@ -1,6 +1,6 @@
 # DataFrame Transformations Documentation
 
-This module implements a collection of transformation classes that perform various operations on DataFrames. Each transformation class extends the base `Transformation` class and updates the DataFrame stored in the pypeline context accordingly.
+This module implements a collection of transformation classes that perform various operations on DataFrames. Each transformation class extends the base `Transformation` class and updates the DataFrame stored in the `Pipeline` context accordingly.
 
 - **TransposeDataFrame**: Transposes the DataFrame.
 - **PivotDataFrame**: Creates a pivot table from a DataFrame.
@@ -19,7 +19,7 @@ This module implements a collection of transformation classes that perform vario
 - **MapValues**: Maps values in a specified column based on a provided dictionary.
 - **OneHotEncode**: Performs one-hot encoding on a categorical column.
 
-Each transformation retrieves the target DataFrame from the pypeline context, applies the desired operation, updates the DataFrame, and returns the modified context.
+Each transformation retrieves the target DataFrame from the `Pipeline` context, applies the desired operation, updates the DataFrame, and returns the modified context.
 
 ## DataFrame Transformation Classes
 

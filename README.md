@@ -1,19 +1,19 @@
-## Pypeline Package Guide
+## Pydra Package Guide
 
-Welcome to **Pypeline**! This repository contains the source code, documentation, and examples to help you get started and contribute to this project.
+Welcome to **Pydra**! This repository contains the source code, documentation, and examples to help you get started and contribute to this project.
 
 ## Overview
-`Pypeline` is a powerful Python package designed to help users build and execute efficient ETL (or ELT) data pipelines. ETL stands for Extract, Transform, and Load — a process that extracts data from various sources, transforms it into a suitable format, and then loads it into a destination system. 
+`Pydra` is a powerful Python package designed to help users build and execute efficient ETL (or ELT) data pipelines. ETL stands for Extract, Transform, and Load — a process that extracts data from various sources, transforms it into a suitable format, and then loads it into a destination system. 
 
-With `Pypeline`, each phase of your data pipeline is broken down into concrete steps: `Extractor` steps for data extraction, `Transformation` steps for data manipulation, and `Loader` steps for data loading. Think of it like assembling a Lego set—pypeline provides all the essential bricks, and you simply pick and add the desired step objects sequentially into a `Pypeline` object, then run `pypeline.execute()` to run your entire process. 
+With `Pydra`, each phase of your data pipeline is broken down into concrete steps: `Extractor` steps for data extraction, `Transformation` steps for data manipulation, and `Loader` steps for data loading. Think of it like assembling a Lego set—Pydra provides all the essential bricks, and you simply pick and add the desired step objects sequentially into a `Pydra` object, then run `pydra.execute()` to run your entire process. 
 
 Additionally, the package supports seamless creation of custom `Extractors`, `Loaders`, and `Transformations` through its intuitive interfaces, along with robust features like logging, caching, and chunking. Plus, it comes preloaded with over 70+ predefined transformations, making it an indispensable tool for data pipeline creation and execution.
 
-To Get Started using Pypeline head over to our [Get Started](docs/getting_started.md) Page.
+To Get Started using Pydra head over to our [Get Started](docs/getting_started.md) Page.
 
 ## Table of Contents
 
-- [Pypeline Package Guide](#pypeline-package-guide)
+- [Pydra Package Guide](#pydra-package-guide)
 - [Overview](#overview)
 - [Table of Contents](#table-of-contents)
 - [Prerequisites](#prerequisites)
@@ -48,15 +48,15 @@ source venv_name/bin/activate  # For macOS use
 To install the package from PyPI, run the following command:
 
 ```bash
-pip install pypeline
+pip install pydra
 ```
 
 ### Installing from Source
 If you want to install the package directly from the source code, follow these steps:
 1. Clone the repository:
 ```bash
-git clone https://github.com/.../pypeline.git
-cd pypeline
+git clone https://github.com/.../pydra.git
+cd pydra
 ```
 
 2. Install dependencies:
@@ -65,10 +65,10 @@ pip install -r requirements.txt
 ```
 
 ## Documentation
-Below are some links to the documentation provided for the various components in the Pypeline package. It is recommended that users review some of these components prior to using the package.
+Below are some links to the documentation provided for the various components in the Pydra package. It is recommended that users review some of these components prior to using the package.
 
 - [Getting Started](docs/getting_started.md)
-- [Pypeline](docs/pypeline.md)
+- [Pydra](docs/Pydra.md)
 - [Step](docs/step.md)
 - [Transformations](docs/transformations/transformation.md)
 - [Extractors](docs/extract.md)

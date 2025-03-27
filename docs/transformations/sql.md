@@ -1,12 +1,12 @@
 # SQL Transformations Documentation
 
-This module implements a transformation class for executing SQL queries on DataFrames using the pandasql library. Each transformation class extends the base `Transformation` class and operates on DataFrames stored in the Pypeline context. The available transformation is:
+This module implements a transformation class for executing SQL queries on DataFrames using the pandasql library. Each transformation class extends the base `Transformation` class and operates on DataFrames stored in the `Pipeline` context. The available transformation is:
 
 - **SQLQuery**: Executes a SQL query against one or more DataFrames in the context and stores the result under a specified key.
 
 ## SQLQuery
 
-- **Purpose**: Runs a SQL query on DataFrames in the Pypeline context using pandasql’s `sqldf`.
+- **Purpose**: Runs a SQL query on DataFrames in the `Pipeline` context using pandasql’s `sqldf`.
 - **Parameters**:
   - `query` (str): The SQL query string. DataFrames may be referenced by their context keys.
   - `output_dataframe_name` (str): The context key under which to store the query result.
@@ -17,11 +17,11 @@ This module implements a transformation class for executing SQL queries on DataF
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import SQLQuery
+  from pydra import Pipeline
+  from pydra.transform import SQLQuery
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... # Extractor extracts 'customers' and 'orders'
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... # Extractor extracts 'customers' and 'orders'
   # SQL query to join customers and orders and aggregate total spend
   query = """
   SELECT c.customer_id,
@@ -38,6 +38,6 @@ This module implements a transformation class for executing SQL queries on DataF
       output_dataframe_name="customer_summary"
   )
 
-  pypeline.add_steps([sql_step])
-  pypeline.execute()
+  pipeline.add_steps([sql_step])
+  pipeline.execute()
 ```

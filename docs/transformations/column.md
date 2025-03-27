@@ -1,6 +1,6 @@
 # Column Transformations Documentation
 
-This module implements a collection of transformation classes that perform various column operations on DataFrames. These transformations update the DataFrame stored in the Pypeline context. Each transformation class extends the base `Transformation` class and provides a specific column operation.
+This module implements a collection of transformation classes that perform various column operations on DataFrames. These transformations update the DataFrame stored in the `Pipeline` context. Each transformation class extends the base `Transformation` class and provides a specific column operation.
 
 - **ConvertColumnType**: Converts a specified column of a DataFrame to a new data type.
 - **RenameColumns**: Renames one or more columns based on a provided mapping.
@@ -12,7 +12,7 @@ This module implements a collection of transformation classes that perform vario
 - **ExplodeColumn**: Explodes a column containing list-like elements into multiple rows.
 - **CreateColumnFromVariable**: Creates a new column in a DataFrame using a constant value provided via a variable.
 
-Each transformation retrieves the target DataFrame from the Pypeline context, performs the operation, updates the DataFrame, and returns the modified context.
+Each transformation retrieves the target DataFrame from the `Pipeline` context, performs the operation, updates the DataFrame, and returns the modified context.
 
 ## Column Transformation Classes
 
@@ -32,16 +32,16 @@ Below is an example demonstrating how to use the Transformation `ConvertColumnTy
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import ConvertColumnType
+  from pydra import Pipeline
+  from pydra.transform import ConvertColumnType
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'sales_data' with a 'price' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'sales_data' with a 'price' column
 
   convert_col_type = ConvertColumnType(column="price", dataframe="sales_data", new_type=int) # Initialize the ConvertColumnType to convert the 'price' column to type 'int'
 
-  pypeline.add_steps([convert_col_type])
-  pypeline.execute()
+  pipeline.add_steps([convert_col_type])
+  pipeline.execute()
 ```
 
 ---
@@ -61,16 +61,16 @@ Below is an example demonstrating how to use the Transformation `RenameColumns`:
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import RenameColumns
+  from pydra import Pipeline
+  from pydra.transform import RenameColumns
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads a DataFrame called 'sales_data' with 'price' and 'quantity' columns
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads a DataFrame called 'sales_data' with 'price' and 'quantity' columns
 
   rename_columns = RenameColumns(dataframe="sales_data", columns_mapping={"price": "unit_price", "quantity": "units_sold"})  # Initialize RenameColumns to rename 'price' → 'unit_price' and 'quantity' → 'units_sold'
 
-  pypeline.add_steps([rename_columns])
-  pypeline.execute()
+  pipeline.add_steps([rename_columns])
+  pipeline.execute()
 ```
 
 ---
@@ -90,16 +90,16 @@ Below is an example demonstrating how to use the Transformation `DropColumn`:
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import DropColumn
+  from pydra import Pipeline
+  from pydra.transform import DropColumn
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
 
   drop_column = DropColumn(column="price", dataframe="sales_data")  # Initialize DropColumn to drop the 'price' column
 
-  pypeline.add_steps([drop_column])
-  pypeline.execute()
+  pipeline.add_steps([drop_column])
+  pipeline.execute()
 ```
 
 ---
@@ -119,16 +119,16 @@ Below is an example demonstrating how to use the Transformation `DropColumns`:
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import DropColumns
+  from pydra import Pipeline
+  from pydra.transform import DropColumns
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with 'price' and 'quantity' columns
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' with 'price' and 'quantity' columns
 
   drop_columns = DropColumns(columns=["price", "quantity"], dataframe="sales_data")  # Initialize DropColumns to drop both 'price' and 'quantity'
 
-  pypeline.add_steps([drop_columns])
-  pypeline.execute()
+  pipeline.add_steps([drop_columns])
+  pipeline.execute()
 ```
 
 ---
@@ -149,11 +149,11 @@ Below is an example demonstrating how to use the Transformation `AddColumn`:
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import AddColumn
+  from pydra import Pipeline
+  from pydra.transform import AddColumn
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with 'price' and 'quantity' columns
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' with 'price' and 'quantity' columns
 
   add_column = AddColumn(
       column="total_sales",
@@ -161,8 +161,8 @@ Below is an example demonstrating how to use the Transformation `AddColumn`:
       compute_func=lambda df: df["price"] * df["quantity"]
   )  # Initialize AddColumn to create 'total_sales' by multiplying 'price' × 'quantity'
 
-  pypeline.add_steps([add_column])
-  pypeline.execute()
+  pipeline.add_steps([add_column])
+  pipeline.execute()
 ```
 
 ---
@@ -184,11 +184,11 @@ Below is an example demonstrating how to use the Transformation `MergeColumns`:
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import MergeColumns
+  from pydra import Pipeline
+  from pydra.transform import MergeColumns
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with 'first_name' and 'last_name' columns
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' with 'first_name' and 'last_name' columns
 
   merge_columns = MergeColumns(
       columns=["first_name", "last_name"],
@@ -197,8 +197,8 @@ Below is an example demonstrating how to use the Transformation `MergeColumns`:
       separator=" "
   )  # Initialize MergeColumns to concatenate first_name and last_name into 'full_name'
 
-  pypeline.add_steps([merge_columns])
-  pypeline.execute()
+  pipeline.add_steps([merge_columns])
+  pipeline.execute()
 ```
 
 ---
@@ -220,11 +220,11 @@ Below is an example demonstrating how to use the Transformation `SplitColumn`:
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import SplitColumn
+  from pydra import Pipeline
+  from pydra.transform import SplitColumn
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'full_name' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'full_name' column
 
   split_column = SplitColumn(
       column="full_name",
@@ -233,8 +233,8 @@ Below is an example demonstrating how to use the Transformation `SplitColumn`:
       delimiter=" "
   )  # Initialize SplitColumn to split 'full_name' into 'first_name' and 'last_name'
 
-  pypeline.add_steps([split_column])
-  pypeline.execute()
+  pipeline.add_steps([split_column])
+  pipeline.execute()
 ```
 
 ---
@@ -254,16 +254,16 @@ Below is an example demonstrating how to use the Transformation `ExplodeColumn`:
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import ExplodeColumn
+  from pydra import Pipeline
+  from pydra.transform import ExplodeColumn
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'tags' column containing lists
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'tags' column containing lists
 
   explode_column = ExplodeColumn(column="tags", dataframe="sales_data")  # Initialize ExplodeColumn to expand each list in 'tags' into separate rows
 
-  pypeline.add_steps([explode_column])
-  pypeline.execute()
+  pipeline.add_steps([explode_column])
+  pipeline.execute()
 ```
 
 ---
@@ -284,16 +284,16 @@ Below is an example demonstrating how to use the Transformation `CreateColumnFro
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import CreateColumnFromVariable
+  from pydra import Pipeline
+  from pydra.transform import CreateColumnFromVariable
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data'
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data'
 
   create_column = CreateColumnFromVariable(column="region", dataframe="sales_data", variable="North_America")  # Initialize CreateColumnFromVariable to add a 'region' column with constant value 'North America'
 
-  pypeline.add_steps([create_column])
-  pypeline.execute()
+  pipeline.add_steps([create_column])
+  pipeline.execute()
 ```
 
 ---

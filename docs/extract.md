@@ -1,6 +1,6 @@
 # Extractor Documentation
 
-The modules documented here define the base structure and concrete implementations for `Extractor` steps. These extractors are responsible for reading data from various sources—such as files (CSV, Excel) and SQL Server tables—and adding the resulting pandas DataFrames to the `Pypeline` context. The extractors support both full reads and chunked reads, as well as error handling and row count estimation.
+The modules documented here define the base structure and concrete implementations for `Extractor` steps. These extractors are responsible for reading data from various sources—such as files (CSV, Excel) and SQL Server tables—and adding the resulting pandas DataFrames to the `Pipeline` context. The extractors support both full reads and chunked reads, as well as error handling and row count estimation.
 
 ## Overview
 
@@ -37,14 +37,14 @@ The `Extractor` class is an abstract base class that provides the common structu
   - `func` *(function)*: 
     - The function that performs the extraction and adds the DataFrame to the context.
   - `on_error` *("raises", "ignore")*: 
-    - `"raises"`: Raises Exceptions terminating `Pypeline` execution.
-    - `"ignore"`: Ignores Exceptions terminating the `Extractor` without terminating the `Pypeline` execution.
+    - `"raises"`: Raises Exceptions terminating `Pipeline` execution.
+    - `"ignore"`: Ignores Exceptions terminating the `Extractor` without terminating the `Pipeline` execution.
   - `chunk_size` *(int, optional)*: 
     - The number of rows to process at a time. If provided, enables chunked reading.
 
 - **`func(self, context)`**  
   *Abstract Method*  
-  Must be implemented by subclasses to read the data source and add the DataFrame to the pypeline context.
+  Must be implemented by subclasses to read the data source and add the DataFrame to the `Pipeline` context.
 
   **Parameters:**
   context (Context): A blank context object to which the DataFrame will be added.
@@ -64,8 +64,8 @@ The `Extractor` class is an abstract base class that provides the common structu
 Below is an example demonstrating how a concrete extract implementation might inherit from `Extractor` and implement its methods:
 
 ```python
-  from pypeline import Pypeline
-  from pypeline.extract import Extractor
+  from pydra import Pipeline
+  from pydra.extract import Extractor
 
   class MyCustomExtractor(Extractor):
       def __init__(self, source, chunk_size=None, **kwargs):
@@ -81,10 +81,10 @@ Below is an example demonstrating how a concrete extract implementation might in
           num_rows = ... # Custom logic to determine the number of rows
           return num_rows
 
-  pypeline = Pypeline(...)
+  pipeline = Pipeline(...)
   custom_extractor = MyCustomExtractor(...)
-  pypeline.target_extractor = custom_extractor # Or add it using the add_step(s) methods
-  pypeline.execute()
+  pipeline.target_extractor = custom_extractor # Or add it using the add_step(s) methods
+  pipeline.execute()
 ```
 
 ## Class: FileExtractor
@@ -110,8 +110,8 @@ The `FileExtractor` class extends `Extractor` and provides a template for file-b
   - `func` *(function)*: 
     - The function that performs the extraction and adds the DataFrame to the context.
   - `on_error` *("raises", "ignore")*: 
-    - `"raises"`: Raises Exceptions terminating `Pypeline` execution.
-    - `"ignore"`: Ignores Exceptions terminating the `FileExtractor` without terminating the `Pypeline` execution.
+    - `"raises"`: Raises Exceptions terminating `Pipeline` execution.
+    - `"ignore"`: Ignores Exceptions terminating the `FileExtractor` without terminating the `Pipeline` execution.
   - `chunk_size` *(int)*: 
     - The number of rows to process at a time. If provided, enables chunked reading.
   - `**kwargs` *(Any)*: 
@@ -139,8 +139,8 @@ The `FileExtractor` class extends `Extractor` and provides a template for file-b
 Below is an example demonstrating how a concrete extract implementation might inherit from `FileExtractor` and implement its methods:
 
 ```python
-  from pypeline import Pypeline
-  from pypeline.extract import FileExtractor
+  from pydra import Pipeline
+  from pydra.extract import FileExtractor
 
   class MyCustomFileExtractor(FileExtractor):
       def __init__(self, source, chunk_size=None, **kwargs):
@@ -156,15 +156,15 @@ Below is an example demonstrating how a concrete extract implementation might in
           num_rows = ... # Custom logic to determine the number of rows
           return num_rows
 
-  pypeline = Pypeline(...)
+  pipeline = Pipeline(...)
   custom_file_extractor = MyCustomFileExtractor(...)
-  pypeline.target_extractor = custom_file_extractor # Or add it using the add_step(s) methods
-  pypeline.execute()
+  pipeline.target_extractor = custom_file_extractor # Or add it using the add_step(s) methods
+  pipeline.execute()
 ```
 
 ## Class: CSVExtractor
 
-The `CSVExtractor` class is a concrete implementation for extracting data from a single CSV file. It leverages pandas’ read_csv() method to load the CSV file into a DataFrame and adds it to the `Pypeline` context under the file name. In addition, it provides a method for counting the total number of rows in the CSV file, which is useful for operations like chunked reading.
+The `CSVExtractor` class is a concrete implementation for extracting data from a single CSV file. It leverages pandas’ read_csv() method to load the CSV file into a DataFrame and adds it to the `Pipeline` context under the file name. In addition, it provides a method for counting the total number of rows in the CSV file, which is useful for operations like chunked reading.
 
 ## Initialization
 
@@ -179,8 +179,8 @@ The `CSVExtractor` class is a concrete implementation for extracting data from a
     - The name of the extraction step.
     - Default: `“CSVExtractor”`.
   - `on_error` *("raises", "ignore", optional)*: 
-    - `"raises"`: Raises Exceptions terminating `Pypeline` execution.
-    - `"ignore"`: Ignores Exceptions terminating the `CSVExtractor` without terminating the `Pypeline` execution.
+    - `"raises"`: Raises Exceptions terminating `Pipeline` execution.
+    - `"ignore"`: Ignores Exceptions terminating the `CSVExtractor` without terminating the `Pipeline` execution.
   - `chunk_size` *(int, optional)*: 
     - The number of rows to process at a time. If provided, enables chunked reading.
   - `**kwargs` *(Any)*: 
@@ -188,21 +188,21 @@ The `CSVExtractor` class is a concrete implementation for extracting data from a
   
 #### Initialization Example
 
-Below is a simple example that shows how to initialize a `Pypeline` object with an `CSVExtractor`:
+Below is a simple example that shows how to initialize a `Pipeline` object with an `CSVExtractor`:
 
 ```python
-  from pypeline import Pypeline
-  from pypeline.extract import CSVExtractor
+  from pydra import Pipeline
+  from pydra.extract import CSVExtractor
 
-  pypeline = Pypeline(...)
+  pipeline = Pipeline(...)
   csv_extractor = CSVExtractor(source="path_to_csv_file")
-  pypeline.target_extractor = csv_extractor # Or add it using the add_step(s) methods
-  pypeline.execute()
+  pipeline.target_extractor = csv_extractor # Or add it using the add_step(s) methods
+  pipeline.execute()
 ```
 
 ## Class: MultiCSVExtractor
 
-The `MultiCSVExtractor` class handles the extraction of data from multiple CSV files stored in a given directory. It extends the `MultiFileExtractor` and automatically gathers CSV file paths based on the specified directory. For each CSV file, it creates an instance of `CSVExtractor` to process and load the data into the `Pypeline` context.
+The `MultiCSVExtractor` class handles the extraction of data from multiple CSV files stored in a given directory. It extends the `MultiFileExtractor` and automatically gathers CSV file paths based on the specified directory. For each CSV file, it creates an instance of `CSVExtractor` to process and load the data into the `Pipeline` context.
 
 ## Initialization
 
@@ -214,8 +214,8 @@ The `MultiCSVExtractor` class handles the extraction of data from multiple CSV f
   - `source` *(str)*: 
     - The directory containing the CSV files.
   - `on_error` *("raises", "ignore", optional)*: 
-    - `"raises"`: Raises Exceptions terminating `Pypeline` execution.
-    - `"ignore"`: Ignores Exceptions terminating the `CSVExtractor` without terminating the `Pypeline` execution.
+    - `"raises"`: Raises Exceptions terminating `Pipeline` execution.
+    - `"ignore"`: Ignores Exceptions terminating the `CSVExtractor` without terminating the `Pipeline` execution.
   - `chunk_size` *(int, optional)*: 
     - The number of rows to process at a time. If provided, enables chunked reading.
   - `**kwargs` *(Any)*: 
@@ -223,21 +223,21 @@ The `MultiCSVExtractor` class handles the extraction of data from multiple CSV f
   
 #### Initialization Example
 
-Below is a simple example that shows how to initialize a `Pypeline` object with an `MultiCSVExtractor`:
+Below is a simple example that shows how to initialize a `Pipeline` object with an `MultiCSVExtractor`:
 
 ```python
-  from pypeline import Pypeline
-  from pypeline.extract import MultiCSVExtractor
+  from pydra import Pipeline
+  from pydra.extract import MultiCSVExtractor
 
-  pypeline = Pypeline(...)
+  pipeline = Pipeline(...)
   multi_csv_extractor = MultiCSVExtractor(source="path_to_directory", chunk_size=100)
-  pypeline.target_extractor = multi_csv_extractor # Or add it using the add_step(s) methods
-  pypeline.execute(chunker=...)
+  pipeline.target_extractor = multi_csv_extractor # Or add it using the add_step(s) methods
+  pipeline.execute(chunker=...)
 ```
 
 ## Class: ExcelExtractor
 
-The `ExcelExtractor` class is a concrete implementation for reading data from a single Excel file. It supports both .xls and .xlsx formats by selecting the appropriate engine (xlrd for .xls and openpyxl for .xlsx). The extractor loads the data into a DataFrame and adds it to the `Pypeline` context under the file name.
+The `ExcelExtractor` class is a concrete implementation for reading data from a single Excel file. It supports both .xls and .xlsx formats by selecting the appropriate engine (xlrd for .xls and openpyxl for .xlsx). The extractor loads the data into a DataFrame and adds it to the `Pipeline` context under the file name.
 
 ## Initialization
 
@@ -252,8 +252,8 @@ The `ExcelExtractor` class is a concrete implementation for reading data from a 
     - The name of the extraction step.
     - Default: `ExcelExtractor`.
   - `on_error` *("raises", "ignore", optional)*: 
-    - `"raises"`: Raises Exceptions terminating `Pypeline` execution.
-    - `"ignore"`: Ignores Exceptions terminating the `ExcelExtractor` without terminating the `Pypeline` execution.
+    - `"raises"`: Raises Exceptions terminating `Pipeline` execution.
+    - `"ignore"`: Ignores Exceptions terminating the `ExcelExtractor` without terminating the `Pipeline` execution.
   - `chunk_size` *(int, optional)*: 
     - The number of rows to process at a time. If provided, enables chunked reading.
   - `**kwargs` *(Any)*: 
@@ -261,21 +261,21 @@ The `ExcelExtractor` class is a concrete implementation for reading data from a 
   
 #### Initialization Example
 
-Below is a simple example that shows how to initialize a `Pypeline` object with an `ExcelExtractor`:
+Below is a simple example that shows how to initialize a `Pipeline` object with an `ExcelExtractor`:
 
 ```python
-  from pypeline import Pypeline
-  from pypeline.extract import ExcelExtractor
+  from pydra import Pipeline
+  from pydra.extract import ExcelExtractor
 
-  pypeline = Pypeline(...)
+  pipeline = Pipeline(...)
   excel_extractor = ExcelExtractor(source="path_to_excel_file")
-  pypeline.target_extractor = excel_extractor # Or add it using the add_step(s) methods
-  pypeline.execute()
+  pipeline.target_extractor = excel_extractor # Or add it using the add_step(s) methods
+  pipeline.execute()
 ```
 
 ## Class: MultiExcelExtractor
 
-The `MultiExcelExtractor` class processes multiple Excel files from a specified directory. It extends the `MultiFileExtractor` and automatically identifies Excel files based on common extensions (.xlsx and .xls). For each Excel file, an `ExcelExtractor` instance is created and used to add the data to the `Pypeline` context.
+The `MultiExcelExtractor` class processes multiple Excel files from a specified directory. It extends the `MultiFileExtractor` and automatically identifies Excel files based on common extensions (.xlsx and .xls). For each Excel file, an `ExcelExtractor` instance is created and used to add the data to the `Pipeline` context.
 
 ## Initialization
 
@@ -287,8 +287,8 @@ The `MultiExcelExtractor` class processes multiple Excel files from a specified 
   - `source` *(str)*: 
     - The directory containing the Excel files.
   - `on_error` *("raises", "ignore", optional)*: 
-    - `"raises"`: Raises Exceptions terminating `Pypeline` execution.
-    - `"ignore"`: Ignores Exceptions terminating the `ExcelExtractor` without terminating the `Pypeline` execution.
+    - `"raises"`: Raises Exceptions terminating `Pipeline` execution.
+    - `"ignore"`: Ignores Exceptions terminating the `ExcelExtractor` without terminating the `Pipeline` execution.
   - `chunk_size` *(int, optional)*: 
     - The number of rows to process at a time. If provided, enables chunked reading.
   - `**kwargs` *(Any)*: 
@@ -296,16 +296,16 @@ The `MultiExcelExtractor` class processes multiple Excel files from a specified 
   
 #### Initialization Example
 
-Below is a simple example that shows how to initialize a `Pypeline` object with an `MultiExcelExtractor`:
+Below is a simple example that shows how to initialize a `Pipeline` object with an `MultiExcelExtractor`:
 
 ```python
-  from pypeline import Pypeline
-  from pypeline.extract import MultiExcelExtractor
+  from pydra import Pipeline
+  from pydra.extract import MultiExcelExtractor
 
-  pypeline = Pypeline(...)
+  pipeline = Pipeline(...)
   multi_excel_extractor = MultiExcelExtractor(source="path_to_directory", on_error="ignore")
-  pypeline.target_extractor = multi_excel_extractor # Or add it using the add_step(s) methods
-  pypeline.execute()
+  pipeline.target_extractor = multi_excel_extractor # Or add it using the add_step(s) methods
+  pipeline.execute()
 ```
 
 ## Class: SQLServerExtractor
@@ -335,8 +335,8 @@ Please Review the [Engine](engine.md) documentation for further information on `
     - The name of the extraction step.
     - Default: `SQLServerExtractor`.
   - `on_error` *("raises", "ignore", optional)*: 
-    - `"raises"`: Raises Exceptions terminating `Pypeline` execution.
-    - `"ignore"`: Ignores Exceptions terminating the `SQLServerExtractor` without terminating the `Pypeline` execution.
+    - `"raises"`: Raises Exceptions terminating `Pipeline` execution.
+    - `"ignore"`: Ignores Exceptions terminating the `SQLServerExtractor` without terminating the `Pipeline` execution.
   - `chunk_size` *(int, optional)*: 
     - The number of rows to process at a time. If provided, enables chunked reading.
   - `**kwargs` *(Any)*: 
@@ -344,18 +344,18 @@ Please Review the [Engine](engine.md) documentation for further information on `
   
 #### Initialization Example
 
-Below is a simple example that shows how to initialize a `Pypeline` object with an `SQLServerExtractor`:
+Below is a simple example that shows how to initialize a `Pipeline` object with an `SQLServerExtractor`:
 
 ```python
-  from pypeline import Pypeline
-  from pypeline.extract import SQLServerExtractor
-  from pypeline.engine import SQLAlchemyEngine # Select preferred Engine
+  from pydra import Pipeline
+  from pydra.extract import SQLServerExtractor
+  from pydra.engine import SQLAlchemyEngine # Select preferred Engine
 
-  pypeline = Pypeline(...)
+  pipeline = Pipeline(...)
   engine = SQLAlchemyEngine(...)
   sqlserver_extractor = SQLServerExtractor(source="Table Name", engine=engine)
-  pypeline.target_extractor = sqlserver_extractor # Or add it using the add_step(s) methods
-  pypeline.execute()
+  pipeline.target_extractor = sqlserver_extractor # Or add it using the add_step(s) methods
+  pipeline.execute()
 ```
 
 ## Class: ODBCExtractor
@@ -385,8 +385,8 @@ Please Review the [Engine](engine.md) documentation for further information on `
     - The name of the extraction step.
     - Default: `ODBCExtractor`.
   - `on_error` *("raises", "ignore", optional)*: 
-    - `"raises"`: Raises Exceptions terminating `Pypeline` execution.
-    - `"ignore"`: Ignores Exceptions terminating the `ODBCExtractor` without terminating the `Pypeline` execution.
+    - `"raises"`: Raises Exceptions terminating `Pipeline` execution.
+    - `"ignore"`: Ignores Exceptions terminating the `ODBCExtractor` without terminating the `Pipeline` execution.
   - `chunk_size` *(int, optional)*: 
     - The number of rows to process at a time. If provided, enables chunked reading.
   - `**kwargs` *(Any)*: 
@@ -394,16 +394,16 @@ Please Review the [Engine](engine.md) documentation for further information on `
 
 #### Initialization Example
 
-Below is a simple example that shows how to initialize a `Pypeline` object with an `ODBCExtractor`:
+Below is a simple example that shows how to initialize a `Pipeline` object with an `ODBCExtractor`:
 
 ```python
-    from pypeline import Pypeline
-    from pypeline.extract import ODBCExtractor
+    from pydra import Pipeline
+    from pydra.extract import ODBCExtractor
     import pyodbc
 
-    pypeline = Pypeline(...)
+    pipeline = Pipeline(...)
     engine = pyodbc.connect(...)
     odbc_extractor = ODBCExtractor(source="Table Name", engine=engine, schema="Schema Name")
-    pypeline.target_extractor = odbc_extractor # Or add it using the add_step(s) methods
-    pypeline.execute()
+    pipeline.target_extractor = odbc_extractor # Or add it using the add_step(s) methods
+    pipeline.execute()
 ```
