@@ -32,8 +32,8 @@ Below is an example demonstrating how to use the Transformation `ConvertColumnTy
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import ConvertColumnType
+  from seroflow import Pipeline
+  from seroflow.transform import ConvertColumnType
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'sales_data' with a 'price' column
@@ -61,8 +61,8 @@ Below is an example demonstrating how to use the Transformation `RenameColumns`:
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import RenameColumns
+  from seroflow import Pipeline
+  from seroflow.transform import RenameColumns
 
   pipeline = Pipeline()
   pipeline.target_extractor = ...  # Extractor loads a DataFrame called 'sales_data' with 'price' and 'quantity' columns
@@ -90,8 +90,8 @@ Below is an example demonstrating how to use the Transformation `DropColumn`:
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import DropColumn
+  from seroflow import Pipeline
+  from seroflow.transform import DropColumn
 
   pipeline = Pipeline()
   pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
@@ -119,8 +119,8 @@ Below is an example demonstrating how to use the Transformation `DropColumns`:
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import DropColumns
+  from seroflow import Pipeline
+  from seroflow.transform import DropColumns
 
   pipeline = Pipeline()
   pipeline.target_extractor = ...  # Extractor loads 'sales_data' with 'price' and 'quantity' columns
@@ -149,8 +149,8 @@ Below is an example demonstrating how to use the Transformation `AddColumn`:
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import AddColumn
+  from seroflow import Pipeline
+  from seroflow.transform import AddColumn
 
   pipeline = Pipeline()
   pipeline.target_extractor = ...  # Extractor loads 'sales_data' with 'price' and 'quantity' columns
@@ -184,8 +184,8 @@ Below is an example demonstrating how to use the Transformation `MergeColumns`:
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import MergeColumns
+  from seroflow import Pipeline
+  from seroflow.transform import MergeColumns
 
   pipeline = Pipeline()
   pipeline.target_extractor = ...  # Extractor loads 'sales_data' with 'first_name' and 'last_name' columns
@@ -220,8 +220,8 @@ Below is an example demonstrating how to use the Transformation `SplitColumn`:
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import SplitColumn
+  from seroflow import Pipeline
+  from seroflow.transform import SplitColumn
 
   pipeline = Pipeline()
   pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'full_name' column
@@ -254,8 +254,8 @@ Below is an example demonstrating how to use the Transformation `ExplodeColumn`:
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import ExplodeColumn
+  from seroflow import Pipeline
+  from seroflow.transform import ExplodeColumn
 
   pipeline = Pipeline()
   pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'tags' column containing lists
@@ -284,8 +284,8 @@ Below is an example demonstrating how to use the Transformation `CreateColumnFro
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import CreateColumnFromVariable
+  from seroflow import Pipeline
+  from seroflow.transform import CreateColumnFromVariable
 
   pipeline = Pipeline()
   pipeline.target_extractor = ...  # Extractor loads 'sales_data'

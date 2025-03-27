@@ -120,7 +120,7 @@ After unpacking settings and creating the `Engine` object via its subclass’s `
 #### Example
 
 ```python
-from pydra.engine import Engine
+from seroflow.engine import Engine
 
 class DummyEngine(Engine):
     def create_engine(self):
@@ -177,9 +177,9 @@ On initialization, `SQLAlchemyEngine` constructs its URL, creates the engine, an
 #### Example
 
 ```python
-  from pydra import Pipeline
-  from pydra.extract import SQLServerExtractor
-  from pydra.engine import SQLAlchemyEngine # Select preferred Engine
+  from seroflow import Pipeline
+  from seroflow.extract import SQLServerExtractor
+  from seroflow.engine import SQLAlchemyEngine # Select preferred Engine
 
   engine = SQLAlchemyEngine(...)
 
@@ -189,15 +189,15 @@ On initialization, `SQLAlchemyEngine` constructs its URL, creates the engine, an
   pipeline.execute()
 ```
 
-## Instantiating Non Pydra provided Engines
+## Instantiating Non Seroflow provided Engines
 As mentioned previously, it is entirely possible to bypass `Pipeline’s` classes entirely if you prefer a native approach:
 
 #### Example
 In the example below we create a native `sqlalchemy` based engine and use it in conjunction with a Loader Step in the `Pipeline`.
 
 ```python
-  from pydra import Pipeline
-  from pydra.extract import SQLServerExtractor
+  from seroflow import Pipeline
+  from seroflow.extract import SQLServerExtractor
   from sqlalchemy import create_engine
   from sqlalchemy.engine import URL
 
@@ -214,8 +214,8 @@ In the example below we create a native `sqlalchemy` based engine and use it in 
 In the example below we create a native `pyodbc` based engine and use it in conjunction with a Loader Step in the `Pipeline`.
 
 ```python
-  from pydra import Pipeline
-  from pydra.extract import SQLServerExtractor
+  from seroflow import Pipeline
+  from seroflow.extract import SQLServerExtractor
   from pyodbc 
 
   engine = pyodbc.connect(...)

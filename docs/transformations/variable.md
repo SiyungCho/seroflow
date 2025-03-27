@@ -25,8 +25,8 @@ This module implements transformation classes for manipulating scalar variables 
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import CopyVariable
+  from seroflow import Pipeline
+  from seroflow.transform import CopyVariable
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... 
@@ -49,8 +49,8 @@ This module implements transformation classes for manipulating scalar variables 
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import DivideVariable
+  from seroflow import Pipeline
+  from seroflow.transform import DivideVariable
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... 
@@ -72,8 +72,8 @@ This module implements transformation classes for manipulating scalar variables 
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import MultiplyVariable
+  from seroflow import Pipeline
+  from seroflow.transform import MultiplyVariable
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... 
@@ -95,8 +95,8 @@ This module implements transformation classes for manipulating scalar variables 
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import IncrementVariable
+  from seroflow import Pipeline
+  from seroflow.transform import IncrementVariable
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... 
@@ -118,8 +118,8 @@ This module implements transformation classes for manipulating scalar variables 
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import DecrementVariable
+  from seroflow import Pipeline
+  from seroflow.transform import DecrementVariable
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... 
@@ -141,8 +141,8 @@ This module implements transformation classes for manipulating scalar variables 
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import CreateVariable
+  from seroflow import Pipeline
+  from seroflow.transform import CreateVariable
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... 
@@ -164,8 +164,8 @@ This module implements transformation classes for manipulating scalar variables 
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import UpdateVariable
+  from seroflow import Pipeline
+  from seroflow.transform import UpdateVariable
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... 

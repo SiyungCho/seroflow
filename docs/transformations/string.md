@@ -24,8 +24,8 @@ Below is an example demonstrating how to use the Transformation `RemoveCharacter
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import RemoveCharacterFromColumn
+  from seroflow import Pipeline
+  from seroflow.transform import RemoveCharacterFromColumn
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers data
@@ -54,8 +54,8 @@ Below is an example demonstrating how to use the Transformation `RemoveCharacter
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import RemoveCharactersFromColumn
+  from seroflow import Pipeline
+  from seroflow.transform import RemoveCharactersFromColumn
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers data
@@ -85,8 +85,8 @@ Below is an example demonstrating how to use the Transformation `ReplaceStringIn
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import ReplaceStringInColumn
+  from seroflow import Pipeline
+  from seroflow.transform import ReplaceStringInColumn
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers data

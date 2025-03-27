@@ -124,8 +124,8 @@ from type_validation import (
     is_context_object,
 )
 
-from pydra.context import Context
-from pydra.extract import ExcelExtractor
+from seroflow.context import Context
+from seroflow.extract import ExcelExtractor
 
 my_extractor = ExcelExtractor(...)
 my_context = Context(...)

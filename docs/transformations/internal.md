@@ -24,8 +24,8 @@ Below is an example demonstrating how to use the Transformation `AddDataFrame`:
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import AddDataFrame
+  from seroflow import Pipeline
+  from seroflow.transform import AddDataFrame
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers data
@@ -54,8 +54,8 @@ Below is an example demonstrating how to use the Transformation `DeleteDataFrame
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import DeleteDataFrame
+  from seroflow import Pipeline
+  from seroflow.transform import DeleteDataFrame
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers data
@@ -83,8 +83,8 @@ Below is an example demonstrating how to use the Transformation `RenameDataFrame
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import RenameDataFrame
+  from seroflow import Pipeline
+  from seroflow.transform import RenameDataFrame
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers data
@@ -112,8 +112,8 @@ Below is an example demonstrating how to use the Transformation `CopyDataFrame`:
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import CopyDataFrame
+  from seroflow import Pipeline
+  from seroflow.transform import CopyDataFrame
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers data

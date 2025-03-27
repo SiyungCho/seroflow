@@ -37,16 +37,16 @@ Below is an example demonstrating how to use the Transformation `TransposeDataFr
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import TransposeDataFrame
+  from seroflow import Pipeline
+  from seroflow.transform import TransposeDataFrame
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads a DataFrame called 'sales_data'
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads a DataFrame called 'sales_data'
 
   transpose_df = TransposeDataFrame(dataframe="sales_data")  # Initialize TransposeDataFrame to transpose 'sales_data'
 
-  pypeline.add_steps([transpose_df])
-  pypeline.execute()
+  pipeline.add_steps([transpose_df])
+  pipeline.execute()
 ```
 
 ---
@@ -69,11 +69,11 @@ Below is an example demonstrating how to use the Transformation `PivotDataFrame`
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import PivotDataFrame
+  from seroflow import Pipeline
+  from seroflow.transform import PivotDataFrame
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with 'region', 'month', and 'sales' columns
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' with 'region', 'month', and 'sales' columns
 
   pivot_df = PivotDataFrame(
       dataframe="sales_data",
@@ -83,8 +83,8 @@ Below is an example demonstrating how to use the Transformation `PivotDataFrame`
       aggfunc="sum"
   )  # Initialize PivotDataFrame to create a pivot table of sales by region and month
 
-  pypeline.add_steps([pivot_df])
-  pypeline.execute()
+  pipeline.add_steps([pivot_df])
+  pipeline.execute()
 ```
 
 ---
@@ -107,11 +107,11 @@ Below is an example demonstrating how to use the Transformation `MeltDataFrame`:
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import MeltDataFrame
+  from seroflow import Pipeline
+  from seroflow.transform import MeltDataFrame
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with 'region', 'sales_Q1', 'sales_Q2' columns
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' with 'region', 'sales_Q1', 'sales_Q2' columns
 
   melt_df = MeltDataFrame(
       dataframe="sales_data",
@@ -121,8 +121,8 @@ Below is an example demonstrating how to use the Transformation `MeltDataFrame`:
       value_name="sales"
   )  # Initialize MeltDataFrame to unpivot quarterly sales into long format
 
-  pypeline.add_steps([melt_df])
-  pypeline.execute()
+  pipeline.add_steps([melt_df])
+  pipeline.execute()
 ```
 
 ---
@@ -143,11 +143,11 @@ Below is an example demonstrating how to use the Transformation `GroupByAggregat
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import GroupByAggregate
+  from seroflow import Pipeline
+  from seroflow.transform import GroupByAggregate
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with 'region' and 'sales' columns
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' with 'region' and 'sales' columns
 
   groupby_agg = GroupByAggregate(
       dataframe="sales_data",
@@ -155,8 +155,8 @@ Below is an example demonstrating how to use the Transformation `GroupByAggregat
       agg_dict={"sales": "sum"}
   )  # Initialize GroupByAggregate to compute total sales per region
 
-  pypeline.add_steps([groupby_agg])
-  pypeline.execute()
+  pipeline.add_steps([groupby_agg])
+  pipeline.execute()
 ```
 
 ---
@@ -176,19 +176,19 @@ Below is an example demonstrating how to use the Transformation `FilterRows`:
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import FilterRows
+  from seroflow import Pipeline
+  from seroflow.transform import FilterRows
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with 'sales' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' with 'sales' column
 
   filter_rows = FilterRows(
       dataframe="sales_data",
       filter_func=lambda df: df["sales"] > 1000
   )  # Initialize FilterRows to keep only rows with sales > 1000
 
-  pypeline.add_steps([filter_rows])
-  pypeline.execute()
+  pipeline.add_steps([filter_rows])
+  pipeline.execute()
 ```
 
 ---
@@ -209,11 +209,11 @@ Below is an example demonstrating how to use the Transformation `SortDataFrame`:
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import SortDataFrame
+  from seroflow import Pipeline
+  from seroflow.transform import SortDataFrame
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with 'sales' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' with 'sales' column
 
   sort_df = SortDataFrame(
       dataframe="sales_data",
@@ -221,8 +221,8 @@ Below is an example demonstrating how to use the Transformation `SortDataFrame`:
       ascending=False
   )  # Initialize SortDataFrame to sort sales in descending order
 
-  pypeline.add_steps([sort_df])
-  pypeline.execute()
+  pipeline.add_steps([sort_df])
+  pipeline.execute()
 ```
 
 ---
@@ -243,19 +243,19 @@ Below is an example demonstrating how to use the Transformation `DropDuplicates`
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import DropDuplicates
+  from seroflow import Pipeline
+  from seroflow.transform import DropDuplicates
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with duplicate rows
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' with duplicate rows
 
   drop_dups = DropDuplicates(
       dataframe="sales_data",
       subset=["customer_id"]
   )  # Initialize DropDuplicates to remove duplicate customer records
 
-  pypeline.add_steps([drop_dups])
-  pypeline.execute()
+  pipeline.add_steps([drop_dups])
+  pipeline.execute()
 ```
 
 ---
@@ -275,19 +275,19 @@ Below is an example demonstrating how to use the Transformation `SelectColumns`:
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import SelectColumns
+  from seroflow import Pipeline
+  from seroflow.transform import SelectColumns
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with multiple columns
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' with multiple columns
 
   select_cols = SelectColumns(
       dataframe="sales_data",
       columns=["customer_id", "sales"]
   )  # Initialize SelectColumns to keep only customer_id and sales columns
 
-  pypeline.add_steps([select_cols])
-  pypeline.execute()
+  pipeline.add_steps([select_cols])
+  pipeline.execute()
 ```
 
 ---
@@ -307,19 +307,19 @@ Below is an example demonstrating how to use the Transformation `FillNAValues`:
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import FillNAValues
+  from seroflow import Pipeline
+  from seroflow.transform import FillNAValues
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with missing values
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' with missing values
 
   fill_na = FillNAValues(
       dataframe="sales_data",
       fill_value=0
   )  # Initialize FillNAValues to replace NaNs with 0
 
-  pypeline.add_steps([fill_na])
-  pypeline.execute()
+  pipeline.add_steps([fill_na])
+  pipeline.execute()
 ```
 
 ---
@@ -340,11 +340,11 @@ Below is an example demonstrating how to use the Transformation `ReplaceValues`:
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import ReplaceValues
+  from seroflow import Pipeline
+  from seroflow.transform import ReplaceValues
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with placeholder values
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' with placeholder values
 
   replace_vals = ReplaceValues(
       dataframe="sales_data",
@@ -352,8 +352,8 @@ Below is an example demonstrating how to use the Transformation `ReplaceValues`:
       value=None
   )  # Initialize ReplaceValues to convert 'N/A' to None
 
-  pypeline.add_steps([replace_vals])
-  pypeline.execute()
+  pipeline.add_steps([replace_vals])
+  pipeline.execute()
 ```
 
 ---
@@ -376,11 +376,11 @@ Below is an example demonstrating how to use the Transformation `MergeDataFrames
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import MergeDataFrames
+  from seroflow import Pipeline
+  from seroflow.transform import MergeDataFrames
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' and 'customer_data'
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' and 'customer_data'
 
   merge_dfs = MergeDataFrames(
       left_dataframe="sales_data",
@@ -390,8 +390,8 @@ Below is an example demonstrating how to use the Transformation `MergeDataFrames
       output_name="merged_sales"
   )  # Initialize MergeDataFrames to join sales_data with customer_data
 
-  pypeline.add_steps([merge_dfs])
-  pypeline.execute()
+  pipeline.add_steps([merge_dfs])
+  pipeline.execute()
 ```
 
 ---
@@ -415,11 +415,11 @@ Below is an example demonstrating how to use the Transformation `JoinDataFrames`
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import JoinDataFrames
+  from seroflow import Pipeline
+  from seroflow.transform import JoinDataFrames
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' and 'customer_data'
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' and 'customer_data'
 
   join_dfs = JoinDataFrames(
       primary_dataframe="sales_data",
@@ -428,8 +428,8 @@ Below is an example demonstrating how to use the Transformation `JoinDataFrames`
       how="inner"
   )  # Initialize JoinDataFrames to perform an inner join on customer_id
 
-  pypeline.add_steps([join_dfs])
-  pypeline.execute()
+  pipeline.add_steps([join_dfs])
+  pipeline.execute()
 ```
 
 ---
@@ -451,19 +451,19 @@ Below is an example demonstrating how to use the Transformation `ApplyFunction`:
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import ApplyFunction
+  from seroflow import Pipeline
+  from seroflow.transform import ApplyFunction
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data'
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data'
 
   apply_fn = ApplyFunction(
       dataframe="sales_data",
       function=lambda df: df.assign(sales=df["sales"].round(2))
   )  # Initialize ApplyFunction to round sales to two decimal places
 
-  pypeline.add_steps([apply_fn])
-  pypeline.execute()
+  pipeline.add_steps([apply_fn])
+  pipeline.execute()
 ```
 
 ---
@@ -483,19 +483,19 @@ Below is an example demonstrating how to use the Transformation `ApplyMap`:
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import ApplyMap
+  from seroflow import Pipeline
+  from seroflow.transform import ApplyMap
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data'
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data'
 
   apply_map = ApplyMap(
       dataframe="sales_data",
       function=lambda x: str(x).upper()
   )  # Initialize ApplyMap to convert all values to uppercase strings
 
-  pypeline.add_steps([apply_map])
-  pypeline.execute()
+  pipeline.add_steps([apply_map])
+  pipeline.execute()
 ```
 
 ---
@@ -516,11 +516,11 @@ Below is an example demonstrating how to use the Transformation `MapValues`:
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import MapValues
+  from seroflow import Pipeline
+  from seroflow.transform import MapValues
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with 'region' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' with 'region' column
 
   map_values = MapValues(
       dataframe="sales_data",
@@ -528,8 +528,8 @@ Below is an example demonstrating how to use the Transformation `MapValues`:
       mapping_dict={"NY": "New York", "CA": "California"}
   )  # Initialize MapValues to expand region codes into full names
 
-  pypeline.add_steps([map_values])
-  pypeline.execute()
+  pipeline.add_steps([map_values])
+  pipeline.execute()
 ```
 
 ---
@@ -550,11 +550,11 @@ Below is an example demonstrating how to use the Transformation `OneHotEncode`:
 
 ```python
   import pandas as pd
-  from pypeline import Pypeline
-  from pypeline.transform import OneHotEncode
+  from seroflow import Pipeline
+  from seroflow.transform import OneHotEncode
 
-  pypeline = Pypeline()
-  pypeline.target_extractor = ...  # Extractor loads 'sales_data' with 'region' column
+  pipeline = Pipeline()
+  pipeline.target_extractor = ...  # Extractor loads 'sales_data' with 'region' column
 
   one_hot = OneHotEncode(
       dataframe="sales_data",
@@ -562,8 +562,8 @@ Below is an example demonstrating how to use the Transformation `OneHotEncode`:
       drop_original=True
   )  # Initialize OneHotEncode to one-hot encode region and drop the original column
 
-  pypeline.add_steps([one_hot])
-  pypeline.execute()
+  pipeline.add_steps([one_hot])
+  pipeline.execute()
 ```
 
 ---

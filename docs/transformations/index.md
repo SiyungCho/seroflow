@@ -20,8 +20,8 @@ This module implements transformation classes for manipulating the index of a Da
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import SetIndex
+  from seroflow import Pipeline
+  from seroflow.transform import SetIndex
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Extractor extracts 'sample_data' with 'id' column
@@ -46,8 +46,8 @@ This module implements transformation classes for manipulating the index of a Da
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import ResetIndex
+  from seroflow import Pipeline
+  from seroflow.transform import ResetIndex
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Extractor extracts 'sample_data'

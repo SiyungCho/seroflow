@@ -67,8 +67,8 @@ The `Loader` class is an abstract base class for writing a `pandas` DataFrame (o
 Below is an example demonstrating how a concrete load implementation might inherit from `Loader` and implement its methods:
 
 ```python
-    from pydra import Pipeline
-    from pydra.load import Loader
+    from seroflow import Pipeline
+    from seroflow.load import Loader
 
     class MyCustomLoader(Loader):
         def __init__(self, target, dataframe, exists="append", on_error="raise"):
@@ -131,8 +131,8 @@ The `FileLoader` class is an abstract loader for file-based outputs. It extends 
 Below is an example demonstrating how a concrete load implementation might inherit from `FileLoader` and implement its methods:
 
 ```python
-    from pydra import Pipeline
-    from pydra.load import FileLoader
+    from seroflow import Pipeline
+    from seroflow.load import FileLoader
 
     class MyCustomFileLoader(FileLoader):
         def __init__(self, target, dataframe, file_extension, exists="append", on_error="raise"):
@@ -192,8 +192,8 @@ The `CSVLoader` class is a concrete loader for writing a single DataFrame to a C
 Below is a simple example that shows how to initialize a `Pipeline` object with an `CSVLoader`:
 
 ```python
-    from pydra import Pipeline
-    from pydra.load import CSVLoader
+    from seroflow import Pipeline
+    from seroflow.load import CSVLoader
 
     pipeline = Pipeline(...)
     pipeline.target_extractor = ... # Set Extractor to gather data
@@ -237,8 +237,8 @@ The `MultiCSVLoader` class extends `CSVLoader` to handle writing multiple DataFr
 Below is a simple example that shows how to initialize a `Pipeline` object with an `MultiCSVLoader`:
 
 ```python
-    from pydra import Pipeline
-    from pydra.load import MultiCSVLoader
+    from seroflow import Pipeline
+    from seroflow.load import MultiCSVLoader
 
     pipeline = Pipeline(...)
     pipeline.target_extractor = ... # Set Extractor to gather data
@@ -285,7 +285,7 @@ The `ExcelLoader` class is a concrete loader for writing a single DataFrame to a
 Below is a simple example that shows how to initialize a `Pipeline` object with an `ExcelLoader`:
 
 ```python
-    from pydra import Pipeline
+    from seroflow import Pipeline
     from v.load import ExcelLoader
 
     pipeline = Pipeline(...)
@@ -333,8 +333,8 @@ The `MultiExcelLoader` class extends `ExcelLoader` to handle multiple DataFrames
 Below is a simple example that shows how to initialize a `Pipeline` object with an `MultiExcelLoader`:
 
 ```python
-    from pydra import Pipeline
-    from pydra.load import MultiExcelLoader
+    from seroflow import Pipeline
+    from seroflow.load import MultiExcelLoader
 
     pipeline = Pipeline(...)
     pipeline.target_extractor = ... # Set Extractor to gather data
@@ -388,9 +388,9 @@ Please Review the [Engine](engine.md) documentation for further information on `
 Below is a simple example that shows how to initialize a `Pipeline` object with an `SQLServerLoader`:
 
 ```python
-    from pydra import Pipeline
-    from pydra.load import SQLServerLoader
-    from pydra.engine import SQLAlchemyEngine # Select preferred Engine
+    from seroflow import Pipeline
+    from seroflow.load import SQLServerLoader
+    from seroflow.engine import SQLAlchemyEngine # Select preferred Engine
 
     pipeline = Pipeline(...)
     pipeline.target_extractor = ... # Set Extractor to gather data
@@ -443,8 +443,8 @@ Please Review the [Engine](engine.md) documentation for further information on `
 Below is a simple example that shows how to initialize a `Pipeline` object with an `ODBCLoader`:
 
 ```python
-  from pydra import Pipeline
-  from pydra.load import ODBCLoader
+  from seroflow import Pipeline
+  from seroflow.load import ODBCLoader
   import pyodbc
 
   pipeline = Pipeline(...)

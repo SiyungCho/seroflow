@@ -95,8 +95,8 @@ A concrete implementation of the `Chunker` class that calculates chunk coordinat
 Below is a simple example that shows how to initialize a `Pipeline` object with an `LFUCache`:
 
 ```python
-  from pydra import Pipeline
-  from pydra.chunker import DirectChunker
+  from seroflow import Pipeline
+  from seroflow.chunker import DirectChunker
 
   pipeline = Pipeline()
   pipeline.execute(chunker=DirectChunker) # Execute Pipeline with chunker
@@ -173,8 +173,8 @@ A concrete implementation of the `Chunker` class that calculates chunk coordinat
 Below is a simple example that shows how to initialize a `Pipeline` object with an `LFUCache`:
 
 ```python
-  from pydra import Pipeline
-  from pydra.chunker import DistributedChunker
+  from seroflow import Pipeline
+  from seroflow.chunker import DistributedChunker
 
   pipeline = Pipeline()
   pipeline.execute(chunker=DistributedChunker) # Execute Pipeline with chunker

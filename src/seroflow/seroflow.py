@@ -1,5 +1,5 @@
 """
-Module: pydra
+Module: seroflow
 
 This module implements a data pipeline framework using the Pipeline class.
 It provides functionality for managing and executing a sequence of data processing steps
@@ -130,7 +130,7 @@ class Pipeline():
         Pipeline Object Custom Print method.
         Used to display internal Parameter Index, Step Index and Dataframe Index.
         """
-        print("----Pydra Pipeline----")
+        print("----Seroflow Pipeline----")
         print(f"Parameters Index: {self.parameter_index}")
         print(f"Step Index: {self.step_index}")
         print(f"Step Name Index: {self.step_name_index}")

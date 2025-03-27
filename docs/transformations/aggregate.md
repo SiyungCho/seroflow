@@ -31,8 +31,8 @@ Below is an example demonstrating how to use the Transformation `GetColMean`:
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import GetColMean
+  from seroflow import Pipeline
+  from seroflow.transform import GetColMean
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'sales_data' with a 'price' column
@@ -59,8 +59,8 @@ Below is an example demonstrating how to use the Transformation `GetColMedian`:
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import GetColMedian
+  from seroflow import Pipeline
+  from seroflow.transform import GetColMedian
 
   pipeline = Pipeline()
   pipeline.target_extractor = ...  # Extractor loads a DataFrame named 'sales_data' with a 'price' column
@@ -87,8 +87,8 @@ Below is an example demonstrating how to use the Transformation `GetColMode`:
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import GetColMode
+  from seroflow import Pipeline
+  from seroflow.transform import GetColMode
 
   pipeline = Pipeline()
   pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
@@ -115,8 +115,8 @@ Below is an example demonstrating how to use the Transformation `GetColStd`:
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import GetColStd
+  from seroflow import Pipeline
+  from seroflow.transform import GetColStd
 
   pipeline = Pipeline()
   pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
@@ -143,8 +143,8 @@ Below is an example demonstrating how to use the Transformation `GetColSum`:
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import GetColSum
+  from seroflow import Pipeline
+  from seroflow.transform import GetColSum
 
   pipeline = Pipeline()
   pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
@@ -171,8 +171,8 @@ Below is an example demonstrating how to use the Transformation `GetColVariance`
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import GetColVariance
+  from seroflow import Pipeline
+  from seroflow.transform import GetColVariance
 
   pipeline = Pipeline()
   pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
@@ -200,8 +200,8 @@ Below is an example demonstrating how to use the Transformation `GetColQuantile`
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import GetColQuantile
+  from seroflow import Pipeline
+  from seroflow.transform import GetColQuantile
 
   pipeline = Pipeline()
   pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
@@ -229,8 +229,8 @@ Below is an example demonstrating how to use the Transformation `GetColCorrelati
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import GetColCorrelation
+  from seroflow import Pipeline
+  from seroflow.transform import GetColCorrelation
 
   pipeline = Pipeline()
   pipeline.target_extractor = ...  # Extractor loads 'sales_data' with 'price' and 'quantity' columns
@@ -258,8 +258,8 @@ Below is an example demonstrating how to use the Transformation `GetColCovarianc
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import GetColCovariance
+  from seroflow import Pipeline
+  from seroflow.transform import GetColCovariance
 
   pipeline = Pipeline()
   pipeline.target_extractor = ...  # Extractor loads 'sales_data' with 'price' and 'quantity' columns
@@ -286,8 +286,8 @@ Below is an example demonstrating how to use the Transformation `GetColSkew`:
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import GetColSkew
+  from seroflow import Pipeline
+  from seroflow.transform import GetColSkew
 
   pipeline = Pipeline()
   pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column

@@ -1,13 +1,13 @@
-## Getting Started with Pydra
+## Getting Started with Seroflow
 
-Welcome to **Pydra**! This guide will walk you through the basics of key components, configuring, and using the package to build and execute efficient ETL (Extract, Transform, Load) data pipelines.
+Welcome to **Seroflow**! This guide will walk you through the basics of key components, configuring, and using the package to build and execute efficient ETL (Extract, Transform, Load) data pipelines.
 
 ## Introduction
 
-**Pydra** is a powerful Python package that allows users to easily build and execute data pipelines. It simplifies pipeline creation by breaking each phase—extraction, transformation, and loading—into concrete step objects. Think of it like assembling Lego bricks: you choose and add the steps you need, then execute your pipeline with a simple command.
+**Seroflow** is a powerful Python package that allows users to easily build and execute data pipelines. It simplifies pipeline creation by breaking each phase—extraction, transformation, and loading—into concrete step objects. Think of it like assembling Lego bricks: you choose and add the steps you need, then execute your pipeline with a simple command.
 
 ## Basics
-**Pydra** uses 5 main components to build and execute data pipelines. In the next section, we will discuss each of these components at a high level and then review how a collection of these components can be used to execute the `Pipeline`.
+**Seroflow** uses 5 main components to build and execute data pipelines. In the next section, we will discuss each of these components at a high level and then review how a collection of these components can be used to execute the `Pipeline`.
 
 ### Key Components
 - **`Pipeline`**: 
@@ -23,7 +23,7 @@ The `Pipeline` Object is the main container and executor of the data pipeline. I
 `Loader` Objects are the 'Load' operations in a data pipeline and are a subclass of the `Step` Class. They are the data senders and connect, read and conform to a target location in order to move data from a `pandas` dataframe to the destination. `Loader` Objects then receive transformed dataframes from the `Pipeline` Object. `Target Loaders`, are a special type of `Loader`. They are essential, and when configured are always the last `Step` executed by the `Pipeline`. `Target Loaders` are not mandatory in *any modes*, however, they are recommended to ensure the transformed data is always released.
 
 - **`Transformation`**: 
-`Transformation` Objects are the intermediate Steps that perform singular data operations on specified dataframes and are a subclass of the `Step` Class. These operations can range in complexity however the `Pydra` package offers over 70+ predefined transformations to be used. Users simply select, configure and add a `Transformation` Object to the `Pipeline` object and the operation will be performed on the selected dataframes.
+`Transformation` Objects are the intermediate Steps that perform singular data operations on specified dataframes and are a subclass of the `Step` Class. These operations can range in complexity however the `Seroflow` package offers over 70+ predefined transformations to be used. Users simply select, configure and add a `Transformation` Object to the `Pipeline` object and the operation will be performed on the selected dataframes.
 
 ### Basic Execution
 After adding all necessary Steps and components, in order to execute the `Pipeline` Object, we simply run the `.execute()` method on the `Pipeline` Object. This sequentially performs all the added steps and runs the entire data pipeline.
@@ -32,10 +32,10 @@ After adding all necessary Steps and components, in order to execute the `Pipeli
 In the example below, we will create a simple data `Pipeline` by extracting data from a csv file, performing a transpose operation on the data then releasing the transformed data to an excel file.
 
 ```python
-    from pydra.pydra import Pipeline
-    from pydra.extract import CSVExtractor
-    from pydra.load import ExcelLoader
-    from pydra.transform import TransposeDataFrame
+    from seroflow.seroflow import Pipeline
+    from seroflow.extract import CSVExtractor
+    from seroflow.load import ExcelLoader
+    from seroflow.transform import TransposeDataFrame
 
     pipeline = Pipeline()
 
@@ -50,17 +50,17 @@ In the example below, we will create a simple data `Pipeline` by extracting data
 ```
 
 ## Easily Create Custom Steps
-Say there is a custom `Step` operation, a user may need that is not predefined by the `Pydra` package. One of the main features of `Pydra` is the ability to easily create and integrate custom `Steps` to be executed by the `Pipeline` Object. One of the simplest methods to create a custom `Step` is to use the `Step` Class as a function wrapper. All we need to do, is create a python function which performs an operation on a dataframe and then wrap that function in the `@Step()` decorator.
+Say there is a custom `Step` operation, a user may need that is not predefined by the `Seroflow` package. One of the main features of `Seroflow` is the ability to easily create and integrate custom `Steps` to be executed by the `Pipeline` Object. One of the simplest methods to create a custom `Step` is to use the `Step` Class as a function wrapper. All we need to do, is create a python function which performs an operation on a dataframe and then wrap that function in the `@Step()` decorator.
 
 #### Usage Example
 In the example below, we will build off our previous data pipeline, but this time creates and adds a custom step which prints the first 5 rows of a dataframe using the `@Step()` decorator.
 
 ```python
-    from pydra.pydra import Pipeline
-    from pydra.extract import CSVExtractor
-    from pydra.load import ExcelLoader
-    from pydra.transform import TransposeDataFrame
-    from pydra.step import Step
+    from seroflow.seroflow import Pipeline
+    from seroflow.extract import CSVExtractor
+    from seroflow.load import ExcelLoader
+    from seroflow.transform import TransposeDataFrame
+    from seroflow.step import Step
 
     @Step(dataframes='testdata')
     def print_first_5_dataframe_rows(context):
@@ -83,7 +83,7 @@ In the example below, we will build off our previous data pipeline, but this tim
 Please refer to the [Pipeline](pipeline.md) documentation to learn more about creating custom Steps.
 
 ## Advanced Features
-`Pydra` supports several other advanced features to enhance your data pipelines such:
+`Seroflow` supports several other advanced features to enhance your data pipelines such:
 - **Logging**: Automatically logs pipeline execution details.
 - **Caching**: Supports caching intermediate data for improved performance.
 - **Chunking**: Processes data in manageable chunks.

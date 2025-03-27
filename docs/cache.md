@@ -140,8 +140,8 @@ The `LFUCache` class uses the Least Frequently Used (LFU) strategy to manage a c
 Below is a simple example that shows how to initialize a `Pipeline` object with an `LFUCache`:
 
 ```python
-  from pydra import Pipeline
-  from pydra.cache import LFUCache # Import LFUCache
+  from seroflow import Pipeline
+  from seroflow.cache import LFUCache # Import LFUCache
 
   # Initialize a pipeline with caching 
   pipeline = Pipeline(cache=LFUCache)

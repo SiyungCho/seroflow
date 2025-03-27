@@ -22,8 +22,8 @@ Below is an example demonstrating how to use the Transformation `ConvertToDateTi
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import ConvertToDateTime
+  from seroflow import Pipeline
+  from seroflow.transform import ConvertToDateTime
 
   # Create a Pipeline and register the DataFrame under the name 'sales_data'
   pipeline = Pipeline()

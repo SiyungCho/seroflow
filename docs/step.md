@@ -102,8 +102,8 @@ To create a custom `Step` using the wrapper method, users simply add the `@Step(
 Below is a simple example that shows how to create a custom `Step` using the wrapper method:
 
 ```python
-  from pydra import Pipeline
-  from pydra.step import Step # Import the Step class
+  from seroflow import Pipeline
+  from seroflow.step import Step # Import the Step class
   
   @Step(dataframes=['df1', ...], params={'a':10, ...}) # Create a Custom Step using the wrapper format
   def sample_function(context, a, b=1):
@@ -130,8 +130,8 @@ Parameter definition is the same as the wrapper method, however, a `'step_name'`
 Below is a simple example that shows how to create a custom `Step` by inheriting the `Step` class:
 
 ```python
-  from pydra import Pipeline
-  from pydra.step import Step # Import the Step class
+  from seroflow import Pipeline
+  from seroflow.step import Step # Import the Step class
   
   class CustomStep(Step):
     def __init__(self, dataframes, params, step_name="sample_function", on_error="raise", ...):

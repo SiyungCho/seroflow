@@ -17,8 +17,8 @@ This module implements a transformation class for executing SQL queries on DataF
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import SQLQuery
+  from seroflow import Pipeline
+  from seroflow.transform import SQLQuery
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Extractor extracts 'customers' and 'orders'

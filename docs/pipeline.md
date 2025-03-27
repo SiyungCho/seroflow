@@ -1,4 +1,4 @@
-# Pydra Documentation
+# Seroflow Documentation
 
 This documentation provides a Pipeline framework for building, managing, and executing a series of data processing steps. It integrates custom logging, caching, context management, transformation utilities, chunking, and type validation to offer a robust and extensible architecture for ETL workflows.
 
@@ -41,8 +41,8 @@ The core component of the module is the `Pipeline` class. It encapsulates the lo
 Below is a simple example that shows how to initialize a `Pipeline` object:
 
 ```python
-  from pydra import Pipeline
-  from pydra.cache import LFUCache
+  from seroflow import Pipeline
+  from seroflow.cache import LFUCache
 
   # Initialize a pipeline with caching and logging enabled in development mode.
   pipeline = Pipeline(cache=LFUCache, logger=True, mode="DEV")
@@ -88,10 +88,10 @@ In this example, execution of steps will occur in this order:
 - ExcelLoader.
 
 ```python
-  from pydra import Pipeline
-  from pydra.extract import MultiCSVExtractor # Gathering multiple csv files
-  from pydra.load import ExcelLoader # Load data to excel sheet
-  from pydra.transform import TransposeDataFrame # Transpose Dataframes gathered
+  from seroflow import Pipeline
+  from seroflow.extract import MultiCSVExtractor # Gathering multiple csv files
+  from seroflow.load import ExcelLoader # Load data to excel sheet
+  from seroflow.transform import TransposeDataFrame # Transpose Dataframes gathered
 
   pipeline = Pipeline()
   pipeline.target_extractor = MultiCSVExtractor(...) # Set Target Extractor as MultiCSVExtractor
@@ -146,11 +146,11 @@ In this example, execution of steps will occur in this order:
  - ExcelLoader: loads selected df
 
 ```python
-  from pydra import Pipeline
-  from pydra.extract import CSVExtractor
-  from pydra.load import ExcelLoader
-  from pydra.transform import TransposeDataFrame
-  from pydra.transform import PivotDataFrame
+  from seroflow import Pipeline
+  from seroflow.extract import CSVExtractor
+  from seroflow.load import ExcelLoader
+  from seroflow.transform import TransposeDataFrame
+  from seroflow.transform import PivotDataFrame
 
   pipeline = Pipeline()
   pipeline.target_extractor = CSVExtractor(...)
@@ -221,11 +221,11 @@ In this example, say there are 2 chunks execution will occur in this order:
 - ExcelLoader
   
 ```python
-  from pydra import Pipeline
-  from pydra.extract import CSVExtractor 
-  from pydra.load import ExcelLoader 
-  from pydra.transform import TransposeDataFrame
-  from pydra.chunker import DistributedChunker # Load DistributedChunker class
+  from seroflow import Pipeline
+  from seroflow.extract import CSVExtractor 
+  from seroflow.load import ExcelLoader 
+  from seroflow.transform import TransposeDataFrame
+  from seroflow.chunker import DistributedChunker # Load DistributedChunker class
 
   pipeline = Pipeline()
   pipeline.target_extractor = CSVExtractor(...)
@@ -250,8 +250,8 @@ There are multiple ways users can create custom `Step` objects, however, all of 
 #### Example
 In this example, we create a custom Step object which can be passed into the `Pipeline` execution.
 ```python
-  from pydra import Pipeline
-  from pydra.step import Step # Import the Step class
+  from seroflow import Pipeline
+  from seroflow.step import Step # Import the Step class
   
   @Step(dataframes=['df1', ...], params={'a':10, ...}) # Create a Custom Step using the wrapper format
   def sample_function(context, a, b=1):
@@ -271,8 +271,8 @@ Because `Extractor` and `Loader` Objects are simply subclasses of the `Step` cla
 #### Example
 In this example, we create a custom Extractor object
 ```python
-  from pydra import Pipeline
-  from pydra.extract import Extractor # Import the Extractor class which is the interface for extractors and a subclass of the Step Class
+  from seroflow import Pipeline
+  from seroflow.extract import Extractor # Import the Extractor class which is the interface for extractors and a subclass of the Step Class
   
   class SampleExtractor(Extractor):
     ...
@@ -285,8 +285,8 @@ In this example, we create a custom Extractor object
 #### Example
 In this example, we create a custom Loader object
 ```python
-  from pydra import Pipeline
-  from pydra.load import Loader # Import the Loader class which is the interface for loaders and a subclass of the Step Class
+  from seroflow import Pipeline
+  from seroflow.load import Loader # Import the Loader class which is the interface for loaders and a subclass of the Step Class
   
   class SampleExtractor(Extractor):
     ...

@@ -1,19 +1,19 @@
-## Pydra Package Guide
+## Seroflow Package Guide
 
-Welcome to **Pydra**! This repository contains the source code, documentation, and examples to help you get started and contribute to this project.
+Welcome to **Seroflow**! This repository contains the source code, documentation, and examples to help you get started and contribute to this project.
 
 ## Overview
-`Pydra` is a powerful Python package designed to help users build and execute efficient ETL (or ELT) data pipelines. ETL stands for Extract, Transform, and Load — a process that extracts data from various sources, transforms it into a suitable format, and then loads it into a destination system. 
+`Seroflow` is a powerful Python package designed to help users build and execute efficient ETL (or ELT) data pipelines. ETL stands for Extract, Transform, and Load — a process that extracts data from various sources, transforms it into a suitable format, and then loads it into a destination system. 
 
-With `Pydra`, each phase of your data pipeline is broken down into concrete steps: `Extractor` steps for data extraction, `Transformation` steps for data manipulation, and `Loader` steps for data loading. Think of it like assembling a Lego set—Pydra provides all the essential bricks, and you simply pick and add the desired step objects sequentially into a `Pydra` object, then run `pydra.execute()` to run your entire process. 
+With `Seroflow`, each phase of your data pipeline is broken down into concrete steps: `Extractor` steps for data extraction, `Transformation` steps for data manipulation, and `Loader` steps for data loading. Think of it like assembling a Lego set—Seroflow provides all the essential bricks, and you simply pick and add the desired step objects sequentially into a `Seroflow` object, then run `seroflow.execute()` to run your entire process. 
 
 Additionally, the package supports seamless creation of custom `Extractors`, `Loaders`, and `Transformations` through its intuitive interfaces, along with robust features like logging, caching, and chunking. Plus, it comes preloaded with over 70+ predefined transformations, making it an indispensable tool for data pipeline creation and execution.
 
-To Get Started using Pydra head over to our [Get Started](docs/getting_started.md) Page.
+To Get Started using Seroflow head over to our [Get Started](docs/getting_started.md) Page.
 
 ## Table of Contents
 
-- [Pydra Package Guide](#pydra-package-guide)
+- [Seroflow Package Guide](#seroflow-package-guide)
 - [Overview](#overview)
 - [Table of Contents](#table-of-contents)
 - [Prerequisites](#prerequisites)
@@ -48,15 +48,15 @@ source venv_name/bin/activate  # For macOS use
 To install the package from PyPI, run the following command:
 
 ```bash
-pip install pydra
+pip install seroflow
 ```
 
 ### Installing from Source
 If you want to install the package directly from the source code, follow these steps:
 1. Clone the repository:
 ```bash
-git clone https://github.com/.../pydra.git
-cd pydra
+git clone https://github.com/.../seroflow.git
+cd seroflow
 ```
 
 2. Install dependencies:
@@ -65,10 +65,10 @@ pip install -r requirements.txt
 ```
 
 ## Documentation
-Below are some links to the documentation provided for the various components in the Pydra package. It is recommended that users review some of these components prior to using the package.
+Below are some links to the documentation provided for the various components in the Seroflow package. It is recommended that users review some of these components prior to using the package.
 
 - [Getting Started](docs/getting_started.md)
-- [Pydra](docs/Pydra.md)
+- [Seroflow](docs/Seroflow.md)
 - [Step](docs/step.md)
 - [Transformations](docs/transformations/transformation.md)
 - [Extractors](docs/extract.md)

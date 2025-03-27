@@ -34,8 +34,8 @@ The `Transformation` class serves as an abstract base class (inheriting from `AB
 Below is a simple example that shows how to create a custom `Step` by inheriting the `Step` class:
 
 ```python
-  from pydra import Pipeline
-  from pydra.transform import Transformation  # Import the Transformation class
+  from seroflow import Pipeline
+  from seroflow.transform import Transformation  # Import the Transformation class
 
   class Add10toVariableAndDataFrameTransformation(Transformation):
     def __init__(self, dataframes, variable, step_name="Add10toVariableAndDataFrameTransformation", on_error="raise", **kwargs):

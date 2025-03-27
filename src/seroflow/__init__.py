@@ -1,5 +1,5 @@
 """
-Package: Pydra
+Package: Seroflow
 Version: 1.0.0
 
 This package provides a comprehensive toolkit for building and managing data pipelines

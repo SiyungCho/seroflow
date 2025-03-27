@@ -64,8 +64,8 @@ The `Extractor` class is an abstract base class that provides the common structu
 Below is an example demonstrating how a concrete extract implementation might inherit from `Extractor` and implement its methods:
 
 ```python
-  from pydra import Pipeline
-  from pydra.extract import Extractor
+  from seroflow import Pipeline
+  from seroflow.extract import Extractor
 
   class MyCustomExtractor(Extractor):
       def __init__(self, source, chunk_size=None, **kwargs):
@@ -139,8 +139,8 @@ The `FileExtractor` class extends `Extractor` and provides a template for file-b
 Below is an example demonstrating how a concrete extract implementation might inherit from `FileExtractor` and implement its methods:
 
 ```python
-  from pydra import Pipeline
-  from pydra.extract import FileExtractor
+  from seroflow import Pipeline
+  from seroflow.extract import FileExtractor
 
   class MyCustomFileExtractor(FileExtractor):
       def __init__(self, source, chunk_size=None, **kwargs):
@@ -191,8 +191,8 @@ The `CSVExtractor` class is a concrete implementation for extracting data from a
 Below is a simple example that shows how to initialize a `Pipeline` object with an `CSVExtractor`:
 
 ```python
-  from pydra import Pipeline
-  from pydra.extract import CSVExtractor
+  from seroflow import Pipeline
+  from seroflow.extract import CSVExtractor
 
   pipeline = Pipeline(...)
   csv_extractor = CSVExtractor(source="path_to_csv_file")
@@ -226,8 +226,8 @@ The `MultiCSVExtractor` class handles the extraction of data from multiple CSV f
 Below is a simple example that shows how to initialize a `Pipeline` object with an `MultiCSVExtractor`:
 
 ```python
-  from pydra import Pipeline
-  from pydra.extract import MultiCSVExtractor
+  from seroflow import Pipeline
+  from seroflow.extract import MultiCSVExtractor
 
   pipeline = Pipeline(...)
   multi_csv_extractor = MultiCSVExtractor(source="path_to_directory", chunk_size=100)
@@ -264,8 +264,8 @@ The `ExcelExtractor` class is a concrete implementation for reading data from a 
 Below is a simple example that shows how to initialize a `Pipeline` object with an `ExcelExtractor`:
 
 ```python
-  from pydra import Pipeline
-  from pydra.extract import ExcelExtractor
+  from seroflow import Pipeline
+  from seroflow.extract import ExcelExtractor
 
   pipeline = Pipeline(...)
   excel_extractor = ExcelExtractor(source="path_to_excel_file")
@@ -299,8 +299,8 @@ The `MultiExcelExtractor` class processes multiple Excel files from a specified 
 Below is a simple example that shows how to initialize a `Pipeline` object with an `MultiExcelExtractor`:
 
 ```python
-  from pydra import Pipeline
-  from pydra.extract import MultiExcelExtractor
+  from seroflow import Pipeline
+  from seroflow.extract import MultiExcelExtractor
 
   pipeline = Pipeline(...)
   multi_excel_extractor = MultiExcelExtractor(source="path_to_directory", on_error="ignore")
@@ -347,9 +347,9 @@ Please Review the [Engine](engine.md) documentation for further information on `
 Below is a simple example that shows how to initialize a `Pipeline` object with an `SQLServerExtractor`:
 
 ```python
-  from pydra import Pipeline
-  from pydra.extract import SQLServerExtractor
-  from pydra.engine import SQLAlchemyEngine # Select preferred Engine
+  from seroflow import Pipeline
+  from seroflow.extract import SQLServerExtractor
+  from seroflow.engine import SQLAlchemyEngine # Select preferred Engine
 
   pipeline = Pipeline(...)
   engine = SQLAlchemyEngine(...)
@@ -397,8 +397,8 @@ Please Review the [Engine](engine.md) documentation for further information on `
 Below is a simple example that shows how to initialize a `Pipeline` object with an `ODBCExtractor`:
 
 ```python
-    from pydra import Pipeline
-    from pydra.extract import ODBCExtractor
+    from seroflow import Pipeline
+    from seroflow.extract import ODBCExtractor
     import pyodbc
 
     pipeline = Pipeline(...)

@@ -40,8 +40,8 @@ Below is an example demonstrating how to use the Transformation `DisplayInfo`:
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import DisplayInfo
+  from seroflow import Pipeline
+  from seroflow.transform import DisplayInfo
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers dataframes called 'states' and 'regions'
@@ -67,8 +67,8 @@ Below is an example demonstrating how to use the Transformation `DisplayColumns`
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import DisplayColumns
+  from seroflow import Pipeline
+  from seroflow.transform import DisplayColumns
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'sales'
@@ -95,8 +95,8 @@ Below is an example demonstrating how to use the Transformation `DisplayHead`:
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import DisplayHead
+  from seroflow import Pipeline
+  from seroflow.transform import DisplayHead
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'employees'
@@ -123,8 +123,8 @@ Below is an example demonstrating how to use the Transformation `DisplayTail`:
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import DisplayTail
+  from seroflow import Pipeline
+  from seroflow.transform import DisplayTail
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'orders'
@@ -151,8 +151,8 @@ Below is an example demonstrating how to use the Transformation `DisplayColumnMe
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import DisplayColumnMean
+  from seroflow import Pipeline
+  from seroflow.transform import DisplayColumnMean
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'metrics' with a 'score' column
@@ -179,8 +179,8 @@ Below is an example demonstrating how to use the Transformation `DisplayColumnMe
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import DisplayColumnMedian
+  from seroflow import Pipeline
+  from seroflow.transform import DisplayColumnMedian
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'data' with a 'age' column
@@ -207,8 +207,8 @@ Below is an example demonstrating how to use the Transformation `DisplayColumnMo
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import DisplayColumnMode
+  from seroflow import Pipeline
+  from seroflow.transform import DisplayColumnMode
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'survey' with a 'response' column
@@ -235,8 +235,8 @@ Below is an example demonstrating how to use the Transformation `DisplayColumnVa
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import DisplayColumnVariance
+  from seroflow import Pipeline
+  from seroflow.transform import DisplayColumnVariance
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'finance' with a 'revenue' column
@@ -263,8 +263,8 @@ Below is an example demonstrating how to use the Transformation `DisplayColumnSt
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import DisplayColumnStdDev
+  from seroflow import Pipeline
+  from seroflow.transform import DisplayColumnStdDev
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'stats' with a 'duration' column
@@ -291,8 +291,8 @@ Below is an example demonstrating how to use the Transformation `DisplayColumnSu
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import DisplayColumnSum
+  from seroflow import Pipeline
+  from seroflow.transform import DisplayColumnSum
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'transactions' with a 'amount' column
@@ -319,8 +319,8 @@ Below is an example demonstrating how to use the Transformation `DisplayColumnMi
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import DisplayColumnMin
+  from seroflow import Pipeline
+  from seroflow.transform import DisplayColumnMin
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'inventory' with a 'price' column
@@ -347,8 +347,8 @@ Below is an example demonstrating how to use the Transformation `DisplayColumnMa
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import DisplayColumnMax
+  from seroflow import Pipeline
+  from seroflow.transform import DisplayColumnMax
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'inventory' with a 'price' column
@@ -375,8 +375,8 @@ Below is an example demonstrating how to use the Transformation `DisplayColumnCo
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import DisplayColumnCount
+  from seroflow import Pipeline
+  from seroflow.transform import DisplayColumnCount
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'customers' with a 'email' column
@@ -403,8 +403,8 @@ Below is an example demonstrating how to use the Transformation `DisplayColumnUn
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import DisplayColumnUnique
+  from seroflow import Pipeline
+  from seroflow.transform import DisplayColumnUnique
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'logs' with a 'user_id' column
@@ -431,8 +431,8 @@ Below is an example demonstrating how to use the Transformation `DisplayColumnNU
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import DisplayColumnNUnique
+  from seroflow import Pipeline
+  from seroflow.transform import DisplayColumnNUnique
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'responses' with a 'answer' column
@@ -459,8 +459,8 @@ Below is an example demonstrating how to use the Transformation `DisplayColumnDT
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import DisplayColumnDType
+  from seroflow import Pipeline
+  from seroflow.transform import DisplayColumnDType
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'records' with a 'date' column
@@ -487,8 +487,8 @@ Below is an example demonstrating how to use the Transformation `DisplayStringCo
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import DisplayStringCount
+  from seroflow import Pipeline
+  from seroflow.transform import DisplayStringCount
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'reviews' with a 'comment' column
@@ -515,8 +515,8 @@ Below is an example demonstrating how to use the Transformation `DisplayMostFreq
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import DisplayMostFrequentString
+  from seroflow import Pipeline
+  from seroflow.transform import DisplayMostFrequentString
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'feedback' with a 'rating' column
@@ -543,8 +543,8 @@ Below is an example demonstrating how to use the Transformation `DisplayAllCateg
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import DisplayAllCategories
+  from seroflow import Pipeline
+  from seroflow.transform import DisplayAllCategories
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'products' with a 'category' column
@@ -572,8 +572,8 @@ Below is an example demonstrating how to use the Transformation `DisplaySubstrin
 
 ```python
   import pandas as pd
-  from pydra import Pipeline
-  from pydra.transform import DisplaySubstringOccurrence
+  from seroflow import Pipeline
+  from seroflow.transform import DisplaySubstringOccurrence
 
   pipeline = Pipeline()
   pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'logs' with a 'message' column
