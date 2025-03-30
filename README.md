@@ -1,4 +1,4 @@
-## Seroflow Package Guide
+## Seroflow
 
 Welcome to **Seroflow**! This repository contains the source code, documentation, and examples to help you get started and contribute to this project.
 
