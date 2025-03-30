@@ -51,19 +51,6 @@ To install the package from PyPI, run the following command:
 pip install seroflow
 ```
 
-### Installing from Source
-If you want to install the package directly from the source code, follow these steps:
-1. Clone the repository:
-```bash
-git clone https://github.com/.../seroflow.git
-cd seroflow
-```
-
-2. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-
 ## Documentation
 Below are some links to the documentation provided for the various components in the Seroflow package. It is recommended that users review some of these components prior to using the package.
 
