@@ -70,7 +70,7 @@ Below are some links to the documentation provided for the various components in
 - [Wrappers](docs/wrappers.md)
 
 ## License
-This project is licensed under the MIT License. Please review the license for more details.
+This project is licensed under the MIT License. Please review the [License](LICENSE.md) for more details.
 
 ## Contributing
 We welcome contributions! Please read our [Contributing](docs/contributing.md) for guidelines on how to contribute to the project.
