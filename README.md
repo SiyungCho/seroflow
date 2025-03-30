@@ -1,4 +1,7 @@
 ## Seroflow
+![PyPI](https://img.shields.io/pypi/v/seroflow)
+![Python](https://img.shields.io/pypi/pyversions/seroflow)
+![License](https://img.shields.io/github/license/SiyungCho/seroflow)
 
 Welcome to **Seroflow**! This repository contains the source code, documentation, and examples to help you get started and contribute to this project.
 
@@ -13,7 +16,7 @@ To Get Started using Seroflow head over to our [Get Started](docs/getting_starte
 
 ## Table of Contents
 
-- [Seroflow Package Guide](#seroflow-package-guide)
+- [Seroflow](#seroflow)
 - [Overview](#overview)
 - [Table of Contents](#table-of-contents)
 - [Prerequisites](#prerequisites)
