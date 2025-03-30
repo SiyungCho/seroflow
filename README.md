@@ -3,7 +3,7 @@
 Welcome to **Seroflow**! This repository contains the source code, documentation, and examples to help you get started and contribute to this project.
 
 ## Overview
-`Seroflow` is a powerful Python package designed to help users build and execute efficient ETL (or ELT) data pipelines. ETL stands for Extract, Transform, and Load — a process that extracts data from various sources, transforms it into a suitable format, and then loads it into a destination system. 
+`Seroflow` is a powerful Python package designed to help users build and execute efficient data pipelines. Developing ETL, ELT and other forms of data pipelines has never been easier with `Seroflow's` emphasis on performance, customization and ease-of-use.
 
 With `Seroflow`, each phase of your data pipeline is broken down into concrete steps: `Extractor` steps for data extraction, `Transformation` steps for data manipulation, and `Loader` steps for data loading. Think of it like assembling a Lego set—Seroflow provides all the essential bricks, and you simply pick and add the desired step objects sequentially into a `Pipeline` object, then run `pipeline.execute()` to run your entire process. 
 
