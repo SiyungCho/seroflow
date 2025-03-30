@@ -37,8 +37,8 @@ python -m pip install --upgrade pip
 ```bash
 python -m venv venv_name
 
-venv_name\Scripts\activate # For Windows OS use
-source venv_name/bin/activate  # For macOS use
+venv_name\Scripts\activate # Windows OS
+source venv_name/bin/activate  # mac/lunix OS
 ```
 
 ## Installation
