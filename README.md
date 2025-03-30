@@ -42,9 +42,7 @@ source venv_name/bin/activate  # mac/lunix OS
 
 ## Installation
 
-### Using pip
-
-To install the package from PyPI, run the following command:
+To install the package from PyPI, simply run the following command:
 
 ```bash
 pip install seroflow
