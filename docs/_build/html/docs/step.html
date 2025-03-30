@@ -1,0 +1,417 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Step &mdash; Seroflow 1.0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=1ed6394b"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="seroflow.transform package" href="transform.html" />
+    <link rel="prev" title="Logging" href="log.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Seroflow
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="seroflow.html">Seroflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cache.html">Cache</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chunker.html">Chunker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="context.html">Context</a></li>
+<li class="toctree-l1"><a class="reference internal" href="engine.html">Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract.html">Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="load.html">Load</a></li>
+<li class="toctree-l1"><a class="reference internal" href="log.html">Logging</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Step</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#abstractstep">AbstractStep</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#seroflow.step.base_step.AbstractStep"><code class="docutils literal notranslate"><span class="pre">AbstractStep</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.step.base_step.AbstractStep.execute"><code class="docutils literal notranslate"><span class="pre">AbstractStep.execute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.step.base_step.AbstractStep.start_step"><code class="docutils literal notranslate"><span class="pre">AbstractStep.start_step()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.step.base_step.AbstractStep.stop_step"><code class="docutils literal notranslate"><span class="pre">AbstractStep.stop_step()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Step</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#seroflow.step.step.Step"><code class="docutils literal notranslate"><span class="pre">Step</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.step.step.Step.__call__"><code class="docutils literal notranslate"><span class="pre">Step.__call__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.step.step.Step.__init__"><code class="docutils literal notranslate"><span class="pre">Step.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.step.step.Step.__str__"><code class="docutils literal notranslate"><span class="pre">Step.__str__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.step.step.Step.add_params"><code class="docutils literal notranslate"><span class="pre">Step.add_params()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.step.step.Step.check_params"><code class="docutils literal notranslate"><span class="pre">Step.check_params()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.step.step.Step.create_kwargs_params"><code class="docutils literal notranslate"><span class="pre">Step.create_kwargs_params()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.step.step.Step.execute"><code class="docutils literal notranslate"><span class="pre">Step.execute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.step.step.Step.get_default_params"><code class="docutils literal notranslate"><span class="pre">Step.get_default_params()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.step.step.Step.override_params_list"><code class="docutils literal notranslate"><span class="pre">Step.override_params_list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.step.step.Step.override_return_list"><code class="docutils literal notranslate"><span class="pre">Step.override_return_list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.step.step.Step.start_step"><code class="docutils literal notranslate"><span class="pre">Step.start_step()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.step.step.Step.stop_step"><code class="docutils literal notranslate"><span class="pre">Step.stop_step()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.step.step.Step.update_params_list"><code class="docutils literal notranslate"><span class="pre">Step.update_params_list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.step.step.Step.update_return_list"><code class="docutils literal notranslate"><span class="pre">Step.update_return_list()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="transform.html">seroflow.transform package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wrappers.html">Wrappers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Seroflow</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Step</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/docs/step.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="step">
+<h1>Step<a class="headerlink" href="#step" title="Link to this heading"></a></h1>
+<section id="abstractstep">
+<h2>AbstractStep<a class="headerlink" href="#abstractstep" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="seroflow.step.base_step.AbstractStep">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.step.base_step.</span></span><span class="sig-name descname"><span class="pre">AbstractStep</span></span><a class="headerlink" href="#seroflow.step.base_step.AbstractStep" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a></p>
+<p>An abstract class for defining the structure of a step. This class extends the ABC class
+and provides a common interface for starting, stopping, and executing the main
+functionality of a step. Subclasses must implement the abstract methods start_step(),
+stop_step(), and execute() to provide step-specific functionality.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.step.base_step.AbstractStep.execute">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.step.base_step.AbstractStep.execute" title="Link to this definition"></a></dt>
+<dd><p>Abstract method: execute()
+This method should contain the main functionality of the step.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.step.base_step.AbstractStep.start_step">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">start_step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.step.base_step.AbstractStep.start_step" title="Link to this definition"></a></dt>
+<dd><p>Abstract method: start_step()
+This method should contain logic to initialize the step before execution.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.step.base_step.AbstractStep.stop_step">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stop_step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.step.base_step.AbstractStep.stop_step" title="Link to this definition"></a></dt>
+<dd><p>Abstract method: stop_step()
+This method should contain logic to clean up the step after execution has completed.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="id1">
+<h2>Step<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="seroflow.step.step.Step">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.step.step.</span></span><span class="sig-name descname"><span class="pre">Step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'raise'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.step.step.Step" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#seroflow.step.base_step.AbstractStep" title="seroflow.step.base_step.AbstractStep"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractStep</span></code></a></p>
+<p>An implementation of a step that encapsulates the logic for executing a function with
+specified parameters and DataFrames. The Step class allows configuration of function
+parameters, extraction of default values, and error handling based on a defined strategy.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.step.step.Step.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.step.step.Step.__call__" title="Link to this definition"></a></dt>
+<dd><p>Call method for Step class
+This method is called when the Step object is called as a function.
+When creating a custom step, the first call should be the decorated function.
+This will initialize the step function and its parameters.
+Subsequent calls will execute the step function with the given parameters.
+Arguments and keyword arguments are passed to function and saved inside the Step object.
+The argument ‘context’ is reserved for the context object and should not be a parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – The arguments to be passed to the function</p></li>
+<li><p><strong>**kwargs</strong> – The keyword arguments to be passed to the function</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.step.step.Step.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'raise'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.step.step.Step.__init__" title="Link to this definition"></a></dt>
+<dd><p>Step Class Constructor
+Initializes the Step object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>step_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the step</p></li>
+<li><p><strong>params</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The parameters to be passed to the function</p></li>
+<li><p><strong>dataframes</strong> (<em>List</em>) – The DataFrames to be used in the step</p></li>
+<li><p><strong>on_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The error handling strategy</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments for the function</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.step.step.Step.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.step.step.Step.__str__" title="Link to this definition"></a></dt>
+<dd><p>Public method: __str__()
+Returns the name of the step and the input parameters.
+When the Step object is printed, this method is called.
+Or when the object is converted to a string, this method is called.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The name of the step and the input parameters</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.step.step.Step.add_params">
+<span class="sig-name descname"><span class="pre">add_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.step.step.Step.add_params" title="Link to this definition"></a></dt>
+<dd><p>Public method: add_params()
+Adds parameters to the step function.
+If the parameter is not in the function signature, a ValueError is raised.
+If the parameter is already set, it is not overwritten.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>params</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The parameters to be added to the step function</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If the parameter is not in the function signature</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.step.step.Step.check_params">
+<span class="sig-name descname"><span class="pre">check_params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.step.step.Step.check_params" title="Link to this definition"></a></dt>
+<dd><p>Public method: check_params()
+Checks if any of the parameters are None.
+This method is called before executing the step function.
+If any parameter is None, a ValueError is raised</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If any parameter is None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.step.step.Step.create_kwargs_params">
+<span class="sig-name descname"><span class="pre">create_kwargs_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.step.step.Step.create_kwargs_params" title="Link to this definition"></a></dt>
+<dd><p>Public method: create_kwargs_params()
+Creates the parameters dictionary for the step function.
+Arguments are passed to the function based on their order.
+Keyword arguments are passed to the function based on their name.
+If the function has a ‘context’ parameter, it is added to the parameters dictionary.
+The input parameters are added to the parameters dictionary.
+The default parameters are added to the parameters dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> – The arguments to be passed to the function</p></li>
+<li><p><strong>kwargs</strong> – The keyword arguments to be passed to the</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.step.step.Step.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.step.step.Step.execute" title="Link to this definition"></a></dt>
+<dd><p>Public method: execute()
+Executes the step function with the given parameters.
+If an error occurs during execution, the error is caught and handled
+based on the on_error parameter.
+If the on_error parameter is set to ‘raise’, the error is raised.
+If the on_error parameter is set to ‘ignore’, the error is printed
+and the step output is set to None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The output of the step function</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Any</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.13)"><strong>RuntimeError</strong></a> – If the on_error parameter is set to ‘raise’ and an error occurs during
+    the execution of the step function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.step.step.Step.get_default_params">
+<span class="sig-name descname"><span class="pre">get_default_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sig</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.step.step.Step.get_default_params" title="Link to this definition"></a></dt>
+<dd><p>Public method: get_default_params()
+Gets the default parameters of the step function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sig</strong> (<em>Signature</em>) – The signature of the step function</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The default parameters of the step function</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.step.step.Step.override_params_list">
+<span class="sig-name descname"><span class="pre">override_params_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.step.step.Step.override_params_list" title="Link to this definition"></a></dt>
+<dd><p>Public method: override_params_list()
+Overrides the params list with the given variable.
+Used externally to explicitly set the params list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>variable</strong> – The variable to be added to the params list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.step.step.Step.override_return_list">
+<span class="sig-name descname"><span class="pre">override_return_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.step.step.Step.override_return_list" title="Link to this definition"></a></dt>
+<dd><p>Public method: override_return_list()
+Overrides the return list with the given variable.
+Used externally to explicitly set the return list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>variable</strong> – The variable to be added to the return list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.step.step.Step.start_step">
+<span class="sig-name descname"><span class="pre">start_step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.step.step.Step.start_step" title="Link to this definition"></a></dt>
+<dd><p>Public method: start_step()
+Validates that the inputted context is of the correct type</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.step.step.Step.stop_step">
+<span class="sig-name descname"><span class="pre">stop_step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.step.step.Step.stop_step" title="Link to this definition"></a></dt>
+<dd><p>Public method: stop_step()
+Clears the parameters dictionary so that the step can be executed again</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.step.step.Step.update_params_list">
+<span class="sig-name descname"><span class="pre">update_params_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.step.step.Step.update_params_list" title="Link to this definition"></a></dt>
+<dd><p>Public method: update_params_list()
+Updates the params list with the given variable.
+If the params list is empty, the variable is added to the list.
+Otherwise, the variable is appended to the list.
+Used externally to explicitly set the params list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>variable</strong> – The variable to be added to the params list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.step.step.Step.update_return_list">
+<span class="sig-name descname"><span class="pre">update_return_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.step.step.Step.update_return_list" title="Link to this definition"></a></dt>
+<dd><p>Public method: update_return_list()
+Updates the return list with the given variable
+If the return list is empty, the variable is added to the list.
+Otherwise, the variable is appended to the list.
+Used externally to explicitly set the return list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>variable</strong> – The variable to be added to the return list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="log.html" class="btn btn-neutral float-left" title="Logging" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="transform.html" class="btn btn-neutral float-right" title="seroflow.transform package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Frank Siyung Cho.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

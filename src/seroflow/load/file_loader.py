@@ -9,7 +9,7 @@ It leverages utility functions to verify target paths and directories.
 """
 from abc import abstractmethod
 from ..utils.utils import check_directory, check_str_is_file
-from ..load.loader import Loader
+from .loader import Loader
 
 class FileLoader(Loader):
     """

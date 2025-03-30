@@ -1,0 +1,603 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Load &mdash; Seroflow 1.0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=1ed6394b"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Logging" href="log.html" />
+    <link rel="prev" title="Extractors" href="extract.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Seroflow
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="seroflow.html">Seroflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cache.html">Cache</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chunker.html">Chunker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="context.html">Context</a></li>
+<li class="toctree-l1"><a class="reference internal" href="engine.html">Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract.html">Extractors</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Load</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#loader">Loader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#seroflow.load.loader.Loader"><code class="docutils literal notranslate"><span class="pre">Loader</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.load.loader.Loader.__init__"><code class="docutils literal notranslate"><span class="pre">Loader.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.load.loader.Loader.func"><code class="docutils literal notranslate"><span class="pre">Loader.func()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.load.loader.Loader.map_exists_parameter"><code class="docutils literal notranslate"><span class="pre">Loader.map_exists_parameter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.load.loader.Loader.start_step"><code class="docutils literal notranslate"><span class="pre">Loader.start_step()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.load.loader.Loader.stop_step"><code class="docutils literal notranslate"><span class="pre">Loader.stop_step()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#fileloader">FileLoader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#seroflow.load.file_loader.FileLoader"><code class="docutils literal notranslate"><span class="pre">FileLoader</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.load.file_loader.FileLoader.__init__"><code class="docutils literal notranslate"><span class="pre">FileLoader.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.load.file_loader.FileLoader.func"><code class="docutils literal notranslate"><span class="pre">FileLoader.func()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#csvloader">CSVLoader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#seroflow.load.csv_loader.CSVLoader"><code class="docutils literal notranslate"><span class="pre">CSVLoader</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.load.csv_loader.CSVLoader.__init__"><code class="docutils literal notranslate"><span class="pre">CSVLoader.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.load.csv_loader.CSVLoader.func"><code class="docutils literal notranslate"><span class="pre">CSVLoader.func()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.load.csv_loader.CSVLoader.map_exists_parameter"><code class="docutils literal notranslate"><span class="pre">CSVLoader.map_exists_parameter()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#multicsvloader">MultiCSVLoader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#seroflow.load.csv_loader.MultiCSVLoader"><code class="docutils literal notranslate"><span class="pre">MultiCSVLoader</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.load.csv_loader.MultiCSVLoader.__init__"><code class="docutils literal notranslate"><span class="pre">MultiCSVLoader.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#excelloader">ExcelLoader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#seroflow.load.excel_loader.ExcelLoader"><code class="docutils literal notranslate"><span class="pre">ExcelLoader</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.load.excel_loader.ExcelLoader.__init__"><code class="docutils literal notranslate"><span class="pre">ExcelLoader.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.load.excel_loader.ExcelLoader.func"><code class="docutils literal notranslate"><span class="pre">ExcelLoader.func()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.load.excel_loader.ExcelLoader.map_exists_parameter"><code class="docutils literal notranslate"><span class="pre">ExcelLoader.map_exists_parameter()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#multiexcelloader">MultiExcelLoader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#seroflow.load.excel_loader.MultiExcelLoader"><code class="docutils literal notranslate"><span class="pre">MultiExcelLoader</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.load.excel_loader.MultiExcelLoader.__init__"><code class="docutils literal notranslate"><span class="pre">MultiExcelLoader.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#odbcloader">ODBCLoader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#seroflow.load.odbc_loader.ODBCLoader"><code class="docutils literal notranslate"><span class="pre">ODBCLoader</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.load.odbc_loader.ODBCLoader.__init__"><code class="docutils literal notranslate"><span class="pre">ODBCLoader.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.load.odbc_loader.ODBCLoader.func"><code class="docutils literal notranslate"><span class="pre">ODBCLoader.func()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.load.odbc_loader.ODBCLoader.map_exists_parameter"><code class="docutils literal notranslate"><span class="pre">ODBCLoader.map_exists_parameter()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sqlserverloader">SQLServerLoader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#seroflow.load.sqlserver_loader.SQLServerLoader"><code class="docutils literal notranslate"><span class="pre">SQLServerLoader</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.load.sqlserver_loader.SQLServerLoader.__init__"><code class="docutils literal notranslate"><span class="pre">SQLServerLoader.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.load.sqlserver_loader.SQLServerLoader.func"><code class="docutils literal notranslate"><span class="pre">SQLServerLoader.func()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.load.sqlserver_loader.SQLServerLoader.map_exists_parameter"><code class="docutils literal notranslate"><span class="pre">SQLServerLoader.map_exists_parameter()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="log.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="step.html">Step</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform.html">seroflow.transform package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wrappers.html">Wrappers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Seroflow</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Load</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/docs/load.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="load">
+<h1>Load<a class="headerlink" href="#load" title="Link to this heading"></a></h1>
+<section id="loader">
+<h2>Loader<a class="headerlink" href="#loader" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="seroflow.load.loader.Loader">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.load.loader.</span></span><span class="sig-name descname"><span class="pre">Loader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.loader.Loader" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="step.html#seroflow.step.step.Step" title="seroflow.step.step.Step"><code class="xref py py-class docutils literal notranslate"><span class="pre">Step</span></code></a></p>
+<p>An Abstract class for writing a DataFrame to a file.
+This class extends the Step class and provides methods to determine the target file path,
+handle file modes according to the specified existence parameter, and define the file
+extension for the target file.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.load.loader.Loader.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.loader.Loader.__init__" title="Link to this definition"></a></dt>
+<dd><p>Loader Class Constructor
+Initializes the Loader object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>step_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the step</p></li>
+<li><p><strong>dataframes</strong> (<em>DataFrame</em>) – The DataFrame to be written to the file</p></li>
+<li><p><strong>exists</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The file mode to use when writing the file</p></li>
+<li><p><strong>func</strong> (<em>function</em>) – The function to be executed by the loader</p></li>
+<li><p><strong>on_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The error handling strategy</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.load.loader.Loader.func">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.loader.Loader.func" title="Link to this definition"></a></dt>
+<dd><p>Abstract method: func()
+Writes the DataFrame to a file</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.load.loader.Loader.map_exists_parameter">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">map_exists_parameter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.loader.Loader.map_exists_parameter" title="Link to this definition"></a></dt>
+<dd><p>Abstract method: map_exists_parameter()
+Maps the exists parameter to the appropriate file mode</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.load.loader.Loader.start_step">
+<span class="sig-name descname"><span class="pre">start_step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.loader.Loader.start_step" title="Link to this definition"></a></dt>
+<dd><p>Public method: start_step()
+Validates that the inputted context is of the correct type</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.load.loader.Loader.stop_step">
+<span class="sig-name descname"><span class="pre">stop_step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.loader.Loader.stop_step" title="Link to this definition"></a></dt>
+<dd><p>Public method: stop_step()
+Clears the parameters dictionary</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="fileloader">
+<h2>FileLoader<a class="headerlink" href="#fileloader" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="seroflow.load.file_loader.FileLoader">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.load.file_loader.</span></span><span class="sig-name descname"><span class="pre">FileLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_extension</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'FileLoader'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.file_loader.FileLoader" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#seroflow.load.loader.Loader" title="seroflow.load.loader.Loader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Loader</span></code></a></p>
+<p>A concrete loader for writing a DataFrame to a file.
+This class extends Loader and provides methods to determine the target file path,
+handle file modes according to the specified existence parameter, and define the file
+extension for the target file.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.load.file_loader.FileLoader.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_extension</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'FileLoader'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.file_loader.FileLoader.__init__" title="Link to this definition"></a></dt>
+<dd><p>FileLoader Class Constructor
+Initializes the FileLoader object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The target directory where the file will be written</p></li>
+<li><p><strong>dataframe</strong> (<em>DataFrame</em>) – The DataFrame to be written to the file</p></li>
+<li><p><strong>exists</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The file mode to use when writing the file</p></li>
+<li><p><strong>func</strong> (<em>function</em>) – The function to be executed by the loader</p></li>
+<li><p><strong>file_extension</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The file extension to use when writing the file</p></li>
+<li><p><strong>on_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The error handling strategy</p></li>
+<li><p><strong>step_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the step</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments for the loader function</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.load.file_loader.FileLoader.func">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.file_loader.FileLoader.func" title="Link to this definition"></a></dt>
+<dd><p>Abstract method: func()
+Reads the DataFrame from the context and writes it to a file</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="csvloader">
+<h2>CSVLoader<a class="headerlink" href="#csvloader" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="seroflow.load.csv_loader.CSVLoader">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.load.csv_loader.</span></span><span class="sig-name descname"><span class="pre">CSVLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'append'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CSVLoader'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.csv_loader.CSVLoader" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#seroflow.load.file_loader.FileLoader" title="seroflow.load.file_loader.FileLoader"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileLoader</span></code></a></p>
+<p>A concrete loader for writing a DataFrame to a CSV file.
+This class extends FileLoader and provides methods to convert DataFrames into CSV format,
+determine the target file path, and handle file modes to the specified existence parameter.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.load.csv_loader.CSVLoader.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'append'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CSVLoader'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.csv_loader.CSVLoader.__init__" title="Link to this definition"></a></dt>
+<dd><p>CSVLoader Class Constructor
+Initializes the CSVLoader object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The target directory where the CSV file will be written</p></li>
+<li><p><strong>dataframe</strong> (<em>DataFrame</em>) – The DataFrame to be written to the CSV file</p></li>
+<li><p><strong>exists</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The file mode to use when writing the CSV file</p></li>
+<li><p><strong>step_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the step</p></li>
+<li><p><strong>on_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The error handling strategy</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments for the to_csv() method</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.load.csv_loader.CSVLoader.func">
+<span class="sig-name descname"><span class="pre">func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.csv_loader.CSVLoader.func" title="Link to this definition"></a></dt>
+<dd><p>Public method: func()
+Reads the DataFrame from the context and writes it to a CSV file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>context</strong> (<a class="reference internal" href="context.html#seroflow.context.context.Context" title="seroflow.context.context.Context"><em>Context</em></a>) – The context object containing the dataframes to be written to the CSV file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.load.csv_loader.CSVLoader.map_exists_parameter">
+<span class="sig-name descname"><span class="pre">map_exists_parameter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.csv_loader.CSVLoader.map_exists_parameter" title="Link to this definition"></a></dt>
+<dd><p>Public method: map_exists_parameter()
+Maps the exists parameter to the appropriate file mode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>‘a’: append mode
+‘x’: fail if exists
+‘w’: replace mode
+None: if the exists parameter is not recognized</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a> ([‘a’, ‘x’, ‘w’], None)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="multicsvloader">
+<h2>MultiCSVLoader<a class="headerlink" href="#multicsvloader" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="seroflow.load.csv_loader.MultiCSVLoader">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.load.csv_loader.</span></span><span class="sig-name descname"><span class="pre">MultiCSVLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'append'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'MultiCSVLoader'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.csv_loader.MultiCSVLoader" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#seroflow.load.csv_loader.CSVLoader" title="seroflow.load.csv_loader.CSVLoader"><code class="xref py py-class docutils literal notranslate"><span class="pre">CSVLoader</span></code></a></p>
+<p>A concrete loader for writing multiple DataFrames to CSV files.
+This class extends CSVLoader and provides methods to write multiple DataFrames
+to CSV files in the specified target directory.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.load.csv_loader.MultiCSVLoader.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'append'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'MultiCSVLoader'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.csv_loader.MultiCSVLoader.__init__" title="Link to this definition"></a></dt>
+<dd><p>MultiCSVLoader Class Constructor
+Initializes the MultiCSVLoader object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The target directory where the CSV files will be written</p></li>
+<li><p><strong>dataframes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – A dictionary mapping DataFrame keys to DataFrames</p></li>
+<li><p><strong>exists</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The file mode to use when writing the CSV files</p></li>
+<li><p><strong>step_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the step</p></li>
+<li><p><strong>on_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The error handling strategy</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments for the to_csv() method</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="excelloader">
+<h2>ExcelLoader<a class="headerlink" href="#excelloader" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="seroflow.load.excel_loader.ExcelLoader">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.load.excel_loader.</span></span><span class="sig-name descname"><span class="pre">ExcelLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.xlsx'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'append'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ExcelLoader'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.excel_loader.ExcelLoader" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#seroflow.load.file_loader.FileLoader" title="seroflow.load.file_loader.FileLoader"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileLoader</span></code></a></p>
+<p>A concrete loader for writing a DataFrame to an Excel file.
+This class extends FileLoader and provides methods to convert DataFrames into Excel format,
+determine the target file path, and handle file modes to the specified existence parameter.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.load.excel_loader.ExcelLoader.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.xlsx'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'append'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ExcelLoader'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.excel_loader.ExcelLoader.__init__" title="Link to this definition"></a></dt>
+<dd><p>ExcelLoader Class Constructor
+Initializes the ExcelLoader object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The target directory where the Excel file will be written</p></li>
+<li><p><strong>dataframe</strong> (<em>DataFrame</em>) – The DataFrame to be written to the Excel file</p></li>
+<li><p><strong>file_extension</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The file extension to use when writing the Excel file</p></li>
+<li><p><strong>exists</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The file mode to use when writing the Excel file</p></li>
+<li><p><strong>step_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the step</p></li>
+<li><p><strong>on_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The error handling strategy</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments for the to_excel() method</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.load.excel_loader.ExcelLoader.func">
+<span class="sig-name descname"><span class="pre">func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.excel_loader.ExcelLoader.func" title="Link to this definition"></a></dt>
+<dd><p>Public method: func()
+Reads the DataFrame from the context and writes it to an Excel file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>context</strong> (<a class="reference internal" href="context.html#seroflow.context.context.Context" title="seroflow.context.context.Context"><em>Context</em></a>) – The context object containing the dataframes to be written to the Excel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.load.excel_loader.ExcelLoader.map_exists_parameter">
+<span class="sig-name descname"><span class="pre">map_exists_parameter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.excel_loader.ExcelLoader.map_exists_parameter" title="Link to this definition"></a></dt>
+<dd><p>Public method: map_exists_parameter()
+Maps the exists parameter to the if_sheet_exists parameter for the ExcelWriter object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The appropriate if_sheet_exists parameter for the ExcelWriter object</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a> ([‘error’, ‘replace’, ‘append’], None)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="multiexcelloader">
+<h2>MultiExcelLoader<a class="headerlink" href="#multiexcelloader" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="seroflow.load.excel_loader.MultiExcelLoader">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.load.excel_loader.</span></span><span class="sig-name descname"><span class="pre">MultiExcelLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.xlsx'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'append'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'MultiExcelLoader'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.excel_loader.MultiExcelLoader" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#seroflow.load.excel_loader.ExcelLoader" title="seroflow.load.excel_loader.ExcelLoader"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExcelLoader</span></code></a></p>
+<p>A concrete loader for writing multiple DataFrames to multiple Excel files.
+This class extends ExcelLoader and provides methods to write multiple DataFrames
+to Excel files in the specified target directory.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.load.excel_loader.MultiExcelLoader.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.xlsx'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'append'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'MultiExcelLoader'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.excel_loader.MultiExcelLoader.__init__" title="Link to this definition"></a></dt>
+<dd><p>MultiExcelLoader Class Constructor
+Initializes the MultiExcelLoader object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The target directory where the Excel files will be written</p></li>
+<li><p><strong>dataframes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – A dictionary mapping keys to DataFrames to be written to the Excel files</p></li>
+<li><p><strong>file_extension</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The file extension to use when writing the Excel files</p></li>
+<li><p><strong>exists</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The file mode to use when writing the Excel files</p></li>
+<li><p><strong>step_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the step</p></li>
+<li><p><strong>on_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The error handling strategy</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments for the to_excel() method</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="odbcloader">
+<h2>ODBCLoader<a class="headerlink" href="#odbcloader" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="seroflow.load.odbc_loader.ODBCLoader">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.load.odbc_loader.</span></span><span class="sig-name descname"><span class="pre">ODBCLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ODBCLoader'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'append'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.odbc_loader.ODBCLoader" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#seroflow.load.loader.Loader" title="seroflow.load.loader.Loader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Loader</span></code></a></p>
+<p>Loader for ODBC-accessible targets. Inserts a pandas DataFrame into a database table via ODBC.</p>
+<dl class="simple">
+<dt>Supports three existence behaviors:</dt><dd><ul class="simple">
+<li><p>append (default): Add rows to an existing table.</p></li>
+<li><p>replace: Drop and recreate the table before loading.</p></li>
+<li><p>error: Raise if the target table already exists.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.load.odbc_loader.ODBCLoader.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ODBCLoader'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'append'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.odbc_loader.ODBCLoader.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize an ODBCLoader.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of the destination table.</p></li>
+<li><p><strong>engine</strong> (<em>pyodbc.Connection</em>) – Active ODBC connection.</p></li>
+<li><p><strong>dataframe</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Name of DataFrame to load.</p></li>
+<li><p><strong>schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Database schema or owner for qualifying the target.</p></li>
+<li><p><strong>step_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Identifier for this load step.</p></li>
+<li><p><strong>exists</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Behavior if the target exists: ‘append’, ‘replace’, or ‘error’.</p></li>
+<li><p><strong>on_error</strong> (<em>callable</em><em>, </em><em>optional</em>) – Error handler callback.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.load.odbc_loader.ODBCLoader.func">
+<span class="sig-name descname"><span class="pre">func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.odbc_loader.ODBCLoader.func" title="Link to this definition"></a></dt>
+<dd><p>Execute the load operation. Depending on ‘exists’, may drop and recreate the table,
+raise on conflict, or append. Inserts all rows of the DataFrame in a single batch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>context</strong> – Pipeline context containing dataframes.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Updated Pipeline context after loading.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>context</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If exists=’error’ and target table already exists.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.load.odbc_loader.ODBCLoader.map_exists_parameter">
+<span class="sig-name descname"><span class="pre">map_exists_parameter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.odbc_loader.ODBCLoader.map_exists_parameter" title="Link to this definition"></a></dt>
+<dd><p>Public method: map_exists_parameter()
+Maps the exists parameter, No mapping required for this instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a> ([‘error’, ‘replace’, ‘append’], None)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="sqlserverloader">
+<h2>SQLServerLoader<a class="headerlink" href="#sqlserverloader" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="seroflow.load.sqlserver_loader.SQLServerLoader">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.load.sqlserver_loader.</span></span><span class="sig-name descname"><span class="pre">SQLServerLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SQLServerLoader'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'append'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.sqlserver_loader.SQLServerLoader" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#seroflow.load.loader.Loader" title="seroflow.load.loader.Loader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Loader</span></code></a></p>
+<p>A concrete loader for writing a DataFrame to a SQL server table.
+This class extends Loader and provides methods to convert DataFrames into SQL server tables
+with the use of a predefined engine.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.load.sqlserver_loader.SQLServerLoader.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SQLServerLoader'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'append'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.sqlserver_loader.SQLServerLoader.__init__" title="Link to this definition"></a></dt>
+<dd><p>CSVLoader Class Constructor
+Initializes the CSVLoader object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The target SQL server table names</p></li>
+<li><p><strong>engine</strong> (<em>Engine subclass</em>) – An object containing the database engine and schema attributes.</p></li>
+<li><p><strong>schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>optional</em>) – Database schema where the table resides.</p></li>
+<li><p><strong>dataframe</strong> (<em>DataFrame</em>) – The DataFrame to be written to the SQL server table</p></li>
+<li><p><strong>exists</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The file mode to use when writing the SQL server table</p></li>
+<li><p><strong>step_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the step</p></li>
+<li><p><strong>on_error</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The error handling strategy</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments for the to_sql() method</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.load.sqlserver_loader.SQLServerLoader.func">
+<span class="sig-name descname"><span class="pre">func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.sqlserver_loader.SQLServerLoader.func" title="Link to this definition"></a></dt>
+<dd><p>Public method: func()
+Reads the DataFrame from the context and writes it to an SQL server table</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>context</strong> (<a class="reference internal" href="context.html#seroflow.context.context.Context" title="seroflow.context.context.Context"><em>Context</em></a>) – The context object containing the dataframes to be written to the target</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.load.sqlserver_loader.SQLServerLoader.map_exists_parameter">
+<span class="sig-name descname"><span class="pre">map_exists_parameter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.sqlserver_loader.SQLServerLoader.map_exists_parameter" title="Link to this definition"></a></dt>
+<dd><p>Public method: map_exists_parameter()
+Maps the exists parameter, No mapping required for this instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a> ([‘error’, ‘replace’, ‘append’], None)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="extract.html" class="btn btn-neutral float-left" title="Extractors" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="log.html" class="btn btn-neutral float-right" title="Logging" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Frank Siyung Cho.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -14,5 +14,10 @@ Key Components:
     A caching implementation that employs the LFU algorithm to manage and evict cache entries
     based on usage frequency.
 """
-from .abstract_cache import AbstractCache
+from .cache import AbstractCache
 from .lfu_cache import LFUCache
+
+__all__ = [
+    "AbstractCache",
+    "LFUCache",
+]

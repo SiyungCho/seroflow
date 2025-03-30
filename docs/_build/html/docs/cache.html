@@ -1,0 +1,414 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cache &mdash; Seroflow 1.0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=1ed6394b"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Chunker" href="chunker.html" />
+    <link rel="prev" title="Seroflow" href="seroflow.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Seroflow
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="seroflow.html">Seroflow</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Cache</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Cache</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#seroflow.cache.cache.AbstractCache"><code class="docutils literal notranslate"><span class="pre">AbstractCache</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.cache.cache.AbstractCache.get"><code class="docutils literal notranslate"><span class="pre">AbstractCache.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.cache.cache.AbstractCache.load"><code class="docutils literal notranslate"><span class="pre">AbstractCache.load()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.cache.cache.AbstractCache.put"><code class="docutils literal notranslate"><span class="pre">AbstractCache.put()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.cache.cache.AbstractCache.reset"><code class="docutils literal notranslate"><span class="pre">AbstractCache.reset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.cache.cache.AbstractCache.store"><code class="docutils literal notranslate"><span class="pre">AbstractCache.store()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#usage-example">Usage Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#lfucache">LFUCache</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#seroflow.cache.lfu_cache.LFUCache"><code class="docutils literal notranslate"><span class="pre">LFUCache</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.cache.lfu_cache.LFUCache.__del__"><code class="docutils literal notranslate"><span class="pre">LFUCache.__del__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.cache.lfu_cache.LFUCache.__init__"><code class="docutils literal notranslate"><span class="pre">LFUCache.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.cache.lfu_cache.LFUCache.get"><code class="docutils literal notranslate"><span class="pre">LFUCache.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.cache.lfu_cache.LFUCache.load"><code class="docutils literal notranslate"><span class="pre">LFUCache.load()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.cache.lfu_cache.LFUCache.put"><code class="docutils literal notranslate"><span class="pre">LFUCache.put()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.cache.lfu_cache.LFUCache.reset"><code class="docutils literal notranslate"><span class="pre">LFUCache.reset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seroflow.cache.lfu_cache.LFUCache.store"><code class="docutils literal notranslate"><span class="pre">LFUCache.store()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chunker.html">Chunker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="context.html">Context</a></li>
+<li class="toctree-l1"><a class="reference internal" href="engine.html">Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extract.html">Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="load.html">Load</a></li>
+<li class="toctree-l1"><a class="reference internal" href="log.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="step.html">Step</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform.html">seroflow.transform package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wrappers.html">Wrappers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Seroflow</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Cache</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/docs/cache.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cache">
+<h1>Cache<a class="headerlink" href="#cache" title="Link to this heading"></a></h1>
+<p>The modules documented here define the base structure and a concrete implementation for <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> caching.
+They provide a common interface to inserting, retrieving, storing, loading, and resetting cache items.
+This ensures consistent cache behavior across different caching strategies.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>This documentation covers two modules:</p>
+<ul class="simple">
+<li><p><strong>abstract_cache</strong>:
+Defines the <code class="docutils literal notranslate"><span class="pre">AbstractCache</span></code> abstract class, which specifies the interface for creating caches.</p></li>
+<li><p><strong>lfu_cache</strong>:
+The Least Frequently Used (LFU), <code class="docutils literal notranslate"><span class="pre">LFUCache</span></code> class implements the <code class="docutils literal notranslate"><span class="pre">AbstractCache</span></code> interface to store, retrieve, and manage states within the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> execution.
+It supports caching of <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> parameters and global context, along with mechanisms to evict the least frequently used items when the cache capacity is exceeded, persist cache state to disk, and restore the state from saved checkpoints.</p></li>
+</ul>
+</section>
+<section id="id1">
+<h2>Cache<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">AbstractCache</span></code> is an abstract base class (inheriting from <code class="docutils literal notranslate"><span class="pre">ABC</span></code>) for implementing caching mechanisms within the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> framework.
+Derived classes must implement all the abstract methods below to handle caching operations.
+This design enforces a standardized interface and behavior across different caching strategies.</p>
+<p><strong>Note</strong>: It is important to consider how a custom cache will interact with the internal systems in the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> Object.
+Please Review the [Cache Transformations](transformations/cache.md) documentation for further information on <code class="docutils literal notranslate"><span class="pre">CacheState</span></code>, <code class="docutils literal notranslate"><span class="pre">ReloadCacheState</span></code> and <code class="docutils literal notranslate"><span class="pre">ResetCache</span></code>.</p>
+<p><strong>Subclasses must override:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">put(self,</span> <span class="pre">value)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get(self,</span> <span class="pre">key)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">store(self,</span> <span class="pre">step_index,</span> <span class="pre">parameter_index,</span> <span class="pre">global_context,</span> <span class="pre">step_key)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">load(self,</span> <span class="pre">step_key)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reset(self,</span> <span class="pre">delete_directory=False)</span></code></p></li>
+</ul>
+<dl class="py class">
+<dt class="sig sig-object py" id="seroflow.cache.cache.AbstractCache">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.cache.cache.</span></span><span class="sig-name descname"><span class="pre">AbstractCache</span></span><a class="headerlink" href="#seroflow.cache.cache.AbstractCache" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a></p>
+<p>Abstract base class for caching mechanisms in the Pipeline framework.</p>
+<p>Concrete subclasses must implement methods for inserting, retrieving,
+storing, loading, and resetting cache items.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.cache.cache.AbstractCache.get">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.cache.cache.AbstractCache.get" title="Link to this definition"></a></dt>
+<dd><p>Retrieves an item from the cache using the provided key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The key identifying the cached item.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The cached value associated with the key, or None if not found.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.cache.cache.AbstractCache.load">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step_key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.cache.cache.AbstractCache.load" title="Link to this definition"></a></dt>
+<dd><p>Reloads a cached state using the specified step key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>step_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The key identifying the cached state to reload.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the parameter index and global context.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.cache.cache.AbstractCache.put">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">put</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.cache.cache.AbstractCache.put" title="Link to this definition"></a></dt>
+<dd><p>Inserts or updates an item in the cache.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>Any</em>) – The value to be cached.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.cache.cache.AbstractCache.reset">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delete_directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.cache.cache.AbstractCache.reset" title="Link to this definition"></a></dt>
+<dd><p>Resets the cache to its initial state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>delete_directory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, deletes the cache directory.
+Defaults to False.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.cache.cache.AbstractCache.store">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">store</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameter_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.cache.cache.AbstractCache.store" title="Link to this definition"></a></dt>
+<dd><p>Caches the current state of the Pipeline.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>step_index</strong> (<em>OrderedDict</em>) – Index of all instantiated steps in the Pipeline.</p></li>
+<li><p><strong>parameter_index</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – The current state of the parameter index.</p></li>
+<li><p><strong>global_context</strong> (<a class="reference internal" href="context.html#seroflow.context.context.Context" title="seroflow.context.context.Context"><em>Context</em></a>) – The current global context of the Pipeline.</p></li>
+<li><p><strong>step_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The key identifying the step whose state is being cached.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<section id="usage-example">
+<h3>Usage Example<a class="headerlink" href="#usage-example" title="Link to this heading"></a></h3>
+<p>Below is an example demonstrating how a concrete cache implementation might inherit from <code class="docutils literal notranslate"><span class="pre">AbstractCache</span></code> and implement its methods:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">abstract_cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">AbstractCache</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MyCache</span><span class="p">(</span><span class="n">AbstractCache</span><span class="p">):</span>
+ <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+     <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="p">{}</span>
+
+ <span class="k">def</span><span class="w"> </span><span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+     <span class="c1"># Example implementation: Generate a key and store the value</span>
+     <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_key</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+     <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+ <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+     <span class="c1"># Retrieve the cached value by key</span>
+     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+ <span class="k">def</span><span class="w"> </span><span class="nf">store</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step_index</span><span class="p">,</span> <span class="n">parameter_index</span><span class="p">,</span> <span class="n">global_context</span><span class="p">,</span> <span class="n">step_key</span><span class="p">):</span>
+     <span class="c1"># Store the current state in the cache</span>
+     <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="n">step_key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+         <span class="s1">&#39;step_index&#39;</span><span class="p">:</span> <span class="n">step_index</span><span class="p">,</span>
+         <span class="s1">&#39;parameter_index&#39;</span><span class="p">:</span> <span class="n">parameter_index</span><span class="p">,</span>
+         <span class="s1">&#39;global_context&#39;</span><span class="p">:</span> <span class="n">global_context</span>
+     <span class="p">}</span>
+
+ <span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step_key</span><span class="p">):</span>
+     <span class="c1"># Load the cached state using the step key</span>
+     <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">step_key</span><span class="p">)</span>
+     <span class="k">if</span> <span class="n">state</span><span class="p">:</span>
+         <span class="k">return</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;parameter_index&#39;</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;global_context&#39;</span><span class="p">]</span>
+     <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+ <span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delete_directory</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+     <span class="c1"># Reset the cache; if delete_directory is True, delete the underlying cache directory</span>
+     <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+     <span class="k">if</span> <span class="n">delete_directory</span><span class="p">:</span>
+         <span class="c1"># Add code to delete the cache directory if necessary</span>
+         <span class="k">pass</span>
+
+ <span class="k">def</span><span class="w"> </span><span class="nf">generate_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+     <span class="c1"># Dummy key generation for demonstration purposes</span>
+     <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="nb">hash</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="lfucache">
+<h2>LFUCache<a class="headerlink" href="#lfucache" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="seroflow.cache.lfu_cache.LFUCache">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.cache.lfu_cache.</span></span><span class="sig-name descname"><span class="pre">LFUCache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">capacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_finish</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'delete'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.cache.lfu_cache.LFUCache" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#seroflow.cache.cache.AbstractCache" title="seroflow.cache.cache.AbstractCache"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractCache</span></code></a></p>
+<p>Concrete cache implementation using Least Frequently Used (LFU) eviction.</p>
+<p>Manages a cache with limited capacity, evicting items based on usage frequency.
+Supports state persistence and restoration.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.cache.lfu_cache.LFUCache.__del__">
+<span class="sig-name descname"><span class="pre">__del__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.cache.lfu_cache.LFUCache.__del__" title="Link to this definition"></a></dt>
+<dd><p>Deletes cache files/directories upon object deletion if configured.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.cache.lfu_cache.LFUCache.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">capacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_finish</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'delete'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.cache.lfu_cache.LFUCache.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initializes an LFUCache instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>capacity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>, </em><em>optional</em>) – Maximum number of items to store. Defaults to 3.</p></li>
+<li><p><strong>cache_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><em>optional</em>) – Directory for cache storage. Defaults to None (uses CWD).</p></li>
+<li><p><strong>on_finish</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> or </em><em>None</em><em>, </em><em>optional</em>) – Behavior on destruction (‘delete’ or None).
+Defaults to ‘delete’.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.cache.lfu_cache.LFUCache.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.cache.lfu_cache.LFUCache.get" title="Link to this definition"></a></dt>
+<dd><p>Retrieves and updates frequency of a cached item by key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Key identifying cached item.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Cached value or None if not found.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.cache.lfu_cache.LFUCache.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step_key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.cache.lfu_cache.LFUCache.load" title="Link to this definition"></a></dt>
+<dd><p>Loads pipeline and cache state from disk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>step_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Step identifier.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Parameter index and global context.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.cache.lfu_cache.LFUCache.put">
+<span class="sig-name descname"><span class="pre">put</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.cache.lfu_cache.LFUCache.put" title="Link to this definition"></a></dt>
+<dd><p>Inserts a new item into the cache, evicting if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>Any</em>) – Value to cache.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.cache.lfu_cache.LFUCache.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delete_directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.cache.lfu_cache.LFUCache.reset" title="Link to this definition"></a></dt>
+<dd><p>Resets cache state and optionally deletes cache directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>delete_directory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em>, </em><em>optional</em>) – Deletes cache directory if True. Defaults to False.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="seroflow.cache.lfu_cache.LFUCache.store">
+<span class="sig-name descname"><span class="pre">store</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameter_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.cache.lfu_cache.LFUCache.store" title="Link to this definition"></a></dt>
+<dd><p>Stores pipeline state and cache state to disk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>step_index</strong> (<em>OrderedDict</em>) – Pipeline steps.</p></li>
+<li><p><strong>parameter_index</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – Parameters of pipeline.</p></li>
+<li><p><strong>global_context</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – Global pipeline context.</p></li>
+<li><p><strong>step_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – Step identifier.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="seroflow.html" class="btn btn-neutral float-left" title="Seroflow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="chunker.html" class="btn btn-neutral float-right" title="Chunker" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Frank Siyung Cho.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

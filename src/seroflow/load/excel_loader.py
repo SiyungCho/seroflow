@@ -11,7 +11,7 @@ parameter, and managing Excel writing engines.
 """
 import os
 import pandas as pd
-from ..load.file_loader import FileLoader
+from .file_loader import FileLoader
 
 class ExcelLoader(FileLoader):
     """

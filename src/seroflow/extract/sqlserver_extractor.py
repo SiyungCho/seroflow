@@ -10,7 +10,7 @@ engines to read data.
 """
 import pandas as pd
 from sqlalchemy import MetaData, Table
-from ..extract.extractor import Extractor
+from .extractor import Extractor
 
 class SQLServerExtractor(Extractor):
     """

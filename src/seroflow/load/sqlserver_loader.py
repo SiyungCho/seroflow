@@ -8,7 +8,7 @@ It defines two loader classes:
 These classes extend the base Loader class and implement SQL server-specific functionality.
 """
 
-from ..load.loader import Loader
+from .loader import Loader
 
 
 class SQLServerLoader(Loader):

@@ -7,7 +7,7 @@ replace, or error-if-exists modes, and automatic table creation with datatype in
 """
 
 import pandas as pd
-from ..load.loader import Loader
+from .loader import Loader
 
 class ODBCLoader(Loader):
     """

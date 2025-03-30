@@ -8,5 +8,5 @@ It provides easy-to-use wrappers that can be applied to functions to:
     - Catch, log, and handle exceptions gracefully (via the log_error decorator).
 """
 
-from .wrappers import timer
-from .wrappers import log_error
+from seroflow.wrappers.wrappers import timer
+from seroflow.wrappers.wrappers import log_error

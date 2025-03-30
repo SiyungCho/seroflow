@@ -11,7 +11,7 @@ Each extraction returns a pandas DataFrame and integrates with the framework’s
 interface for pipeline orchestration.
 """
 import pandas as pd
-from ..extract.extractor import Extractor
+from .extractor import Extractor
 
 class ODBCExtractor(Extractor):
     """

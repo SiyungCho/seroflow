@@ -13,7 +13,7 @@ It provides two main classes:
 
 from abc import abstractmethod
 from ..utils.utils import check_directory, check_file, gather_files, remove_extension
-from ..extract.extractor import Extractor, MultiExtractor
+from .extractor import Extractor, MultiExtractor
 
 class FileExtractor(Extractor):
     """

@@ -1,0 +1,631 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Getting Started with Seroflow! &mdash; Seroflow 1.0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=1ed6394b"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Seroflow" href="docs/seroflow.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            Seroflow
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/seroflow.html">Seroflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/cache.html">Cache</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/chunker.html">Chunker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/context.html">Context</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/engine.html">Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/extract.html">Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/load.html">Load</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/log.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/step.html">Step</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/transform.html">seroflow.transform package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/types.html">Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/utils.html">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/wrappers.html">Wrappers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Seroflow</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Getting Started with Seroflow!</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="getting-started-with-seroflow">
+<h1>Getting Started with Seroflow!<a class="headerlink" href="#getting-started-with-seroflow" title="Link to this heading"></a></h1>
+<p>Welcome to <strong>Seroflow</strong>!
+This guide will walk you through the basics of key components, configuring, and using the package to build and execute efficient data pipelines.</p>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
+<p><strong>Seroflow</strong> is a powerful Python package that allows users to easily build and execute data pipelines.
+It simplifies pipeline creation by breaking each phase—extraction, transformation, and loading—into concrete step objects.</p>
+</section>
+<section id="basics">
+<h2>Basics<a class="headerlink" href="#basics" title="Link to this heading"></a></h2>
+<p><strong>Seroflow</strong> uses 5 main components to build and execute data pipelines.
+In the next section, we will discuss each of these components at a high level and then review how a collection of these components can be used to execute the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>.</p>
+<section id="key-components">
+<h3>Key Components<a class="headerlink" href="#key-components" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt><strong>Pipelines</strong>:</dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> Object is the main container and executor of the data pipeline.
+It sequentially analyses and stores any added Steps, then when ready executes these steps, storing and validating the outputs.
+The <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object receives and stores <code class="docutils literal notranslate"><span class="pre">pandas</span></code> dataframes and can also store intermediate single variables to be used throughout execution.
+If we think of a freight train analogy, the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object is the engine and conductor, whilst our step object are the containers being stored onboard.
+The <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object can also log, chunk and cache during execution making it extremely robust and easy to monitor.</p>
+</dd>
+<dt><strong>Steps</strong>:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">Step</span></code> Objects are the main building blocks of a data pipeline.
+They perform the individual operations that will be performed and ensure the operations are performed correctly.
+They also configure and analyze the resources needed so that the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object can easily distribute any needed variables or dataframes.
+The <code class="docutils literal notranslate"><span class="pre">Step</span></code> Class is an interface used to create custom operations and as you will see essentially all components derive from this class.</p>
+</dd>
+<dt><strong>Extractors</strong>:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">Extractor</span></code> Objects are the ‘Extract’ operations in a data pipeline and are a subclass of the <code class="docutils literal notranslate"><span class="pre">Step</span></code> Class.
+They are the data gatherers and connect, read and conform to data sources in order to move data from source into a <code class="docutils literal notranslate"><span class="pre">pandas</span></code> dataframe.
+<code class="docutils literal notranslate"><span class="pre">Extractor</span></code> Objects then send this extracted dataframe to the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> Object to be used in future steps.
+<code class="docutils literal notranslate"><span class="pre">Target</span> <span class="pre">Extractors</span></code>, are a special type of <code class="docutils literal notranslate"><span class="pre">Extractor</span></code>.
+They are essential, and when configured are always the first <code class="docutils literal notranslate"><span class="pre">Step</span></code> executed by the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>.
+<code class="docutils literal notranslate"><span class="pre">Target</span> <span class="pre">Extractors</span></code> are mandatory in <em>Production modes</em>, as they ensure there is always data inside the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>.</p>
+</dd>
+<dt><strong>Loaders</strong>:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">Loader</span></code> Objects are the ‘Load’ operations in a data pipeline and are a subclass of the <code class="docutils literal notranslate"><span class="pre">Step</span></code> Class.
+They are the data senders and connect, read and conform to a target location in order to move data from a <code class="docutils literal notranslate"><span class="pre">pandas</span></code> dataframe to the destination.
+<code class="docutils literal notranslate"><span class="pre">Loader</span></code> Objects then receive transformed dataframes from the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> Object. <code class="docutils literal notranslate"><span class="pre">Target</span> <span class="pre">Loaders</span></code>, are a special type of <code class="docutils literal notranslate"><span class="pre">Loader</span></code>.
+They are essential, and when configured are always the last <code class="docutils literal notranslate"><span class="pre">Step</span></code> executed by the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>.
+<code class="docutils literal notranslate"><span class="pre">Target</span> <span class="pre">Loaders</span></code> are not mandatory in <em>any modes</em>, however, they are recommended to ensure the transformed data is always released.</p>
+</dd>
+<dt><strong>Transformations</strong>:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">Transformation</span></code> Objects are the intermediate Steps that perform singular data operations on specified dataframes and are a subclass of the <code class="docutils literal notranslate"><span class="pre">Step</span></code> Class.
+These operations can range in complexity however the <code class="docutils literal notranslate"><span class="pre">Seroflow</span></code> package offers over 70+ predefined transformations to be used.
+Users simply select, configure and add a <code class="docutils literal notranslate"><span class="pre">Transformation</span></code> Object to the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object and the operation will be performed on the selected dataframes.</p>
+</dd>
+</dl>
+</section>
+<section id="basic-execution">
+<h3>Basic Execution<a class="headerlink" href="#basic-execution" title="Link to this heading"></a></h3>
+<p>After adding all necessary Steps and components, in order to execute the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> Object, we simply run the <code class="docutils literal notranslate"><span class="pre">.execute()</span></code> method on the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> Object.
+This sequentially performs all the added steps and runs the entire data pipeline.</p>
+</section>
+<section id="usage-example">
+<h3>Usage Example<a class="headerlink" href="#usage-example" title="Link to this heading"></a></h3>
+<p>In the example below, we will create a simple data <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> by extracting data from a csv file, performing a transpose operation on the data then releasing the transformed data to an excel file.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.extract</span><span class="w"> </span><span class="kn">import</span> <span class="n">CSVExtractor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.load</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExcelLoader</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.transform</span><span class="w"> </span><span class="kn">import</span> <span class="n">TransposeDataFrame</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
+
+<span class="n">csv_extractor</span> <span class="o">=</span> <span class="n">CSVExtractor</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;.../datafolder/testdata.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">excel_loader</span> <span class="o">=</span> <span class="n">ExcelLoader</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="s1">&#39;.../datafolder/export/&#39;</span><span class="p">,</span> <span class="n">dataframe</span><span class="o">=</span><span class="s1">&#39;testdata&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">transpose_dataframe</span> <span class="o">=</span> <span class="n">TransposeDataFrame</span><span class="p">(</span><span class="n">dataframe</span><span class="o">=</span><span class="s1">&#39;testdata&#39;</span><span class="p">)</span>
+
+<span class="n">pipeline</span><span class="o">.</span><span class="n">target_extractor</span> <span class="o">=</span> <span class="n">csv_extractor</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">target_loader</span> <span class="o">=</span> <span class="n">excel_loader</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">add_steps</span><span class="p">([</span><span class="n">transpose_dataframe</span><span class="p">])</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="easily-create-custom-steps">
+<h2>Easily Create Custom Steps<a class="headerlink" href="#easily-create-custom-steps" title="Link to this heading"></a></h2>
+<p>Say there is a custom <code class="docutils literal notranslate"><span class="pre">Step</span></code> operation, a user may need that is not predefined by the <code class="docutils literal notranslate"><span class="pre">Seroflow</span></code> package.
+One of the main features of <code class="docutils literal notranslate"><span class="pre">Seroflow</span></code> is the ability to easily create and integrate custom <code class="docutils literal notranslate"><span class="pre">Steps</span></code> to be executed by the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> Object.
+One of the simplest methods to create a custom <code class="docutils literal notranslate"><span class="pre">Step</span></code> is to use the <code class="docutils literal notranslate"><span class="pre">Step</span></code> Class as a function wrapper.
+All we need to do, is create a python function which performs an operation on a dataframe and then wrap that function in the <code class="docutils literal notranslate"><span class="pre">&#64;Step()</span></code> decorator.</p>
+<section id="id1">
+<h3>Usage Example<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<p>In the example below, we will build off our previous data pipeline, but this time creates and adds a custom step which prints the first 5 rows of a dataframe using the <code class="docutils literal notranslate"><span class="pre">&#64;Step()</span></code> decorator.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.extract</span><span class="w"> </span><span class="kn">import</span> <span class="n">CSVExtractor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.load</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExcelLoader</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.transform</span><span class="w"> </span><span class="kn">import</span> <span class="n">TransposeDataFrame</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.step</span><span class="w"> </span><span class="kn">import</span> <span class="n">Step</span>
+
+<span class="nd">@Step</span><span class="p">(</span><span class="n">dataframes</span><span class="o">=</span><span class="s1">&#39;testdata&#39;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">print_first_5_dataframe_rows</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+   <span class="n">dataframe</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">get_dataframe</span><span class="p">(</span><span class="s1">&#39;testdata&#39;</span><span class="p">)</span>
+   <span class="nb">print</span><span class="p">(</span><span class="n">dataframe</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+   <span class="k">return</span> <span class="n">context</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
+
+<span class="n">csv_extractor</span> <span class="o">=</span> <span class="n">CSVExtractor</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;.../datafolder/testdata.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">excel_loader</span> <span class="o">=</span> <span class="n">ExcelLoader</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="s1">&#39;.../datafolder/export/&#39;</span><span class="p">,</span> <span class="n">dataframe</span><span class="o">=</span><span class="s1">&#39;testdata&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">transpose_dataframe</span> <span class="o">=</span> <span class="n">TransposeDataFrame</span><span class="p">(</span><span class="n">dataframe</span><span class="o">=</span><span class="s1">&#39;testdata&#39;</span><span class="p">)</span>
+
+<span class="n">pipeline</span><span class="o">.</span><span class="n">target_extractor</span> <span class="o">=</span> <span class="n">csv_extractor</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">target_loader</span> <span class="o">=</span> <span class="n">excel_loader</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">add_steps</span><span class="p">([</span><span class="n">transpose_dataframe</span><span class="p">,</span> <span class="n">print_first_5_dataframe_rows</span><span class="p">])</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Please refer to the [Pipeline](pipeline.md) documentation to learn more about creating custom Steps.</p>
+</section>
+</section>
+<section id="advanced-features">
+<h2>Advanced Features<a class="headerlink" href="#advanced-features" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Seroflow</span></code> supports several other advanced features to enhance your data pipelines such as:</p>
+<ul class="simple">
+<li><p><strong>Logging</strong>: Automatically logs pipeline execution details.</p></li>
+<li><p><strong>Caching</strong>: Supports caching intermediate data for improved performance.</p></li>
+<li><p><strong>Chunking</strong>: Processes data in manageable chunks.</p></li>
+</ul>
+<p>Refer to the [Documentation](../README.md#documentation) for detailed usage and configuration options.</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/seroflow.html">Seroflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/cache.html">Cache</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="docs/cache.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/cache.html#id1">Cache</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/cache.html#seroflow.cache.cache.AbstractCache"><code class="docutils literal notranslate"><span class="pre">AbstractCache</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/cache.html#usage-example">Usage Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/cache.html#lfucache">LFUCache</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/cache.html#seroflow.cache.lfu_cache.LFUCache"><code class="docutils literal notranslate"><span class="pre">LFUCache</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="docs/chunker.html">Chunker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="docs/chunker.html#id1">Chunker</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/chunker.html#seroflow.chunker.chunker.Chunker"><code class="docutils literal notranslate"><span class="pre">Chunker</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/chunker.html#directchunker">DirectChunker</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/chunker.html#seroflow.chunker.direct_chunker.DirectChunker"><code class="docutils literal notranslate"><span class="pre">DirectChunker</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/chunker.html#distributedchunker">DistributedChunker</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/chunker.html#seroflow.chunker.distributed_chunker.DistributedChunker"><code class="docutils literal notranslate"><span class="pre">DistributedChunker</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="docs/context.html">Context</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="docs/context.html#id1">Context</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/context.html#seroflow.context.context.Context"><code class="docutils literal notranslate"><span class="pre">Context</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="docs/engine.html">Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="docs/engine.html#abstractengine">AbstractEngine</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/engine.html#seroflow.engine.engine.AbstractEngine"><code class="docutils literal notranslate"><span class="pre">AbstractEngine</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/engine.html#id1">Engine</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/engine.html#seroflow.engine.engine.Engine"><code class="docutils literal notranslate"><span class="pre">Engine</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/engine.html#sqlalchemyengine">SQLAlchemyEngine</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/engine.html#seroflow.engine.sqlalchemy_engine.SQLAlchemyEngine"><code class="docutils literal notranslate"><span class="pre">SQLAlchemyEngine</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="docs/extract.html">Extractors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="docs/extract.html#extractor">Extractor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/extract.html#seroflow.extract.extractor.Extractor"><code class="docutils literal notranslate"><span class="pre">Extractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/extract.html#multiextractor">MultiExtractor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/extract.html#seroflow.extract.extractor.MultiExtractor"><code class="docutils literal notranslate"><span class="pre">MultiExtractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/extract.html#fileextractor">FileExtractor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/extract.html#seroflow.extract.file_extractor.FileExtractor"><code class="docutils literal notranslate"><span class="pre">FileExtractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/extract.html#multifileextractor">MultiFileExtractor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/extract.html#seroflow.extract.file_extractor.MultiFileExtractor"><code class="docutils literal notranslate"><span class="pre">MultiFileExtractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/extract.html#csvextractor">CSVExtractor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/extract.html#seroflow.extract.csv_extractor.CSVExtractor"><code class="docutils literal notranslate"><span class="pre">CSVExtractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/extract.html#multicsvextractor">MultiCSVExtractor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/extract.html#seroflow.extract.csv_extractor.MultiCSVExtractor"><code class="docutils literal notranslate"><span class="pre">MultiCSVExtractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/extract.html#excelextractor">ExcelExtractor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/extract.html#seroflow.extract.excel_extractor.ExcelExtractor"><code class="docutils literal notranslate"><span class="pre">ExcelExtractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/extract.html#multiexcelextractor">MultiExcelExtractor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/extract.html#seroflow.extract.excel_extractor.MultiExcelExtractor"><code class="docutils literal notranslate"><span class="pre">MultiExcelExtractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/extract.html#odbcextractor">ODBCExtractor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/extract.html#seroflow.extract.odbc_extractor.ODBCExtractor"><code class="docutils literal notranslate"><span class="pre">ODBCExtractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/extract.html#sqlserverextractor">SQLServerExtractor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/extract.html#seroflow.extract.sqlserver_extractor.SQLServerExtractor"><code class="docutils literal notranslate"><span class="pre">SQLServerExtractor</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="docs/load.html">Load</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="docs/load.html#loader">Loader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/load.html#seroflow.load.loader.Loader"><code class="docutils literal notranslate"><span class="pre">Loader</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/load.html#fileloader">FileLoader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/load.html#seroflow.load.file_loader.FileLoader"><code class="docutils literal notranslate"><span class="pre">FileLoader</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/load.html#csvloader">CSVLoader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/load.html#seroflow.load.csv_loader.CSVLoader"><code class="docutils literal notranslate"><span class="pre">CSVLoader</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/load.html#multicsvloader">MultiCSVLoader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/load.html#seroflow.load.csv_loader.MultiCSVLoader"><code class="docutils literal notranslate"><span class="pre">MultiCSVLoader</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/load.html#excelloader">ExcelLoader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/load.html#seroflow.load.excel_loader.ExcelLoader"><code class="docutils literal notranslate"><span class="pre">ExcelLoader</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/load.html#multiexcelloader">MultiExcelLoader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/load.html#seroflow.load.excel_loader.MultiExcelLoader"><code class="docutils literal notranslate"><span class="pre">MultiExcelLoader</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/load.html#odbcloader">ODBCLoader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/load.html#seroflow.load.odbc_loader.ODBCLoader"><code class="docutils literal notranslate"><span class="pre">ODBCLoader</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/load.html#sqlserverloader">SQLServerLoader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/load.html#seroflow.load.sqlserver_loader.SQLServerLoader"><code class="docutils literal notranslate"><span class="pre">SQLServerLoader</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="docs/log.html">Logging</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="docs/log.html#customlogger">CustomLogger</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/log.html#seroflow.log.logger.CustomLogger"><code class="docutils literal notranslate"><span class="pre">CustomLogger</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="docs/step.html">Step</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="docs/step.html#abstractstep">AbstractStep</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/step.html#seroflow.step.base_step.AbstractStep"><code class="docutils literal notranslate"><span class="pre">AbstractStep</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/step.html#id1">Step</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/step.html#seroflow.step.step.Step"><code class="docutils literal notranslate"><span class="pre">Step</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="docs/transform.html">seroflow.transform package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="docs/transform.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/transform.html#module-seroflow.transform.aggregation">seroflow.transform.aggregation module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.aggregation.GetColCorrelation"><code class="docutils literal notranslate"><span class="pre">GetColCorrelation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.aggregation.GetColCovariance"><code class="docutils literal notranslate"><span class="pre">GetColCovariance</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.aggregation.GetColMean"><code class="docutils literal notranslate"><span class="pre">GetColMean</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.aggregation.GetColMedian"><code class="docutils literal notranslate"><span class="pre">GetColMedian</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.aggregation.GetColMode"><code class="docutils literal notranslate"><span class="pre">GetColMode</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.aggregation.GetColQuantile"><code class="docutils literal notranslate"><span class="pre">GetColQuantile</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.aggregation.GetColSkew"><code class="docutils literal notranslate"><span class="pre">GetColSkew</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.aggregation.GetColStd"><code class="docutils literal notranslate"><span class="pre">GetColStd</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.aggregation.GetColSum"><code class="docutils literal notranslate"><span class="pre">GetColSum</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.aggregation.GetColVariance"><code class="docutils literal notranslate"><span class="pre">GetColVariance</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/transform.html#module-seroflow.transform.cache">seroflow.transform.cache module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.cache.CacheState"><code class="docutils literal notranslate"><span class="pre">CacheState</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.cache.ReloadCacheState"><code class="docutils literal notranslate"><span class="pre">ReloadCacheState</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.cache.ResetCache"><code class="docutils literal notranslate"><span class="pre">ResetCache</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/transform.html#module-seroflow.transform.column">seroflow.transform.column module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.column.AddColumn"><code class="docutils literal notranslate"><span class="pre">AddColumn</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.column.ConvertColumnType"><code class="docutils literal notranslate"><span class="pre">ConvertColumnType</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.column.CreateColumnFromVariable"><code class="docutils literal notranslate"><span class="pre">CreateColumnFromVariable</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.column.DropColumn"><code class="docutils literal notranslate"><span class="pre">DropColumn</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.column.DropColumns"><code class="docutils literal notranslate"><span class="pre">DropColumns</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.column.ExplodeColumn"><code class="docutils literal notranslate"><span class="pre">ExplodeColumn</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.column.MergeColumns"><code class="docutils literal notranslate"><span class="pre">MergeColumns</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.column.RenameColumns"><code class="docutils literal notranslate"><span class="pre">RenameColumns</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.column.SplitColumn"><code class="docutils literal notranslate"><span class="pre">SplitColumn</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/transform.html#module-seroflow.transform.dataframe">seroflow.transform.dataframe module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.dataframe.ApplyFunction"><code class="docutils literal notranslate"><span class="pre">ApplyFunction</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.dataframe.ApplyMap"><code class="docutils literal notranslate"><span class="pre">ApplyMap</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.dataframe.DropDuplicates"><code class="docutils literal notranslate"><span class="pre">DropDuplicates</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.dataframe.FillNAValues"><code class="docutils literal notranslate"><span class="pre">FillNAValues</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.dataframe.FilterRows"><code class="docutils literal notranslate"><span class="pre">FilterRows</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.dataframe.GroupByAggregate"><code class="docutils literal notranslate"><span class="pre">GroupByAggregate</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.dataframe.JoinDataFrames"><code class="docutils literal notranslate"><span class="pre">JoinDataFrames</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.dataframe.MapValues"><code class="docutils literal notranslate"><span class="pre">MapValues</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.dataframe.MeltDataFrame"><code class="docutils literal notranslate"><span class="pre">MeltDataFrame</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.dataframe.MergeDataFrames"><code class="docutils literal notranslate"><span class="pre">MergeDataFrames</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.dataframe.OneHotEncode"><code class="docutils literal notranslate"><span class="pre">OneHotEncode</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.dataframe.PivotDataFrame"><code class="docutils literal notranslate"><span class="pre">PivotDataFrame</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.dataframe.ReplaceValues"><code class="docutils literal notranslate"><span class="pre">ReplaceValues</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.dataframe.SelectColumns"><code class="docutils literal notranslate"><span class="pre">SelectColumns</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.dataframe.SortDataFrame"><code class="docutils literal notranslate"><span class="pre">SortDataFrame</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.dataframe.TransposeDataFrame"><code class="docutils literal notranslate"><span class="pre">TransposeDataFrame</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/transform.html#module-seroflow.transform.date">seroflow.transform.date module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.date.ConvertToDateTime"><code class="docutils literal notranslate"><span class="pre">ConvertToDateTime</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/transform.html#module-seroflow.transform.display">seroflow.transform.display module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.display.DisplayAllCategories"><code class="docutils literal notranslate"><span class="pre">DisplayAllCategories</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.display.DisplayColumnCount"><code class="docutils literal notranslate"><span class="pre">DisplayColumnCount</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.display.DisplayColumnDType"><code class="docutils literal notranslate"><span class="pre">DisplayColumnDType</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.display.DisplayColumnMax"><code class="docutils literal notranslate"><span class="pre">DisplayColumnMax</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.display.DisplayColumnMean"><code class="docutils literal notranslate"><span class="pre">DisplayColumnMean</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.display.DisplayColumnMedian"><code class="docutils literal notranslate"><span class="pre">DisplayColumnMedian</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.display.DisplayColumnMin"><code class="docutils literal notranslate"><span class="pre">DisplayColumnMin</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.display.DisplayColumnMode"><code class="docutils literal notranslate"><span class="pre">DisplayColumnMode</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.display.DisplayColumnNUnique"><code class="docutils literal notranslate"><span class="pre">DisplayColumnNUnique</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.display.DisplayColumnStdDev"><code class="docutils literal notranslate"><span class="pre">DisplayColumnStdDev</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.display.DisplayColumnSum"><code class="docutils literal notranslate"><span class="pre">DisplayColumnSum</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.display.DisplayColumnUnique"><code class="docutils literal notranslate"><span class="pre">DisplayColumnUnique</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.display.DisplayColumnVariance"><code class="docutils literal notranslate"><span class="pre">DisplayColumnVariance</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.display.DisplayColumns"><code class="docutils literal notranslate"><span class="pre">DisplayColumns</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.display.DisplayHead"><code class="docutils literal notranslate"><span class="pre">DisplayHead</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.display.DisplayInfo"><code class="docutils literal notranslate"><span class="pre">DisplayInfo</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.display.DisplayMostFrequentString"><code class="docutils literal notranslate"><span class="pre">DisplayMostFrequentString</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.display.DisplayStringCount"><code class="docutils literal notranslate"><span class="pre">DisplayStringCount</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.display.DisplaySubstringOccurrence"><code class="docutils literal notranslate"><span class="pre">DisplaySubstringOccurrence</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.display.DisplayTail"><code class="docutils literal notranslate"><span class="pre">DisplayTail</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/transform.html#module-seroflow.transform.execution">seroflow.transform.execution module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/transform.html#module-seroflow.transform.index">seroflow.transform.index module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.index.ResetIndex"><code class="docutils literal notranslate"><span class="pre">ResetIndex</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.index.SetIndex"><code class="docutils literal notranslate"><span class="pre">SetIndex</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/transform.html#module-seroflow.transform.internal">seroflow.transform.internal module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.internal.AddDataFrame"><code class="docutils literal notranslate"><span class="pre">AddDataFrame</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.internal.CopyDataFrame"><code class="docutils literal notranslate"><span class="pre">CopyDataFrame</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.internal.DeleteDataFrame"><code class="docutils literal notranslate"><span class="pre">DeleteDataFrame</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.internal.RenameDataFrame"><code class="docutils literal notranslate"><span class="pre">RenameDataFrame</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/transform.html#module-seroflow.transform.sql">seroflow.transform.sql module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.sql.SQLQuery"><code class="docutils literal notranslate"><span class="pre">SQLQuery</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/transform.html#module-seroflow.transform.string">seroflow.transform.string module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.string.RemoveCharacterFromColumn"><code class="docutils literal notranslate"><span class="pre">RemoveCharacterFromColumn</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.string.RemoveCharactersFromColumn"><code class="docutils literal notranslate"><span class="pre">RemoveCharactersFromColumn</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.string.ReplaceStringInColumn"><code class="docutils literal notranslate"><span class="pre">ReplaceStringInColumn</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/transform.html#module-seroflow.transform.transformation">seroflow.transform.transformation module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.transformation.Transformation"><code class="docutils literal notranslate"><span class="pre">Transformation</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/transform.html#module-seroflow.transform.variable">seroflow.transform.variable module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.variable.CopyVariable"><code class="docutils literal notranslate"><span class="pre">CopyVariable</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.variable.CreateVariable"><code class="docutils literal notranslate"><span class="pre">CreateVariable</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.variable.DecrementVariable"><code class="docutils literal notranslate"><span class="pre">DecrementVariable</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.variable.DivideVariable"><code class="docutils literal notranslate"><span class="pre">DivideVariable</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.variable.IncrementVariable"><code class="docutils literal notranslate"><span class="pre">IncrementVariable</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.variable.MultiplyVariable"><code class="docutils literal notranslate"><span class="pre">MultiplyVariable</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.variable.UpdateVariable"><code class="docutils literal notranslate"><span class="pre">UpdateVariable</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="docs/transform.html#module-seroflow.transform">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.AddColumn"><code class="docutils literal notranslate"><span class="pre">AddColumn</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.AddDataFrame"><code class="docutils literal notranslate"><span class="pre">AddDataFrame</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.ApplyFunction"><code class="docutils literal notranslate"><span class="pre">ApplyFunction</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.ApplyMap"><code class="docutils literal notranslate"><span class="pre">ApplyMap</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.CacheState"><code class="docutils literal notranslate"><span class="pre">CacheState</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.ConvertColumnType"><code class="docutils literal notranslate"><span class="pre">ConvertColumnType</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.ConvertToDateTime"><code class="docutils literal notranslate"><span class="pre">ConvertToDateTime</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.CopyDataFrame"><code class="docutils literal notranslate"><span class="pre">CopyDataFrame</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.CopyVariable"><code class="docutils literal notranslate"><span class="pre">CopyVariable</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.CreateColumnFromVariable"><code class="docutils literal notranslate"><span class="pre">CreateColumnFromVariable</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.CreateVariable"><code class="docutils literal notranslate"><span class="pre">CreateVariable</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.DecrementVariable"><code class="docutils literal notranslate"><span class="pre">DecrementVariable</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.DeleteDataFrame"><code class="docutils literal notranslate"><span class="pre">DeleteDataFrame</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.DisplayAllCategories"><code class="docutils literal notranslate"><span class="pre">DisplayAllCategories</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.DisplayColumnCount"><code class="docutils literal notranslate"><span class="pre">DisplayColumnCount</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.DisplayColumnDType"><code class="docutils literal notranslate"><span class="pre">DisplayColumnDType</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.DisplayColumnMax"><code class="docutils literal notranslate"><span class="pre">DisplayColumnMax</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.DisplayColumnMean"><code class="docutils literal notranslate"><span class="pre">DisplayColumnMean</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.DisplayColumnMedian"><code class="docutils literal notranslate"><span class="pre">DisplayColumnMedian</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.DisplayColumnMin"><code class="docutils literal notranslate"><span class="pre">DisplayColumnMin</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.DisplayColumnMode"><code class="docutils literal notranslate"><span class="pre">DisplayColumnMode</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.DisplayColumnNUnique"><code class="docutils literal notranslate"><span class="pre">DisplayColumnNUnique</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.DisplayColumnStdDev"><code class="docutils literal notranslate"><span class="pre">DisplayColumnStdDev</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.DisplayColumnSum"><code class="docutils literal notranslate"><span class="pre">DisplayColumnSum</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.DisplayColumnUnique"><code class="docutils literal notranslate"><span class="pre">DisplayColumnUnique</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.DisplayColumnVariance"><code class="docutils literal notranslate"><span class="pre">DisplayColumnVariance</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.DisplayColumns"><code class="docutils literal notranslate"><span class="pre">DisplayColumns</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.DisplayHead"><code class="docutils literal notranslate"><span class="pre">DisplayHead</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.DisplayInfo"><code class="docutils literal notranslate"><span class="pre">DisplayInfo</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.DisplayMostFrequentString"><code class="docutils literal notranslate"><span class="pre">DisplayMostFrequentString</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.DisplayStringCount"><code class="docutils literal notranslate"><span class="pre">DisplayStringCount</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.DisplaySubstringOccurrence"><code class="docutils literal notranslate"><span class="pre">DisplaySubstringOccurrence</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.DisplayTail"><code class="docutils literal notranslate"><span class="pre">DisplayTail</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.DivideVariable"><code class="docutils literal notranslate"><span class="pre">DivideVariable</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.DropColumn"><code class="docutils literal notranslate"><span class="pre">DropColumn</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.DropColumns"><code class="docutils literal notranslate"><span class="pre">DropColumns</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.DropDuplicates"><code class="docutils literal notranslate"><span class="pre">DropDuplicates</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.ExplodeColumn"><code class="docutils literal notranslate"><span class="pre">ExplodeColumn</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.FillNAValues"><code class="docutils literal notranslate"><span class="pre">FillNAValues</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.FilterRows"><code class="docutils literal notranslate"><span class="pre">FilterRows</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.GetColCorrelation"><code class="docutils literal notranslate"><span class="pre">GetColCorrelation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.GetColCovariance"><code class="docutils literal notranslate"><span class="pre">GetColCovariance</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.GetColMean"><code class="docutils literal notranslate"><span class="pre">GetColMean</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.GetColMedian"><code class="docutils literal notranslate"><span class="pre">GetColMedian</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.GetColMode"><code class="docutils literal notranslate"><span class="pre">GetColMode</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.GetColQuantile"><code class="docutils literal notranslate"><span class="pre">GetColQuantile</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.GetColSkew"><code class="docutils literal notranslate"><span class="pre">GetColSkew</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.GetColStd"><code class="docutils literal notranslate"><span class="pre">GetColStd</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.GetColSum"><code class="docutils literal notranslate"><span class="pre">GetColSum</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.GetColVariance"><code class="docutils literal notranslate"><span class="pre">GetColVariance</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.GroupByAggregate"><code class="docutils literal notranslate"><span class="pre">GroupByAggregate</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.IncrementVariable"><code class="docutils literal notranslate"><span class="pre">IncrementVariable</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.JoinDataFrames"><code class="docutils literal notranslate"><span class="pre">JoinDataFrames</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.MapValues"><code class="docutils literal notranslate"><span class="pre">MapValues</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.MeltDataFrame"><code class="docutils literal notranslate"><span class="pre">MeltDataFrame</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.MergeColumns"><code class="docutils literal notranslate"><span class="pre">MergeColumns</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.MergeDataFrames"><code class="docutils literal notranslate"><span class="pre">MergeDataFrames</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.MultiplyVariable"><code class="docutils literal notranslate"><span class="pre">MultiplyVariable</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.OneHotEncode"><code class="docutils literal notranslate"><span class="pre">OneHotEncode</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.PivotDataFrame"><code class="docutils literal notranslate"><span class="pre">PivotDataFrame</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.ReloadCacheState"><code class="docutils literal notranslate"><span class="pre">ReloadCacheState</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.RemoveCharacterFromColumn"><code class="docutils literal notranslate"><span class="pre">RemoveCharacterFromColumn</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.RemoveCharactersFromColumn"><code class="docutils literal notranslate"><span class="pre">RemoveCharactersFromColumn</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.RenameColumns"><code class="docutils literal notranslate"><span class="pre">RenameColumns</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.RenameDataFrame"><code class="docutils literal notranslate"><span class="pre">RenameDataFrame</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.ReplaceStringInColumn"><code class="docutils literal notranslate"><span class="pre">ReplaceStringInColumn</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.ReplaceValues"><code class="docutils literal notranslate"><span class="pre">ReplaceValues</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.ResetCache"><code class="docutils literal notranslate"><span class="pre">ResetCache</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.ResetIndex"><code class="docutils literal notranslate"><span class="pre">ResetIndex</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.SQLQuery"><code class="docutils literal notranslate"><span class="pre">SQLQuery</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.SelectColumns"><code class="docutils literal notranslate"><span class="pre">SelectColumns</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.SetIndex"><code class="docutils literal notranslate"><span class="pre">SetIndex</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.SortDataFrame"><code class="docutils literal notranslate"><span class="pre">SortDataFrame</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.SplitColumn"><code class="docutils literal notranslate"><span class="pre">SplitColumn</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.Transformation"><code class="docutils literal notranslate"><span class="pre">Transformation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.TransposeDataFrame"><code class="docutils literal notranslate"><span class="pre">TransposeDataFrame</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/transform.html#seroflow.transform.UpdateVariable"><code class="docutils literal notranslate"><span class="pre">UpdateVariable</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="docs/types.html">Types</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="docs/types.html#module-seroflow.types.type_validation">type_validation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/types.html#seroflow.types.type_validation.is_context"><code class="docutils literal notranslate"><span class="pre">is_context()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/types.html#seroflow.types.type_validation.is_context_object"><code class="docutils literal notranslate"><span class="pre">is_context_object()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/types.html#seroflow.types.type_validation.is_extractor"><code class="docutils literal notranslate"><span class="pre">is_extractor()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/types.html#seroflow.types.type_validation.is_loader"><code class="docutils literal notranslate"><span class="pre">is_loader()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/types.html#seroflow.types.type_validation.is_multiextractor"><code class="docutils literal notranslate"><span class="pre">is_multiextractor()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/types.html#seroflow.types.type_validation.is_step"><code class="docutils literal notranslate"><span class="pre">is_step()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="docs/utils.html">Utils</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="docs/utils.html#id1">utils</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/utils.html#seroflow.utils.utils.check_directory"><code class="docutils literal notranslate"><span class="pre">check_directory()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/utils.html#seroflow.utils.utils.check_file"><code class="docutils literal notranslate"><span class="pre">check_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/utils.html#seroflow.utils.utils.check_kw_in_kwargs"><code class="docutils literal notranslate"><span class="pre">check_kw_in_kwargs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/utils.html#seroflow.utils.utils.check_str_is_file"><code class="docutils literal notranslate"><span class="pre">check_str_is_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/utils.html#seroflow.utils.utils.create_directory"><code class="docutils literal notranslate"><span class="pre">create_directory()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/utils.html#seroflow.utils.utils.create_file"><code class="docutils literal notranslate"><span class="pre">create_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/utils.html#seroflow.utils.utils.filter_kwargs"><code class="docutils literal notranslate"><span class="pre">filter_kwargs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/utils.html#seroflow.utils.utils.find_dir"><code class="docutils literal notranslate"><span class="pre">find_dir()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/utils.html#seroflow.utils.utils.find_file"><code class="docutils literal notranslate"><span class="pre">find_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/utils.html#seroflow.utils.utils.gather_files"><code class="docutils literal notranslate"><span class="pre">gather_files()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/utils.html#seroflow.utils.utils.generate_key"><code class="docutils literal notranslate"><span class="pre">generate_key()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/utils.html#seroflow.utils.utils.get_function_hash"><code class="docutils literal notranslate"><span class="pre">get_function_hash()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/utils.html#seroflow.utils.utils.get_function_source"><code class="docutils literal notranslate"><span class="pre">get_function_source()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/utils.html#seroflow.utils.utils.get_return_elements"><code class="docutils literal notranslate"><span class="pre">get_return_elements()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/utils.html#seroflow.utils.utils.hash_source"><code class="docutils literal notranslate"><span class="pre">hash_source()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/utils.html#seroflow.utils.utils.remove_extension"><code class="docutils literal notranslate"><span class="pre">remove_extension()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/utils.html#seroflow.utils.utils.split_last_delimiter"><code class="docutils literal notranslate"><span class="pre">split_last_delimiter()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="docs/wrappers.html">Wrappers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="docs/wrappers.html#id1">wrappers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docs/wrappers.html#seroflow.wrappers.wrappers.log_error"><code class="docutils literal notranslate"><span class="pre">log_error()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="docs/wrappers.html#seroflow.wrappers.wrappers.timer"><code class="docutils literal notranslate"><span class="pre">timer()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="docs/seroflow.html" class="btn btn-neutral float-right" title="Seroflow" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Frank Siyung Cho.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

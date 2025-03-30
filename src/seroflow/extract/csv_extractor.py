@@ -13,7 +13,7 @@ in a CSV file, which is useful for chunking operations.
 """
 
 import pandas as pd
-from ..extract.file_extractor import FileExtractor, MultiFileExtractor
+from .file_extractor import FileExtractor, MultiFileExtractor
 
 class CSVExtractor(FileExtractor):
     """

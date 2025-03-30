@@ -7,3 +7,7 @@ The custom logger is designed to facilitate debugging, monitoring, and tracking
 of Pipeline events, providing detailed logs for debugging and validation purposes.
 """
 from .logger import CustomLogger
+
+__all__ = [
+    "CustomLogger",
+]

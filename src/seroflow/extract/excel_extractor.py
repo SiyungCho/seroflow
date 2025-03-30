@@ -11,7 +11,7 @@ openpyxl to read Excel files.
 import xlrd
 from openpyxl import load_workbook
 import pandas as pd
-from ..extract.file_extractor import FileExtractor, MultiFileExtractor
+from .file_extractor import FileExtractor, MultiFileExtractor
 
 class ExcelExtractor(FileExtractor):
     """

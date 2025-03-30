@@ -8,7 +8,7 @@ It defines two loader classes:
 These classes extend the FileLoader class and implement CSV-specific functionality.
 """
 import os
-from ..load.file_loader import FileLoader
+from .file_loader import FileLoader
 
 class CSVLoader(FileLoader):
     """
