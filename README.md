@@ -18,7 +18,6 @@ To Get Started using Seroflow head over to our [Get Started](docs/getting_starte
 - [Table of Contents](#table-of-contents)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
-  - [Using pip](#using-pip)
 - [Documentation](#documentation)
 - [License](#license)
 - [Contributing](#contributing)
