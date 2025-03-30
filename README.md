@@ -86,4 +86,4 @@ Below are some links to the documentation provided for the various components in
 This project is licensed under the MIT License. Please review the license for more details.
 
 ## Contributing
-We welcome contributions! Please read our CONTRIBUTING.md for guidelines on how to contribute to the project.
+We welcome contributions! Please read our [Contributing](docs/contributing.md) for guidelines on how to contribute to the project.
