@@ -13,7 +13,7 @@ With `Seroflow`, each phase of your data pipeline is broken down into concrete s
 
 Additionally, the package supports seamless creation of custom `Extractors`, `Loaders`, and `Transformations` through its intuitive interfaces, along with robust features like logging, caching, and chunking. Plus, it comes preloaded with over 70+ predefined transformations, making it an indispensable tool for data pipeline creation and execution.
 
-To Get Started using Seroflow head over to our [Get Started](docs/getting_started.md) Page.
+To Get Started using Seroflow head over to our [Get Started](https://seroflow.readthedocs.io/en/latest/) Page.
 
 ## Table of Contents
 
@@ -52,10 +52,10 @@ pip install seroflow
 ```
 
 ## Documentation
-The documentation for the various components in the Seroflow package can be found [here](). It is recommended that users review some of these components prior to using the package.
+The documentation for the various components in the Seroflow package can be found [here](https://seroflow.readthedocs.io/en/latest/). It is recommended that users review some of these components prior to using the package.
 
 ## License
-This project is licensed under the MIT License. Please review the [License](LICENSE.md) for more details.
+This project is licensed under the MIT License. Please review the [License](LICENSE) for more details.
 
 ## Contributing
-We welcome contributions! Please read our [Contributing](docs/contributing.md) for guidelines on how to contribute to the project.
+We welcome contributions! Please read our [Contributing](CONTRIBUTING.md) for guidelines on how to contribute to the project.
