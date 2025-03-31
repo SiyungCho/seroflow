@@ -9,20 +9,6 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../src'))
-print(sys.path)
-# sys.path.insert(0, os.path.abspath('../src/seroflow'))
-# sys.path.insert(0, os.path.abspath('../src/seroflow/cache/'))
-# sys.path.insert(0, os.path.abspath('../src/seroflow/chunker/'))
-# sys.path.insert(0, os.path.abspath('../src/seroflow/context/'))
-# sys.path.insert(0, os.path.abspath('../src/seroflow/engine/'))
-# sys.path.insert(0, os.path.abspath('../src/seroflow/extract/'))
-# sys.path.insert(0, os.path.abspath('../src/seroflow/load/'))
-# sys.path.insert(0, os.path.abspath('../src/seroflow/log/'))
-# sys.path.insert(0, os.path.abspath('../src/seroflow/step/'))
-# sys.path.insert(0, os.path.abspath('../src/seroflow/transform/'))
-# sys.path.insert(0, os.path.abspath('../src/seroflow/types/'))
-# sys.path.insert(0, os.path.abspath('../src/seroflow/utils/'))
-# sys.path.insert(0, os.path.abspath('../src/seroflow/wrappers/'))
 
 project = 'Seroflow'
 copyright = '2025, Frank Siyung Cho'
@@ -64,7 +50,7 @@ intersphinx_mapping = {
 }
 # intersphinx_disabled_domains = ["std"]
 
-# templates_path = ["_templates"]
+templates_path = ["_templates"]
 
 
 # -- Options for HTML output -------------------------------------------------
