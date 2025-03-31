@@ -1,37 +1,45 @@
 """
-Module: aggregation.py
+These transformation classes compute various statistical metrics on columns of a DataFrame.
+Each transformation class extends the base ``Transformation`` class and is designed to operate on a specified DataFrame stored in the ``Pipeline`` context.
+The available transformations include:
 
-This module implements a suite of transformation classes that compute various statistical 
-metrics on columns of a DataFrame. Each transformation class extends the base
-Transformation class and is designed to operate on a specified DataFrame stored in the
-Pipeline context. The available transformations include:
+- **GetColMean**: Computes the mean of a specified column.
+- **GetColMedian**: Computes the median of a specified column.
+- **GetColMode**: Computes the mode of a specified column.
+- **GetColStd**: Computes the standard deviation of a specified column.
+- **GetColSum**: Computes the sum of a specified column.
+- **GetColVariance**: Computes the variance of a specified column.
+- **GetColQuantile**: Computes a given quantile of a specified column.
+- **GetColCorrelation**: Computes the correlation between two specified columns.
+- **GetColCovariance**: Computes the covariance between two specified columns.
+- **GetColSkew**: Computes the skewness of a specified column.
 
-    - GetColMean: Computes the mean of a specified column.
-    - GetColMedian: Computes the median of a specified column.
-    - GetColMode: Computes the mode of a specified column.
-    - GetColStd: Computes the standard deviation of a specified column.
-    - GetColSum: Computes the sum of a specified column.
-    - GetColVariance: Computes the variance of a specified column.
-    - GetColQuantile: Computes a given quantile of a specified column.
-    - GetColCorrelation: Computes the correlation between two specified columns.
-    - GetColCovariance: Computes the covariance between two specified columns.
-    - GetColSkew: Computes the skewness of a specified column.
-
-Each class is initialized with the name of the column(s) to be processed, the DataFrame name,
-an optional variable name for storing the result
-(defaulting to a suffix based on the column name), and an error handling strategy. 
-The transformation is executed by calling its func() method, which retrieves the DataFrame
-from the context and computes the desired statistic.
+Each class is initialized with the name of the column(s) to be processed, the DataFrame name, an optional variable name for storing the result (defaulting to a suffix based on the column name), and an error handling strategy.
+The transformation is executed by calling its ``func()`` method, which retrieves the DataFrame from the context and computes the desired statistic.
 """
 
 from .transformation import Transformation
 
 class GetColMean(Transformation):
-    """
-    GetColMean Class
+    """Computes the mean of a specified column in a DataFrame and returns the result.
+    The resulting mean can be stored in the ``Pipeline`` context under a designated variable name.
 
-    Computes the mean of a specified column in a DataFrame and returns the result.
-    The resulting mean can be stored in the Pipeline context under a designated variable name.
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``GetColMean``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import GetColMean
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'sales_data' with a 'price' column
+
+        get_mean = GetColMean(column="price", dataframe="sales_data", variable="mean_price") # Initialize the GetColMean to compute the mean of the 'price' column
+
+        pipeline.add_steps([get_mean])
+        pipeline.execute()
 
     Attributes:
         column (str): Name of the column to compute the mean.
@@ -45,7 +53,7 @@ class GetColMean(Transformation):
                  step_name="GetColMean",
                  on_error=None):
         """
-        Initializes the GetColMean transformation.
+        Initializes the ``GetColMean`` transformation.
 
         Arguments:
             column (str): The name of the column to compute the mean.
@@ -67,7 +75,7 @@ class GetColMean(Transformation):
 
     def func(self, context):
         """
-        Executes the GetColMean transformation.
+        Executes the ``GetColMean`` transformation.
 
         Retrieves the DataFrame from the context and computes the mean of the specified column.
 
@@ -96,10 +104,24 @@ class GetColMean(Transformation):
 
 class GetColMedian(Transformation):
     """
-    GetColMedian Class
-
     Computes the median of a specified column in a DataFrame and returns the result.
-    The resulting median is stored in the Pipeline context under a designated variable name.
+    The resulting median is stored in the ``Pipeline`` context under a designated variable name.
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+    Below is an example demonstrating how to use the Transformation ``GetColMedian``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import GetColMedian
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ...  # Extractor loads a DataFrame named 'sales_data' with a 'price' column
+
+        get_median = GetColMedian(column="price", dataframe="sales_data", variable="median_price") # Initialize the GetColMedian to compute the median of the 'price' column
+
+        pipeline.add_steps([get_median])
+        pipeline.execute()
 
     Attributes:
         column (str): Name of the column to compute the median.
@@ -113,7 +135,7 @@ class GetColMedian(Transformation):
                  step_name="GetColMedian",
                  on_error=None):
         """
-        Initializes the GetColMedian transformation.
+        Initializes the ``GetColMedian`` transformation.
 
         Arguments:
             column (str): The name of the column to compute the median.
@@ -135,7 +157,7 @@ class GetColMedian(Transformation):
 
     def func(self, context):
         """
-        Executes the GetColMedian transformation.
+        Executes the ``GetColMedian`` transformation.
 
         Retrieves the DataFrame from the context and computes the median of the specified column.
 
@@ -164,10 +186,25 @@ class GetColMedian(Transformation):
 
 class GetColMode(Transformation):
     """
-    GetColMode Class
-
     Computes the mode of a specified column in a DataFrame and returns the result.
-    The resulting mode is stored in the Pipeline context under a designated variable name.
+    The resulting mode is stored in the ``Pipeline`` context under a designated variable name.
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``GetColMode``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import GetColMode
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
+
+        get_mode = GetColMode(column="price", dataframe="sales_data", variable="mode_price") # Initialize the GetColMode to compute the mode of the 'price' column
+
+        pipeline.add_steps([get_mode])
+        pipeline.execute()
 
     Attributes:
         column (str): Name of the column to compute the mode.
@@ -181,7 +218,7 @@ class GetColMode(Transformation):
                  step_name="GetColMode",
                  on_error=None):
         """
-        Initializes the GetColMode transformation.
+        Initializes the ``GetColMode`` transformation.
 
         Arguments:
             column (str): The name of the column to compute the mode.
@@ -203,7 +240,7 @@ class GetColMode(Transformation):
 
     def func(self, context):
         """
-        Executes the GetColMode transformation.
+        Executes the ``GetColMode`` transformation.
 
         Retrieves the DataFrame from the context and computes the mode of the specified column.
         If multiple modes exist, the first mode is returned.
@@ -233,10 +270,25 @@ class GetColMode(Transformation):
 
 class GetColStd(Transformation):
     """
-    GetColStd Class
-
     Computes the standard deviation of a specified column in a DataFrame and returns the result.
-    The resulting standard deviation is stored in the Pipeline context under a variable name.
+    The resulting standard deviation is stored in the ``Pipeline`` context under a variable name.
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``GetColStd``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import GetColStd
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
+
+        get_std = GetColStd(column="price", dataframe="sales_data", variable="price_std") # Initialize the GetColStd to compute the standard deviation of the 'price' column
+
+        pipeline.add_steps([get_std])
+        pipeline.execute()
 
     Attributes:
         column (str): Name of the column to compute the standard deviation.
@@ -250,7 +302,7 @@ class GetColStd(Transformation):
                  step_name="GetColStd",
                  on_error=None):
         """
-        Initializes the GetColStd transformation.
+        Initializes the ``GetColStd`` transformation.
 
         Arguments:
             column (str): The name of the column to compute the standard deviation.
@@ -272,7 +324,7 @@ class GetColStd(Transformation):
 
     def func(self, context):
         """
-        Executes the GetColStd transformation.
+        Executes the ``GetColStd`` transformation.
 
         Retrieves the DataFrame from the context and computes the standard
         deviation of the specified column.
@@ -302,10 +354,25 @@ class GetColStd(Transformation):
 
 class GetColSum(Transformation):
     """
-    GetColSum Class
-
     Computes the sum of a specified column in a DataFrame and returns the result.
-    The resulting sum is stored in the Pipeline context under a designated variable name.
+    The resulting sum is stored in the ``Pipeline`` context under a designated variable name.
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``GetColSum``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import GetColSum
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
+
+        get_sum = GetColSum(column="price", dataframe="sales_data", variable="price_sum") # Initialize the GetColSum to compute the sum of the 'price' column
+
+        pipeline.add_steps([get_sum])
+        pipeline.execute()
 
     Attributes:
         column (str): Name of the column to compute the sum.
@@ -319,7 +386,7 @@ class GetColSum(Transformation):
                  step_name="GetColSum",
                  on_error=None):
         """
-        Initializes the GetColSum transformation.
+        Initializes the ``GetColSum`` transformation.
 
         Arguments:
             column (str): The name of the column to compute the sum.
@@ -341,7 +408,7 @@ class GetColSum(Transformation):
 
     def func(self, context):
         """
-        Executes the GetColSum transformation.
+        Executes the ``GetColSum`` transformation.
 
         Retrieves the DataFrame from the context and computes the sum of the specified column.
 
@@ -370,10 +437,25 @@ class GetColSum(Transformation):
 
 class GetColVariance(Transformation):
     """
-    GetColVariance Class
-
     Computes the variance of a specified column in a DataFrame and returns the result.
-    The computed variance is stored in the Pipeline context under a designated variable name.
+    The computed variance is stored in the ``Pipeline`` context under a designated variable name.
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``GetColVariance``:
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import GetColVariance
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
+
+        get_variance = GetColVariance(column="price", dataframe="sales_data", variable="price_variance") # Initialize the GetColVariance to compute the variance of the 'price' column
+
+        pipeline.add_steps([get_variance])
+        pipeline.execute()
 
     Attributes:
         column (str): Name of the column to compute the variance.
@@ -387,7 +469,7 @@ class GetColVariance(Transformation):
                  step_name="GetColVariance",
                  on_error=None):
         """
-        Initializes the GetColVariance transformation.
+        Initializes the ``GetColVariance`` transformation.
 
         Arguments:
             column (str): The name of the column to compute the variance.
@@ -409,7 +491,7 @@ class GetColVariance(Transformation):
 
     def func(self, context):
         """
-        Executes the GetColVariance transformation.
+        Executes the ``GetColVariance`` transformation.
 
         Retrieves the DataFrame from the context and computes the variance
         of the specified column.
@@ -439,10 +521,25 @@ class GetColVariance(Transformation):
 
 class GetColQuantile(Transformation):
     """
-    GetColQuantile Class
-
     Computes a specified quantile of a column in a DataFrame and returns the result.
-    The computed quantile is stored in the Pipeline context under a designated variable name.
+    The computed quantile is stored in the ``Pipeline`` context under a designated variable name.
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``GetColQuantile``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import GetColQuantile
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
+
+        get_quantile = GetColQuantile(column="price", dataframe="sales_data", quantile=0.75, variable="price_quantile_0.75") # Initialize the GetColQuantile to compute the quantile of the 'price' column
+
+        pipeline.add_steps([get_quantile])
+        pipeline.execute()
 
     Attributes:
         column (str): Name of the column for which the quantile is computed.
@@ -458,7 +555,7 @@ class GetColQuantile(Transformation):
                  step_name="GetColQuantile",
                  on_error=None):
         """
-        Initializes the GetColQuantile transformation.
+        Initializes the ``GetColQuantile`` transformation.
 
         Arguments:
             column (str): The name of the column for which the quantile will be computed.
@@ -482,7 +579,7 @@ class GetColQuantile(Transformation):
 
     def func(self, context):
         """
-        Executes the GetColQuantile transformation.
+        Executes the ``GetColQuantile`` transformation.
 
         Retrieves the DataFrame from the context and computes the
         specified quantile of the given column.
@@ -513,10 +610,25 @@ class GetColQuantile(Transformation):
 
 class GetColCorrelation(Transformation):
     """
-    GetColCorrelation Class
-
     Computes the correlation between two specified columns in a DataFrame and returns the result.
-    The computed correlation is stored in the Pipeline context under a designated variable name.
+    The computed correlation is stored in the ``Pipeline`` context under a designated variable name.
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``GetColCorrelation``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import GetColCorrelation
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ...  # Extractor loads 'sales_data' with 'price' and 'quantity' columns
+
+        get_corr = GetColCorrelation(column1="price", column2="quantity", dataframe="sales_data", variable="price_quantity_correlation") # Initialize the GetColCorrelation to compute the correlation of the 'price' column to the 'quantity' column
+
+        pipeline.add_steps([get_corr])
+        pipeline.execute()
 
     Attributes:
         column1 (str): Name of the first column.
@@ -532,7 +644,7 @@ class GetColCorrelation(Transformation):
                  step_name="GetColCorrelation",
                  on_error=None):
         """
-        Initializes the GetColCorrelation transformation.
+        Initializes the ``GetColCorrelation`` transformation.
 
         Arguments:
             column1 (str): The name of the first column.
@@ -556,7 +668,7 @@ class GetColCorrelation(Transformation):
 
     def func(self, context):
         """
-        Executes the GetColCorrelation transformation.
+        Executes the ``GetColCorrelation`` transformation.
 
         Retrieves the DataFrame from the context and computes the correlation
         between the two specified columns.
@@ -587,10 +699,25 @@ class GetColCorrelation(Transformation):
 
 class GetColCovariance(Transformation):
     """
-    GetColCovariance Class
-
     Computes the covariance between two specified columns in a DataFrame and returns the result.
-    The computed covariance is stored in the Pipeline context under a designated variable name.
+    The computed covariance is stored in the ``Pipeline`` context under a designated variable name.
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``GetColCovariance``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import GetColCovariance
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ...  # Extractor loads 'sales_data' with 'price' and 'quantity' columns
+
+        get_cov = GetColCovariance(column1="price", column2="quantity", dataframe="sales_data", variable="price_quantity_covariance") # Initialize the GetColCovariance to compute the covariance of the 'price' column to the 'quantity' column
+
+        pipeline.add_steps([get_cov])
+        pipeline.execute()
 
     Attributes:
         column1 (str): Name of the first column.
@@ -606,7 +733,7 @@ class GetColCovariance(Transformation):
                  step_name="GetColCovariance",
                  on_error=None):
         """
-        Initializes the GetColCovariance transformation.
+        Initializes the ``GetColCovariance`` transformation.
 
         Arguments:
             column1 (str): The name of the first column.
@@ -630,7 +757,7 @@ class GetColCovariance(Transformation):
 
     def func(self, context):
         """
-        Executes the GetColCovariance transformation.
+        Executes the ``GetColCovariance`` transformation.
 
         Retrieves the DataFrame from the context and computes
         the covariance between the two specified columns.
@@ -661,10 +788,25 @@ class GetColCovariance(Transformation):
 
 class GetColSkew(Transformation):
     """
-    GetColSkew Class
-
     Computes the skewness of a specified column in a DataFrame and returns the result.
-    The computed skewness is stored in the Pipeline context under a designated variable name.
+    The computed skewness is stored in the ``Pipeline`` context under a designated variable name.
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``GetColSkew``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import GetColSkew
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
+
+        get_skew = GetColSkew(column="price", dataframe="sales_data", variable="price_skew") # Initialize the GetColSkew to compute the skew of the 'price' column
+
+        pipeline.add_steps([get_skew])
+        pipeline.execute()
 
     Attributes:
         column (str): Name of the column to compute the skewness.
@@ -678,7 +820,7 @@ class GetColSkew(Transformation):
                  step_name="GetColSkew",
                  on_error=None):
         """
-        Initializes the GetColSkew transformation.
+        Initializes the ``GetColSkew`` transformation.
 
         Arguments:
             column (str): The name of the column for which skewness will be computed.
@@ -700,7 +842,7 @@ class GetColSkew(Transformation):
 
     def func(self, context):
         """
-        Executes the GetColSkew transformation.
+        Executes the ``GetColSkew`` transformation.
 
         Retrieves the DataFrame from context and computes the skewness of the specified column.
 

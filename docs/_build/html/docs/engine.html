@@ -44,7 +44,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Getting Started with Seroflow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="seroflow.html">Seroflow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cache.html">Cache</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chunker.html">Chunker</a></li>
@@ -63,7 +63,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#usage-example">Usage Example:</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id1">Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Engine</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#seroflow.engine.engine.Engine"><code class="docutils literal notranslate"><span class="pre">Engine</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.engine.engine.Engine.__enter__"><code class="docutils literal notranslate"><span class="pre">Engine.__enter__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.engine.engine.Engine.__exit__"><code class="docutils literal notranslate"><span class="pre">Engine.__exit__()</span></code></a></li>
@@ -74,7 +74,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.engine.engine.Engine.unpack_connection_settings"><code class="docutils literal notranslate"><span class="pre">Engine.unpack_connection_settings()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">Usage Example:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Usage Example:</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#sqlalchemyengine">SQLAlchemyEngine</a><ul>
@@ -86,7 +86,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.engine.sqlalchemy_engine.SQLAlchemyEngine.test_engine"><code class="docutils literal notranslate"><span class="pre">SQLAlchemyEngine.test_engine()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">Usage Example:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Usage Example:</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#instantiating-non-seroflow-provided-engines">Instantiating Non Seroflow provided Engines</a><ul>
@@ -97,10 +97,10 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="extract.html">Extractors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="load.html">Load</a></li>
+<li class="toctree-l1"><a class="reference internal" href="load.html">Loaders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="log.html">Logging</a></li>
 <li class="toctree-l1"><a class="reference internal" href="step.html">Step</a></li>
-<li class="toctree-l1"><a class="reference internal" href="transform.html">seroflow.transform package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform.html">Transformations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="types.html">Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
 <li class="toctree-l1"><a class="reference internal" href="wrappers.html">Wrappers</a></li>
@@ -131,7 +131,7 @@
            <div itemprop="articleBody">
              
   <section id="engine">
-<h1>Engine<a class="headerlink" href="#engine" title="Link to this heading"></a></h1>
+<span id="id1"></span><h1>Engine<a class="headerlink" href="#engine" title="Link to this heading"></a></h1>
 <p>The modules documented here define the interface and concrete implementations for <code class="docutils literal notranslate"><span class="pre">Seroflow</span></code> <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> compatible <code class="docutils literal notranslate"><span class="pre">Engines</span></code>.
 They provide a common interface to handle common <code class="docutils literal notranslate"><span class="pre">Engine</span></code> connection setup, context‑management, and resource cleanup within a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> Object.</p>
 <p><strong>It is important to note</strong> that all <code class="docutils literal notranslate"><span class="pre">Seroflow</span></code> <code class="docutils literal notranslate"><span class="pre">Extractors</span></code> and <code class="docutils literal notranslate"><span class="pre">Loaders</span></code> that require an <code class="docutils literal notranslate"><span class="pre">Engine</span></code> can use the native <code class="docutils literal notranslate"><span class="pre">SQLAlchemy</span></code> or <code class="docutils literal notranslate"><span class="pre">Pyodbc</span></code> connection without implementing any of the defined <code class="docutils literal notranslate"><span class="pre">Engine</span></code> Classes offered with <code class="docutils literal notranslate"><span class="pre">Seroflow</span></code>, unless specified otherwise.
@@ -262,8 +262,8 @@ and connection testing functionality.</p>
 It is instead recommended to use the <code class="docutils literal notranslate"><span class="pre">Engine</span></code> Class documented below.</p>
 </section>
 </section>
-<section id="id1">
-<h2>Engine<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<section id="id2">
+<h2>Engine<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">Engine</span></code> class provides a concrete base implementation of <code class="docutils literal notranslate"><span class="pre">AbstractEngine</span></code>.
 It handles common functionality such as unpacking a dictionary of connection settings into individual attributes, automatically creating and testing the underlying connection upon initialization, and cleaning up resources when used within a <code class="docutils literal notranslate"><span class="pre">with</span></code> block.</p>
 <p>After unpacking settings and creating the <code class="docutils literal notranslate"><span class="pre">Engine</span></code> object via its subclass’s <code class="docutils literal notranslate"><span class="pre">create_engine()</span></code> implementation, the base class calls <code class="docutils literal notranslate"><span class="pre">test_engine()</span></code> if requested.
@@ -378,8 +378,8 @@ Must be implemented by subclasses.</p>
 
 </dd></dl>
 
-<section id="id2">
-<h3>Usage Example:<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<section id="id3">
+<h3>Usage Example:<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
 <p>Below is an example demonstrating how a concrete engine implementation might inherit from <code class="docutils literal notranslate"><span class="pre">Engine</span></code> and implement its methods:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Engine</span>
 
@@ -490,8 +490,8 @@ INFORMATION_SCHEMA.TABLES.</p>
 
 </dd></dl>
 
-<section id="id3">
-<h3>Usage Example:<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<section id="id4">
+<h3>Usage Example:<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
 <p>Below is an example demonstrating how <code class="docutils literal notranslate"><span class="pre">SQLAlchemyEngine</span></code> may be used:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.extract</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLServerExtractor</span>

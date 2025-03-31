@@ -1,4 +1,4 @@
-.. Seroflow documentation master file
+.. _getting-started-with-seroflow:
 
 Getting Started with Seroflow!
 ===================================
@@ -110,7 +110,7 @@ In the example below, we will build off our previous data pipeline, but this tim
    pipeline.add_steps([transpose_dataframe, print_first_5_dataframe_rows])
    pipeline.execute()
 
-Please refer to the [Pipeline](pipeline.md) documentation to learn more about creating custom Steps.
+Please refer to the :ref:`seroflow` documentation to learn more about creating custom Steps.
 
 Advanced Features
 -----------------------------------
@@ -120,10 +120,8 @@ Advanced Features
 * **Caching**: Supports caching intermediate data for improved performance.
 * **Chunking**: Processes data in manageable chunks.
 
-Refer to the [Documentation](../README.md#documentation) for detailed usage and configuration options.
-
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 1
    :caption: Contents:
 
    Getting Started with Seroflow <self>

@@ -44,13 +44,13 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Getting Started with Seroflow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="seroflow.html">Seroflow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cache.html">Cache</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chunker.html">Chunker</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Context</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id1">Context</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Context</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#seroflow.context.context.Context"><code class="docutils literal notranslate"><span class="pre">Context</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.context.context.Context.context_name"><code class="docutils literal notranslate"><span class="pre">Context.context_name</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.context.context.Context.dataframes"><code class="docutils literal notranslate"><span class="pre">Context.dataframes</span></code></a></li>
@@ -61,13 +61,13 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.context.context.Context.add_dataframe"><code class="docutils literal notranslate"><span class="pre">Context.add_dataframe()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.context.context.Context.added_dataframe_update_metadata"><code class="docutils literal notranslate"><span class="pre">Context.added_dataframe_update_metadata()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">Context.context_name</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id2"><code class="docutils literal notranslate"><span class="pre">Context.dataframe_addr</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id3"><code class="docutils literal notranslate"><span class="pre">Context.dataframes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3"><code class="docutils literal notranslate"><span class="pre">Context.dataframe_addr</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4"><code class="docutils literal notranslate"><span class="pre">Context.dataframes</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.context.context.Context.delete_dataframe"><code class="docutils literal notranslate"><span class="pre">Context.delete_dataframe()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.context.context.Context.get_dataframe"><code class="docutils literal notranslate"><span class="pre">Context.get_dataframe()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.context.context.Context.get_dataframe_names"><code class="docutils literal notranslate"><span class="pre">Context.get_dataframe_names()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.context.context.Context.get_metadata"><code class="docutils literal notranslate"><span class="pre">Context.get_metadata()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id4"><code class="docutils literal notranslate"><span class="pre">Context.metadata</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5"><code class="docutils literal notranslate"><span class="pre">Context.metadata</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.context.context.Context.set_context_name"><code class="docutils literal notranslate"><span class="pre">Context.set_context_name()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.context.context.Context.set_dataframe"><code class="docutils literal notranslate"><span class="pre">Context.set_dataframe()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.context.context.Context.set_metadata"><code class="docutils literal notranslate"><span class="pre">Context.set_metadata()</span></code></a></li>
@@ -80,10 +80,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="engine.html">Engine</a></li>
 <li class="toctree-l1"><a class="reference internal" href="extract.html">Extractors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="load.html">Load</a></li>
+<li class="toctree-l1"><a class="reference internal" href="load.html">Loaders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="log.html">Logging</a></li>
 <li class="toctree-l1"><a class="reference internal" href="step.html">Step</a></li>
-<li class="toctree-l1"><a class="reference internal" href="transform.html">seroflow.transform package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform.html">Transformations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="types.html">Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
 <li class="toctree-l1"><a class="reference internal" href="wrappers.html">Wrappers</a></li>
@@ -114,7 +114,7 @@
            <div itemprop="articleBody">
              
   <section id="context">
-<h1>Context<a class="headerlink" href="#context" title="Link to this heading"></a></h1>
+<span id="id1"></span><h1>Context<a class="headerlink" href="#context" title="Link to this heading"></a></h1>
 <p>This module defines the <code class="docutils literal notranslate"><span class="pre">Context</span></code> dataclass for managing <code class="docutils literal notranslate"><span class="pre">pandas</span></code> DataFrames and metadata.
 The <code class="docutils literal notranslate"><span class="pre">Context</span></code> class provides a structured way to store and retrieve multiple DataFrames, manage related metadata, and track DataFrame addresses.</p>
 <section id="overview">
@@ -122,8 +122,8 @@ The <code class="docutils literal notranslate"><span class="pre">Context</span><
 <p>The <code class="docutils literal notranslate"><span class="pre">Context</span></code> class is designed to facilitate the organization of DataFrames along with their associated metadata.
 It provides methods to set and retrieve DataFrames, update metadata, and manage the overall state of a <code class="docutils literal notranslate"><span class="pre">context</span></code>.</p>
 </section>
-<section id="id1">
-<h2>Context<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<section id="id2">
+<h2>Context<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
 <p id="module-seroflow.context.context">Module that defines the Context dataclass for managing pandas DataFrames and metadata.</p>
 <p>The Context class provides a structured way to store and retrieve multiple DataFrames,
 manage related metadata, and track DataFrame addresses.</p>
@@ -230,13 +230,13 @@ the number of DataFrames currently stored.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id2">
-<span class="sig-name descname"><span class="pre">dataframe_addr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.13)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">id</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">dataframe_addr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.13)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">id</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id3">
-<span class="sig-name descname"><span class="pre">dataframes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.13)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">dataframes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.13)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -305,8 +305,8 @@ the number of DataFrames currently stored.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id4">
-<span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.13)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.13)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

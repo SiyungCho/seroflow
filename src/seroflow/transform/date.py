@@ -1,10 +1,9 @@
 """
-Module: date.py
+This module implements transformation classes for converting columns in a DataFrame to datetime format.
+Each transformation class extends the base ``Transformation`` class and operates on a specified DataFrame stored in the `Pipeline` context.
+The available transformations are:
 
-This module implements transformation classes for converting columns in a DataFrame to
-datetime format. It provides functionality to convert a specified column to a datetime
-type using pandas' to_datetime method, allowing for an optional format parameter to
-guide the conversion.
+- **ConvertToDateTime**: Converts a specified column to pandas datetime format, with optional format parsing.
 """
 import pandas as pd
 from .transformation import Transformation
@@ -13,10 +12,31 @@ from .transformation import Transformation
 
 class ConvertToDateTime(Transformation):
     """
-    ConvertToDateTime Class
-
     A transformation that converts a specified column in a DataFrame to datetime format.
-    It leverages pandas.to_datetime to perform the conversion, optionally using provided format.
+    It leverages ``pandas.to_datetime`` to perform the conversion, optionally using provided format.
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``ConvertToDateTime``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import ConvertToDateTime
+
+        # Create a Pipeline and register the DataFrame under the name 'sales_data'
+        pipeline = Pipeline()
+        pipeline.target_extractor = ...
+
+        # Initialize the ConvertToDateTime transformation to convert 'order_date' to datetime
+        convert_dates = ConvertToDateTime(
+            dataframe="sales_data",
+            column="order_date",
+            format="%Y-%m-%d"
+        )
+
+        pipeline.add_steps([convert_dates])
+        pipeline.execute()
     
     Attributes:
         dataframe (str): The name of the DataFrame in the context.
@@ -30,7 +50,7 @@ class ConvertToDateTime(Transformation):
                  step_name="ConvertToDateTime",
                  on_error=None):
         """
-        Initializes the ConvertToDateTime transformation.
+        Initializes the ``ConvertToDateTime`` transformation.
 
         Arguments:
             dataframe (str): The name of the DataFrame to update in the context.
@@ -51,7 +71,7 @@ class ConvertToDateTime(Transformation):
 
     def func(self, context):
         """
-        Executes the ConvertToDateTime transformation.
+        Executes the ``ConvertToDateTime`` transformation.
 
         Retrieves the specified DataFrame from the context, converts the designated column
         to datetime format, updates the DataFrame in the context, and returns the updated context.
@@ -71,7 +91,7 @@ class ConvertToDateTime(Transformation):
         Converts the specified column of the DataFrame to datetime format.
 
         If a format is provided, it uses that format for conversion; otherwise,
-        it relies on pandas' default parsing.
+        it relies on ``pandas'`` default parsing.
 
         Arguments:
             df (DataFrame): The DataFrame to process.

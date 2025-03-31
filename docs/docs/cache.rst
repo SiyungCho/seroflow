@@ -1,3 +1,5 @@
+.. _cache:
+
 Cache
 ======================
 
@@ -23,7 +25,7 @@ Derived classes must implement all the abstract methods below to handle caching 
 This design enforces a standardized interface and behavior across different caching strategies.
 
 **Note**: It is important to consider how a custom cache will interact with the internal systems in the ``Seroflow`` ``Pipeline`` Object.
-Please Review the [Cache Transformations](transformations/cache.md) documentation for further information on ``CacheState``, ``ReloadCacheState`` and ``ResetCache``.
+Please Review the :ref:`cache_transformation` documentation for further information on ``CacheState``, ``ReloadCacheState`` and ``ResetCache``.
 
 .. autoclass:: seroflow.cache.cache.AbstractCache
    :members:
@@ -32,9 +34,10 @@ Please Review the [Cache Transformations](transformations/cache.md) documentatio
 
 Usage Example
 ^^^^^^^^^^^^^^^^^
+
 Below is an example demonstrating how a concrete cache implementation might inherit from ``AbstractCache`` and implement its methods: ::
 
-   from abstract_cache import AbstractCache
+   from seroflow.cache import AbstractCache
 
    class MyCache(AbstractCache):
     def __init__(self):

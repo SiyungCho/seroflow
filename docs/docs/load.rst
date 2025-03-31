@@ -1,3 +1,5 @@
+.. _loaders:
+
 Loaders
 =====================
 The modules documented here define the base structure and concrete implementations for ``Loader`` steps.
@@ -227,7 +229,7 @@ The existence parameter is defined, ensuring the appropriate behavior (append, f
 
 **Note**: An ``Engine`` object must be created and passed to use with the ``ODBCLoader`` in the ``engine`` parameter.
 
-Please Review the [Engine](engine.md) documentation for further information on ``Engine`` Objects.
+Please Review the :ref:`engine` documentation for further information on ``Engine`` Objects.
 
 .. autoclass:: seroflow.load.odbc_loader.ODBCLoader
    :members:
@@ -261,7 +263,7 @@ The existence parameter is passed directly to the ``if_exists`` argument of ``to
 
 **Note**: An ``Engine`` object must be created and passed to use with the ``SQLServerLoader`` in the ``engine`` parameter.
 
-Please Review the [Engine](engine.md) documentation for further information on ``Engine`` Objects.
+Please Review the :ref:`engine` documentation for further information on ``Engine`` Objects.
 
 .. autoclass:: seroflow.load.sqlserver_loader.SQLServerLoader
    :members:

@@ -1,3 +1,5 @@
+.. _seroflow:
+
 Seroflow
 ================
 
@@ -114,7 +116,7 @@ The ``Pipeline`` Object enables caching in both *global* and *in execution* stat
 When the ``cache`` parameter is set to ``True`` a default ``LFUCache`` will be used.
 Custom Caches can be created and passed into the ``cache`` parameter however, they must confer with the ``AbstractCache`` interface. 
 
-Please review the [Cache](cache.md) documentation for further information.
+Please review the :ref:`cache` documentation for further information.
 
 Global Caching
 ^^^^^^^^^^^^^^^^^
@@ -147,7 +149,7 @@ States are cached in-memory and are therefore **volatile**, meaning that all cac
 - ``reset_cache(...)``
    Returns a ``ResetCache`` step that resets the cache. If ``delete_directory`` is set to ``True``, it deletes the cache directory.
 
-Please Review the [Cache Transformations](transformations/cache.md) documentation for further information on ``CacheState``, ``ReloadCacheState`` and ``ResetCache``.
+Please Review the :ref:`cache_transformation` documentation for further information on ``CacheState``, ``ReloadCacheState`` and ``ResetCache``.
 
 Usage Example
 ^^^^^^^^^^^^^^^^^
@@ -190,7 +192,7 @@ Then, ``Pipeline`` execution will be partitioned horizontally, until all chunks 
 Custom chunker classes can be created and used however, they must conform to the ``Chunker`` interface.
 It is highly recommended you understand the chunking methodology a selected Chunker employs before executing the ``Pipeline`` as unexpected scenarios may arise. 
 
-Please review the [Chunk](chunker.md) documentation for further information.
+Please review the :ref:`chunker` documentation for further information.
 
 DirectChunker
 ^^^^^^^^^^^^^^^^^
@@ -292,7 +294,7 @@ This ensures that each Step does not load all DataFrames only the ones required.
 It is important to understand how the ``Pipeline`` object interacts with a context primarily in the scenarios below.
 However, in most basic cases context objects will not need to be handled by users. 
 
-Please review the [Context](context.md) documentation for further information.
+Please review the :ref:`context` documentation for further information.
 
 Case 1: Creating Custom Steps
 ^^^^^^^^^^^^^^^^^
@@ -319,7 +321,7 @@ In this example, we create a custom Step object which can be passed into the ``P
   pipeline = Pipeline()
   pipeline.add_step(sample_function) # We can add the Custom Step function by passing the function name as an object
 
-Please review the [Step](step.md) documentation for further information.
+Please review the :ref:`step_doc` documentation for further information.
 
 Case 2: Creating Custom Extractors and Loaders
 ^^^^^^^^^^^^^^^^^
@@ -361,7 +363,7 @@ In this example, we create a custom Loader object ::
       df = context.get_dataframe("sample_df")
       df... # load dataframe to target
 
-Please review the [Extractor](extract.md) and [Loader](load.md) documentation for further information.
+Please review the :ref:`extractors` and :ref:`loaders` documentation for further information.
 
 Case 3: Creating Custom Caches
 ^^^^^^^^^^^^^^^^^
@@ -371,4 +373,4 @@ This saves the current state of the DataFrames at a particular step and allows e
 In some cases, users may want to create a custom ``Cache`` using the ``AbstractCache`` interface, which simply caches a subcontext of the global context, storing only a subset of the DataFrames instead of all of them.
 This is possible by manipulating the ``store(self, step_index, parameter_index, global_context, step_key)`` method to remove any unwanted DataFrames before the actual store is executed.
 
-Please review the [Cache](cache.md) documentation for further information.
+Please review the :ref:`cache` documentation for further information.

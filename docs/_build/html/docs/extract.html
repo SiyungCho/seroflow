@@ -44,7 +44,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Getting Started with Seroflow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="seroflow.html">Seroflow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cache.html">Cache</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chunker.html">Chunker</a></li>
@@ -80,7 +80,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.extract.file_extractor.FileExtractor.get_max_row_count"><code class="docutils literal notranslate"><span class="pre">FileExtractor.get_max_row_count()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id1">Usage Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Usage Example</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#multifileextractor">MultiFileExtractor</a><ul>
@@ -98,7 +98,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.extract.csv_extractor.CSVExtractor.get_max_row_count"><code class="docutils literal notranslate"><span class="pre">CSVExtractor.get_max_row_count()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">Usage Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Usage Example</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#multicsvextractor">MultiCSVExtractor</a><ul>
@@ -106,7 +106,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.extract.csv_extractor.MultiCSVExtractor.__init__"><code class="docutils literal notranslate"><span class="pre">MultiCSVExtractor.__init__()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">Usage Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Usage Example</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#excelextractor">ExcelExtractor</a><ul>
@@ -116,7 +116,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.extract.excel_extractor.ExcelExtractor.get_max_row_count"><code class="docutils literal notranslate"><span class="pre">ExcelExtractor.get_max_row_count()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">Usage Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Usage Example</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#multiexcelextractor">MultiExcelExtractor</a><ul>
@@ -124,7 +124,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.extract.excel_extractor.MultiExcelExtractor.__init__"><code class="docutils literal notranslate"><span class="pre">MultiExcelExtractor.__init__()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id5">Usage Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Usage Example</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#odbcextractor">ODBCExtractor</a><ul>
@@ -133,7 +133,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.extract.odbc_extractor.ODBCExtractor.get_max_row_count"><code class="docutils literal notranslate"><span class="pre">ODBCExtractor.get_max_row_count()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id6">Usage Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">Usage Example</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#sqlserverextractor">SQLServerExtractor</a><ul>
@@ -143,7 +143,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.extract.sqlserver_extractor.SQLServerExtractor.get_max_row_count"><code class="docutils literal notranslate"><span class="pre">SQLServerExtractor.get_max_row_count()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">Usage Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">Usage Example</a></li>
 </ul>
 </li>
 </ul>
@@ -151,7 +151,7 @@
 <li class="toctree-l1"><a class="reference internal" href="load.html">Loaders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="log.html">Logging</a></li>
 <li class="toctree-l1"><a class="reference internal" href="step.html">Step</a></li>
-<li class="toctree-l1"><a class="reference internal" href="transform.html">seroflow.transform package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform.html">Transformations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="types.html">Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
 <li class="toctree-l1"><a class="reference internal" href="wrappers.html">Wrappers</a></li>
@@ -182,9 +182,9 @@
            <div itemprop="articleBody">
              
   <section id="extractors">
-<h1>Extractors<a class="headerlink" href="#extractors" title="Link to this heading"></a></h1>
+<span id="id1"></span><h1>Extractors<a class="headerlink" href="#extractors" title="Link to this heading"></a></h1>
 <p>The modules documented here define the base structure and concrete implementations for <code class="docutils literal notranslate"><span class="pre">Extractor</span></code> steps.
-These extractors are responsible for reading data from various sources—such as files (CSV, Excel) and SQL Server tables—and adding the resulting pandas DataFrames to the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> context.
+These extractors are responsible for reading data from various sources—such as files or DB tables—and adding the resulting pandas DataFrames to the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> context.
 The extractors support both full reads and chunked reads, as well as error handling and row count estimation.</p>
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
@@ -432,8 +432,8 @@ Returns the number of rows in the file</p>
 
 </dd></dl>
 
-<section id="id1">
-<h3>Usage Example<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<section id="id2">
+<h3>Usage Example<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
 <p>Below is an example demonstrating how a concrete extract implementation might inherit from <code class="docutils literal notranslate"><span class="pre">FileExtractor</span></code> and implement its methods:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.extract</span><span class="w"> </span><span class="kn">import</span> <span class="n">FileExtractor</span>
@@ -583,8 +583,8 @@ Returns the maximum number of rows in the CSV file</p>
 
 </dd></dl>
 
-<section id="id2">
-<h3>Usage Example<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<section id="id3">
+<h3>Usage Example<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
 <p>Below is a simple example that shows how to initialize a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object with an <code class="docutils literal notranslate"><span class="pre">CSVExtractor</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.extract</span><span class="w"> </span><span class="kn">import</span> <span class="n">CSVExtractor</span>
@@ -628,8 +628,8 @@ Initializes the MultiCSVExtractor object.</p>
 
 </dd></dl>
 
-<section id="id3">
-<h3>Usage Example<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<section id="id4">
+<h3>Usage Example<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
 <p>Below is a simple example that shows how to initialize a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object with an <code class="docutils literal notranslate"><span class="pre">MultiCSVExtractor</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.extract</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultiCSVExtractor</span>
@@ -708,8 +708,8 @@ Gets the maximum number of rows in the Excel file</p>
 
 </dd></dl>
 
-<section id="id4">
-<h3>Usage Example<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<section id="id5">
+<h3>Usage Example<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
 <p>Below is a simple example that shows how to initialize a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object with an <code class="docutils literal notranslate"><span class="pre">ExcelExtractor</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.extract</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExcelExtractor</span>
@@ -753,8 +753,8 @@ Initializes the MultiExcelExtractor object.</p>
 
 </dd></dl>
 
-<section id="id5">
-<h3>Usage Example<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<section id="id6">
+<h3>Usage Example<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
 <p>Below is a simple example that shows how to initialize a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object with an <code class="docutils literal notranslate"><span class="pre">MultiExcelExtractor</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.extract</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultiExcelExtractor</span>
@@ -773,7 +773,7 @@ Initializes the MultiExcelExtractor object.</p>
 Uses a <code class="docutils literal notranslate"><span class="pre">pyodbc.Connection</span></code> to execute <code class="docutils literal notranslate"><span class="pre">SQL</span></code> queries and returns <code class="docutils literal notranslate"><span class="pre">pandas</span></code> DataFrames.
 Supports full-table extraction or chunked extraction via <code class="docutils literal notranslate"><span class="pre">OFFSET/FETCH</span></code> for batching large tables.</p>
 <p><strong>Note</strong>: An <code class="docutils literal notranslate"><span class="pre">Engine</span></code> object must be created and passed to use with the <code class="docutils literal notranslate"><span class="pre">ODBCExtractor</span></code> in the <code class="docutils literal notranslate"><span class="pre">engine</span></code> parameter.</p>
-<p>Please Review the [Engine](engine.md) documentation for further information on <code class="docutils literal notranslate"><span class="pre">Engine</span></code> Objects.</p>
+<p>Please Review the <a class="reference internal" href="engine.html#engine"><span class="std std-ref">Engine</span></a> documentation for further information on <code class="docutils literal notranslate"><span class="pre">Engine</span></code> Objects.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seroflow.extract.odbc_extractor.ODBCExtractor">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.extract.odbc_extractor.</span></span><span class="sig-name descname"><span class="pre">ODBCExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ODBCExtractor'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.extract.odbc_extractor.ODBCExtractor" title="Link to this definition"></a></dt>
@@ -828,8 +828,8 @@ of ‘skiprows’ and ‘nrows’ in kwargs, then adds the resulting DataFrame t
 
 </dd></dl>
 
-<section id="id6">
-<h3>Usage Example<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<section id="id7">
+<h3>Usage Example<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
 <p>Below is a simple example that shows how to initialize a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object with an <code class="docutils literal notranslate"><span class="pre">ODBCExtractor</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.extract</span><span class="w"> </span><span class="kn">import</span> <span class="n">ODBCExtractor</span>
@@ -851,7 +851,7 @@ It uses <code class="docutils literal notranslate"><span class="pre">SQLAlchemy<
 This extractor supports both full table reads and chunked reads by constructing <code class="docutils literal notranslate"><span class="pre">SQL</span></code> queries with <code class="docutils literal notranslate"><span class="pre">OFFSET/FETCH</span></code> clauses.
 It also provides a method to obtain the total number of rows in the table without reading the entire dataset.</p>
 <p><strong>Note</strong>: An <code class="docutils literal notranslate"><span class="pre">Engine</span></code> object must be created and passed to use with the <code class="docutils literal notranslate"><span class="pre">SQLServerExtractor</span></code> in the <code class="docutils literal notranslate"><span class="pre">engine</span></code> parameter.</p>
-<p>Please Review the [Engine](engine.md) documentation for further information on <code class="docutils literal notranslate"><span class="pre">Engine</span></code> Objects.</p>
+<p>Please Review the <a class="reference internal" href="engine.html#engine"><span class="std std-ref">Engine</span></a> documentation for further information on <code class="docutils literal notranslate"><span class="pre">Engine</span></code> Objects.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seroflow.extract.sqlserver_extractor.SQLServerExtractor">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.extract.sqlserver_extractor.</span></span><span class="sig-name descname"><span class="pre">SQLServerExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SQLServerExtractor'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.extract.sqlserver_extractor.SQLServerExtractor" title="Link to this definition"></a></dt>
@@ -911,8 +911,8 @@ of rows is retrieved using an OFFSET/FETCH query. Otherwise, the full table is r
 
 </dd></dl>
 
-<section id="id7">
-<h3>Usage Example<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<section id="id8">
+<h3>Usage Example<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
 <p>Below is a simple example that shows how to initialize a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object with an <code class="docutils literal notranslate"><span class="pre">SQLServerExtractor</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.extract</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLServerExtractor</span>

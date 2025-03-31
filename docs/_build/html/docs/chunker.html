@@ -44,12 +44,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Getting Started with Seroflow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="seroflow.html">Seroflow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cache.html">Cache</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Chunker</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id1">Chunker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Chunker</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#seroflow.chunker.chunker.Chunker"><code class="docutils literal notranslate"><span class="pre">Chunker</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.chunker.chunker.Chunker.__init__"><code class="docutils literal notranslate"><span class="pre">Chunker.__init__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.chunker.chunker.Chunker.calculate_chunks"><code class="docutils literal notranslate"><span class="pre">Chunker.calculate_chunks()</span></code></a></li>
@@ -80,9 +80,9 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.chunker.distributed_chunker.DistributedChunker.calculate_chunks"><code class="docutils literal notranslate"><span class="pre">DistributedChunker.calculate_chunks()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">Initialization Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Initialization Example</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#distributedchunker-methodology">DistributedChunker Methodology</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">Key behaviors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Key behaviors</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#distributedchunker-methodology-example">DistributedChunker Methodology Example</a></li>
 </ul>
 </li>
@@ -91,10 +91,10 @@
 <li class="toctree-l1"><a class="reference internal" href="context.html">Context</a></li>
 <li class="toctree-l1"><a class="reference internal" href="engine.html">Engine</a></li>
 <li class="toctree-l1"><a class="reference internal" href="extract.html">Extractors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="load.html">Load</a></li>
+<li class="toctree-l1"><a class="reference internal" href="load.html">Loaders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="log.html">Logging</a></li>
 <li class="toctree-l1"><a class="reference internal" href="step.html">Step</a></li>
-<li class="toctree-l1"><a class="reference internal" href="transform.html">seroflow.transform package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform.html">Transformations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="types.html">Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
 <li class="toctree-l1"><a class="reference internal" href="wrappers.html">Wrappers</a></li>
@@ -125,7 +125,7 @@
            <div itemprop="articleBody">
              
   <section id="chunker">
-<h1>Chunker<a class="headerlink" href="#chunker" title="Link to this heading"></a></h1>
+<span id="id1"></span><h1>Chunker<a class="headerlink" href="#chunker" title="Link to this heading"></a></h1>
 <p>The modules documented here define the interface and concrete implementation for <code class="docutils literal notranslate"><span class="pre">Seroflow</span></code> <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> partitioning (chunking).
 They provide a common interface to calculating chunk coordinates, managing a queue of chunking coordinates, and saving/restoring the chunker’s state.
 This ensures consistent chunker behavior across different chunking strategies.</p>
@@ -143,8 +143,8 @@ This ensures consistent chunker behavior across different chunking strategies.</
 <p>It computes the total number of chunks by combining the number of chunks available for each step and then evenly distributes rows among those chunks.
 This ensures a balanced allocation of rows across all chunks for efficient parallel or segmented processing.</p>
 </section>
-<section id="id1">
-<h2>Chunker<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<section id="id2">
+<h2>Chunker<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Chunker</span></code> is an abstract base class (inheriting from <code class="docutils literal notranslate"><span class="pre">ABC</span></code>) for implementing chunking.
 Derived classes must implement all the abstract methods to handle chunking operations.
 This design enforces a standardized interface and behavior across different chunking strategies.</p>
@@ -491,8 +491,8 @@ compatibility with pandas read_csv.</p>
 
 </dd></dl>
 
-<section id="id2">
-<h3>Initialization Example<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<section id="id3">
+<h3>Initialization Example<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
 <p>Below is a simple example that shows how to initialize a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object with an <code class="docutils literal notranslate"><span class="pre">LFUCache</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.chunker</span><span class="w"> </span><span class="kn">import</span> <span class="n">DistributedChunker</span>
@@ -507,8 +507,8 @@ compatibility with pandas read_csv.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">DistributedChunker</span></code> evenly spreads rows across a unified set of execution chunks so that every run contains work for every extractor (unless the extractor has fewer total rows than the number of chunks).
 It computes the total number of chunks as the product of each extractor’s chunk‑count, then divides each extractor’s rows evenly across those chunks.</p>
 </section>
-<section id="id3">
-<h3>Key behaviors<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<section id="id4">
+<h3>Key behaviors<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
 <ul>
 <li><dl class="simple">
 <dt><strong>Balanced distribution</strong>:</dt><dd><p>Rows for each extractor are split into nearly equal‑sized pieces, minimizing empty (zero‑row) runs.</p>

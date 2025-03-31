@@ -1,3 +1,5 @@
+.. _engine:
+
 Engine
 =======================
 The modules documented here define the interface and concrete implementations for ``Seroflow`` ``Pipeline`` compatible ``Engines``.

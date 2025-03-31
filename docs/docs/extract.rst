@@ -1,3 +1,4 @@
+.. _extractors:
 Extractors
 ========================
 
@@ -223,7 +224,7 @@ Supports full-table extraction or chunked extraction via ``OFFSET/FETCH`` for ba
 
 **Note**: An ``Engine`` object must be created and passed to use with the ``ODBCExtractor`` in the ``engine`` parameter.
 
-Please Review the [Engine](engine.md) documentation for further information on ``Engine`` Objects.
+Please Review the :ref:`engine` documentation for further information on ``Engine`` Objects.
 
 .. autoclass:: seroflow.extract.odbc_extractor.ODBCExtractor
    :members:
@@ -255,7 +256,7 @@ It also provides a method to obtain the total number of rows in the table withou
 
 **Note**: An ``Engine`` object must be created and passed to use with the ``SQLServerExtractor`` in the ``engine`` parameter.
 
-Please Review the [Engine](engine.md) documentation for further information on ``Engine`` Objects.
+Please Review the :ref:`engine` documentation for further information on ``Engine`` Objects.
 
 
 .. autoclass:: seroflow.extract.sqlserver_extractor.SQLServerExtractor

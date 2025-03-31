@@ -1,19 +1,15 @@
 """
-Module: variable.py
+This module implements transformation classes for manipulating scalar variables within a ``Pipeline``.
+Each class extends the base ``Transformation`` and performs a simple arithmetic or assignment operation on a named variable.
+The result of each transformation is returned and can be stored back into the ``Pipeline`` context.
 
-This module implements a series of transformation classes for manipulating variables
-within the ETL Pipeline. These transformations perform arithmetic or assignment operations
-on variables passed as parameters to Pipeline steps. The available transformations include:
-    - CopyVariable: Creates a copy of an existing variable.
-    - DivideVariable: Divides a variable by a specified divisor.
-    - MultiplyVariable: Multiplies a variable by a specified factor.
-    - IncrementVariable: Increments a variable by a specified amount.
-    - DecrementVariable: Decrements a variable by a specified amount.
-    - CreateVariable: Creates a new variable with a constant value.
-    - UpdateVariable: Updates an existing variable with a new value.
-
-Each class extends the base Transformation class and implements the func() method to
-perform its specific operation.
+- **CopyVariable**: Copies the value of an existing variable under a new name.
+- **DivideVariable**: Divides a variable’s value by a specified divisor.
+- **MultiplyVariable**: Multiplies a variable’s value by a specified factor.
+- **IncrementVariable**: Increments a variable’s value by a specified amount.
+- **DecrementVariable**: Decrements a variable’s value by a specified amount.
+- **CreateVariable**: Creates a new variable with a constant value.
+- **UpdateVariable**: Updates an existing variable with a new value.
 """
 
 # class DeleteVariable(Transformation):
@@ -23,12 +19,26 @@ from .transformation import Transformation
 
 class CopyVariable(Transformation):
     """
-    CopyVariable
-
     Copies the value of an existing variable.
     This transformation retrieves the value of a specified variable from the input parameters
     and returns it, effectively creating a duplicate value under the same variable name
-    in the Pipeline context.
+    in the ``Pipeline`` context.
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``CopyVariable``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import CopyVariable
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... 
+
+        cp_var = CopyVariable(variable="x", new_variable="x_copy")
+        pipeline.add_steps([cp_var])
+        pipeline.execute()
 
     Attributes:
         variable (str): The name of the variable to copy.
@@ -40,7 +50,7 @@ class CopyVariable(Transformation):
                  step_name="CopyVariable",
                  on_error=None):
         """
-        Initializes the CopyVariable transformation.
+        Initializes the ``CopyVariable`` transformation.
 
         Arguments:
             variable (str): The name of the variable to copy.
@@ -59,7 +69,7 @@ class CopyVariable(Transformation):
 
     def func(self, **kwargs):
         """
-        Executes the CopyVariable transformation.
+        Executes the ``CopyVariable`` transformation.
 
         Retrieves the value of the specified variable from the input keyword arguments
         and returns it.
@@ -75,10 +85,24 @@ class CopyVariable(Transformation):
 
 class DivideVariable(Transformation):
     """
-    DivideVariable
-
     Divides the value of a specified variable by a given divisor.
     The result of the division is returned as the updated variable value.
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``DivideVariable``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import DivideVariable
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... 
+
+        div_var = DivideVariable(variable="x", divide_by=2)
+        pipeline.add_steps([div_var])
+        pipeline.execute()
     
     Attributes:
         variable (str): The name of the variable to be divided.
@@ -90,7 +114,7 @@ class DivideVariable(Transformation):
                  step_name="DivideVariable",
                  on_error=None):
         """
-        Initializes the DivideVariable transformation.
+        Initializes the ``DivideVariable`` transformation.
 
         Arguments:
             variable (str): The name of the variable whose value will be divided.
@@ -110,7 +134,7 @@ class DivideVariable(Transformation):
 
     def func(self, **kwargs):
         """
-        Executes the DivideVariable transformation.
+        Executes the ``DivideVariable`` transformation.
 
         Retrieves the value of the specified variable from the input keyword arguments,
         divides it by the divisor, and returns the result.
@@ -126,10 +150,25 @@ class DivideVariable(Transformation):
 
 class MultiplyVariable(Transformation):
     """
-    MultiplyVariable
-
     Multiplies the value of a specified variable by a given factor.
     The resulting product is returned as the updated variable value.
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``MultiplyVariable``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import MultiplyVariable
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... 
+
+        mul_var = MultiplyVariable(variable="y", multiply_by=3)
+        pipeline.add_steps([mul_var])
+        pipeline.execute()
+
     
     Attributes:
         variable (str): The name of the variable to be multiplied.
@@ -141,7 +180,7 @@ class MultiplyVariable(Transformation):
                  step_name="MultiplyVariable",
                  on_error=None):
         """
-        Initializes the MultiplyVariable transformation.
+        Initializes the ``MultiplyVariable`` transformation.
 
         Arguments:
             variable (str): The name of the variable whose value will be multiplied.
@@ -160,7 +199,7 @@ class MultiplyVariable(Transformation):
 
     def func(self, **kwargs):
         """
-        Executes the MultiplyVariable transformation.
+        Executes the ``MultiplyVariable`` transformation.
 
         Retrieves the value of the specified variable from the input keyword arguments,
         multiplies it by the factor, and returns the result.
@@ -176,11 +215,25 @@ class MultiplyVariable(Transformation):
 
 class IncrementVariable(Transformation):
     """
-    IncrementVariable
-
     Increments the value of a specified variable by a given amount.
     The result of the increment operation is returned as the updated variable value.
-    
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``IncrementVariable``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import IncrementVariable
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... 
+
+        inc_var = IncrementVariable(variable="x", increment_by=10)
+        pipeline.add_steps([inc_var])
+        pipeline.execute()
+
     Attributes:
         variable (str): The name of the variable to be incremented.
         increment_by (numeric): The value by which to increment the variable.
@@ -191,7 +244,7 @@ class IncrementVariable(Transformation):
                  step_name="IncrementVariable",
                  on_error=None):
         """
-        Initializes the IncrementVariable transformation.
+        Initializes the ``IncrementVariable`` transformation.
 
         Arguments:
             variable (str): The name of the variable to increment.
@@ -211,7 +264,7 @@ class IncrementVariable(Transformation):
 
     def func(self, **kwargs):
         """
-        Executes the IncrementVariable transformation.
+        Executes the ``IncrementVariable`` transformation.
 
         Retrieves the value of the specified variable from the input keyword arguments,
         adds the increment value, and returns the result.
@@ -227,11 +280,25 @@ class IncrementVariable(Transformation):
 
 class DecrementVariable(Transformation):
     """
-    DecrementVariable
-
     Decrements the value of a specified variable by a given amount.
     The result of the decrement operation is returned as the updated variable value.
-    
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``DecrementVariable``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import DecrementVariable
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... 
+
+        dec_var = DecrementVariable(variable="y", decrement_by=5)
+        pipeline.add_steps([dec_var])
+        pipeline.execute()
+
     Attributes:
         variable (str): The name of the variable to be decremented.
         decrement_by (numeric): The value by which to decrement the variable.
@@ -242,7 +309,7 @@ class DecrementVariable(Transformation):
                  step_name="DecrementVariable",
                  on_error=None):
         """
-        Initializes the DecrementVariable transformation.
+        Initializes the ``DecrementVariable`` transformation.
 
         Arguments:
             variable (str): The name of the variable to decrement.
@@ -262,7 +329,7 @@ class DecrementVariable(Transformation):
 
     def func(self, **kwargs):
         """
-        Executes the DecrementVariable transformation.
+        Executes the ``DecrementVariable`` transformation.
 
         Retrieves the value of the specified variable from the input keyword arguments,
         subtracts the decrement value, and returns the result.
@@ -277,10 +344,24 @@ class DecrementVariable(Transformation):
 
 class CreateVariable(Transformation):
     """
-    CreateVariable
-
     Creates a new variable with a specified constant value.
-    
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``CreateVariable``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import CreateVariable
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... 
+
+        create_var = CreateVariable(variable="z", value=42)
+        pipeline.add_steps([create_var])
+        pipeline.execute()
+
     Attributes:
         variable (str): The name of the variable to create.
         value: The constant value to assign to the variable.
@@ -291,7 +372,7 @@ class CreateVariable(Transformation):
                  step_name="CreateVariable",
                  on_error=None):
         """
-        Initializes the CreateVariable transformation.
+        Initializes the ``CreateVariable`` transformation.
 
         Arguments:
             variable (str): The name of the new variable.
@@ -309,7 +390,7 @@ class CreateVariable(Transformation):
 
     def func(self):
         """
-        Executes the CreateVariable transformation.
+        Executes the ``CreateVariable`` transformation.
 
         Returns the constant value specified for the variable.
 
@@ -321,10 +402,24 @@ class CreateVariable(Transformation):
 
 class UpdateVariable(Transformation):
     """
-    UpdateVariable
-
     Updates an existing variable with a new value.
-    
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``UpdateVariable``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import UpdateVariable
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... 
+
+        update_var = UpdateVariable(variable="x", value=200)
+        pipeline.add_steps([update_var])
+        pipeline.execute()
+
     Attributes:
         variable (str): The name of the variable to update.
         value: The new value to assign to the variable.
@@ -335,7 +430,7 @@ class UpdateVariable(Transformation):
                  step_name="UpdateVariable",
                  on_error=None):
         """
-        Initializes the UpdateVariable transformation.
+        Initializes the ``UpdateVariable`` transformation.
 
         Arguments:
             variable (str): The name of the variable to update.
@@ -353,7 +448,7 @@ class UpdateVariable(Transformation):
 
     def func(self):
         """
-        Executes the UpdateVariable transformation.
+        Executes the ``UpdateVariable`` transformation.
 
         Returns the new value that should update the variable.
 

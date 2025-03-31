@@ -41,7 +41,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Getting Started with Seroflow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docs/seroflow.html">Seroflow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docs/cache.html">Cache</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docs/chunker.html">Chunker</a></li>
@@ -51,7 +51,7 @@
 <li class="toctree-l1"><a class="reference internal" href="docs/load.html">Loaders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docs/log.html">Logging</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docs/step.html">Step</a></li>
-<li class="toctree-l1"><a class="reference internal" href="docs/transform.html">seroflow.transform package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/transform.html">Transformations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docs/types.html">Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docs/utils.html">Utils</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docs/wrappers.html">Wrappers</a></li>
@@ -86,6 +86,7 @@
 <div class="genindex-jumpbox">
  <a href="#_"><strong>_</strong></a>
  | <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
  | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
@@ -94,6 +95,7 @@
  | <a href="#H"><strong>H</strong></a>
  | <a href="#I"><strong>I</strong></a>
  | <a href="#J"><strong>J</strong></a>
+ | <a href="#K"><strong>K</strong></a>
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
@@ -184,10 +186,6 @@
 </li>
         <li><a href="docs/step.html#seroflow.step.step.Step.__init__">(seroflow.step.step.Step method)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.AddColumn.__init__">(seroflow.transform.AddColumn method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.AddDataFrame.__init__">(seroflow.transform.AddDataFrame method)</a>
-</li>
         <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColCorrelation.__init__">(seroflow.transform.aggregation.GetColCorrelation method)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColCovariance.__init__">(seroflow.transform.aggregation.GetColCovariance method)</a>
@@ -208,17 +206,11 @@
 </li>
         <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColVariance.__init__">(seroflow.transform.aggregation.GetColVariance method)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.ApplyFunction.__init__">(seroflow.transform.ApplyFunction method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ApplyMap.__init__">(seroflow.transform.ApplyMap method)</a>
-</li>
         <li><a href="docs/transform.html#seroflow.transform.cache.CacheState.__init__">(seroflow.transform.cache.CacheState method)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.cache.ReloadCacheState.__init__">(seroflow.transform.cache.ReloadCacheState method)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.cache.ResetCache.__init__">(seroflow.transform.cache.ResetCache method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.CacheState.__init__">(seroflow.transform.CacheState method)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.column.AddColumn.__init__">(seroflow.transform.column.AddColumn method)</a>
 </li>
@@ -237,18 +229,6 @@
         <li><a href="docs/transform.html#seroflow.transform.column.RenameColumns.__init__">(seroflow.transform.column.RenameColumns method)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.column.SplitColumn.__init__">(seroflow.transform.column.SplitColumn method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ConvertColumnType.__init__">(seroflow.transform.ConvertColumnType method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ConvertToDateTime.__init__">(seroflow.transform.ConvertToDateTime method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.CopyDataFrame.__init__">(seroflow.transform.CopyDataFrame method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.CopyVariable.__init__">(seroflow.transform.CopyVariable method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.CreateColumnFromVariable.__init__">(seroflow.transform.CreateColumnFromVariable method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.CreateVariable.__init__">(seroflow.transform.CreateVariable method)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.dataframe.ApplyFunction.__init__">(seroflow.transform.dataframe.ApplyFunction method)</a>
 </li>
@@ -283,10 +263,6 @@
         <li><a href="docs/transform.html#seroflow.transform.dataframe.TransposeDataFrame.__init__">(seroflow.transform.dataframe.TransposeDataFrame method)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.date.ConvertToDateTime.__init__">(seroflow.transform.date.ConvertToDateTime method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DecrementVariable.__init__">(seroflow.transform.DecrementVariable method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DeleteDataFrame.__init__">(seroflow.transform.DeleteDataFrame method)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.display.DisplayAllCategories.__init__">(seroflow.transform.display.DisplayAllCategories method)</a>
 </li>
@@ -328,84 +304,6 @@
 </li>
         <li><a href="docs/transform.html#seroflow.transform.display.DisplayTail.__init__">(seroflow.transform.display.DisplayTail method)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayAllCategories.__init__">(seroflow.transform.DisplayAllCategories method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayColumnCount.__init__">(seroflow.transform.DisplayColumnCount method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayColumnDType.__init__">(seroflow.transform.DisplayColumnDType method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayColumnMax.__init__">(seroflow.transform.DisplayColumnMax method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayColumnMean.__init__">(seroflow.transform.DisplayColumnMean method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayColumnMedian.__init__">(seroflow.transform.DisplayColumnMedian method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayColumnMin.__init__">(seroflow.transform.DisplayColumnMin method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayColumnMode.__init__">(seroflow.transform.DisplayColumnMode method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayColumnNUnique.__init__">(seroflow.transform.DisplayColumnNUnique method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayColumns.__init__">(seroflow.transform.DisplayColumns method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayColumnStdDev.__init__">(seroflow.transform.DisplayColumnStdDev method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayColumnSum.__init__">(seroflow.transform.DisplayColumnSum method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayColumnUnique.__init__">(seroflow.transform.DisplayColumnUnique method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayColumnVariance.__init__">(seroflow.transform.DisplayColumnVariance method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayHead.__init__">(seroflow.transform.DisplayHead method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayInfo.__init__">(seroflow.transform.DisplayInfo method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayMostFrequentString.__init__">(seroflow.transform.DisplayMostFrequentString method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayStringCount.__init__">(seroflow.transform.DisplayStringCount method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplaySubstringOccurrence.__init__">(seroflow.transform.DisplaySubstringOccurrence method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayTail.__init__">(seroflow.transform.DisplayTail method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DivideVariable.__init__">(seroflow.transform.DivideVariable method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DropColumn.__init__">(seroflow.transform.DropColumn method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DropColumns.__init__">(seroflow.transform.DropColumns method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DropDuplicates.__init__">(seroflow.transform.DropDuplicates method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ExplodeColumn.__init__">(seroflow.transform.ExplodeColumn method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.FillNAValues.__init__">(seroflow.transform.FillNAValues method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.FilterRows.__init__">(seroflow.transform.FilterRows method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColCorrelation.__init__">(seroflow.transform.GetColCorrelation method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColCovariance.__init__">(seroflow.transform.GetColCovariance method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColMean.__init__">(seroflow.transform.GetColMean method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColMedian.__init__">(seroflow.transform.GetColMedian method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColMode.__init__">(seroflow.transform.GetColMode method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColQuantile.__init__">(seroflow.transform.GetColQuantile method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColSkew.__init__">(seroflow.transform.GetColSkew method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColStd.__init__">(seroflow.transform.GetColStd method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColSum.__init__">(seroflow.transform.GetColSum method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColVariance.__init__">(seroflow.transform.GetColVariance method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GroupByAggregate.__init__">(seroflow.transform.GroupByAggregate method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.IncrementVariable.__init__">(seroflow.transform.IncrementVariable method)</a>
-</li>
         <li><a href="docs/transform.html#seroflow.transform.index.ResetIndex.__init__">(seroflow.transform.index.ResetIndex method)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.index.SetIndex.__init__">(seroflow.transform.index.SetIndex method)</a>
@@ -418,51 +316,7 @@
 </li>
         <li><a href="docs/transform.html#seroflow.transform.internal.RenameDataFrame.__init__">(seroflow.transform.internal.RenameDataFrame method)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.JoinDataFrames.__init__">(seroflow.transform.JoinDataFrames method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.MapValues.__init__">(seroflow.transform.MapValues method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.MeltDataFrame.__init__">(seroflow.transform.MeltDataFrame method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.MergeColumns.__init__">(seroflow.transform.MergeColumns method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.MergeDataFrames.__init__">(seroflow.transform.MergeDataFrames method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.MultiplyVariable.__init__">(seroflow.transform.MultiplyVariable method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.OneHotEncode.__init__">(seroflow.transform.OneHotEncode method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.PivotDataFrame.__init__">(seroflow.transform.PivotDataFrame method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ReloadCacheState.__init__">(seroflow.transform.ReloadCacheState method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.RemoveCharacterFromColumn.__init__">(seroflow.transform.RemoveCharacterFromColumn method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.RemoveCharactersFromColumn.__init__">(seroflow.transform.RemoveCharactersFromColumn method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.RenameColumns.__init__">(seroflow.transform.RenameColumns method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.RenameDataFrame.__init__">(seroflow.transform.RenameDataFrame method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ReplaceStringInColumn.__init__">(seroflow.transform.ReplaceStringInColumn method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ReplaceValues.__init__">(seroflow.transform.ReplaceValues method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ResetCache.__init__">(seroflow.transform.ResetCache method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ResetIndex.__init__">(seroflow.transform.ResetIndex method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.SelectColumns.__init__">(seroflow.transform.SelectColumns method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.SetIndex.__init__">(seroflow.transform.SetIndex method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.SortDataFrame.__init__">(seroflow.transform.SortDataFrame method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.SplitColumn.__init__">(seroflow.transform.SplitColumn method)</a>
-</li>
         <li><a href="docs/transform.html#seroflow.transform.sql.SQLQuery.__init__">(seroflow.transform.sql.SQLQuery method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.SQLQuery.__init__">(seroflow.transform.SQLQuery method)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.string.RemoveCharacterFromColumn.__init__">(seroflow.transform.string.RemoveCharacterFromColumn method)</a>
 </li>
@@ -470,13 +324,7 @@
 </li>
         <li><a href="docs/transform.html#seroflow.transform.string.ReplaceStringInColumn.__init__">(seroflow.transform.string.ReplaceStringInColumn method)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.Transformation.__init__">(seroflow.transform.Transformation method)</a>
-</li>
         <li><a href="docs/transform.html#seroflow.transform.transformation.Transformation.__init__">(seroflow.transform.transformation.Transformation method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.TransposeDataFrame.__init__">(seroflow.transform.TransposeDataFrame method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.UpdateVariable.__init__">(seroflow.transform.UpdateVariable method)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.variable.CopyVariable.__init__">(seroflow.transform.variable.CopyVariable method)</a>
 </li>
@@ -514,12 +362,6 @@
 </li>
         <li><a href="docs/transform.html#seroflow.transform.cache.ResetCache.__str__">(seroflow.transform.cache.ResetCache method)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.CacheState.__str__">(seroflow.transform.CacheState method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ReloadCacheState.__str__">(seroflow.transform.ReloadCacheState method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ResetCache.__str__">(seroflow.transform.ResetCache method)</a>
-</li>
       </ul></li>
   </ul></td>
 </tr></table>
@@ -545,32 +387,32 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="docs/transform.html#seroflow.transform.AddColumn">AddColumn (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.column.AddColumn">(class in seroflow.transform.column)</a>
+      <li><a href="docs/transform.html#seroflow.transform.column.AddColumn">AddColumn (class in seroflow.transform.column)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.AddDataFrame">AddDataFrame (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.internal.AddDataFrame">(class in seroflow.transform.internal)</a>
+      <li><a href="docs/transform.html#seroflow.transform.internal.AddDataFrame">AddDataFrame (class in seroflow.transform.internal)</a>
 </li>
-      </ul></li>
       <li><a href="docs/context.html#seroflow.context.context.Context.added_dataframe_update_metadata">added_dataframe_update_metadata() (seroflow.context.context.Context method)</a>
 </li>
-      <li><a href="docs/transform.html#seroflow.transform.ApplyFunction">ApplyFunction (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.dataframe.ApplyFunction">(class in seroflow.transform.dataframe)</a>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.GroupByAggregate.agg_dict">agg_dict (seroflow.transform.dataframe.GroupByAggregate attribute)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.ApplyMap">ApplyMap (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.dataframe.ApplyMap">(class in seroflow.transform.dataframe)</a>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.PivotDataFrame.aggfunc">aggfunc (seroflow.transform.dataframe.PivotDataFrame attribute)</a>
 </li>
-      </ul></li>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.ApplyFunction">ApplyFunction (class in seroflow.transform.dataframe)</a>
+</li>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.ApplyMap">ApplyMap (class in seroflow.transform.dataframe)</a>
+</li>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.SortDataFrame.ascending">ascending (seroflow.transform.dataframe.SortDataFrame attribute)</a>
+</li>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.ApplyFunction.axis">axis (seroflow.transform.dataframe.ApplyFunction attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.SortDataFrame.by">by (seroflow.transform.dataframe.SortDataFrame attribute)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -584,17 +426,11 @@
 </li>
         <li><a href="docs/transform.html#seroflow.transform.cache.CacheState.cache">(seroflow.transform.cache.CacheState attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.CacheState.cache">(seroflow.transform.CacheState attribute)</a>
-</li>
       </ul></li>
       <li><a href="docs/seroflow.html#seroflow.Pipeline.cache_state">cache_state() (seroflow.Pipeline method)</a>
 </li>
-      <li><a href="docs/transform.html#seroflow.transform.CacheState">CacheState (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.cache.CacheState">(class in seroflow.transform.cache)</a>
+      <li><a href="docs/transform.html#seroflow.transform.cache.CacheState">CacheState (class in seroflow.transform.cache)</a>
 </li>
-      </ul></li>
       <li><a href="docs/chunker.html#seroflow.chunker.chunker.Chunker.calculate_chunks">calculate_chunks() (seroflow.chunker.chunker.Chunker method)</a>
 
       <ul>
@@ -603,18 +439,10 @@
         <li><a href="docs/chunker.html#seroflow.chunker.distributed_chunker.DistributedChunker.calculate_chunks">(seroflow.chunker.distributed_chunker.DistributedChunker method)</a>
 </li>
       </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.RemoveCharacterFromColumn.char_to_remove">char_to_remove (seroflow.transform.RemoveCharacterFromColumn attribute)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.string.RemoveCharacterFromColumn.char_to_remove">(seroflow.transform.string.RemoveCharacterFromColumn attribute)</a>
+      <li><a href="docs/transform.html#seroflow.transform.string.RemoveCharacterFromColumn.char_to_remove">char_to_remove (seroflow.transform.string.RemoveCharacterFromColumn attribute)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.RemoveCharactersFromColumn.chars_to_remove">chars_to_remove (seroflow.transform.RemoveCharactersFromColumn attribute)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.string.RemoveCharactersFromColumn.chars_to_remove">(seroflow.transform.string.RemoveCharactersFromColumn attribute)</a>
+      <li><a href="docs/transform.html#seroflow.transform.string.RemoveCharactersFromColumn.chars_to_remove">chars_to_remove (seroflow.transform.string.RemoveCharactersFromColumn attribute)</a>
 </li>
-      </ul></li>
       <li><a href="docs/utils.html#seroflow.utils.utils.check_directory">check_directory() (in module seroflow.utils.utils)</a>
 </li>
       <li><a href="docs/utils.html#seroflow.utils.utils.check_file">check_file() (in module seroflow.utils.utils)</a>
@@ -632,14 +460,12 @@
       <li><a href="docs/seroflow.html#seroflow.Pipeline.chunker">chunker (seroflow.Pipeline attribute)</a>
 
       <ul>
-        <li><a href="docs/seroflow.html#id1">(seroflow.Pipeline property)</a>
+        <li><a href="docs/seroflow.html#id2">(seroflow.Pipeline property)</a>
 </li>
       </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.AddColumn.column">column (seroflow.transform.AddColumn attribute)</a>
+      <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColMean.column">column (seroflow.transform.aggregation.GetColMean attribute)</a>
 
       <ul>
-        <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColMean.column">(seroflow.transform.aggregation.GetColMean attribute)</a>
-</li>
         <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColMedian.column">(seroflow.transform.aggregation.GetColMedian attribute)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColMode.column">(seroflow.transform.aggregation.GetColMode attribute)</a>
@@ -666,41 +492,45 @@
 </li>
         <li><a href="docs/transform.html#seroflow.transform.column.SplitColumn.column">(seroflow.transform.column.SplitColumn attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.ConvertColumnType.column">(seroflow.transform.ConvertColumnType attribute)</a>
+        <li><a href="docs/transform.html#seroflow.transform.dataframe.ApplyFunction.column">(seroflow.transform.dataframe.ApplyFunction attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.ConvertToDateTime.column">(seroflow.transform.ConvertToDateTime attribute)</a>
+        <li><a href="docs/transform.html#seroflow.transform.dataframe.MapValues.column">(seroflow.transform.dataframe.MapValues attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.CreateColumnFromVariable.column">(seroflow.transform.CreateColumnFromVariable attribute)</a>
+        <li><a href="docs/transform.html#seroflow.transform.dataframe.OneHotEncode.column">(seroflow.transform.dataframe.OneHotEncode attribute)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.date.ConvertToDateTime.column">(seroflow.transform.date.ConvertToDateTime attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.DropColumn.column">(seroflow.transform.DropColumn attribute)</a>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayAllCategories.column">(seroflow.transform.display.DisplayAllCategories attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.ExplodeColumn.column">(seroflow.transform.ExplodeColumn attribute)</a>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnCount.column">(seroflow.transform.display.DisplayColumnCount attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColMean.column">(seroflow.transform.GetColMean attribute)</a>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnDType.column">(seroflow.transform.display.DisplayColumnDType attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColMedian.column">(seroflow.transform.GetColMedian attribute)</a>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnMax.column">(seroflow.transform.display.DisplayColumnMax attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColMode.column">(seroflow.transform.GetColMode attribute)</a>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnMean.column">(seroflow.transform.display.DisplayColumnMean attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColQuantile.column">(seroflow.transform.GetColQuantile attribute)</a>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnMedian.column">(seroflow.transform.display.DisplayColumnMedian attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColSkew.column">(seroflow.transform.GetColSkew attribute)</a>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnMin.column">(seroflow.transform.display.DisplayColumnMin attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColStd.column">(seroflow.transform.GetColStd attribute)</a>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnMode.column">(seroflow.transform.display.DisplayColumnMode attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColSum.column">(seroflow.transform.GetColSum attribute)</a>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnNUnique.column">(seroflow.transform.display.DisplayColumnNUnique attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColVariance.column">(seroflow.transform.GetColVariance attribute)</a>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnStdDev.column">(seroflow.transform.display.DisplayColumnStdDev attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.RemoveCharacterFromColumn.column">(seroflow.transform.RemoveCharacterFromColumn attribute)</a>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnSum.column">(seroflow.transform.display.DisplayColumnSum attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.RemoveCharactersFromColumn.column">(seroflow.transform.RemoveCharactersFromColumn attribute)</a>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnUnique.column">(seroflow.transform.display.DisplayColumnUnique attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.ReplaceStringInColumn.column">(seroflow.transform.ReplaceStringInColumn attribute)</a>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnVariance.column">(seroflow.transform.display.DisplayColumnVariance attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.SplitColumn.column">(seroflow.transform.SplitColumn attribute)</a>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayMostFrequentString.column">(seroflow.transform.display.DisplayMostFrequentString attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayStringCount.column">(seroflow.transform.display.DisplayStringCount attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplaySubstringOccurrence.column">(seroflow.transform.display.DisplaySubstringOccurrence attribute)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.string.RemoveCharacterFromColumn.column">(seroflow.transform.string.RemoveCharacterFromColumn attribute)</a>
 </li>
@@ -716,19 +546,11 @@
       <ul>
         <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColCovariance.column1">(seroflow.transform.aggregation.GetColCovariance attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColCorrelation.column1">(seroflow.transform.GetColCorrelation attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColCovariance.column1">(seroflow.transform.GetColCovariance attribute)</a>
-</li>
       </ul></li>
       <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColCorrelation.column2">column2 (seroflow.transform.aggregation.GetColCorrelation attribute)</a>
 
       <ul>
         <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColCovariance.column2">(seroflow.transform.aggregation.GetColCovariance attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColCorrelation.column2">(seroflow.transform.GetColCorrelation attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColCovariance.column2">(seroflow.transform.GetColCovariance attribute)</a>
 </li>
       </ul></li>
       <li><a href="docs/transform.html#seroflow.transform.column.DropColumns.columns">columns (seroflow.transform.column.DropColumns attribute)</a>
@@ -736,53 +558,29 @@
       <ul>
         <li><a href="docs/transform.html#seroflow.transform.column.MergeColumns.columns">(seroflow.transform.column.MergeColumns attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.DropColumns.columns">(seroflow.transform.DropColumns attribute)</a>
+        <li><a href="docs/transform.html#seroflow.transform.dataframe.PivotDataFrame.columns">(seroflow.transform.dataframe.PivotDataFrame attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.MergeColumns.columns">(seroflow.transform.MergeColumns attribute)</a>
+        <li><a href="docs/transform.html#seroflow.transform.dataframe.SelectColumns.columns">(seroflow.transform.dataframe.SelectColumns attribute)</a>
 </li>
       </ul></li>
       <li><a href="docs/transform.html#seroflow.transform.column.RenameColumns.columns_mapping">columns_mapping (seroflow.transform.column.RenameColumns attribute)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.RenameColumns.columns_mapping">(seroflow.transform.RenameColumns attribute)</a>
 </li>
-      </ul></li>
       <li><a href="docs/cache.html#seroflow.cache.lfu_cache.LFUCache.compare_function_code">compare_function_code() (seroflow.cache.lfu_cache.LFUCache method)</a>
 </li>
-      <li><a href="docs/transform.html#seroflow.transform.AddColumn.compute_func">compute_func (seroflow.transform.AddColumn attribute)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.column.AddColumn.compute_func">(seroflow.transform.column.AddColumn attribute)</a>
+      <li><a href="docs/transform.html#seroflow.transform.column.AddColumn.compute_func">compute_func (seroflow.transform.column.AddColumn attribute)</a>
 </li>
-      </ul></li>
       <li><a href="docs/context.html#seroflow.context.context.Context">Context (class in seroflow.context.context)</a>
 </li>
       <li><a href="docs/context.html#id0">context_name (seroflow.context.context.Context attribute)</a>, <a href="docs/context.html#seroflow.context.context.Context.context_name">[1]</a>
 </li>
-      <li><a href="docs/transform.html#seroflow.transform.ConvertColumnType">ConvertColumnType (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.column.ConvertColumnType">(class in seroflow.transform.column)</a>
+      <li><a href="docs/transform.html#seroflow.transform.column.ConvertColumnType">ConvertColumnType (class in seroflow.transform.column)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.ConvertToDateTime">ConvertToDateTime (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.date.ConvertToDateTime">(class in seroflow.transform.date)</a>
+      <li><a href="docs/transform.html#seroflow.transform.date.ConvertToDateTime">ConvertToDateTime (class in seroflow.transform.date)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.CopyDataFrame">CopyDataFrame (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.internal.CopyDataFrame">(class in seroflow.transform.internal)</a>
+      <li><a href="docs/transform.html#seroflow.transform.internal.CopyDataFrame">CopyDataFrame (class in seroflow.transform.internal)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.CopyVariable">CopyVariable (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.variable.CopyVariable">(class in seroflow.transform.variable)</a>
+      <li><a href="docs/transform.html#seroflow.transform.variable.CopyVariable">CopyVariable (class in seroflow.transform.variable)</a>
 </li>
-      </ul></li>
       <li><a href="docs/engine.html#seroflow.engine.sqlalchemy_engine.SQLAlchemyEngine.create_alchemy_engine">create_alchemy_engine() (seroflow.engine.sqlalchemy_engine.SQLAlchemyEngine method)</a>
 </li>
       <li><a href="docs/utils.html#seroflow.utils.utils.create_directory">create_directory() (in module seroflow.utils.utils)</a>
@@ -801,18 +599,10 @@
 </li>
       <li><a href="docs/engine.html#seroflow.engine.sqlalchemy_engine.SQLAlchemyEngine.create_url">create_url() (seroflow.engine.sqlalchemy_engine.SQLAlchemyEngine method)</a>
 </li>
-      <li><a href="docs/transform.html#seroflow.transform.CreateColumnFromVariable">CreateColumnFromVariable (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.column.CreateColumnFromVariable">(class in seroflow.transform.column)</a>
+      <li><a href="docs/transform.html#seroflow.transform.column.CreateColumnFromVariable">CreateColumnFromVariable (class in seroflow.transform.column)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.CreateVariable">CreateVariable (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.variable.CreateVariable">(class in seroflow.transform.variable)</a>
+      <li><a href="docs/transform.html#seroflow.transform.variable.CreateVariable">CreateVariable (class in seroflow.transform.variable)</a>
 </li>
-      </ul></li>
       <li><a href="docs/extract.html#seroflow.extract.csv_extractor.CSVExtractor">CSVExtractor (class in seroflow.extract.csv_extractor)</a>
 </li>
       <li><a href="docs/load.html#seroflow.load.csv_loader.CSVLoader">CSVLoader (class in seroflow.load.csv_loader)</a>
@@ -827,11 +617,9 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="docs/transform.html#seroflow.transform.AddColumn.dataframe">dataframe (seroflow.transform.AddColumn attribute)</a>
+      <li><a href="docs/transform.html#seroflow.transform.column.AddColumn.dataframe">dataframe (seroflow.transform.column.AddColumn attribute)</a>
 
       <ul>
-        <li><a href="docs/transform.html#seroflow.transform.column.AddColumn.dataframe">(seroflow.transform.column.AddColumn attribute)</a>
-</li>
         <li><a href="docs/transform.html#seroflow.transform.column.ConvertColumnType.dataframe">(seroflow.transform.column.ConvertColumnType attribute)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.column.CreateColumnFromVariable.dataframe">(seroflow.transform.column.CreateColumnFromVariable attribute)</a>
@@ -848,39 +636,43 @@
 </li>
         <li><a href="docs/transform.html#seroflow.transform.column.SplitColumn.dataframe">(seroflow.transform.column.SplitColumn attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.ConvertColumnType.dataframe">(seroflow.transform.ConvertColumnType attribute)</a>
+        <li><a href="docs/transform.html#seroflow.transform.dataframe.ApplyFunction.dataframe">(seroflow.transform.dataframe.ApplyFunction attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.ConvertToDateTime.dataframe">(seroflow.transform.ConvertToDateTime attribute)</a>
+        <li><a href="docs/transform.html#seroflow.transform.dataframe.ApplyMap.dataframe">(seroflow.transform.dataframe.ApplyMap attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.CreateColumnFromVariable.dataframe">(seroflow.transform.CreateColumnFromVariable attribute)</a>
+        <li><a href="docs/transform.html#seroflow.transform.dataframe.DropDuplicates.dataframe">(seroflow.transform.dataframe.DropDuplicates attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.dataframe.FillNAValues.dataframe">(seroflow.transform.dataframe.FillNAValues attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.dataframe.FilterRows.dataframe">(seroflow.transform.dataframe.FilterRows attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.dataframe.GroupByAggregate.dataframe">(seroflow.transform.dataframe.GroupByAggregate attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.dataframe.MapValues.dataframe">(seroflow.transform.dataframe.MapValues attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.dataframe.MeltDataFrame.dataframe">(seroflow.transform.dataframe.MeltDataFrame attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.dataframe.OneHotEncode.dataframe">(seroflow.transform.dataframe.OneHotEncode attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.dataframe.PivotDataFrame.dataframe">(seroflow.transform.dataframe.PivotDataFrame attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.dataframe.ReplaceValues.dataframe">(seroflow.transform.dataframe.ReplaceValues attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.dataframe.SelectColumns.dataframe">(seroflow.transform.dataframe.SelectColumns attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.dataframe.SortDataFrame.dataframe">(seroflow.transform.dataframe.SortDataFrame attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.dataframe.TransposeDataFrame.dataframe">(seroflow.transform.dataframe.TransposeDataFrame attribute)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.date.ConvertToDateTime.dataframe">(seroflow.transform.date.ConvertToDateTime attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DropColumn.dataframe">(seroflow.transform.DropColumn attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DropColumns.dataframe">(seroflow.transform.DropColumns attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ExplodeColumn.dataframe">(seroflow.transform.ExplodeColumn attribute)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.index.ResetIndex.dataframe">(seroflow.transform.index.ResetIndex attribute)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.index.SetIndex.dataframe">(seroflow.transform.index.SetIndex attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.MergeColumns.dataframe">(seroflow.transform.MergeColumns attribute)</a>
+        <li><a href="docs/transform.html#seroflow.transform.internal.AddDataFrame.dataframe">(seroflow.transform.internal.AddDataFrame attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.RemoveCharacterFromColumn.dataframe">(seroflow.transform.RemoveCharacterFromColumn attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.RemoveCharactersFromColumn.dataframe">(seroflow.transform.RemoveCharactersFromColumn attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.RenameColumns.dataframe">(seroflow.transform.RenameColumns attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ReplaceStringInColumn.dataframe">(seroflow.transform.ReplaceStringInColumn attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ResetIndex.dataframe">(seroflow.transform.ResetIndex attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.SetIndex.dataframe">(seroflow.transform.SetIndex attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.SplitColumn.dataframe">(seroflow.transform.SplitColumn attribute)</a>
+        <li><a href="docs/transform.html#seroflow.transform.internal.DeleteDataFrame.dataframe">(seroflow.transform.internal.DeleteDataFrame attribute)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.string.RemoveCharacterFromColumn.dataframe">(seroflow.transform.string.RemoveCharacterFromColumn attribute)</a>
 </li>
@@ -889,12 +681,12 @@
         <li><a href="docs/transform.html#seroflow.transform.string.ReplaceStringInColumn.dataframe">(seroflow.transform.string.ReplaceStringInColumn attribute)</a>
 </li>
       </ul></li>
-      <li><a href="docs/context.html#id2">dataframe_addr (seroflow.context.context.Context attribute)</a>, <a href="docs/context.html#seroflow.context.context.Context.dataframe_addr">[1]</a>
+      <li><a href="docs/context.html#id3">dataframe_addr (seroflow.context.context.Context attribute)</a>, <a href="docs/context.html#seroflow.context.context.Context.dataframe_addr">[1]</a>
 </li>
       <li><a href="docs/seroflow.html#seroflow.Pipeline.dataframe_index">dataframe_index (seroflow.Pipeline attribute)</a>
 
       <ul>
-        <li><a href="docs/seroflow.html#id2">(seroflow.Pipeline property)</a>
+        <li><a href="docs/seroflow.html#id3">(seroflow.Pipeline property)</a>
 </li>
       </ul></li>
       <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColCorrelation.dataframe_name">dataframe_name (seroflow.transform.aggregation.GetColCorrelation attribute)</a>
@@ -918,221 +710,125 @@
 </li>
         <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColVariance.dataframe_name">(seroflow.transform.aggregation.GetColVariance attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColCorrelation.dataframe_name">(seroflow.transform.GetColCorrelation attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColCovariance.dataframe_name">(seroflow.transform.GetColCovariance attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColMean.dataframe_name">(seroflow.transform.GetColMean attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColMedian.dataframe_name">(seroflow.transform.GetColMedian attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColMode.dataframe_name">(seroflow.transform.GetColMode attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColQuantile.dataframe_name">(seroflow.transform.GetColQuantile attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColSkew.dataframe_name">(seroflow.transform.GetColSkew attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColStd.dataframe_name">(seroflow.transform.GetColStd attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColSum.dataframe_name">(seroflow.transform.GetColSum attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColVariance.dataframe_name">(seroflow.transform.GetColVariance attribute)</a>
-</li>
       </ul></li>
-      <li><a href="docs/context.html#id3">dataframes (seroflow.context.context.Context attribute)</a>, <a href="docs/context.html#seroflow.context.context.Context.dataframes">[1]</a>
-</li>
-      <li><a href="docs/transform.html#seroflow.transform.DecrementVariable.decrement_by">decrement_by (seroflow.transform.DecrementVariable attribute)</a>
+      <li><a href="docs/context.html#id4">dataframes (seroflow.context.context.Context attribute)</a>, <a href="docs/context.html#seroflow.context.context.Context.dataframes">[1]</a>
 
       <ul>
-        <li><a href="docs/transform.html#seroflow.transform.variable.DecrementVariable.decrement_by">(seroflow.transform.variable.DecrementVariable attribute)</a>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayAllCategories.dataframes">(seroflow.transform.display.DisplayAllCategories attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnCount.dataframes">(seroflow.transform.display.DisplayColumnCount attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnDType.dataframes">(seroflow.transform.display.DisplayColumnDType attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnMax.dataframes">(seroflow.transform.display.DisplayColumnMax attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnMean.dataframes">(seroflow.transform.display.DisplayColumnMean attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnMedian.dataframes">(seroflow.transform.display.DisplayColumnMedian attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnMin.dataframes">(seroflow.transform.display.DisplayColumnMin attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnMode.dataframes">(seroflow.transform.display.DisplayColumnMode attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnNUnique.dataframes">(seroflow.transform.display.DisplayColumnNUnique attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumns.dataframes">(seroflow.transform.display.DisplayColumns attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnStdDev.dataframes">(seroflow.transform.display.DisplayColumnStdDev attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnSum.dataframes">(seroflow.transform.display.DisplayColumnSum attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnUnique.dataframes">(seroflow.transform.display.DisplayColumnUnique attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnVariance.dataframes">(seroflow.transform.display.DisplayColumnVariance attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayHead.dataframes">(seroflow.transform.display.DisplayHead attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayInfo.dataframes">(seroflow.transform.display.DisplayInfo attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayMostFrequentString.dataframes">(seroflow.transform.display.DisplayMostFrequentString attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayStringCount.dataframes">(seroflow.transform.display.DisplayStringCount attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplaySubstringOccurrence.dataframes">(seroflow.transform.display.DisplaySubstringOccurrence attribute)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayTail.dataframes">(seroflow.transform.display.DisplayTail attribute)</a>
 </li>
       </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.DecrementVariable">DecrementVariable (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.variable.DecrementVariable">(class in seroflow.transform.variable)</a>
-</li>
-      </ul></li>
-      <li><a href="docs/cache.html#seroflow.cache.lfu_cache.LFUCache.delete_cached_file">delete_cached_file() (seroflow.cache.lfu_cache.LFUCache method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/transform.html#seroflow.transform.variable.DecrementVariable.decrement_by">decrement_by (seroflow.transform.variable.DecrementVariable attribute)</a>
+</li>
+      <li><a href="docs/transform.html#seroflow.transform.variable.DecrementVariable">DecrementVariable (class in seroflow.transform.variable)</a>
+</li>
+      <li><a href="docs/cache.html#seroflow.cache.lfu_cache.LFUCache.delete_cached_file">delete_cached_file() (seroflow.cache.lfu_cache.LFUCache method)</a>
+</li>
       <li><a href="docs/context.html#seroflow.context.context.Context.delete_dataframe">delete_dataframe() (seroflow.context.context.Context method)</a>
 </li>
-      <li><a href="docs/transform.html#seroflow.transform.DeleteDataFrame">DeleteDataFrame (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.internal.DeleteDataFrame">(class in seroflow.transform.internal)</a>
+      <li><a href="docs/transform.html#seroflow.transform.internal.DeleteDataFrame">DeleteDataFrame (class in seroflow.transform.internal)</a>
 </li>
-      </ul></li>
       <li><a href="docs/transform.html#seroflow.transform.column.SplitColumn.delimiter">delimiter (seroflow.transform.column.SplitColumn attribute)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.SplitColumn.delimiter">(seroflow.transform.SplitColumn attribute)</a>
 </li>
-      </ul></li>
       <li><a href="docs/chunker.html#seroflow.chunker.chunker.Chunker.dequeue">dequeue() (seroflow.chunker.chunker.Chunker method)</a>
 </li>
       <li><a href="docs/chunker.html#seroflow.chunker.direct_chunker.DirectChunker">DirectChunker (class in seroflow.chunker.direct_chunker)</a>
 </li>
-      <li><a href="docs/transform.html#seroflow.transform.DisplayAllCategories">DisplayAllCategories (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.display.DisplayAllCategories">(class in seroflow.transform.display)</a>
+      <li><a href="docs/transform.html#seroflow.transform.display.DisplayAllCategories">DisplayAllCategories (class in seroflow.transform.display)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.DisplayColumnCount">DisplayColumnCount (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnCount">(class in seroflow.transform.display)</a>
+      <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnCount">DisplayColumnCount (class in seroflow.transform.display)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.DisplayColumnDType">DisplayColumnDType (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnDType">(class in seroflow.transform.display)</a>
+      <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnDType">DisplayColumnDType (class in seroflow.transform.display)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.DisplayColumnMax">DisplayColumnMax (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnMax">(class in seroflow.transform.display)</a>
+      <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnMax">DisplayColumnMax (class in seroflow.transform.display)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.DisplayColumnMean">DisplayColumnMean (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnMean">(class in seroflow.transform.display)</a>
+      <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnMean">DisplayColumnMean (class in seroflow.transform.display)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.DisplayColumnMedian">DisplayColumnMedian (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnMedian">(class in seroflow.transform.display)</a>
+      <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnMedian">DisplayColumnMedian (class in seroflow.transform.display)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.DisplayColumnMin">DisplayColumnMin (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnMin">(class in seroflow.transform.display)</a>
+      <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnMin">DisplayColumnMin (class in seroflow.transform.display)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.DisplayColumnMode">DisplayColumnMode (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnMode">(class in seroflow.transform.display)</a>
+      <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnMode">DisplayColumnMode (class in seroflow.transform.display)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.DisplayColumnNUnique">DisplayColumnNUnique (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnNUnique">(class in seroflow.transform.display)</a>
+      <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnNUnique">DisplayColumnNUnique (class in seroflow.transform.display)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.DisplayColumns">DisplayColumns (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumns">(class in seroflow.transform.display)</a>
+      <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumns">DisplayColumns (class in seroflow.transform.display)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.DisplayColumnStdDev">DisplayColumnStdDev (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnStdDev">(class in seroflow.transform.display)</a>
+      <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnStdDev">DisplayColumnStdDev (class in seroflow.transform.display)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.DisplayColumnSum">DisplayColumnSum (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnSum">(class in seroflow.transform.display)</a>
+      <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnSum">DisplayColumnSum (class in seroflow.transform.display)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.DisplayColumnUnique">DisplayColumnUnique (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnUnique">(class in seroflow.transform.display)</a>
+      <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnUnique">DisplayColumnUnique (class in seroflow.transform.display)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.DisplayColumnVariance">DisplayColumnVariance (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnVariance">(class in seroflow.transform.display)</a>
+      <li><a href="docs/transform.html#seroflow.transform.display.DisplayColumnVariance">DisplayColumnVariance (class in seroflow.transform.display)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.DisplayHead">DisplayHead (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.display.DisplayHead">(class in seroflow.transform.display)</a>
+      <li><a href="docs/transform.html#seroflow.transform.display.DisplayHead">DisplayHead (class in seroflow.transform.display)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.DisplayInfo">DisplayInfo (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.display.DisplayInfo">(class in seroflow.transform.display)</a>
+      <li><a href="docs/transform.html#seroflow.transform.display.DisplayInfo">DisplayInfo (class in seroflow.transform.display)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.DisplayMostFrequentString">DisplayMostFrequentString (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.display.DisplayMostFrequentString">(class in seroflow.transform.display)</a>
+      <li><a href="docs/transform.html#seroflow.transform.display.DisplayMostFrequentString">DisplayMostFrequentString (class in seroflow.transform.display)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.DisplayStringCount">DisplayStringCount (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.display.DisplayStringCount">(class in seroflow.transform.display)</a>
+      <li><a href="docs/transform.html#seroflow.transform.display.DisplayStringCount">DisplayStringCount (class in seroflow.transform.display)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.DisplaySubstringOccurrence">DisplaySubstringOccurrence (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.display.DisplaySubstringOccurrence">(class in seroflow.transform.display)</a>
+      <li><a href="docs/transform.html#seroflow.transform.display.DisplaySubstringOccurrence">DisplaySubstringOccurrence (class in seroflow.transform.display)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.DisplayTail">DisplayTail (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.display.DisplayTail">(class in seroflow.transform.display)</a>
+      <li><a href="docs/transform.html#seroflow.transform.display.DisplayTail">DisplayTail (class in seroflow.transform.display)</a>
 </li>
-      </ul></li>
       <li><a href="docs/chunker.html#seroflow.chunker.distributed_chunker.DistributedChunker">DistributedChunker (class in seroflow.chunker.distributed_chunker)</a>
 </li>
-      <li><a href="docs/transform.html#seroflow.transform.DivideVariable.divide_by">divide_by (seroflow.transform.DivideVariable attribute)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.variable.DivideVariable.divide_by">(seroflow.transform.variable.DivideVariable attribute)</a>
+      <li><a href="docs/transform.html#seroflow.transform.variable.DivideVariable.divide_by">divide_by (seroflow.transform.variable.DivideVariable attribute)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.DivideVariable">DivideVariable (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.variable.DivideVariable">(class in seroflow.transform.variable)</a>
+      <li><a href="docs/transform.html#seroflow.transform.variable.DivideVariable">DivideVariable (class in seroflow.transform.variable)</a>
 </li>
-      </ul></li>
       <li><a href="docs/transform.html#seroflow.transform.index.ResetIndex.drop">drop (seroflow.transform.index.ResetIndex attribute)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.ResetIndex.drop">(seroflow.transform.ResetIndex attribute)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.DropColumn">DropColumn (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.column.DropColumn">(class in seroflow.transform.column)</a>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.OneHotEncode.drop_original">drop_original (seroflow.transform.dataframe.OneHotEncode attribute)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.DropColumns">DropColumns (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.column.DropColumns">(class in seroflow.transform.column)</a>
+      <li><a href="docs/transform.html#seroflow.transform.column.DropColumn">DropColumn (class in seroflow.transform.column)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.DropDuplicates">DropDuplicates (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.dataframe.DropDuplicates">(class in seroflow.transform.dataframe)</a>
+      <li><a href="docs/transform.html#seroflow.transform.column.DropColumns">DropColumns (class in seroflow.transform.column)</a>
 </li>
-      </ul></li>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.DropDuplicates">DropDuplicates (class in seroflow.transform.dataframe)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -1147,6 +843,8 @@
 </li>
       <li><a href="docs/load.html#seroflow.load.excel_loader.ExcelLoader">ExcelLoader (class in seroflow.load.excel_loader)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/seroflow.html#seroflow.Pipeline.execute">execute() (seroflow.Pipeline method)</a>
 
       <ul>
@@ -1155,14 +853,8 @@
         <li><a href="docs/step.html#seroflow.step.step.Step.execute">(seroflow.step.step.Step method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="docs/transform.html#seroflow.transform.ExplodeColumn">ExplodeColumn (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.column.ExplodeColumn">(class in seroflow.transform.column)</a>
+      <li><a href="docs/transform.html#seroflow.transform.column.ExplodeColumn">ExplodeColumn (class in seroflow.transform.column)</a>
 </li>
-      </ul></li>
       <li><a href="docs/extract.html#seroflow.extract.extractor.Extractor">Extractor (class in seroflow.extract.extractor)</a>
 </li>
   </ul></td>
@@ -1175,30 +867,22 @@
 </li>
       <li><a href="docs/load.html#seroflow.load.file_loader.FileLoader">FileLoader (class in seroflow.load.file_loader)</a>
 </li>
-      <li><a href="docs/transform.html#seroflow.transform.FillNAValues">FillNAValues (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.dataframe.FillNAValues">(class in seroflow.transform.dataframe)</a>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.FillNAValues.fill_value">fill_value (seroflow.transform.dataframe.FillNAValues attribute)</a>
 </li>
-      </ul></li>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.FillNAValues">FillNAValues (class in seroflow.transform.dataframe)</a>
+</li>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.FilterRows.filter_func">filter_func (seroflow.transform.dataframe.FilterRows attribute)</a>
+</li>
       <li><a href="docs/utils.html#seroflow.utils.utils.filter_kwargs">filter_kwargs() (in module seroflow.utils.utils)</a>
 </li>
-      <li><a href="docs/transform.html#seroflow.transform.FilterRows">FilterRows (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.dataframe.FilterRows">(class in seroflow.transform.dataframe)</a>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.FilterRows">FilterRows (class in seroflow.transform.dataframe)</a>
 </li>
-      </ul></li>
       <li><a href="docs/utils.html#seroflow.utils.utils.find_dir">find_dir() (in module seroflow.utils.utils)</a>
 </li>
       <li><a href="docs/utils.html#seroflow.utils.utils.find_file">find_file() (in module seroflow.utils.utils)</a>
 </li>
-      <li><a href="docs/transform.html#seroflow.transform.ConvertToDateTime.format">format (seroflow.transform.ConvertToDateTime attribute)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.date.ConvertToDateTime.format">(seroflow.transform.date.ConvertToDateTime attribute)</a>
+      <li><a href="docs/transform.html#seroflow.transform.date.ConvertToDateTime.format">format (seroflow.transform.date.ConvertToDateTime attribute)</a>
 </li>
-      </ul></li>
       <li><a href="docs/extract.html#seroflow.extract.csv_extractor.CSVExtractor.func">func() (seroflow.extract.csv_extractor.CSVExtractor method)</a>
 
       <ul>
@@ -1226,10 +910,6 @@
 </li>
         <li><a href="docs/load.html#seroflow.load.sqlserver_loader.SQLServerLoader.func">(seroflow.load.sqlserver_loader.SQLServerLoader method)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.AddColumn.func">(seroflow.transform.AddColumn method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.AddDataFrame.func">(seroflow.transform.AddDataFrame method)</a>
-</li>
         <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColCorrelation.func">(seroflow.transform.aggregation.GetColCorrelation method)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColCovariance.func">(seroflow.transform.aggregation.GetColCovariance method)</a>
@@ -1250,17 +930,11 @@
 </li>
         <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColVariance.func">(seroflow.transform.aggregation.GetColVariance method)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.ApplyFunction.func">(seroflow.transform.ApplyFunction method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ApplyMap.func">(seroflow.transform.ApplyMap method)</a>
-</li>
         <li><a href="docs/transform.html#seroflow.transform.cache.CacheState.func">(seroflow.transform.cache.CacheState method)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.cache.ReloadCacheState.func">(seroflow.transform.cache.ReloadCacheState method)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.cache.ResetCache.func">(seroflow.transform.cache.ResetCache method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.CacheState.func">(seroflow.transform.CacheState method)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.column.AddColumn.func">(seroflow.transform.column.AddColumn method)</a>
 </li>
@@ -1279,18 +953,6 @@
         <li><a href="docs/transform.html#seroflow.transform.column.RenameColumns.func">(seroflow.transform.column.RenameColumns method)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.column.SplitColumn.func">(seroflow.transform.column.SplitColumn method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ConvertColumnType.func">(seroflow.transform.ConvertColumnType method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ConvertToDateTime.func">(seroflow.transform.ConvertToDateTime method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.CopyDataFrame.func">(seroflow.transform.CopyDataFrame method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.CopyVariable.func">(seroflow.transform.CopyVariable method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.CreateColumnFromVariable.func">(seroflow.transform.CreateColumnFromVariable method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.CreateVariable.func">(seroflow.transform.CreateVariable method)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.dataframe.ApplyFunction.func">(seroflow.transform.dataframe.ApplyFunction method)</a>
 </li>
@@ -1325,10 +987,6 @@
         <li><a href="docs/transform.html#seroflow.transform.dataframe.TransposeDataFrame.func">(seroflow.transform.dataframe.TransposeDataFrame method)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.date.ConvertToDateTime.func">(seroflow.transform.date.ConvertToDateTime method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DecrementVariable.func">(seroflow.transform.DecrementVariable method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DeleteDataFrame.func">(seroflow.transform.DeleteDataFrame method)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.display.DisplayAllCategories.func">(seroflow.transform.display.DisplayAllCategories method)</a>
 </li>
@@ -1370,84 +1028,6 @@
 </li>
         <li><a href="docs/transform.html#seroflow.transform.display.DisplayTail.func">(seroflow.transform.display.DisplayTail method)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayAllCategories.func">(seroflow.transform.DisplayAllCategories method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayColumnCount.func">(seroflow.transform.DisplayColumnCount method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayColumnDType.func">(seroflow.transform.DisplayColumnDType method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayColumnMax.func">(seroflow.transform.DisplayColumnMax method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayColumnMean.func">(seroflow.transform.DisplayColumnMean method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayColumnMedian.func">(seroflow.transform.DisplayColumnMedian method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayColumnMin.func">(seroflow.transform.DisplayColumnMin method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayColumnMode.func">(seroflow.transform.DisplayColumnMode method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayColumnNUnique.func">(seroflow.transform.DisplayColumnNUnique method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayColumns.func">(seroflow.transform.DisplayColumns method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayColumnStdDev.func">(seroflow.transform.DisplayColumnStdDev method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayColumnSum.func">(seroflow.transform.DisplayColumnSum method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayColumnUnique.func">(seroflow.transform.DisplayColumnUnique method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayColumnVariance.func">(seroflow.transform.DisplayColumnVariance method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayHead.func">(seroflow.transform.DisplayHead method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayInfo.func">(seroflow.transform.DisplayInfo method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayMostFrequentString.func">(seroflow.transform.DisplayMostFrequentString method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayStringCount.func">(seroflow.transform.DisplayStringCount method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplaySubstringOccurrence.func">(seroflow.transform.DisplaySubstringOccurrence method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DisplayTail.func">(seroflow.transform.DisplayTail method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DivideVariable.func">(seroflow.transform.DivideVariable method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DropColumn.func">(seroflow.transform.DropColumn method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DropColumns.func">(seroflow.transform.DropColumns method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DropDuplicates.func">(seroflow.transform.DropDuplicates method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ExplodeColumn.func">(seroflow.transform.ExplodeColumn method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.FillNAValues.func">(seroflow.transform.FillNAValues method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.FilterRows.func">(seroflow.transform.FilterRows method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColCorrelation.func">(seroflow.transform.GetColCorrelation method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColCovariance.func">(seroflow.transform.GetColCovariance method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColMean.func">(seroflow.transform.GetColMean method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColMedian.func">(seroflow.transform.GetColMedian method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColMode.func">(seroflow.transform.GetColMode method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColQuantile.func">(seroflow.transform.GetColQuantile method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColSkew.func">(seroflow.transform.GetColSkew method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColStd.func">(seroflow.transform.GetColStd method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColSum.func">(seroflow.transform.GetColSum method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColVariance.func">(seroflow.transform.GetColVariance method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GroupByAggregate.func">(seroflow.transform.GroupByAggregate method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.IncrementVariable.func">(seroflow.transform.IncrementVariable method)</a>
-</li>
         <li><a href="docs/transform.html#seroflow.transform.index.ResetIndex.func">(seroflow.transform.index.ResetIndex method)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.index.SetIndex.func">(seroflow.transform.index.SetIndex method)</a>
@@ -1460,51 +1040,7 @@
 </li>
         <li><a href="docs/transform.html#seroflow.transform.internal.RenameDataFrame.func">(seroflow.transform.internal.RenameDataFrame method)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.JoinDataFrames.func">(seroflow.transform.JoinDataFrames method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.MapValues.func">(seroflow.transform.MapValues method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.MeltDataFrame.func">(seroflow.transform.MeltDataFrame method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.MergeColumns.func">(seroflow.transform.MergeColumns method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.MergeDataFrames.func">(seroflow.transform.MergeDataFrames method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.MultiplyVariable.func">(seroflow.transform.MultiplyVariable method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.OneHotEncode.func">(seroflow.transform.OneHotEncode method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.PivotDataFrame.func">(seroflow.transform.PivotDataFrame method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ReloadCacheState.func">(seroflow.transform.ReloadCacheState method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.RemoveCharacterFromColumn.func">(seroflow.transform.RemoveCharacterFromColumn method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.RemoveCharactersFromColumn.func">(seroflow.transform.RemoveCharactersFromColumn method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.RenameColumns.func">(seroflow.transform.RenameColumns method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.RenameDataFrame.func">(seroflow.transform.RenameDataFrame method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ReplaceStringInColumn.func">(seroflow.transform.ReplaceStringInColumn method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ReplaceValues.func">(seroflow.transform.ReplaceValues method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ResetCache.func">(seroflow.transform.ResetCache method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ResetIndex.func">(seroflow.transform.ResetIndex method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.SelectColumns.func">(seroflow.transform.SelectColumns method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.SetIndex.func">(seroflow.transform.SetIndex method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.SortDataFrame.func">(seroflow.transform.SortDataFrame method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.SplitColumn.func">(seroflow.transform.SplitColumn method)</a>
-</li>
         <li><a href="docs/transform.html#seroflow.transform.sql.SQLQuery.func">(seroflow.transform.sql.SQLQuery method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.SQLQuery.func">(seroflow.transform.SQLQuery method)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.string.RemoveCharacterFromColumn.func">(seroflow.transform.string.RemoveCharacterFromColumn method)</a>
 </li>
@@ -1512,13 +1048,7 @@
 </li>
         <li><a href="docs/transform.html#seroflow.transform.string.ReplaceStringInColumn.func">(seroflow.transform.string.ReplaceStringInColumn method)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.Transformation.func">(seroflow.transform.Transformation method)</a>
-</li>
         <li><a href="docs/transform.html#seroflow.transform.transformation.Transformation.func">(seroflow.transform.transformation.Transformation method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.TransposeDataFrame.func">(seroflow.transform.TransposeDataFrame method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.UpdateVariable.func">(seroflow.transform.UpdateVariable method)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.variable.CopyVariable.func">(seroflow.transform.variable.CopyVariable method)</a>
 </li>
@@ -1533,6 +1063,14 @@
         <li><a href="docs/transform.html#seroflow.transform.variable.MultiplyVariable.func">(seroflow.transform.variable.MultiplyVariable method)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.variable.UpdateVariable.func">(seroflow.transform.variable.UpdateVariable method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.ApplyFunction.function">function (seroflow.transform.dataframe.ApplyFunction attribute)</a>
+
+      <ul>
+        <li><a href="docs/transform.html#seroflow.transform.dataframe.ApplyMap.function">(seroflow.transform.dataframe.ApplyMap attribute)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -1577,88 +1115,44 @@
         <li><a href="docs/extract.html#seroflow.extract.sqlserver_extractor.SQLServerExtractor.get_max_row_count">(seroflow.extract.sqlserver_extractor.SQLServerExtractor method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/context.html#seroflow.context.context.Context.get_metadata">get_metadata() (seroflow.context.context.Context method)</a>
 </li>
       <li><a href="docs/utils.html#seroflow.utils.utils.get_return_elements">get_return_elements() (in module seroflow.utils.utils)</a>
 </li>
-      <li><a href="docs/transform.html#seroflow.transform.GetColCorrelation">GetColCorrelation (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColCorrelation">(class in seroflow.transform.aggregation)</a>
+      <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColCorrelation">GetColCorrelation (class in seroflow.transform.aggregation)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.GetColCovariance">GetColCovariance (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColCovariance">(class in seroflow.transform.aggregation)</a>
+      <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColCovariance">GetColCovariance (class in seroflow.transform.aggregation)</a>
 </li>
-      </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="docs/transform.html#seroflow.transform.GetColMean">GetColMean (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColMean">(class in seroflow.transform.aggregation)</a>
+      <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColMean">GetColMean (class in seroflow.transform.aggregation)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.GetColMedian">GetColMedian (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColMedian">(class in seroflow.transform.aggregation)</a>
+      <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColMedian">GetColMedian (class in seroflow.transform.aggregation)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.GetColMode">GetColMode (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColMode">(class in seroflow.transform.aggregation)</a>
+      <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColMode">GetColMode (class in seroflow.transform.aggregation)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.GetColQuantile">GetColQuantile (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColQuantile">(class in seroflow.transform.aggregation)</a>
+      <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColQuantile">GetColQuantile (class in seroflow.transform.aggregation)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.GetColSkew">GetColSkew (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColSkew">(class in seroflow.transform.aggregation)</a>
+      <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColSkew">GetColSkew (class in seroflow.transform.aggregation)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.GetColStd">GetColStd (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColStd">(class in seroflow.transform.aggregation)</a>
+      <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColStd">GetColStd (class in seroflow.transform.aggregation)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.GetColSum">GetColSum (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColSum">(class in seroflow.transform.aggregation)</a>
+      <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColSum">GetColSum (class in seroflow.transform.aggregation)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.GetColVariance">GetColVariance (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColVariance">(class in seroflow.transform.aggregation)</a>
+      <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColVariance">GetColVariance (class in seroflow.transform.aggregation)</a>
 </li>
-      </ul></li>
       <li><a href="docs/seroflow.html#seroflow.Pipeline.globalcontext">globalcontext (seroflow.Pipeline attribute)</a>
 
       <ul>
-        <li><a href="docs/seroflow.html#id3">(seroflow.Pipeline property)</a>
+        <li><a href="docs/seroflow.html#id4">(seroflow.Pipeline property)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.cache.CacheState.globalcontext">(seroflow.transform.cache.CacheState attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.CacheState.globalcontext">(seroflow.transform.CacheState attribute)</a>
-</li>
       </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.GroupByAggregate">GroupByAggregate (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.dataframe.GroupByAggregate">(class in seroflow.transform.dataframe)</a>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.GroupByAggregate.groupby_columns">groupby_columns (seroflow.transform.dataframe.GroupByAggregate attribute)</a>
 </li>
-      </ul></li>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.GroupByAggregate">GroupByAggregate (class in seroflow.transform.dataframe)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -1668,31 +1162,31 @@
       <li><a href="docs/utils.html#seroflow.utils.utils.hash_source">hash_source() (in module seroflow.utils.utils)</a>
 </li>
   </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.JoinDataFrames.how">how (seroflow.transform.dataframe.JoinDataFrames attribute)</a>
+
+      <ul>
+        <li><a href="docs/transform.html#seroflow.transform.dataframe.MergeDataFrames.how">(seroflow.transform.dataframe.MergeDataFrames attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
 </tr></table>
 
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.MeltDataFrame.id_vars">id_vars (seroflow.transform.dataframe.MeltDataFrame attribute)</a>
+</li>
       <li><a href="docs/extract.html#seroflow.extract.file_extractor.MultiFileExtractor.identify_type">identify_type() (seroflow.extract.file_extractor.MultiFileExtractor method)</a>
 </li>
-      <li><a href="docs/transform.html#seroflow.transform.IncrementVariable.increment_by">increment_by (seroflow.transform.IncrementVariable attribute)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.variable.IncrementVariable.increment_by">(seroflow.transform.variable.IncrementVariable attribute)</a>
+      <li><a href="docs/transform.html#seroflow.transform.variable.IncrementVariable.increment_by">increment_by (seroflow.transform.variable.IncrementVariable attribute)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.IncrementVariable">IncrementVariable (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.variable.IncrementVariable">(class in seroflow.transform.variable)</a>
+      <li><a href="docs/transform.html#seroflow.transform.variable.IncrementVariable">IncrementVariable (class in seroflow.transform.variable)</a>
 </li>
-      </ul></li>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.PivotDataFrame.index">index (seroflow.transform.dataframe.PivotDataFrame attribute)</a>
+</li>
       <li><a href="docs/transform.html#seroflow.transform.index.SetIndex.index_column">index_column (seroflow.transform.index.SetIndex attribute)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.SetIndex.index_column">(seroflow.transform.SetIndex attribute)</a>
 </li>
-      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/log.html#seroflow.log.logger.CustomLogger.init_directory">init_directory() (seroflow.log.logger.CustomLogger method)</a>
@@ -1715,18 +1209,24 @@
 <h2 id="J">J</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="docs/transform.html#seroflow.transform.JoinDataFrames">JoinDataFrames (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.dataframe.JoinDataFrames">(class in seroflow.transform.dataframe)</a>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.JoinDataFrames">JoinDataFrames (class in seroflow.transform.dataframe)</a>
 </li>
-      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="K">K</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.DropDuplicates.keep">keep (seroflow.transform.dataframe.DropDuplicates attribute)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.MergeDataFrames.left_dataframe">left_dataframe (seroflow.transform.dataframe.MergeDataFrames attribute)</a>
+</li>
       <li><a href="docs/cache.html#seroflow.cache.lfu_cache.LFUCache">LFUCache (class in seroflow.cache.lfu_cache)</a>
 </li>
       <li><a href="docs/cache.html#seroflow.cache.cache.AbstractCache.load">load() (seroflow.cache.cache.AbstractCache method)</a>
@@ -1744,10 +1244,12 @@
       <li><a href="docs/seroflow.html#seroflow.Pipeline.logger">logger (seroflow.Pipeline attribute)</a>
 
       <ul>
-        <li><a href="docs/seroflow.html#id4">(seroflow.Pipeline property)</a>
+        <li><a href="docs/seroflow.html#id5">(seroflow.Pipeline property)</a>
 </li>
       </ul></li>
       <li><a href="docs/seroflow.html#seroflow.Pipeline.logger_is_set">logger_is_set() (seroflow.Pipeline method)</a>
+</li>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.JoinDataFrames.lsuffix">lsuffix (seroflow.transform.dataframe.JoinDataFrames attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1767,36 +1269,22 @@
         <li><a href="docs/load.html#seroflow.load.sqlserver_loader.SQLServerLoader.map_exists_parameter">(seroflow.load.sqlserver_loader.SQLServerLoader method)</a>
 </li>
       </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.MapValues">MapValues (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.dataframe.MapValues">(class in seroflow.transform.dataframe)</a>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.MapValues.mapping_dict">mapping_dict (seroflow.transform.dataframe.MapValues attribute)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.MeltDataFrame">MeltDataFrame (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.dataframe.MeltDataFrame">(class in seroflow.transform.dataframe)</a>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.MapValues">MapValues (class in seroflow.transform.dataframe)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.MergeColumns">MergeColumns (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.column.MergeColumns">(class in seroflow.transform.column)</a>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.MeltDataFrame">MeltDataFrame (class in seroflow.transform.dataframe)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.MergeDataFrames">MergeDataFrames (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.dataframe.MergeDataFrames">(class in seroflow.transform.dataframe)</a>
+      <li><a href="docs/transform.html#seroflow.transform.column.MergeColumns">MergeColumns (class in seroflow.transform.column)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/context.html#id4">metadata (seroflow.context.context.Context attribute)</a>, <a href="docs/context.html#seroflow.context.context.Context.metadata">[1]</a>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.MergeDataFrames">MergeDataFrames (class in seroflow.transform.dataframe)</a>
+</li>
+      <li><a href="docs/context.html#id5">metadata (seroflow.context.context.Context attribute)</a>, <a href="docs/context.html#seroflow.context.context.Context.metadata">[1]</a>
 </li>
       <li><a href="docs/seroflow.html#seroflow.Pipeline.mode">mode (seroflow.Pipeline attribute)</a>
 
       <ul>
-        <li><a href="docs/seroflow.html#id5">(seroflow.Pipeline property)</a>
+        <li><a href="docs/seroflow.html#id6">(seroflow.Pipeline property)</a>
 </li>
       </ul></li>
       <li>
@@ -1804,8 +1292,6 @@
 
       <ul>
         <li><a href="docs/context.html#module-seroflow.context.context">seroflow.context.context</a>
-</li>
-        <li><a href="docs/transform.html#module-seroflow.transform">seroflow.transform</a>
 </li>
         <li><a href="docs/transform.html#module-seroflow.transform.aggregation">seroflow.transform.aggregation</a>
 </li>
@@ -1819,8 +1305,6 @@
 </li>
         <li><a href="docs/transform.html#module-seroflow.transform.display">seroflow.transform.display</a>
 </li>
-        <li><a href="docs/transform.html#module-seroflow.transform.execution">seroflow.transform.execution</a>
-</li>
         <li><a href="docs/transform.html#module-seroflow.transform.index">seroflow.transform.index</a>
 </li>
         <li><a href="docs/transform.html#module-seroflow.transform.internal">seroflow.transform.internal</a>
@@ -1828,8 +1312,6 @@
         <li><a href="docs/transform.html#module-seroflow.transform.sql">seroflow.transform.sql</a>
 </li>
         <li><a href="docs/transform.html#module-seroflow.transform.string">seroflow.transform.string</a>
-</li>
-        <li><a href="docs/transform.html#module-seroflow.transform.transformation">seroflow.transform.transformation</a>
 </li>
         <li><a href="docs/transform.html#module-seroflow.transform.variable">seroflow.transform.variable</a>
 </li>
@@ -1854,50 +1336,36 @@
 </li>
       <li><a href="docs/extract.html#seroflow.extract.file_extractor.MultiFileExtractor">MultiFileExtractor (class in seroflow.extract.file_extractor)</a>
 </li>
-      <li><a href="docs/transform.html#seroflow.transform.MultiplyVariable.multiply_by">multiply_by (seroflow.transform.MultiplyVariable attribute)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.variable.MultiplyVariable.multiply_by">(seroflow.transform.variable.MultiplyVariable attribute)</a>
+      <li><a href="docs/transform.html#seroflow.transform.variable.MultiplyVariable.multiply_by">multiply_by (seroflow.transform.variable.MultiplyVariable attribute)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.MultiplyVariable">MultiplyVariable (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.variable.MultiplyVariable">(class in seroflow.transform.variable)</a>
+      <li><a href="docs/transform.html#seroflow.transform.variable.MultiplyVariable">MultiplyVariable (class in seroflow.transform.variable)</a>
 </li>
-      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="N">N</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/transform.html#seroflow.transform.display.DisplayHead.n">n (seroflow.transform.display.DisplayHead attribute)</a>
+
+      <ul>
+        <li><a href="docs/transform.html#seroflow.transform.display.DisplayTail.n">(seroflow.transform.display.DisplayTail attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="docs/transform.html#seroflow.transform.internal.AddDataFrame.name">name (seroflow.transform.internal.AddDataFrame attribute)</a>
+</li>
       <li><a href="docs/transform.html#seroflow.transform.column.MergeColumns.new_column">new_column (seroflow.transform.column.MergeColumns attribute)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.MergeColumns.new_column">(seroflow.transform.MergeColumns attribute)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.column.SplitColumn.new_columns">new_columns (seroflow.transform.column.SplitColumn attribute)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.SplitColumn.new_columns">(seroflow.transform.SplitColumn attribute)</a>
-</li>
-      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/transform.html#seroflow.transform.column.SplitColumn.new_columns">new_columns (seroflow.transform.column.SplitColumn attribute)</a>
+</li>
+      <li><a href="docs/transform.html#seroflow.transform.internal.RenameDataFrame.new_name">new_name (seroflow.transform.internal.RenameDataFrame attribute)</a>
+</li>
       <li><a href="docs/transform.html#seroflow.transform.column.ConvertColumnType.new_type">new_type (seroflow.transform.column.ConvertColumnType attribute)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.ConvertColumnType.new_type">(seroflow.transform.ConvertColumnType attribute)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.CopyVariable.new_variable">new_variable (seroflow.transform.CopyVariable attribute)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.variable.CopyVariable.new_variable">(seroflow.transform.variable.CopyVariable attribute)</a>
+      <li><a href="docs/transform.html#seroflow.transform.variable.CopyVariable.new_variable">new_variable (seroflow.transform.variable.CopyVariable attribute)</a>
 </li>
-      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -1908,14 +1376,22 @@
 </li>
       <li><a href="docs/load.html#seroflow.load.odbc_loader.ODBCLoader">ODBCLoader (class in seroflow.load.odbc_loader)</a>
 </li>
-      <li><a href="docs/transform.html#seroflow.transform.OneHotEncode">OneHotEncode (class in seroflow.transform)</a>
+      <li><a href="docs/transform.html#seroflow.transform.internal.RenameDataFrame.old_name">old_name (seroflow.transform.internal.RenameDataFrame attribute)</a>
+</li>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.JoinDataFrames.on">on (seroflow.transform.dataframe.JoinDataFrames attribute)</a>
 
       <ul>
-        <li><a href="docs/transform.html#seroflow.transform.dataframe.OneHotEncode">(class in seroflow.transform.dataframe)</a>
+        <li><a href="docs/transform.html#seroflow.transform.dataframe.MergeDataFrames.on">(seroflow.transform.dataframe.MergeDataFrames attribute)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.OneHotEncode">OneHotEncode (class in seroflow.transform.dataframe)</a>
+</li>
+      <li><a href="docs/transform.html#seroflow.transform.sql.SQLQuery.output_dataframe_name">output_dataframe_name (seroflow.transform.sql.SQLQuery attribute)</a>
+</li>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.MergeDataFrames.output_name">output_name (seroflow.transform.dataframe.MergeDataFrames attribute)</a>
+</li>
       <li><a href="docs/step.html#seroflow.step.step.Step.override_params_list">override_params_list() (seroflow.step.step.Step method)</a>
 </li>
       <li><a href="docs/step.html#seroflow.step.step.Step.override_return_list">override_return_list() (seroflow.step.step.Step method)</a>
@@ -1929,23 +1405,19 @@
       <li><a href="docs/seroflow.html#seroflow.Pipeline.parameter_index">parameter_index (seroflow.Pipeline attribute)</a>
 
       <ul>
-        <li><a href="docs/seroflow.html#id6">(seroflow.Pipeline property)</a>
+        <li><a href="docs/seroflow.html#id7">(seroflow.Pipeline property)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.cache.CacheState.parameter_index">(seroflow.transform.cache.CacheState attribute)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.CacheState.parameter_index">(seroflow.transform.CacheState attribute)</a>
-</li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/seroflow.html#seroflow.Pipeline">Pipeline (class in seroflow)</a>
 </li>
-      <li><a href="docs/transform.html#seroflow.transform.PivotDataFrame">PivotDataFrame (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.dataframe.PivotDataFrame">(class in seroflow.transform.dataframe)</a>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.PivotDataFrame">PivotDataFrame (class in seroflow.transform.dataframe)</a>
 </li>
-      </ul></li>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.JoinDataFrames.primary_dataframe">primary_dataframe (seroflow.transform.dataframe.JoinDataFrames attribute)</a>
+</li>
       <li><a href="docs/cache.html#seroflow.cache.cache.AbstractCache.put">put() (seroflow.cache.cache.AbstractCache method)</a>
 
       <ul>
@@ -1959,11 +1431,11 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColQuantile.quantile">quantile (seroflow.transform.aggregation.GetColQuantile attribute)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.GetColQuantile.quantile">(seroflow.transform.GetColQuantile attribute)</a>
 </li>
-      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/transform.html#seroflow.transform.sql.SQLQuery.query">query (seroflow.transform.sql.SQLQuery attribute)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -1976,58 +1448,26 @@
 </li>
       <li><a href="docs/seroflow.html#seroflow.Pipeline.reload_cached_state">reload_cached_state() (seroflow.Pipeline method)</a>
 </li>
-      <li><a href="docs/transform.html#seroflow.transform.ReloadCacheState">ReloadCacheState (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.cache.ReloadCacheState">(class in seroflow.transform.cache)</a>
+      <li><a href="docs/transform.html#seroflow.transform.cache.ReloadCacheState">ReloadCacheState (class in seroflow.transform.cache)</a>
 </li>
-      </ul></li>
       <li><a href="docs/utils.html#seroflow.utils.utils.remove_extension">remove_extension() (in module seroflow.utils.utils)</a>
 </li>
-      <li><a href="docs/transform.html#seroflow.transform.RemoveCharacterFromColumn">RemoveCharacterFromColumn (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.string.RemoveCharacterFromColumn">(class in seroflow.transform.string)</a>
+      <li><a href="docs/transform.html#seroflow.transform.string.RemoveCharacterFromColumn">RemoveCharacterFromColumn (class in seroflow.transform.string)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.RemoveCharactersFromColumn">RemoveCharactersFromColumn (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.string.RemoveCharactersFromColumn">(class in seroflow.transform.string)</a>
+      <li><a href="docs/transform.html#seroflow.transform.string.RemoveCharactersFromColumn">RemoveCharactersFromColumn (class in seroflow.transform.string)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.RenameColumns">RenameColumns (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.column.RenameColumns">(class in seroflow.transform.column)</a>
+      <li><a href="docs/transform.html#seroflow.transform.column.RenameColumns">RenameColumns (class in seroflow.transform.column)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.RenameDataFrame">RenameDataFrame (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.internal.RenameDataFrame">(class in seroflow.transform.internal)</a>
+      <li><a href="docs/transform.html#seroflow.transform.internal.RenameDataFrame">RenameDataFrame (class in seroflow.transform.internal)</a>
 </li>
-      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="docs/transform.html#seroflow.transform.ReplaceStringInColumn.replacement">replacement (seroflow.transform.ReplaceStringInColumn attribute)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.string.ReplaceStringInColumn.replacement">(seroflow.transform.string.ReplaceStringInColumn attribute)</a>
+      <li><a href="docs/transform.html#seroflow.transform.string.ReplaceStringInColumn.replacement">replacement (seroflow.transform.string.ReplaceStringInColumn attribute)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.ReplaceStringInColumn">ReplaceStringInColumn (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.string.ReplaceStringInColumn">(class in seroflow.transform.string)</a>
+      <li><a href="docs/transform.html#seroflow.transform.string.ReplaceStringInColumn">ReplaceStringInColumn (class in seroflow.transform.string)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.ReplaceValues">ReplaceValues (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.dataframe.ReplaceValues">(class in seroflow.transform.dataframe)</a>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.ReplaceValues">ReplaceValues (class in seroflow.transform.dataframe)</a>
 </li>
-      </ul></li>
       <li><a href="docs/cache.html#seroflow.cache.cache.AbstractCache.reset">reset() (seroflow.cache.cache.AbstractCache method)</a>
 
       <ul>
@@ -2036,18 +1476,14 @@
       </ul></li>
       <li><a href="docs/seroflow.html#seroflow.Pipeline.reset_cache">reset_cache() (seroflow.Pipeline method)</a>
 </li>
-      <li><a href="docs/transform.html#seroflow.transform.ResetCache">ResetCache (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.cache.ResetCache">(class in seroflow.transform.cache)</a>
+      <li><a href="docs/transform.html#seroflow.transform.cache.ResetCache">ResetCache (class in seroflow.transform.cache)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.ResetIndex">ResetIndex (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.index.ResetIndex">(class in seroflow.transform.index)</a>
+      <li><a href="docs/transform.html#seroflow.transform.index.ResetIndex">ResetIndex (class in seroflow.transform.index)</a>
 </li>
-      </ul></li>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.MergeDataFrames.right_dataframe">right_dataframe (seroflow.transform.dataframe.MergeDataFrames attribute)</a>
+</li>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.JoinDataFrames.rsuffix">rsuffix (seroflow.transform.dataframe.JoinDataFrames attribute)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -2056,30 +1492,17 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/chunker.html#seroflow.chunker.chunker.Chunker.save">save() (seroflow.chunker.chunker.Chunker method)</a>
 </li>
-      <li><a href="docs/transform.html#seroflow.transform.SelectColumns">SelectColumns (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.dataframe.SelectColumns">(class in seroflow.transform.dataframe)</a>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.JoinDataFrames.secondary_dataframe">secondary_dataframe (seroflow.transform.dataframe.JoinDataFrames attribute)</a>
 </li>
-      </ul></li>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.SelectColumns">SelectColumns (class in seroflow.transform.dataframe)</a>
+</li>
       <li><a href="docs/transform.html#seroflow.transform.column.MergeColumns.separator">separator (seroflow.transform.column.MergeColumns attribute)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.MergeColumns.separator">(seroflow.transform.MergeColumns attribute)</a>
 </li>
-      </ul></li>
       <li>
     seroflow.context.context
 
       <ul>
         <li><a href="docs/context.html#module-seroflow.context.context">module</a>
-</li>
-      </ul></li>
-      <li>
-    seroflow.transform
-
-      <ul>
-        <li><a href="docs/transform.html#module-seroflow.transform">module</a>
 </li>
       </ul></li>
       <li>
@@ -2125,13 +1548,6 @@
 </li>
       </ul></li>
       <li>
-    seroflow.transform.execution
-
-      <ul>
-        <li><a href="docs/transform.html#module-seroflow.transform.execution">module</a>
-</li>
-      </ul></li>
-      <li>
     seroflow.transform.index
 
       <ul>
@@ -2157,13 +1573,6 @@
 
       <ul>
         <li><a href="docs/transform.html#module-seroflow.transform.string">module</a>
-</li>
-      </ul></li>
-      <li>
-    seroflow.transform.transformation
-
-      <ul>
-        <li><a href="docs/transform.html#module-seroflow.transform.transformation">module</a>
 </li>
       </ul></li>
       <li>
@@ -2196,40 +1605,26 @@
       </ul></li>
       <li><a href="docs/context.html#seroflow.context.context.Context.set_context_name">set_context_name() (seroflow.context.context.Context method)</a>
 </li>
-      <li><a href="docs/context.html#seroflow.context.context.Context.set_dataframe">set_dataframe() (seroflow.context.context.Context method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/context.html#seroflow.context.context.Context.set_dataframe">set_dataframe() (seroflow.context.context.Context method)</a>
+</li>
       <li><a href="docs/context.html#seroflow.context.context.Context.set_metadata">set_metadata() (seroflow.context.context.Context method)</a>
 </li>
-      <li><a href="docs/transform.html#seroflow.transform.SetIndex">SetIndex (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.index.SetIndex">(class in seroflow.transform.index)</a>
+      <li><a href="docs/transform.html#seroflow.transform.index.SetIndex">SetIndex (class in seroflow.transform.index)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.SortDataFrame">SortDataFrame (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.dataframe.SortDataFrame">(class in seroflow.transform.dataframe)</a>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.SortDataFrame">SortDataFrame (class in seroflow.transform.dataframe)</a>
 </li>
-      </ul></li>
+      <li><a href="docs/transform.html#seroflow.transform.internal.CopyDataFrame.source_dataframe">source_dataframe (seroflow.transform.internal.CopyDataFrame attribute)</a>
+</li>
       <li><a href="docs/utils.html#seroflow.utils.utils.split_last_delimiter">split_last_delimiter() (in module seroflow.utils.utils)</a>
 </li>
-      <li><a href="docs/transform.html#seroflow.transform.SplitColumn">SplitColumn (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.column.SplitColumn">(class in seroflow.transform.column)</a>
+      <li><a href="docs/transform.html#seroflow.transform.column.SplitColumn">SplitColumn (class in seroflow.transform.column)</a>
 </li>
-      </ul></li>
       <li><a href="docs/engine.html#seroflow.engine.sqlalchemy_engine.SQLAlchemyEngine">SQLAlchemyEngine (class in seroflow.engine.sqlalchemy_engine)</a>
 </li>
-      <li><a href="docs/transform.html#seroflow.transform.SQLQuery">SQLQuery (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.sql.SQLQuery">(class in seroflow.transform.sql)</a>
+      <li><a href="docs/transform.html#seroflow.transform.sql.SQLQuery">SQLQuery (class in seroflow.transform.sql)</a>
 </li>
-      </ul></li>
       <li><a href="docs/extract.html#seroflow.extract.sqlserver_extractor.SQLServerExtractor">SQLServerExtractor (class in seroflow.extract.sqlserver_extractor)</a>
 </li>
       <li><a href="docs/load.html#seroflow.load.sqlserver_loader.SQLServerLoader">SQLServerLoader (class in seroflow.load.sqlserver_loader)</a>
@@ -2249,14 +1644,6 @@
 </li>
         <li><a href="docs/transform.html#seroflow.transform.cache.ResetCache.start_step">(seroflow.transform.cache.ResetCache method)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.CacheState.start_step">(seroflow.transform.CacheState method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ReloadCacheState.start_step">(seroflow.transform.ReloadCacheState method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ResetCache.start_step">(seroflow.transform.ResetCache method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.Transformation.start_step">(seroflow.transform.Transformation method)</a>
-</li>
         <li><a href="docs/transform.html#seroflow.transform.transformation.Transformation.start_step">(seroflow.transform.transformation.Transformation method)</a>
 </li>
       </ul></li>
@@ -2265,13 +1652,13 @@
       <li><a href="docs/seroflow.html#seroflow.Pipeline.step_index">step_index (seroflow.Pipeline attribute)</a>
 
       <ul>
-        <li><a href="docs/seroflow.html#id7">(seroflow.Pipeline property)</a>
+        <li><a href="docs/seroflow.html#id8">(seroflow.Pipeline property)</a>
 </li>
       </ul></li>
       <li><a href="docs/seroflow.html#seroflow.Pipeline.step_name_index">step_name_index (seroflow.Pipeline attribute)</a>
 
       <ul>
-        <li><a href="docs/seroflow.html#id8">(seroflow.Pipeline property)</a>
+        <li><a href="docs/seroflow.html#id9">(seroflow.Pipeline property)</a>
 </li>
       </ul></li>
       <li><a href="docs/extract.html#seroflow.extract.extractor.Extractor.stop_step">stop_step() (seroflow.extract.extractor.Extractor method)</a>
@@ -2289,14 +1676,6 @@
 </li>
         <li><a href="docs/transform.html#seroflow.transform.cache.ResetCache.stop_step">(seroflow.transform.cache.ResetCache method)</a>
 </li>
-        <li><a href="docs/transform.html#seroflow.transform.CacheState.stop_step">(seroflow.transform.CacheState method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ReloadCacheState.stop_step">(seroflow.transform.ReloadCacheState method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.ResetCache.stop_step">(seroflow.transform.ResetCache method)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.Transformation.stop_step">(seroflow.transform.Transformation method)</a>
-</li>
         <li><a href="docs/transform.html#seroflow.transform.transformation.Transformation.stop_step">(seroflow.transform.transformation.Transformation method)</a>
 </li>
       </ul></li>
@@ -2306,12 +1685,18 @@
         <li><a href="docs/cache.html#seroflow.cache.lfu_cache.LFUCache.store">(seroflow.cache.lfu_cache.LFUCache method)</a>
 </li>
       </ul></li>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.DropDuplicates.subset">subset (seroflow.transform.dataframe.DropDuplicates attribute)</a>
+</li>
+      <li><a href="docs/transform.html#seroflow.transform.display.DisplaySubstringOccurrence.substring">substring (seroflow.transform.display.DisplaySubstringOccurrence attribute)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/transform.html#seroflow.transform.internal.CopyDataFrame.target_dataframe">target_dataframe (seroflow.transform.internal.CopyDataFrame attribute)</a>
+</li>
       <li><a href="docs/seroflow.html#seroflow.Pipeline.target_extractor">target_extractor (seroflow.Pipeline property)</a>
 </li>
       <li><a href="docs/seroflow.html#seroflow.Pipeline.target_loader">target_loader (seroflow.Pipeline property)</a>
@@ -2324,28 +1709,20 @@
         <li><a href="docs/engine.html#seroflow.engine.sqlalchemy_engine.SQLAlchemyEngine.test_engine">(seroflow.engine.sqlalchemy_engine.SQLAlchemyEngine method)</a>
 </li>
       </ul></li>
-      <li><a href="docs/wrappers.html#seroflow.wrappers.wrappers.timer">timer() (in module seroflow.wrappers.wrappers)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="docs/transform.html#seroflow.transform.ReplaceStringInColumn.to_replace">to_replace (seroflow.transform.ReplaceStringInColumn attribute)</a>
+      <li><a href="docs/wrappers.html#seroflow.wrappers.wrappers.timer">timer() (in module seroflow.wrappers.wrappers)</a>
+</li>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.ReplaceValues.to_replace">to_replace (seroflow.transform.dataframe.ReplaceValues attribute)</a>
 
       <ul>
         <li><a href="docs/transform.html#seroflow.transform.string.ReplaceStringInColumn.to_replace">(seroflow.transform.string.ReplaceStringInColumn attribute)</a>
 </li>
       </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.Transformation">Transformation (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.transformation.Transformation">(class in seroflow.transform.transformation)</a>
+      <li><a href="docs/transform.html#seroflow.transform.transformation.Transformation">Transformation (class in seroflow.transform.transformation)</a>
 </li>
-      </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.TransposeDataFrame">TransposeDataFrame (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.dataframe.TransposeDataFrame">(class in seroflow.transform.dataframe)</a>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.TransposeDataFrame">TransposeDataFrame (class in seroflow.transform.dataframe)</a>
 </li>
-      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -2356,34 +1733,36 @@
 </li>
       <li><a href="docs/cache.html#seroflow.cache.lfu_cache.LFUCache.update_config">update_config() (seroflow.cache.lfu_cache.LFUCache method)</a>
 </li>
-      <li><a href="docs/step.html#seroflow.step.step.Step.update_params_list">update_params_list() (seroflow.step.step.Step method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/step.html#seroflow.step.step.Step.update_params_list">update_params_list() (seroflow.step.step.Step method)</a>
+</li>
       <li><a href="docs/step.html#seroflow.step.step.Step.update_return_list">update_return_list() (seroflow.step.step.Step method)</a>
 </li>
-      <li><a href="docs/transform.html#seroflow.transform.UpdateVariable">UpdateVariable (class in seroflow.transform)</a>
-
-      <ul>
-        <li><a href="docs/transform.html#seroflow.transform.variable.UpdateVariable">(class in seroflow.transform.variable)</a>
+      <li><a href="docs/transform.html#seroflow.transform.variable.UpdateVariable">UpdateVariable (class in seroflow.transform.variable)</a>
 </li>
-      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="docs/transform.html#seroflow.transform.CreateVariable.value">value (seroflow.transform.CreateVariable attribute)</a>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.ReplaceValues.value">value (seroflow.transform.dataframe.ReplaceValues attribute)</a>
 
       <ul>
-        <li><a href="docs/transform.html#seroflow.transform.UpdateVariable.value">(seroflow.transform.UpdateVariable attribute)</a>
-</li>
         <li><a href="docs/transform.html#seroflow.transform.variable.CreateVariable.value">(seroflow.transform.variable.CreateVariable attribute)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.variable.UpdateVariable.value">(seroflow.transform.variable.UpdateVariable attribute)</a>
 </li>
       </ul></li>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.MeltDataFrame.value_name">value_name (seroflow.transform.dataframe.MeltDataFrame attribute)</a>
+</li>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.MeltDataFrame.value_vars">value_vars (seroflow.transform.dataframe.MeltDataFrame attribute)</a>
+</li>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.PivotDataFrame.values">values (seroflow.transform.dataframe.PivotDataFrame attribute)</a>
+</li>
+      <li><a href="docs/transform.html#seroflow.transform.dataframe.MeltDataFrame.var_name">var_name (seroflow.transform.dataframe.MeltDataFrame attribute)</a>
+</li>
       <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColCorrelation.variable">variable (seroflow.transform.aggregation.GetColCorrelation attribute)</a>
 
       <ul>
@@ -2406,42 +1785,6 @@
         <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColVariance.variable">(seroflow.transform.aggregation.GetColVariance attribute)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.column.CreateColumnFromVariable.variable">(seroflow.transform.column.CreateColumnFromVariable attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.CopyVariable.variable">(seroflow.transform.CopyVariable attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.CreateColumnFromVariable.variable">(seroflow.transform.CreateColumnFromVariable attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.CreateVariable.variable">(seroflow.transform.CreateVariable attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DecrementVariable.variable">(seroflow.transform.DecrementVariable attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.DivideVariable.variable">(seroflow.transform.DivideVariable attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColCorrelation.variable">(seroflow.transform.GetColCorrelation attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColCovariance.variable">(seroflow.transform.GetColCovariance attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColMean.variable">(seroflow.transform.GetColMean attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColMedian.variable">(seroflow.transform.GetColMedian attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColMode.variable">(seroflow.transform.GetColMode attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColQuantile.variable">(seroflow.transform.GetColQuantile attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColSkew.variable">(seroflow.transform.GetColSkew attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColStd.variable">(seroflow.transform.GetColStd attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColSum.variable">(seroflow.transform.GetColSum attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.GetColVariance.variable">(seroflow.transform.GetColVariance attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.IncrementVariable.variable">(seroflow.transform.IncrementVariable attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.MultiplyVariable.variable">(seroflow.transform.MultiplyVariable attribute)</a>
-</li>
-        <li><a href="docs/transform.html#seroflow.transform.UpdateVariable.variable">(seroflow.transform.UpdateVariable attribute)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.variable.CopyVariable.variable">(seroflow.transform.variable.CopyVariable attribute)</a>
 </li>

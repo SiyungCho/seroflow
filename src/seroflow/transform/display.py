@@ -1,73 +1,81 @@
 """
-Module: display.py
+This module implements a suite of transformation classes that displays key information of a DataFrame.
+Each transformation class extends the base ``Transformation`` class and is designed to operate on a specified DataFrame stored in the ``Pipeline`` context.
+The available transformations include:
 
-This module implements a variety of transformations for displaying information about DataFrames.
-These transformations are primarily used for debugging and exploratory data analysis.
-They print various aspects of a DataFrame, including its shape, column names, data types,
-head, tail, and statistical summaries. Each transformation class extends the base Transformation 
-class and is designed to operate on one or more DataFrames stored in the Pipeline context.
- 
-Classes:
-    DisplayInfo: Prints basic information (shape, columns, and data types) for DataFrame.
-    DisplayColumns: Prints the list of column names for DataFrame.
-    DisplayHead: Prints the first N rows of DataFrame.
-    DisplayTail: Prints the last N rows of DataFrame.
-    DisplayColumnMean: Displays the mean of a specified column for DataFrame.
-    DisplayColumnMedian: Displays the median of a specified column for DataFrame.
-    DisplayColumnMode: Displays the mode(s) of a specified column for DataFrame.
-    DisplayColumnVariance: Displays the variance of a specified column for DataFrame.
-    DisplayColumnStdDev: Displays the standard deviation of a specified column for DataFrame.
-    DisplayColumnSum: Displays the sum of a specified column for DataFrame.
-    DisplayColumnMin: Displays the minimum value of a specified column for DataFrame.
-    DisplayColumnMax: Displays the maximum value of a specified column for DataFrame.
-    DisplayColumnCount: Displays the count of non-null values in a specified column for DataFrame.
-    DisplayColumnUnique: Displays the unique values in a specified column for DataFrame.
-    DisplayColumnNUnique: Displays the number of unique values in a specified column
-                          for DataFrame.
-    DisplayColumnDType: Displays the data type of a specified column for DataFrame.
-    DisplayStringCount: Displays the value counts for a specified column in DataFrame.
-    DisplayMostFrequentString: Displays the most frequent item(s) in a specified column
-                               for DataFrame.
-    DisplayAllCategories: Displays all unique categories in a specified column for DataFrame.
-    DisplaySubstringOccurrence: Counts and displays occurrences of substring in a specified
-                                column for DataFrame.
+- **DisplayInfo**: Prints basic information (shape, columns, and data types) for each DataFrame.
+- **DisplayColumns**: Prints the list of column names for each DataFrame.
+- **DisplayHead**: Prints the first N rows of each DataFrame.
+- **DisplayTail**: Prints the last N rows of each DataFrame.
+- **DisplayColumnMean**: Displays the mean of a specified column for each DataFrame.
+- **DisplayColumnMedian**: Displays the median of a specified column for each DataFrame.
+- **DisplayColumnMode**: Displays the mode(s) of a specified column for each DataFrame.
+- **DisplayColumnVariance**: Displays the variance of a specified column for each DataFrame.
+- **DisplayColumnStdDev**: Displays the standard deviation of a specified column for each DataFrame.
+- **DisplayColumnSum**: Displays the sum of a specified column for each DataFrame.
+- **DisplayColumnMin**: Displays the minimum value of a specified column for each DataFrame.
+- **DisplayColumnMax**: Displays the maximum value of a specified column for each DataFrame.
+- **DisplayColumnCount**: Displays the count of non-null values in a specified column for each DataFrame.
+- **DisplayColumnUnique**: Displays the unique values in a specified column for each DataFrame.
+- **DisplayColumnNUnique**: Displays the number of unique values in a specified column for each DataFrame.
+- **DisplayColumnDType**: Displays the data type of a specified column for each DataFrame.
+- **DisplayStringCount**: Displays the value counts for a specified column in each DataFrame.
+- **DisplayMostFrequentString**: Displays the most frequent item(s) in a specified column for each DataFrame.
+- **DisplayAllCategories**: Displays all unique categories in a specified column for each DataFrame.
+- **DisplaySubstringOccurrence**: Counts and displays the total occurrences of a substring in a specified column for each DataFrame.
+
+It is important to note that these classes are purely visual and meant solely to view information.
+Future versions will seek to store the display results into variables/log the display results via ``logging.logger``.
 """
 
 #Need to configure to work with logger
 #Need to have save_to_variable property
-
 from .transformation import Transformation
+
 
 class DisplayInfo(Transformation):
     """
-    DisplayInfo
-
     Prints general information about each DataFrame in the context, including its shape,
     column names, and data types.
-    """
-    def __init__(self,
-                 dataframes,
-                 step_name="DisplayInfo"):
-        """
-        Initializes the DisplayInfo transformation.
 
-        Arguments:
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``DisplayInfo``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import DisplayInfo
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... # Add Extractor which gathers dataframes called 'states' and 'regions'
+
+        display_info = DisplayInfo(dataframes=['states', 'regions']) # Initialize the DisplayInfo Step
+
+        pipeline.add_steps([display_info])
+        pipeline.execute()
+
+    Attributes:
+        dataframes (str or list): The name(s) of the DataFrame(s) in the context.
+    """
+
+    def __init__(self, dataframes, step_name="DisplayInfo"):
+        """Initialize the ``DisplayInfo`` transformation.
+
+        Args:
             dataframes (str or list): The name(s) of the DataFrame(s) in the context.
             step_name (str, optional): The name of this transformation step.
-                                       Defaults to "DisplayInfo".
+                Defaults to "DisplayInfo".
         """
-        super().__init__(step_name=step_name,
-                         func=self.func,
-                         dataframes=dataframes)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframes)
 
     def func(self, context):
-        """
-        Executes the DisplayInfo transformation.
+        """Execute the ``DisplayInfo`` transformation.
 
         Iterates over each DataFrame in the context and prints its shape, columns,
         and data types.
 
-        Arguments:
+        Args:
             context (Context): The context containing the DataFrames.
         """
         for dataframe_name, df in context.dataframes.items():
@@ -77,34 +85,48 @@ class DisplayInfo(Transformation):
             print(df.dtypes)
             print("-" * 50)
 
+
 class DisplayColumns(Transformation):
     """
-    DisplayColumns
-
     Prints the list of column names for each DataFrame in the context.
-    """
-    def __init__(self,
-                 dataframes,
-                 step_name="DisplayColumns"):
-        """
-        Initializes the DisplayColumns transformation.
 
-        Arguments:
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``DisplayColumns``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import DisplayColumns
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'sales'
+
+        display_columns = DisplayColumns(dataframes='sales')  # Initialize the DisplayColumns step
+
+        pipeline.add_steps([display_columns])
+        pipeline.execute()
+
+    Attributes:
+        dataframes (str or list): The name(s) of the DataFrame(s) in the context.
+    """
+
+    def __init__(self, dataframes, step_name="DisplayColumns"):
+        """Initialize the ``DisplayColumns`` transformation.
+
+        Args:
             dataframes (str or list): The name(s) of the DataFrame(s) in the context.
             step_name (str, optional): The name of this transformation step.
-                                       Defaults to "DisplayColumns".
+                Defaults to "DisplayColumns".
         """
-        super().__init__(step_name=step_name,
-                         func=self.func,
-                         dataframes=dataframes)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframes)
 
     def func(self, context):
-        """
-        Executes the DisplayColumns transformation.
+        """Execute the ``DisplayColumns`` transformation.
 
         Iterates over each DataFrame in the context and prints its column names.
 
-        Arguments:
+        Args:
             context (Context): The context containing the DataFrames.
         """
         for dataframe_name, df in context.dataframes.items():
@@ -112,37 +134,52 @@ class DisplayColumns(Transformation):
             print(list(df.columns))
             print("-" * 50)
 
+
 class DisplayHead(Transformation):
     """
-    DisplayHead
-
     Prints the first N rows of each DataFrame in the context.
-    """
-    def __init__(self,
-                 dataframes,
-                 n=5,
-                 step_name="DisplayHead"):
-        """
-        Initializes the DisplayHead transformation.
 
-        Arguments:
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``DisplayHead``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import DisplayHead
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'employees'
+
+        display_head = DisplayHead(dataframes='employees', n=10)  # Initialize the DisplayHead step to show first 10 rows
+
+        pipeline.add_steps([display_head])
+        pipeline.execute()
+
+    Attributes:
+        dataframes (str or list): The name(s) of the DataFrame(s) in the context.
+        n (int): Number of rows to display from the top.
+    """
+
+    def __init__(self, dataframes, n=5, step_name="DisplayHead"):
+        """Initialize the ``DisplayHead`` transformation.
+
+        Args:
             dataframes (str or list): The name(s) of the DataFrame(s) in the context.
-            n (int, optional): Number of rows to display from the top. Defaults to 5.
+            n (int, optional): Number of rows to display from the top.
+                Defaults to 5.
             step_name (str, optional): The name of this transformation step.
-                                       Defaults to "DisplayHead".
+                Defaults to "DisplayHead".
         """
         self.n = n
-        super().__init__(step_name=step_name,
-                         func=self.func,
-                         dataframes=dataframes)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframes)
 
     def func(self, context):
-        """
-        Executes the DisplayHead transformation.
+        """Execute the ``DisplayHead`` transformation.
 
         Iterates over each DataFrame in the context and prints the first n rows.
 
-        Arguments:
+        Args:
             context (Context): The context containing the DataFrames.
         """
         for dataframe_name, df in context.dataframes.items():
@@ -152,36 +189,49 @@ class DisplayHead(Transformation):
 
 class DisplayTail(Transformation):
     """
-    DisplayTail
-
     Prints the last N rows of each DataFrame in the context.
-    """
-    def __init__(self,
-                 dataframes,
-                 n=5,
-                 step_name="DisplayTail"):
-        """
-        Initializes the DisplayTail transformation.
 
-        Arguments:
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``DisplayTail``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import DisplayTail
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'orders'
+
+        display_tail = DisplayTail(dataframes='orders', n=5)  # Initialize the DisplayTail step
+
+        pipeline.add_steps([display_tail])
+        pipeline.execute()
+
+    Attributes:
+        dataframes (str or list): The name(s) of the DataFrame(s) in the context.
+        n (int): Number of rows to display from the bottom.
+    """
+
+    def __init__(self, dataframes, n=5, step_name="DisplayTail"):
+        """Initialize the ``DisplayTail`` transformation.
+
+        Args:
             dataframes (str or list): The name(s) of the DataFrame(s) in the context.
             n (int, optional): Number of rows to display from the bottom.
-                               Defaults to 5.
+                Defaults to 5.
             step_name (str, optional): The name of this transformation step.
-                                       Defaults to "DisplayTail".
+                Defaults to "DisplayTail".
         """
         self.n = n
-        super().__init__(step_name=step_name,
-                         func=self.func,
-                         dataframes=dataframes)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframes)
 
     def func(self, context):
-        """
-        Executes the DisplayTail transformation.
+        """Execute the ``DisplayTail`` transformation.
 
         Iterates over each DataFrame in the context and prints the last n rows.
 
-        Arguments:
+        Args:
             context (Context): The context containing the DataFrames.
         """
         for dataframe_name, df in context.dataframes.items():
@@ -191,36 +241,49 @@ class DisplayTail(Transformation):
 
 class DisplayColumnMean(Transformation):
     """
-    DisplayColumnMean
-
     Displays the mean of a specified column for each DataFrame in the context.
-    """
-    def __init__(self,
-                 dataframes,
-                 column,
-                 step_name="DisplayColumnMean"):
-        """
-        Initializes the DisplayColumnMean transformation.
 
-        Arguments:
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``DisplayColumnMean``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import DisplayColumnMean
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'metrics' with a 'score' column
+
+        display_mean = DisplayColumnMean(dataframes='metrics', column='score')  # Initialize the DisplayColumnMean step
+
+        pipeline.add_steps([display_mean])
+        pipeline.execute()
+
+    Attributes:
+        dataframes (str or list): The name(s) of the DataFrame(s) in the context.
+        column (str or int): The column name or index for which the mean is to be computed.
+    """
+
+    def __init__(self, dataframes, column, step_name="DisplayColumnMean"):
+        """Initialize the ``DisplayColumnMean`` transformation.
+
+        Args:
             dataframes (str or list): The name(s) of the DataFrame(s) in the context.
             column (str or int): The column name or index for which the mean is to be computed.
             step_name (str, optional): The name of this transformation step.
-                                       Defaults to "DisplayColumnMean".
+                Defaults to "DisplayColumnMean".
         """
         self.column = column
-        super().__init__(step_name=step_name,
-                         func=self.func,
-                         dataframes=dataframes)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframes)
 
     def func(self, context):
-        """
-        Executes the DisplayColumnMean transformation.
+        """Execute the ``DisplayColumnMean`` transformation.
 
         Iterates over each DataFrame in the context, computes the mean of the specified column,
         and prints the result.
 
-        Arguments:
+        Args:
             context (Context): The context containing the DataFrames.
         """
         for dataframe_name, df in context.dataframes.items():
@@ -232,10 +295,9 @@ class DisplayColumnMean(Transformation):
                 print(f"---- [{dataframe_name}] Mean of column '{col_name}': {mean_value} ----")
 
     def __resolve_column(self, df):
-        """
-        Resolves the column name from the provided column identifier.
+        """Resolve the column name from the provided column identifier.
 
-        Arguments:
+        Args:
             df (DataFrame): The DataFrame to check.
 
         Returns:
@@ -245,38 +307,52 @@ class DisplayColumnMean(Transformation):
             return df.columns[self.column] if self.column < len(df.columns) else None
         return self.column
 
+
 class DisplayColumnMedian(Transformation):
     """
-    DisplayColumnMedian
-
     Displays the median of a specified column for each DataFrame in the context.
-    """
-    def __init__(self,
-                 dataframes,
-                 column,
-                 step_name="DisplayColumnMedian"):
-        """
-        Initializes the DisplayColumnMedian transformation.
 
-        Arguments:
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``DisplayColumnMedian``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import DisplayColumnMedian
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'data' with a 'age' column
+
+        display_median = DisplayColumnMedian(dataframes='data', column='age')  # Initialize the DisplayColumnMedian step
+
+        pipeline.add_steps([display_median])
+        pipeline.execute()
+
+    Attributes:
+        dataframes (str or list): The name(s) of the DataFrame(s) in the context.
+        column (str or int): The column name or index for which the median is to be computed.
+    """
+
+    def __init__(self, dataframes, column, step_name="DisplayColumnMedian"):
+        """Initialize the ``DisplayColumnMedian`` transformation.
+
+        Args:
             dataframes (str or list): The name(s) of the DataFrame(s) in the context.
             column (str or int): The column name or index for which the median is to be computed.
             step_name (str, optional): The name of this transformation step.
-                                       Defaults to "DisplayColumnMedian".
+                Defaults to "DisplayColumnMedian".
         """
         self.column = column
-        super().__init__(step_name=step_name,
-                         func=self.func,
-                         dataframes=dataframes)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframes)
 
     def func(self, context):
-        """
-        Executes the DisplayColumnMedian transformation.
+        """Execute the ``DisplayColumnMedian`` transformation.
 
-        Iterates over each DataFrame in the context, computes the median of the specified
-        column, and prints the result.
+        Iterates over each DataFrame in the context, computes the median of the specified column,
+        and prints the result.
 
-        Arguments:
+        Args:
             context (Context): The context containing the DataFrames.
         """
         for dataframe_name, df in context.dataframes.items():
@@ -288,10 +364,9 @@ class DisplayColumnMedian(Transformation):
                 print(f"--- [{dataframe_name}] Median of column '{col_name}': {median_value} ---")
 
     def __resolve_column(self, df):
-        """
-        Resolves the column name from the provided column identifier.
+        """Resolve the column name from the provided column identifier.
 
-        Arguments:
+        Args:
             df (DataFrame): The DataFrame to check.
 
         Returns:
@@ -303,36 +378,49 @@ class DisplayColumnMedian(Transformation):
 
 class DisplayColumnMode(Transformation):
     """
-    DisplayColumnMode
-
     Displays the mode(s) of a specified column for each DataFrame in the context.
-    """
-    def __init__(self,
-                 dataframes,
-                 column,
-                 step_name="DisplayColumnMode"):
-        """
-        Initializes the DisplayColumnMode transformation.
 
-        Arguments:
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``DisplayColumnMode``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import DisplayColumnMode
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'survey' with a 'response' column
+
+        display_mode = DisplayColumnMode(dataframes='survey', column='response')  # Initialize the DisplayColumnMode step
+
+        pipeline.add_steps([display_mode])
+        pipeline.execute()
+
+    Attributes:
+        dataframes (str or list): The name(s) of the DataFrame(s) in the context.
+        column (str or int): The column name or index for which the mode is to be computed.
+    """
+
+    def __init__(self, dataframes, column, step_name="DisplayColumnMode"):
+        """Initialize the DisplayColumnMode transformation.
+
+        Args:
             dataframes (str or list): The name(s) of the DataFrame(s) in the context.
             column (str or int): The column name or index for which the mode is to be computed.
             step_name (str, optional): The name of this transformation step.
-                                       Defaults to "DisplayColumnMode".
+                Defaults to "DisplayColumnMode".
         """
         self.column = column
-        super().__init__(step_name=step_name,
-                         func=self.func,
-                         dataframes=dataframes)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframes)
 
     def func(self, context):
-        """
-        Executes the DisplayColumnMode transformation.
+        """Execute the ``DisplayColumnMode`` transformation.
 
-        Iterates over each DataFrame in the context, computes the mode(s) of the specified
-        column, and prints the results as a list.
+        Iterates over each DataFrame in the context, computes the mode(s) of the specified column,
+        and prints the results as a list.
 
-        Arguments:
+        Args:
             context (Context): The context containing the DataFrames.
         """
         for dataframe_name, df in context.dataframes.items():
@@ -344,10 +432,9 @@ class DisplayColumnMode(Transformation):
                 print(f"--- [{dataframe_name}] Mode of column '{col_name}': {list(mode_series)} ---")
 
     def __resolve_column(self, df):
-        """
-        Resolves the column name from the provided column identifier.
+        """Resolve the column name from the provided column identifier.
 
-        Arguments:
+        Args:
             df (DataFrame): The DataFrame to check.
 
         Returns:
@@ -357,38 +444,52 @@ class DisplayColumnMode(Transformation):
             return df.columns[self.column] if self.column < len(df.columns) else None
         return self.column
 
+
 class DisplayColumnVariance(Transformation):
     """
-    DisplayColumnVariance
-
     Displays the variance of a specified column for each DataFrame in the context.
-    """
-    def __init__(self,
-                 dataframes,
-                 column,
-                 step_name="DisplayColumnVariance"):
-        """
-        Initializes the DisplayColumnVariance transformation.
 
-        Arguments:
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``DisplayColumnVariance``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import DisplayColumnVariance
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'finance' with a 'revenue' column
+
+        display_variance = DisplayColumnVariance(dataframes='finance', column='revenue')  # Initialize the DisplayColumnVariance step
+
+        pipeline.add_steps([display_variance])
+        pipeline.execute()
+
+    Attributes:
+        dataframes (str or list): The name(s) of the DataFrame(s) in the context.
+        column (str or int): The column name or index for which the variance is computed.
+    """
+
+    def __init__(self, dataframes, column, step_name="DisplayColumnVariance"):
+        """Initialize the ``DisplayColumnVariance`` transformation.
+
+        Args:
             dataframes (str or list): The name(s) of the DataFrame(s) in the context.
             column (str or int): The column name or index for which variance is computed.
             step_name (str, optional): The name of this transformation step.
-                                       Defaults to "DisplayColumnVariance".
+                Defaults to "DisplayColumnVariance".
         """
         self.column = column
-        super().__init__(step_name=step_name,
-                         func=self.func,
-                         dataframes=dataframes)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframes)
 
     def func(self, context):
-        """
-        Executes the DisplayColumnVariance transformation.
+        """Execute the ``DisplayColumnVariance`` transformation.
 
-        Iterates over each DataFrame in the context, computes the variance of the specified
-        column, and prints the result.
+        Iterates over each DataFrame in the context, computes the variance of the specified column,
+        and prints the result.
 
-        Arguments:
+        Args:
             context (Context): The context containing the DataFrames.
         """
         for dataframe_name, df in context.dataframes.items():
@@ -400,10 +501,9 @@ class DisplayColumnVariance(Transformation):
                 print(f"- [{dataframe_name}] Variance of column '{col_name}': {variance_value} -")
 
     def __resolve_column(self, df):
-        """
-        Resolves the column name from the provided column identifier.
+        """Resolve the column name from the provided column identifier.
 
-        Arguments:
+        Args:
             df (DataFrame): The DataFrame to check.
 
         Returns:
@@ -413,38 +513,52 @@ class DisplayColumnVariance(Transformation):
             return df.columns[self.column] if self.column < len(df.columns) else None
         return self.column
 
+
 class DisplayColumnStdDev(Transformation):
     """
-    DisplayColumnStdDev
-
     Displays the standard deviation of a specified column for each DataFrame in the context.
-    """
-    def __init__(self,
-                 dataframes,
-                 column,
-                 step_name="DisplayColumnStdDev"):
-        """
-        Initializes the DisplayColumnStdDev transformation.
 
-        Arguments:
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``DisplayColumnStdDev``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import DisplayColumnStdDev
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'stats' with a 'duration' column
+
+        display_stddev = DisplayColumnStdDev(dataframes='stats', column='duration')  # Initialize the DisplayColumnStdDev step
+
+        pipeline.add_steps([display_stddev])
+        pipeline.execute()
+
+    Attributes:
+        dataframes (str or list): The name(s) of the DataFrame(s) in the context.
+        column (str or int): The column name or index for which the standard deviation is computed.
+    """
+
+    def __init__(self, dataframes, column, step_name="DisplayColumnStdDev"):
+        """Initialize the ``DisplayColumnStdDev`` transformation.
+
+        Args:
             dataframes (str or list): The name(s) of the DataFrame(s) in the context.
             column (str or int): The column or index for which standard deviation is computed.
             step_name (str, optional): The name of this transformation step.
-                                       Defaults to "DisplayColumnStdDev".
+                Defaults to "DisplayColumnStdDev".
         """
         self.column = column
-        super().__init__(step_name=step_name,
-                         func=self.func,
-                         dataframes=dataframes)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframes)
 
     def func(self, context):
-        """
-        Executes the DisplayColumnStdDev transformation.
+        """Execute the ``DisplayColumnStdDev`` transformation.
 
-        Iterates over each DataFrame in the context, computes the standard deviation of
-        the specified column, and prints the result.
+        Iterates over each DataFrame in the context, computes the standard deviation of the specified
+        column, and prints the result.
 
-        Arguments:
+        Args:
             context (Context): The context containing the DataFrames.
         """
         for dataframe_name, df in context.dataframes.items():
@@ -456,10 +570,9 @@ class DisplayColumnStdDev(Transformation):
                 print(f"- [{dataframe_name}] Standard Deviation of column '{col}': {std_dev} -")
 
     def __resolve_column(self, df):
-        """
-        Resolves the column name from the provided column identifier.
+        """Resolve the column name from the provided column identifier.
 
-        Arguments:
+        Args:
             df (DataFrame): The DataFrame to check.
 
         Returns:
@@ -469,38 +582,52 @@ class DisplayColumnStdDev(Transformation):
             return df.columns[self.column] if self.column < len(df.columns) else None
         return self.column
 
+
 class DisplayColumnSum(Transformation):
     """
-    DisplayColumnSum
-
     Displays the sum of a specified column for each DataFrame in the context.
-    """
-    def __init__(self,
-                 dataframes,
-                 column,
-                 step_name="DisplayColumnSum"):
-        """
-        Initializes the DisplayColumnSum transformation.
 
-        Arguments:
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``DisplayColumnSum``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import DisplayColumnSum
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'transactions' with a 'amount' column
+
+        display_sum = DisplayColumnSum(dataframes='transactions', column='amount')  # Initialize the DisplayColumnSum step
+
+        pipeline.add_steps([display_sum])
+        pipeline.execute()
+
+    Attributes:
+        dataframes (str or list): The name(s) of the DataFrame(s) in the context.
+        column (str or int): The column name or index for which the sum is computed.
+    """
+
+    def __init__(self, dataframes, column, step_name="DisplayColumnSum"):
+        """Initialize the ``DisplayColumnSum`` transformation.
+
+        Args:
             dataframes (str or list): The name(s) of the DataFrame(s) in the context.
             column (str or int): The column name or index for which the sum is computed.
             step_name (str, optional): The name of this transformation step.
-                                       Defaults to "DisplayColumnSum".
+                Defaults to "DisplayColumnSum".
         """
         self.column = column
-        super().__init__(step_name=step_name,
-                         func=self.func,
-                         dataframes=dataframes)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframes)
 
     def func(self, context):
-        """
-        Executes the DisplayColumnSum transformation.
+        """Execute the ``DisplayColumnSum`` transformation.
 
         Iterates over each DataFrame in the context, computes the sum of the specified column,
         and prints the result.
 
-        Arguments:
+        Args:
             context (Context): The context containing the DataFrames.
         """
         for dataframe_name, df in context.dataframes.items():
@@ -512,10 +639,9 @@ class DisplayColumnSum(Transformation):
                 print(f"- [{dataframe_name}] Sum of column '{col}': {col_sum} -")
 
     def __resolve_column(self, df):
-        """
-        Resolves the column name from the provided column identifier.
+        """Resolve the column name from the provided column identifier.
 
-        Arguments:
+        Args:
             df (DataFrame): The DataFrame to check.
 
         Returns:
@@ -525,38 +651,52 @@ class DisplayColumnSum(Transformation):
             return df.columns[self.column] if self.column < len(df.columns) else None
         return self.column
 
+
 class DisplayColumnMin(Transformation):
     """
-    DisplayColumnMin
-
     Displays the minimum value of a specified column for each DataFrame in the context.
-    """
-    def __init__(self,
-                 dataframes,
-                 column,
-                 step_name="DisplayColumnMin"):
-        """
-        Initializes the DisplayColumnMin transformation.
 
-        Arguments:
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``DisplayColumnMin``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import DisplayColumnMin
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'inventory' with a 'price' column
+
+        display_min = DisplayColumnMin(dataframes='inventory', column='price')  # Initialize the DisplayColumnMin step
+
+        pipeline.add_steps([display_min])
+        pipeline.execute()
+
+    Attributes:
+        dataframes (str or list): The name(s) of the DataFrame(s) in the context.
+        column (str or int): The column name or index for which the minimum is computed.
+    """
+
+    def __init__(self, dataframes, column, step_name="DisplayColumnMin"):
+        """Initialize the ``DisplayColumnMin`` transformation.
+
+        Args:
             dataframes (str or list): The name(s) of the DataFrame(s) in the context.
             column (str or int): The column name or index for which the minimum value is computed.
             step_name (str, optional): The name of this transformation step.
-                                       Defaults to "DisplayColumnMin".
+                Defaults to "DisplayColumnMin".
         """
         self.column = column
-        super().__init__(step_name=step_name,
-                         func=self.func,
-                         dataframes=dataframes)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframes)
 
     def func(self, context):
-        """
-        Executes the DisplayColumnMin transformation.
+        """Execute the ``DisplayColumnMin`` transformation.
 
-        Iterates over each DataFrame in the context, computes the minimum of the specified
-        column, and prints the result.
+        Iterates over each DataFrame in the context, computes the minimum of the specified column,
+        and prints the result.
 
-        Arguments:
+        Args:
             context (Context): The context containing the DataFrames.
         """
         for dataframe_name, df in context.dataframes.items():
@@ -568,10 +708,9 @@ class DisplayColumnMin(Transformation):
                 print(f"- [{dataframe_name}] Minimum of column '{col}': {col_min} -")
 
     def __resolve_column(self, df):
-        """
-        Resolves the column name from the provided column identifier.
+        """Resolve the column name from the provided column identifier.
 
-        Arguments:
+        Args:
             df (DataFrame): The DataFrame to check.
 
         Returns:
@@ -581,38 +720,52 @@ class DisplayColumnMin(Transformation):
             return df.columns[self.column] if self.column < len(df.columns) else None
         return self.column
 
+
 class DisplayColumnMax(Transformation):
     """
-    DisplayColumnMax
-
     Displays the maximum value of a specified column for each DataFrame in the context.
-    """
-    def __init__(self,
-                 dataframes,
-                 column,
-                 step_name="DisplayColumnMax"):
-        """
-        Initializes the DisplayColumnMax transformation.
 
-        Arguments:
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``DisplayColumnMax``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import DisplayColumnMax
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'inventory' with a 'price' column
+
+        display_max = DisplayColumnMax(dataframes='inventory', column='price')  # Initialize the DisplayColumnMax step
+
+        pipeline.add_steps([display_max])
+        pipeline.execute()
+
+    Attributes:
+        dataframes (str or list): The name(s) of the DataFrame(s) in the context.
+        column (str or int): The column name or index for which the maximum is computed.
+    """
+
+    def __init__(self, dataframes, column, step_name="DisplayColumnMax"):
+        """Initialize the ``DisplayColumnMax`` transformation.
+
+        Args:
             dataframes (str or list): The name(s) of the DataFrame(s) in the context.
             column (str or int): The column or index for which the maximum value is computed.
             step_name (str, optional): The name of this transformation step.
-                                       Defaults to "DisplayColumnMax".
+                Defaults to "DisplayColumnMax".
         """
         self.column = column
-        super().__init__(step_name=step_name,
-                         func=self.func,
-                         dataframes=dataframes)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframes)
 
     def func(self, context):
-        """
-        Executes the DisplayColumnMax transformation.
+        """Execute the ``DisplayColumnMax`` transformation.
 
-        Iterates over each DataFrame in the context, computes the maximum of the specified
-        column, and prints the result.
+        Iterates over each DataFrame in the context, computes the maximum of the specified column,
+        and prints the result.
 
-        Arguments:
+        Args:
             context (Context): The context containing the DataFrames.
         """
         for dataframe_name, df in context.dataframes.items():
@@ -624,10 +777,9 @@ class DisplayColumnMax(Transformation):
                 print(f"- [{dataframe_name}] Maximum of column '{col}': {col_max} -")
 
     def __resolve_column(self, df):
-        """
-        Resolves the column name from the provided column identifier.
+        """Resolve the column name from the provided column identifier.
 
-        Arguments:
+        Args:
             df (DataFrame): The DataFrame to check.
 
         Returns:
@@ -639,37 +791,49 @@ class DisplayColumnMax(Transformation):
 
 class DisplayColumnCount(Transformation):
     """
-    DisplayColumnCount
+    Displays the count of non-null values in a specified column for each DataFrame in the context.
 
-    Displays the count of non-null values in a specified column for each DataFrame in the
-    context.
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``DisplayColumnCount``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import DisplayColumnCount
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'customers' with a 'email' column
+
+        display_count = DisplayColumnCount(dataframes='customers', column='email')  # Initialize the DisplayColumnCount step
+
+        pipeline.add_steps([display_count])
+        pipeline.execute()
+
+    Attributes:
+        dataframes (str or list): The name(s) of the DataFrame(s) in the context.
+        column (str or int): The column name or index for which the count is computed.
     """
-    def __init__(self,
-                 dataframes,
-                 column,
-                 step_name="DisplayColumnCount"):
-        """
-        Initializes the DisplayColumnCount transformation.
 
-        Arguments:
+    def __init__(self, dataframes, column, step_name="DisplayColumnCount"):
+        """Initialize the ``DisplayColumnCount`` transformation.
+
+        Args:
             dataframes (str or list): The name(s) of the DataFrame(s) in the context.
             column (str or int): The column name or index for which the count is computed.
             step_name (str, optional): The name of this transformation step.
-                                       Defaults to "DisplayColumnCount".
+                Defaults to "DisplayColumnCount".
         """
         self.column = column
-        super().__init__(step_name=step_name,
-                         func=self.func,
-                         dataframes=dataframes)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframes)
 
     def func(self, context):
-        """
-        Executes the DisplayColumnCount transformation.
+        """Execute the ``DisplayColumnCount`` transformation.
 
         Iterates over each DataFrame in the context, computes the count of non-null values
         in the specified column, and prints the result.
 
-        Arguments:
+        Args:
             context (Context): The context containing the DataFrames.
         """
         for df_name, df in context.dataframes.items():
@@ -681,10 +845,9 @@ class DisplayColumnCount(Transformation):
                 print(f"- [{df_name}] Count (non-null) for column '{col}': {count_val} -")
 
     def __resolve_column(self, df):
-        """
-        Resolves the column name from the provided column identifier.
+        """Resolve the column name from the provided column identifier.
 
-        Arguments:
+        Args:
             df (DataFrame): The DataFrame to check.
 
         Returns:
@@ -694,38 +857,52 @@ class DisplayColumnCount(Transformation):
             return df.columns[self.column] if self.column < len(df.columns) else None
         return self.column
 
+
 class DisplayColumnUnique(Transformation):
     """
-    DisplayColumnUnique
-
     Displays the unique values present in a specified column for each DataFrame in the context.
-    """
-    def __init__(self,
-                 dataframes,
-                 column,
-                 step_name="DisplayColumnUnique"):
-        """
-        Initializes the DisplayColumnUnique transformation.
 
-        Arguments:
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``DisplayColumnUnique``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import DisplayColumnUnique
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'logs' with a 'user_id' column
+
+        display_unique = DisplayColumnUnique(dataframes='logs', column='user_id')  # Initialize the DisplayColumnUnique step
+
+        pipeline.add_steps([display_unique])
+        pipeline.execute()
+
+    Attributes:
+        dataframes (str or list): The name(s) of the DataFrame(s) in the context.
+        column (str or int): The column name or index to retrieve unique values from.
+    """
+
+    def __init__(self, dataframes, column, step_name="DisplayColumnUnique"):
+        """Initialize the ``DisplayColumnUnique`` transformation.
+
+        Args:
             dataframes (str or list): The name(s) of the DataFrame(s) in the context.
-            column (str or int): The column name or index to retrieve unique values from.
+            column (str or int): The column name or index from which to retrieve unique values.
             step_name (str, optional): The name of this transformation step.
-                                       Defaults to "DisplayColumnUnique".
+                Defaults to "DisplayColumnUnique".
         """
         self.column = column
-        super().__init__(step_name=step_name,
-                         func=self.func,
-                         dataframes=dataframes)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframes)
 
     def func(self, context):
-        """
-        Executes the DisplayColumnUnique transformation.
+        """Execute the ``DisplayColumnUnique`` transformation.
 
         Iterates over each DataFrame in the context, retrieves the unique values from the
         specified column, and prints them as a list.
 
-        Arguments:
+        Args:
             context (Context): The context containing the DataFrames.
         """
         for df_name, df in context.dataframes.items():
@@ -737,10 +914,9 @@ class DisplayColumnUnique(Transformation):
                 print(f"- [{df_name}] Unique values in column '{col}': {list(unique_vals)} -")
 
     def __resolve_column(self, df):
-        """
-        Resolves the column name from the provided column identifier.
+        """Resolve the column name from the provided column identifier.
 
-        Arguments:
+        Args:
             df (DataFrame): The DataFrame to check.
 
         Returns:
@@ -750,38 +926,52 @@ class DisplayColumnUnique(Transformation):
             return df.columns[self.column] if self.column < len(df.columns) else None
         return self.column
 
+
 class DisplayColumnNUnique(Transformation):
     """
-    DisplayColumnNUnique
-
     Displays the number of unique values in a specified column for each DataFrame in the context.
-    """
-    def __init__(self,
-                 dataframes,
-                 column,
-                 step_name="DisplayColumnNUnique"):
-        """
-        Initializes the DisplayColumnNUnique transformation.
 
-        Arguments:
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``DisplayColumnNUnique``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import DisplayColumnNUnique
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'responses' with a 'answer' column
+
+        display_nunique = DisplayColumnNUnique(dataframes='responses', column='answer')  # Initialize the DisplayColumnNUnique step
+
+        pipeline.add_steps([display_nunique])
+        pipeline.execute()
+
+    Attributes:
+        dataframes (str or list): The name(s) of the DataFrame(s) in the context.
+        column (str or int): The column name or index for which to count unique values.
+    """
+
+    def __init__(self, dataframes, column, step_name="DisplayColumnNUnique"):
+        """Initialize the ``DisplayColumnNUnique`` transformation.
+
+        Args:
             dataframes (str or list): The name(s) of the DataFrame(s) in the context.
             column (str or int): The column name or index for which to count unique values.
             step_name (str, optional): The name of this transformation step.
-                                       Defaults to "DisplayColumnNUnique".
+                Defaults to "DisplayColumnNUnique".
         """
         self.column = column
-        super().__init__(step_name=step_name,
-                         func=self.func,
-                         dataframes=dataframes)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframes)
 
     def func(self, context):
-        """
-        Executes the DisplayColumnNUnique transformation.
+        """Execute the ``DisplayColumnNUnique`` transformation.
 
         Iterates over each DataFrame in the context, computes the number of unique values
         in the specified column, and prints the result.
 
-        Arguments:
+        Args:
             context (Context): The context containing the DataFrames.
         """
         for df_name, df in context.dataframes.items():
@@ -793,10 +983,9 @@ class DisplayColumnNUnique(Transformation):
                 print(f"- [{df_name}] Number of unique values in column '{col}': {n_unique} -")
 
     def __resolve_column(self, df):
-        """
-        Resolves the column name from the provided column identifier.
+        """Resolve the column name from the provided column identifier.
 
-        Arguments:
+        Args:
             df (DataFrame): The DataFrame to check.
 
         Returns:
@@ -806,38 +995,52 @@ class DisplayColumnNUnique(Transformation):
             return df.columns[self.column] if self.column < len(df.columns) else None
         return self.column
 
+
 class DisplayColumnDType(Transformation):
     """
-    DisplayColumnDType
-
     Displays the data type of a specified column for each DataFrame in the context.
-    """
-    def __init__(self,
-                 dataframes,
-                 column,
-                 step_name="DisplayColumnDType"):
-        """
-        Initializes the DisplayColumnDType transformation.
 
-        Arguments:
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``DisplayColumnDType``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import DisplayColumnDType
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'records' with a 'date' column
+
+        display_dtype = DisplayColumnDType(dataframes='records', column='date')  # Initialize the DisplayColumnDType step
+
+        pipeline.add_steps([display_dtype])
+        pipeline.execute()
+
+    Attributes:
+        dataframes (str or list): The name(s) of the DataFrame(s) in the context.
+        column (str or int): The column name or index for which to display the data type.
+    """
+
+    def __init__(self, dataframes, column, step_name="DisplayColumnDType"):
+        """Initialize the ``DisplayColumnDType`` transformation.
+
+        Args:
             dataframes (str or list): The name(s) of the DataFrame(s) in the context.
             column (str or int): The column name or index for which to display the data type.
             step_name (str, optional): The name of this transformation step.
-                                       Defaults to "DisplayColumnDType".
+                Defaults to "DisplayColumnDType".
         """
         self.column = column
-        super().__init__(step_name=step_name,
-                         func=self.func,
-                         dataframes=dataframes)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframes)
 
     def func(self, context):
-        """
-        Executes the DisplayColumnDType transformation.
+        """Execute the ``DisplayColumnDType`` transformation.
 
         Iterates over each DataFrame in the context, retrieves the data type of the
         specified column, and prints the result.
 
-        Arguments:
+        Args:
             context (Context): The context containing the DataFrames.
         """
         for df_name, df in context.dataframes.items():
@@ -849,10 +1052,9 @@ class DisplayColumnDType(Transformation):
                 print(f"- [{df_name}] Data type for column '{col}': {dtype_val} -")
 
     def __resolve_column(self, df):
-        """
-        Resolves the column name from the provided column identifier.
+        """Resolve the column name from the provided column identifier.
 
-        Arguments:
+        Args:
             df (DataFrame): The DataFrame to check.
 
         Returns:
@@ -862,39 +1064,52 @@ class DisplayColumnDType(Transformation):
             return df.columns[self.column] if self.column < len(df.columns) else None
         return self.column
 
+
 class DisplayStringCount(Transformation):
     """
-    DisplayStringCount
+    Displays the frequency count of unique string values in a specified column for each DataFrame in the context.
 
-    Displays the frequency count of unique string values in a specified column for
-    each DataFrame in the context.
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``DisplayStringCount``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import DisplayStringCount
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'reviews' with a 'comment' column
+
+        display_string_count = DisplayStringCount(dataframes='reviews', column='comment')  # Initialize the DisplayStringCount step
+
+        pipeline.add_steps([display_string_count])
+        pipeline.execute()
+
+    Attributes:
+        dataframes (str or list): The name(s) of the DataFrame(s) in the context.
+        column (str or int): The column name or index for which to display value counts.
     """
-    def __init__(self,
-                 dataframes,
-                 column,
-                 step_name="DisplayStringItemCount"):
-        """
-        Initializes the DisplayStringCount transformation.
 
-        Arguments:
+    def __init__(self, dataframes, column, step_name="DisplayStringItemCount"):
+        """Initialize the ``DisplayStringCount`` transformation.
+
+        Args:
             dataframes (str or list): The name(s) of the DataFrame(s) in the context.
             column (str or int): The column name or index for which to display value counts.
             step_name (str, optional): The name of this transformation step.
-                                       Defaults to "DisplayStringItemCount".
+                Defaults to "DisplayStringItemCount".
         """
         self.column = column
-        super().__init__(step_name=step_name,
-                         func=self.func,
-                         dataframes=dataframes)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframes)
 
     def func(self, context):
-        """
-        Executes the DisplayStringCount transformation.
+        """Execute the ``DisplayStringCount`` transformation.
 
         Iterates over each DataFrame in the context, computes value counts for the
         specified column, and prints the counts.
 
-        Arguments:
+        Args:
             context (Context): The context containing the DataFrames.
         """
         for dataframe_name, df in context.dataframes.items():
@@ -907,10 +1122,9 @@ class DisplayStringCount(Transformation):
                 print(counts)
 
     def __resolve_column(self, df):
-        """
-        Resolves the column name from the provided column identifier.
+        """Resolve the column name from the provided column identifier.
 
-        Arguments:
+        Args:
             df (DataFrame): The DataFrame to check.
 
         Returns:
@@ -920,40 +1134,52 @@ class DisplayStringCount(Transformation):
             return df.columns[self.column] if self.column < len(df.columns) else None
         return self.column
 
+
 class DisplayMostFrequentString(Transformation):
     """
-    DisplayMostFrequentString
+    Displays the most frequent string(s) in a specified column for each DataFrame in the context.
 
-    Displays the most frequent string(s) in a specified column for each DataFrame in
-    the context.
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``DisplayMostFrequentString``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import DisplayMostFrequentString
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'feedback' with a 'rating' column
+
+        display_most_frequent = DisplayMostFrequentString(dataframes='feedback', column='rating')  # Initialize the DisplayMostFrequentString step
+
+        pipeline.add_steps([display_most_frequent])
+        pipeline.execute()
+
+    Attributes:
+        dataframes (str or list): The name(s) of the DataFrame(s) in the context.
+        column (str or int): The column name or index for which to display the most frequent string(s).
     """
-    def __init__(self,
-                 dataframes,
-                 column,
-                 step_name="DisplayMostFrequentString"):
-        """
-        Initializes the DisplayMostFrequentString transformation.
 
-        Arguments:
+    def __init__(self, dataframes, column, step_name="DisplayMostFrequentString"):
+        """Initialize the ``DisplayMostFrequentString`` transformation.
+
+        Args:
             dataframes (str or list): The name(s) of the DataFrame(s) in the context.
-            column (str or int): The column name or index for which to display the most
-                                 frequent string(s).
+            column (str or int): The column name or index for which to display the most frequent string(s).
             step_name (str, optional): The name of this transformation step.
-                                       Defaults to "DisplayMostFrequentString".
+                Defaults to "DisplayMostFrequentString".
         """
         self.column = column
-        super().__init__(step_name=step_name,
-                         func=self.func,
-                         dataframes=dataframes)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframes)
 
     def func(self, context):
-        """
-        Executes the DisplayMostFrequentString transformation.
+        """Execute the ``DisplayMostFrequentString`` transformation.
 
         Iterates over each DataFrame in the context, computes the mode of the specified column,
         and prints the most frequent string(s).
 
-        Arguments:
+        Args:
             context (Context): The context containing the DataFrames.
         """
         for dataframe_name, df in context.dataframes.items():
@@ -968,10 +1194,9 @@ class DisplayMostFrequentString(Transformation):
                     print(f"- [{dataframe_name}] Most frequent in '{col}': {list(mode_series)} -")
 
     def __resolve_column(self, df):
-        """
-        Resolves the column name from the provided column identifier.
+        """Resolve the column name from the provided column identifier.
 
-        Arguments:
+        Args:
             df (DataFrame): The DataFrame to check.
 
         Returns:
@@ -981,40 +1206,52 @@ class DisplayMostFrequentString(Transformation):
             return df.columns[self.column] if self.column < len(df.columns) else None
         return self.column
 
+
 class DisplayAllCategories(Transformation):
     """
-    DisplayAllCategories
+    Displays all unique categories present in a specified column for each DataFrame in the context.
 
-    Displays all unique categories present in a specified column for each DataFrame in
-    the context.
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``DisplayAllCategories``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import DisplayAllCategories
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'products' with a 'category' column
+
+        display_categories = DisplayAllCategories(dataframes='products', column='category')  # Initialize the DisplayAllCategories step
+
+        pipeline.add_steps([display_categories])
+        pipeline.execute()
+
+    Attributes:
+        dataframes (str or list): The name(s) of the DataFrame(s) in the context.
+        column (str or int): The column name or index from which to retrieve unique categories.
     """
-    def __init__(self,
-                 dataframes,
-                 column,
-                 step_name="DisplayAllCategories"):
-        """
-        Initializes the DisplayAllCategories transformation.
 
-        Arguments:
+    def __init__(self, dataframes, column, step_name="DisplayAllCategories"):
+        """Initialize the ``DisplayAllCategories`` transformation.
+
+        Args:
             dataframes (str or list): The name(s) of the DataFrame(s) in the context.
-            column (str or int): The column name or index from which to retrieve unique
-                                 categories.
+            column (str or int): The column name or index from which to retrieve unique categories.
             step_name (str, optional): The name of this transformation step.
-                                       Defaults to "DisplayAllCategories".
+                Defaults to "DisplayAllCategories".
         """
         self.column = column
-        super().__init__(step_name=step_name,
-                         func=self.func,
-                         dataframes=dataframes)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframes)
 
     def func(self, context):
-        """
-        Executes the DisplayAllCategories transformation.
+        """Execute the ``DisplayAllCategories`` transformation.
 
         Iterates over each DataFrame in the context, retrieves unique values from the
         specified column, and prints them.
 
-        Arguments:
+        Args:
             context (Context): The context containing the DataFrames.
         """
         for dataframe_name, df in context.dataframes.items():
@@ -1026,10 +1263,9 @@ class DisplayAllCategories(Transformation):
                 print(f"- [{dataframe_name}] Unique categories in '{col}': {list(categories)} -")
 
     def __resolve_column(self, df):
-        """
-        Resolves the column name from the provided column identifier.
+        """Resolve the column name from the provided column identifier.
 
-        Arguments:
+        Args:
             df (DataFrame): The DataFrame to check.
 
         Returns:
@@ -1039,42 +1275,56 @@ class DisplayAllCategories(Transformation):
             return df.columns[self.column] if self.column < len(df.columns) else None
         return self.column
 
+
 class DisplaySubstringOccurrence(Transformation):
     """
-    DisplaySubstringOccurrence
+    Counts and displays the total number of occurrences of a specified substring in a given column
+    for each DataFrame in the context.
 
-    Counts and displays the total number of occurrences of a specified substring in a
-    given column for each DataFrame.
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``DisplaySubstringOccurrence``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import DisplaySubstringOccurrence
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'logs' with a 'message' column
+
+        display_substring = DisplaySubstringOccurrence(dataframes='logs', column='message', substring='error')  # Initialize the DisplaySubstringOccurrence step 
+
+        pipeline.add_steps([display_substring])
+        pipeline.execute()
+
+    Attributes:
+        dataframes (str or list): The name(s) of the DataFrame(s) in the context.
+        column (str or int): The column name or index in which to count substring occurrences.
+        substring (str): The substring to count.
     """
-    def __init__(self,
-                 dataframes,
-                 column,
-                 substring,
-                 step_name="DisplaySubstringOccurrence"):
-        """
-        Initializes the DisplaySubstringOccurrence transformation.
 
-        Arguments:
+    def __init__(self, dataframes, column, substring, step_name="DisplaySubstringOccurrence"):
+        """Initialize the ``DisplaySubstringOccurrence`` transformation.
+
+        Args:
             dataframes (str or list): The name(s) of the DataFrame(s) in the context.
             column (str or int): The column name or index in which to count substring occurrences.
             substring (str): The substring to count.
             step_name (str, optional): The name of this transformation step.
-                                       Defaults to "DisplaySubstringOccurrence".
+                Defaults to "DisplaySubstringOccurrence".
         """
         self.column = column
         self.substring = substring
-        super().__init__(step_name=step_name,
-                         func=self.func,
-                         dataframes=dataframes)
+        super().__init__(step_name=step_name, func=self.func, dataframes=dataframes)
 
     def func(self, context):
-        """
-        Executes the DisplaySubstringOccurrence transformation.
+        """Execute the ``DisplaySubstringOccurrence`` transformation.
 
-        Iterates over each DataFrame in the context, counts the total occurrences of the
-        specified substring in the designated column, and prints the result.
+        Iterates over each DataFrame in the context, counts the total occurrences of the specified substring
+        in the designated column, and prints the result.
 
-        Arguments:
+        Args:
             context (Context): The context containing the DataFrames.
         """
         for dataframe_name, df in context.dataframes.items():
@@ -1086,10 +1336,9 @@ class DisplaySubstringOccurrence(Transformation):
                 print(f"- [{dataframe_name}] Occurrences '{self.substring}' in '{col}': {count} -")
 
     def __resolve_column(self, df):
-        """
-        Resolves the column name from the provided column identifier.
+        """Resolve the column name from the provided column identifier.
 
-        Arguments:
+        Args:
             df (DataFrame): The DataFrame to check.
 
         Returns:

@@ -1,3 +1,4 @@
+.. _step_doc:
 Step
 =====================
 
@@ -160,4 +161,4 @@ Below is a simple example that shows how to create a custom ``Step`` by inheriti
 Option 3: Inherit the ``Transformation`` Class
 ^^^^^^^^^^^^^^^^^
 
-Please review the [Transformation](transformations/transformation.md) documentation for further information.
+Please review the :ref:`transformation_doc` documentation for further information.

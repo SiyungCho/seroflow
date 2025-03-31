@@ -1,8 +1,9 @@
+.. _extractors:
 Extractors
 ========================
 
 The modules documented here define the base structure and concrete implementations for ``Extractor`` steps. 
-These extractors are responsible for reading data from various sources—such as files (CSV, Excel) and SQL Server tables—and adding the resulting pandas DataFrames to the ``Pipeline`` context. 
+These extractors are responsible for reading data from various sources—such as files or DB tables—and adding the resulting pandas DataFrames to the ``Pipeline`` context. 
 The extractors support both full reads and chunked reads, as well as error handling and row count estimation.
 
 Overview
@@ -223,7 +224,7 @@ Supports full-table extraction or chunked extraction via ``OFFSET/FETCH`` for ba
 
 **Note**: An ``Engine`` object must be created and passed to use with the ``ODBCExtractor`` in the ``engine`` parameter.
 
-Please Review the [Engine](engine.md) documentation for further information on ``Engine`` Objects.
+Please Review the :ref:`engine` documentation for further information on ``Engine`` Objects.
 
 .. autoclass:: seroflow.extract.odbc_extractor.ODBCExtractor
    :members:
@@ -255,7 +256,7 @@ It also provides a method to obtain the total number of rows in the table withou
 
 **Note**: An ``Engine`` object must be created and passed to use with the ``SQLServerExtractor`` in the ``engine`` parameter.
 
-Please Review the [Engine](engine.md) documentation for further information on ``Engine`` Objects.
+Please Review the :ref:`engine` documentation for further information on ``Engine`` Objects.
 
 
 .. autoclass:: seroflow.extract.sqlserver_extractor.SQLServerExtractor

@@ -1,21 +1,37 @@
 """
-Module: index.py
-
 This module implements transformation classes for manipulating the index of a DataFrame.
-It provides classes to set a specified column as the index (SetIndex) and to reset the
-index (ResetIndex) of a DataFrame. Each transformation updates the DataFrame stored in
-the Pipeline context.
+Each transformation class extends the base ``Transformation`` class and operates on a specified DataFrame stored in the ``Pipeline`` context.
+The available transformations include:
+
+- **SetIndex**: Sets a specified column as the DataFrame’s index.
+- **ResetIndex**: Resets the DataFrame’s index, with an option to drop the existing index.
 """
 
 from .transformation import Transformation
 
 class SetIndex(Transformation):
     """
-    SetIndex
-
     A transformation that sets a specified column as the index of a DataFrame.
-    The transformation updates the DataFrame in the Pipeline context by using the
-    pandas set_index method.
+    The transformation updates the DataFrame in the ``Pipeline`` context by using the
+    ``pandas`` ``set_index`` method.
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``SetIndex``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import SetIndex
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... # Extractor extracts 'sample_data' with 'id' column
+
+        # Initialize and execute SetIndex
+        set_index = SetIndex(dataframe="sample_data", index_column="id")
+        pipeline.add_steps([set_index])
+        pipeline.execute()
+
     
     Attributes:
         dataframe (str): The name of the DataFrame in the context.
@@ -27,7 +43,7 @@ class SetIndex(Transformation):
                  step_name="SetIndex",
                  on_error=None):
         """
-        Initializes the SetIndex transformation.
+        Initializes the ``SetIndex`` transformation.
 
         Arguments:
             dataframe (str): The name of the DataFrame to update in the context.
@@ -45,7 +61,7 @@ class SetIndex(Transformation):
 
     def func(self, context):
         """
-        Executes the SetIndex transformation.
+        Executes the ``SetIndex`` transformation.
 
         Retrieves the DataFrame from the context, sets the specified column as the index,
         updates the DataFrame in the context, and returns the updated context.
@@ -73,11 +89,26 @@ class SetIndex(Transformation):
 
 class ResetIndex(Transformation):
     """
-    ResetIndex
-
     A transformation that resets the index of a DataFrame.
-    The transformation updates the DataFrame in the Pipeline context by resetting its index,
+    The transformation updates the DataFrame in the ``Pipeline`` context by resetting its index,
     optionally dropping the existing index.
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``ResetIndex``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import ResetIndex
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... # Extractor extracts 'sample_data'
+
+        # Initialize and execute ResetIndex (dropping the index)
+        reset_index = ResetIndex(dataframe="sample_data", drop=True)
+        pipeline.add_steps([reset_index])
+        pipeline.execute()
     
     Attributes:
         dataframe (str): The name of the DataFrame in the context.
@@ -89,7 +120,7 @@ class ResetIndex(Transformation):
                  step_name="ResetIndex",
                  on_error=None):
         """
-        Initializes the ResetIndex transformation.
+        Initializes the ``ResetIndex`` transformation.
 
         Arguments:
             dataframe (str): The name of the DataFrame to update in the context.
@@ -107,7 +138,7 @@ class ResetIndex(Transformation):
 
     def func(self, context):
         """
-        Executes the ResetIndex transformation.
+        Executes the ``ResetIndex`` transformation.
 
         Retrieves the DataFrame from the context, resets its index according to the
         specified parameters, updates the DataFrame in the context, and returns the

@@ -1,25 +1,19 @@
 """
-Module: column.py
+This module implements a collection of transformation classes that perform various column operations on DataFrames.
+These transformations update the DataFrame stored in the ``Pipeline`` context.
+Each transformation class extends the base ``Transformation`` class and provides a specific column operation.
 
-This module implements a collection of transformation classes that perform various column
-operations on DataFrames.These transformations include converting column data types,
-renaming columns, dropping columns, adding new columns (based on computations or
-constant values), merging and splitting columns, and exploding columns. Each transformation
-class extends the base Transformation class and is designed to update the DataFrame in
-the Pipeline context.
+- **ConvertColumnType**: Converts a specified column of a DataFrame to a new data type.
+- **RenameColumns**: Renames one or more columns based on a provided mapping.
+- **DropColumn**: Drops a single specified column from a DataFrame.
+- **DropColumns**: Drops multiple specified columns from a DataFrame.
+- **AddColumn**: Adds a new column to a DataFrame computed from a function.
+- **MergeColumns**: Merges multiple columns into a single column by concatenating their string representations.
+- **SplitColumn**: Splits a single column into multiple new columns based on a delimiter.
+- **ExplodeColumn**: Explodes a column containing list-like elements into multiple rows.
+- **CreateColumnFromVariable**: Creates a new column in a DataFrame using a constant value provided via a variable.
 
-Classes:
-    ConvertColumnType: Converts a specified column of a DataFrame to a new data type.
-    RenameColumns: Renames one or more columns in a DataFrame based on a provided mapping.
-    DropColumn: Drops a single specified column from a DataFrame.
-    DropColumns: Drops multiple specified columns from a DataFrame.
-    AddColumn: Adds a new column to a DataFrame computed from a function.
-    MergeColumns: Merges multiple columns into a single column by concatenating
-                  their string representations.
-    SplitColumn: Splits a single column into multiple columns based on a delimiter.
-    ExplodeColumn: Explodes a column containing lists into multiple rows.
-    CreateColumnFromVariable: Creates a new column in a DataFrame using a constant
-                              value provided via a variable.
+Each transformation retrieves the target DataFrame from the ``Pipeline`` context, performs the operation, updates the DataFrame, and returns the modified context.
 """
 
 import pandas as pd
@@ -27,9 +21,24 @@ from .transformation import Transformation
 
 class ConvertColumnType(Transformation):
     """
-    ConvertColumnType
-
     Converts a specified column of a DataFrame to a new data type.
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``ConvertColumnType``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import ConvertColumnType
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ... # Add Extractor which gathers a dataframe called 'sales_data' with a 'price' column
+
+        convert_col_type = ConvertColumnType(column="price", dataframe="sales_data", new_type=int) # Initialize the ConvertColumnType to convert the 'price' column to type 'int'
+
+        pipeline.add_steps([convert_col_type])
+        pipeline.execute()
 
     Attributes:
         dataframe (str): The name of the DataFrame in the context.
@@ -43,7 +52,7 @@ class ConvertColumnType(Transformation):
                  step_name="ConvertColumnType",
                  on_error=None):
         """
-        Initializes the ConvertColumnType transformation.
+        Initializes the ``ConvertColumnType`` transformation.
 
         Arguments:
             dataframe (str): The name of the DataFrame to update.
@@ -96,9 +105,24 @@ class ConvertColumnType(Transformation):
 
 class RenameColumns(Transformation):
     """
-    RenameColumns
-
     Renames one or more columns in a DataFrame based on a provided mapping.
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``RenameColumns``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import RenameColumns
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ...  # Extractor loads a DataFrame called 'sales_data' with 'price' and 'quantity' columns
+
+        rename_columns = RenameColumns(dataframe="sales_data", columns_mapping={"price": "unit_price", "quantity": "units_sold"})  # Initialize RenameColumns to rename 'price' → 'unit_price' and 'quantity' → 'units_sold'
+
+        pipeline.add_steps([rename_columns])
+        pipeline.execute()
 
     Attributes:
         dataframe (str): The name of the DataFrame in the context.
@@ -110,7 +134,7 @@ class RenameColumns(Transformation):
                  step_name="RenameColumns",
                  on_error=None):
         """
-        Initializes the RenameColumns transformation.
+        Initializes the ``RenameColumns`` transformation.
 
         Arguments:
             dataframe (str): The name of the DataFrame to update.
@@ -160,9 +184,24 @@ class RenameColumns(Transformation):
 
 class DropColumn(Transformation):
     """
-    DropColumn
-
     Drops a specified column from a DataFrame.
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``DropColumn``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import DropColumn
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'price' column
+
+        drop_column = DropColumn(column="price", dataframe="sales_data")  # Initialize DropColumn to drop the 'price' column
+
+        pipeline.add_steps([drop_column])
+        pipeline.execute()
 
     Attributes:
         dataframe (str): The name of the DataFrame in the context.
@@ -174,7 +213,7 @@ class DropColumn(Transformation):
                  step_name="DropColumn",
                  on_error=None):
         """
-        Initializes the DropColumn transformation.
+        Initializes the ``DropColumn`` transformation.
 
         Arguments:
             dataframe (str): The name of the DataFrame to update.
@@ -192,7 +231,7 @@ class DropColumn(Transformation):
 
     def func(self, context):
         """
-        Executes the DropColumn transformation.
+        Executes the ``DropColumn`` transformation.
 
         Retrieves the DataFrame from the context, drops the specified column,
         updates the DataFrame in the context, and returns the modified context.
@@ -222,9 +261,25 @@ class DropColumn(Transformation):
 
 class DropColumns(Transformation):
     """
-    DropColumns
-
     Drops multiple specified columns from a DataFrame.
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``DropColumns``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import DropColumns
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ...  # Extractor loads 'sales_data' with 'price' and 'quantity' columns
+
+        drop_columns = DropColumns(columns=["price", "quantity"], dataframe="sales_data")  # Initialize DropColumns to drop both 'price' and 'quantity'
+
+        pipeline.add_steps([drop_columns])
+        pipeline.execute()
+
 
     Attributes:
         dataframe (str): The name of the DataFrame in the context.
@@ -236,7 +291,7 @@ class DropColumns(Transformation):
                  step_name="DropColumns",
                  on_error=None):
         """
-        Initializes the DropColumns transformation.
+        Initializes the ``DropColumns`` transformation.
 
         Arguments:
             dataframe (str): The name of the DataFrame to update.
@@ -254,7 +309,7 @@ class DropColumns(Transformation):
 
     def func(self, context):
         """
-        Executes the DropColumns transformation.
+        Executes the ``DropColumns`` transformation.
 
         Retrieves the DataFrame from the context, drops the specified columns
         (ignoring errors if columns are missing), updates the DataFrame in the context,
@@ -285,9 +340,28 @@ class DropColumns(Transformation):
 
 class AddColumn(Transformation):
     """
-    AddColumn
-
     Adds a new column to a DataFrame computed from a provided function.
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``AddColumn``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import AddColumn
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ...  # Extractor loads 'sales_data' with 'price' and 'quantity' columns
+
+        add_column = AddColumn(
+            column="total_sales",
+            dataframe="sales_data",
+            compute_func=lambda df: df["price"] * df["quantity"]
+        )  # Initialize AddColumn to create 'total_sales' by multiplying 'price' × 'quantity'
+
+        pipeline.add_steps([add_column])
+        pipeline.execute()
     
     Attributes:
         dataframe (str): The name of the DataFrame in the context.
@@ -301,7 +375,7 @@ class AddColumn(Transformation):
                  step_name="AddColumn",
                  on_error=None):
         """
-        Initializes the AddColumn transformation.
+        Initializes the ``AddColumn`` transformation.
 
         Arguments:
             dataframe (str): The name of the DataFrame to update.
@@ -322,7 +396,7 @@ class AddColumn(Transformation):
 
     def func(self, context):
         """
-        Executes the AddColumn transformation.
+        Executes the ``AddColumn`` transformation.
 
         Retrieves the DataFrame from the context, computes the new column values using
         compute_func, adds the new column to the DataFrame, updates the context, and returns it.
@@ -353,10 +427,30 @@ class AddColumn(Transformation):
 
 class MergeColumns(Transformation):
     """
-    MergeColumns
-
     Merges multiple columns into a single column by concatenating their string
     representations using a specified separator.
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``MergeColumns``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import MergeColumns
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ...  # Extractor loads 'sales_data' with 'first_name' and 'last_name' columns
+
+        merge_columns = MergeColumns(
+            columns=["first_name", "last_name"],
+            new_column="full_name",
+            dataframe="sales_data",
+            separator=" "
+        )  # Initialize MergeColumns to concatenate first_name and last_name into 'full_name'
+
+        pipeline.add_steps([merge_columns])
+        pipeline.execute()
 
     Attributes:
         dataframe (str): The name of the DataFrame in the context.
@@ -372,7 +466,7 @@ class MergeColumns(Transformation):
                  step_name="MergeColumns",
                  on_error=None):
         """
-        Initializes the MergeColumns transformation.
+        Initializes the ``MergeColumns`` transformation.
 
         Arguments:
             dataframe (str): The name of the DataFrame to update.
@@ -395,7 +489,7 @@ class MergeColumns(Transformation):
 
     def func(self, context):
         """
-        Executes the MergeColumns transformation.
+        Executes the ``MergeColumns`` transformation.
 
         Retrieves the DataFrame from the context, merges the specified columns by concatenating
         their string representations, adds the new merged column to the DataFrame, updates
@@ -427,9 +521,29 @@ class MergeColumns(Transformation):
 
 class SplitColumn(Transformation):
     """
-    SplitColumn
-
     Splits a single column in a DataFrame into multiple new columns based on a delimiter.
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``SplitColumn``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import SplitColumn
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'full_name' column
+
+        split_column = SplitColumn(
+            column="full_name",
+            new_columns=["first_name", "last_name"],
+            dataframe="sales_data",
+            delimiter=" "
+        )  # Initialize SplitColumn to split 'full_name' into 'first_name' and 'last_name'
+
+        pipeline.add_steps([split_column])
+        pipeline.execute()
 
     Attributes:
         dataframe (str): The name of the DataFrame in the context.
@@ -445,7 +559,7 @@ class SplitColumn(Transformation):
                  step_name="SplitColumn",
                  on_error=None):
         """
-        Initializes the SplitColumn transformation.
+        Initializes the ``SplitColumn`` transformation.
 
         Arguments:
             dataframe (str): The name of the DataFrame to update.
@@ -468,7 +582,7 @@ class SplitColumn(Transformation):
 
     def func(self, context):
         """
-        Executes the SplitColumn transformation.
+        Executes the ``SplitColumn`` transformation.
 
         Retrieves the DataFrame from the context, splits the specified column using the
         delimiter, assigns the resulting parts to new columns, concatenates them with the
@@ -502,10 +616,25 @@ class SplitColumn(Transformation):
 
 class ExplodeColumn(Transformation):
     """
-    ExplodeColumn
-
     Explodes a column containing list-like elements into multiple rows, duplicating the other
     column values.
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``ExplodeColumn``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import ExplodeColumn
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ...  # Extractor loads 'sales_data' with a 'tags' column containing lists
+
+        explode_column = ExplodeColumn(column="tags", dataframe="sales_data")  # Initialize ExplodeColumn to expand each list in 'tags' into separate rows
+
+        pipeline.add_steps([explode_column])
+        pipeline.execute()
 
     Attributes:
         dataframe (str): The name of the DataFrame in the context.
@@ -517,7 +646,7 @@ class ExplodeColumn(Transformation):
                  step_name="ExplodeColumn",
                  on_error=None):
         """
-        Initializes the ExplodeColumn transformation.
+        Initializes the ``ExplodeColumn`` transformation.
 
         Arguments:
             dataframe (str): The name of the DataFrame to update.
@@ -535,7 +664,7 @@ class ExplodeColumn(Transformation):
 
     def func(self, context):
         """
-        Executes the ExplodeColumn transformation.
+        Executes the ``ExplodeColumn`` transformation.
 
         Retrieves the DataFrame from the context, explodes the specified column,
         updates the DataFrame in the context, and returns the updated context.
@@ -565,11 +694,27 @@ class ExplodeColumn(Transformation):
 
 class CreateColumnFromVariable(Transformation):
     """
-    CreateColumnFromVariable
-
     Creates a new column in a DataFrame with a constant value derived from a variable.
     This transformation is used to add a new column whose values are all set to the provided
     variable's value.
+
+    Usage Example
+    ^^^^^^^^^^^^^^^^^
+
+    Below is an example demonstrating how to use the Transformation ``CreateColumnFromVariable``: ::
+
+        import pandas as pd
+        from seroflow import Pipeline
+        from seroflow.transform import CreateColumnFromVariable
+
+        pipeline = Pipeline()
+        pipeline.target_extractor = ...  # Extractor loads 'sales_data'
+
+        create_column = CreateColumnFromVariable(column="region", dataframe="sales_data", variable="North_America")  # Initialize CreateColumnFromVariable to add a 'region' column with constant value 'North America'
+
+        pipeline.add_steps([create_column])
+        pipeline.execute()
+
 
     Attributes:
         dataframe (str): The name of the DataFrame in the context.
@@ -583,7 +728,7 @@ class CreateColumnFromVariable(Transformation):
                  step_name="CreateColumnFromVariable",
                  on_error=None):
         """
-        Initializes the CreateColumnFromVariable transformation.
+        Initializes the ``CreateColumnFromVariable`` transformation.
 
         Arguments:
             dataframe (str): The name of the DataFrame to update.
@@ -605,7 +750,7 @@ class CreateColumnFromVariable(Transformation):
 
     def func(self, context, **kwargs):
         """
-        Executes the CreateColumnFromVariable transformation.
+        Executes the ``CreateColumnFromVariable`` transformation.
 
         Retrieves the DataFrame from the context, creates a new column with the constant
         value provided by the variable, updates the DataFrame in the context, and returns
