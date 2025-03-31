@@ -19,7 +19,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Load" href="load.html" />
+    <link rel="next" title="Loaders" href="load.html" />
     <link rel="prev" title="Engine" href="engine.html" /> 
 </head>
 
@@ -51,6 +51,7 @@
 <li class="toctree-l1"><a class="reference internal" href="context.html">Context</a></li>
 <li class="toctree-l1"><a class="reference internal" href="engine.html">Engine</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Extractors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#extractor">Extractor</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#seroflow.extract.extractor.Extractor"><code class="docutils literal notranslate"><span class="pre">Extractor</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.extract.extractor.Extractor.__init__"><code class="docutils literal notranslate"><span class="pre">Extractor.__init__()</span></code></a></li>
@@ -60,6 +61,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.extract.extractor.Extractor.stop_step"><code class="docutils literal notranslate"><span class="pre">Extractor.stop_step()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#usage-example">Usage Example</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#multiextractor">MultiExtractor</a><ul>
@@ -78,6 +80,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.extract.file_extractor.FileExtractor.get_max_row_count"><code class="docutils literal notranslate"><span class="pre">FileExtractor.get_max_row_count()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Usage Example</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#multifileextractor">MultiFileExtractor</a><ul>
@@ -95,6 +98,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.extract.csv_extractor.CSVExtractor.get_max_row_count"><code class="docutils literal notranslate"><span class="pre">CSVExtractor.get_max_row_count()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Usage Example</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#multicsvextractor">MultiCSVExtractor</a><ul>
@@ -102,6 +106,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.extract.csv_extractor.MultiCSVExtractor.__init__"><code class="docutils literal notranslate"><span class="pre">MultiCSVExtractor.__init__()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Usage Example</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#excelextractor">ExcelExtractor</a><ul>
@@ -111,6 +116,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.extract.excel_extractor.ExcelExtractor.get_max_row_count"><code class="docutils literal notranslate"><span class="pre">ExcelExtractor.get_max_row_count()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Usage Example</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#multiexcelextractor">MultiExcelExtractor</a><ul>
@@ -118,6 +124,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.extract.excel_extractor.MultiExcelExtractor.__init__"><code class="docutils literal notranslate"><span class="pre">MultiExcelExtractor.__init__()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Usage Example</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#odbcextractor">ODBCExtractor</a><ul>
@@ -126,6 +133,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.extract.odbc_extractor.ODBCExtractor.get_max_row_count"><code class="docutils literal notranslate"><span class="pre">ODBCExtractor.get_max_row_count()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Usage Example</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#sqlserverextractor">SQLServerExtractor</a><ul>
@@ -135,11 +143,12 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.extract.sqlserver_extractor.SQLServerExtractor.get_max_row_count"><code class="docutils literal notranslate"><span class="pre">SQLServerExtractor.get_max_row_count()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">Usage Example</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="load.html">Load</a></li>
+<li class="toctree-l1"><a class="reference internal" href="load.html">Loaders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="log.html">Logging</a></li>
 <li class="toctree-l1"><a class="reference internal" href="step.html">Step</a></li>
 <li class="toctree-l1"><a class="reference internal" href="transform.html">seroflow.transform package</a></li>
@@ -174,8 +183,29 @@
              
   <section id="extractors">
 <h1>Extractors<a class="headerlink" href="#extractors" title="Link to this heading"></a></h1>
+<p>The modules documented here define the base structure and concrete implementations for <code class="docutils literal notranslate"><span class="pre">Extractor</span></code> steps.
+These extractors are responsible for reading data from various sources—such as files (CSV, Excel) and SQL Server tables—and adding the resulting pandas DataFrames to the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> context.
+The extractors support both full reads and chunked reads, as well as error handling and row count estimation.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>This documentation covers:</p>
+<ul class="simple">
+<li><p><strong>Extractor</strong>: Abstract class, which specifies the interface for creating a single extractor.</p></li>
+<li><p><strong>MultiExtractor</strong>: A concrete class that aggregates multiple extractor instances to handle multiple sources in a single step.</p></li>
+<li><p><strong>FileExtractor</strong>: Abstract class, which specifies the interface for creating a single extractor, specifically for File data sources.</p></li>
+<li><p><strong>MultiFileExtractor</strong>: A concrete class extending <code class="docutils literal notranslate"><span class="pre">MultiExtractor</span></code> that gathers file paths from a directory (based on extension) and creates extractor instances for each file.</p></li>
+<li><p><strong>CSVExtractor</strong>: Single CSV File data extractor. Extracts data within a single CSV File.</p></li>
+<li><p><strong>MultiCSVExtractor</strong>: Multi CSV File data extractor. Extracts data from multiple CSV Files given a directory path.</p></li>
+<li><p><strong>ExcelExtractor</strong>: Single Excel File data extractor. Extracts data within a single Excel File.</p></li>
+<li><p><strong>MultiExcelExtractor</strong>: Multi Excel File data extractor. Extracts data from multiple Excel Files given a directory path.</p></li>
+<li><p><strong>SQLServerExtractor</strong>: Single SQL Server Table data extractor. Extracts data within a single SQL Server Table.</p></li>
+<li><p><strong>ODBCExtractor</strong>: Single ODBC Source Table data extractor. Extracts data within a single ODBC Source Table.</p></li>
+</ul>
+</section>
 <section id="extractor">
 <h2>Extractor<a class="headerlink" href="#extractor" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">Extractor</span></code> class is an abstract base class that provides the common structure for all data extractors.
+It defines the general interface and common behaviors such as handling chunk sizes and managing the step lifecycle (e.g., start and stop).</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seroflow.extract.extractor.Extractor">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.extract.extractor.</span></span><span class="sig-name descname"><span class="pre">Extractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.extract.extractor.Extractor" title="Link to this definition"></a></dt>
@@ -254,6 +284,33 @@ Clears the parameters dictionary</p>
 
 </dd></dl>
 
+<section id="usage-example">
+<h3>Usage Example<a class="headerlink" href="#usage-example" title="Link to this heading"></a></h3>
+<p>Below is an example demonstrating how a concrete extract implementation might inherit from <code class="docutils literal notranslate"><span class="pre">Extractor</span></code> and implement its methods:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.extract</span><span class="w"> </span><span class="kn">import</span> <span class="n">Extractor</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MyCustomExtractor</span><span class="p">(</span><span class="n">Extractor</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">step_name</span><span class="o">=</span><span class="s2">&quot;MyCustomExtractor&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">,</span> <span class="n">on_error</span><span class="o">=</span><span class="s2">&quot;raises&quot;</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># Obtain a pandas DataFrame here</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">add_dataframe</span><span class="p">(</span><span class="s2">&quot;custom&quot;</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">context</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_max_row_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">num_rows</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># Custom logic to determine the number of rows</span>
+        <span class="k">return</span> <span class="n">num_rows</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">custom_extractor</span> <span class="o">=</span> <span class="n">MyCustomExtractor</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">target_extractor</span> <span class="o">=</span> <span class="n">custom_extractor</span> <span class="c1"># Or add it using the add_step(s) methods</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="multiextractor">
 <h2>MultiExtractor<a class="headerlink" href="#multiextractor" title="Link to this heading"></a></h2>
@@ -308,6 +365,8 @@ Should be blank</p>
 </section>
 <section id="fileextractor">
 <h2>FileExtractor<a class="headerlink" href="#fileextractor" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">FileExtractor</span></code> class extends <code class="docutils literal notranslate"><span class="pre">Extractor</span></code> and provides a template for file-based data sources.
+In addition to the standard <code class="docutils literal notranslate"><span class="pre">Extractor</span></code> functionality, it validates the file’s existence, extracts the file name without its extension, and stores additional keyword arguments for the file reading operation.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seroflow.extract.file_extractor.FileExtractor">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.extract.file_extractor.</span></span><span class="sig-name descname"><span class="pre">FileExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'FileExtractor'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.extract.file_extractor.FileExtractor" title="Link to this definition"></a></dt>
@@ -373,6 +432,33 @@ Returns the number of rows in the file</p>
 
 </dd></dl>
 
+<section id="id1">
+<h3>Usage Example<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<p>Below is an example demonstrating how a concrete extract implementation might inherit from <code class="docutils literal notranslate"><span class="pre">FileExtractor</span></code> and implement its methods:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.extract</span><span class="w"> </span><span class="kn">import</span> <span class="n">FileExtractor</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MyCustomFileExtractor</span><span class="p">(</span><span class="n">FileExtractor</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">step_name</span><span class="o">=</span><span class="s2">&quot;MyCustomFileExtractor&quot;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">,</span> <span class="n">on_error</span><span class="o">=</span><span class="s2">&quot;raises&quot;</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># Obtain a pandas DataFrame here</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">add_dataframe</span><span class="p">(</span><span class="s2">&quot;custom&quot;</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">context</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_max_row_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">num_rows</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># Custom logic to determine the number of rows</span>
+        <span class="k">return</span> <span class="n">num_rows</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">custom_file_extractor</span> <span class="o">=</span> <span class="n">MyCustomFileExtractor</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">target_extractor</span> <span class="o">=</span> <span class="n">custom_file_extractor</span> <span class="c1"># Or add it using the add_step(s) methods</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="multifileextractor">
 <h2>MultiFileExtractor<a class="headerlink" href="#multifileextractor" title="Link to this heading"></a></h2>
@@ -433,6 +519,9 @@ Identifies the file extension type</p>
 </section>
 <section id="csvextractor">
 <h2>CSVExtractor<a class="headerlink" href="#csvextractor" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">CSVExtractor</span></code> class is a concrete implementation for extracting data from a single CSV file.
+It leverages <code class="docutils literal notranslate"><span class="pre">pandas’</span></code> <code class="docutils literal notranslate"><span class="pre">read_csv()</span></code> method to load the CSV file into a DataFrame and adds it to the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> context under the file name.
+In addition, it provides a method for counting the total number of rows in the CSV file, which is useful for operations like chunked reading.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seroflow.extract.csv_extractor.CSVExtractor">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.extract.csv_extractor.</span></span><span class="sig-name descname"><span class="pre">CSVExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CSVExtractor'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.extract.csv_extractor.CSVExtractor" title="Link to this definition"></a></dt>
@@ -494,9 +583,25 @@ Returns the maximum number of rows in the CSV file</p>
 
 </dd></dl>
 
+<section id="id2">
+<h3>Usage Example<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<p>Below is a simple example that shows how to initialize a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object with an <code class="docutils literal notranslate"><span class="pre">CSVExtractor</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.extract</span><span class="w"> </span><span class="kn">import</span> <span class="n">CSVExtractor</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">csv_extractor</span> <span class="o">=</span> <span class="n">CSVExtractor</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s2">&quot;path_to_csv_file&quot;</span><span class="p">)</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">target_extractor</span> <span class="o">=</span> <span class="n">csv_extractor</span> <span class="c1"># Or add it using the add_step(s) methods</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="multicsvextractor">
 <h2>MultiCSVExtractor<a class="headerlink" href="#multicsvextractor" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">MultiCSVExtractor</span></code> class handles the extraction of data from multiple CSV files stored in a given directory.
+It extends the <code class="docutils literal notranslate"><span class="pre">MultiFileExtractor</span></code> and automatically gathers CSV file paths based on the specified directory.
+For each CSV file, it creates an instance of <code class="docutils literal notranslate"><span class="pre">CSVExtractor</span></code> to process and load the data into the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> context.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seroflow.extract.csv_extractor.MultiCSVExtractor">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.extract.csv_extractor.</span></span><span class="sig-name descname"><span class="pre">MultiCSVExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.extract.csv_extractor.MultiCSVExtractor" title="Link to this definition"></a></dt>
@@ -523,9 +628,25 @@ Initializes the MultiCSVExtractor object.</p>
 
 </dd></dl>
 
+<section id="id3">
+<h3>Usage Example<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<p>Below is a simple example that shows how to initialize a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object with an <code class="docutils literal notranslate"><span class="pre">MultiCSVExtractor</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.extract</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultiCSVExtractor</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">multi_csv_extractor</span> <span class="o">=</span> <span class="n">MultiCSVExtractor</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s2">&quot;path_to_directory&quot;</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">target_extractor</span> <span class="o">=</span> <span class="n">multi_csv_extractor</span> <span class="c1"># Or add it using the add_step(s) methods</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">chunker</span><span class="o">=...</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="excelextractor">
 <h2>ExcelExtractor<a class="headerlink" href="#excelextractor" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">ExcelExtractor</span></code> class is a concrete implementation for reading data from a single Excel file.
+It supports both .xls and .xlsx formats by selecting the appropriate engine (xlrd for .xls and openpyxl for .xlsx).
+The extractor loads the data into a DataFrame and adds it to the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> context under the file name.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seroflow.extract.excel_extractor.ExcelExtractor">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.extract.excel_extractor.</span></span><span class="sig-name descname"><span class="pre">ExcelExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ExcelExtractor'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.extract.excel_extractor.ExcelExtractor" title="Link to this definition"></a></dt>
@@ -587,9 +708,25 @@ Gets the maximum number of rows in the Excel file</p>
 
 </dd></dl>
 
+<section id="id4">
+<h3>Usage Example<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p>Below is a simple example that shows how to initialize a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object with an <code class="docutils literal notranslate"><span class="pre">ExcelExtractor</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.extract</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExcelExtractor</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">excel_extractor</span> <span class="o">=</span> <span class="n">ExcelExtractor</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s2">&quot;path_to_excel_file&quot;</span><span class="p">)</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">target_extractor</span> <span class="o">=</span> <span class="n">excel_extractor</span> <span class="c1"># Or add it using the add_step(s) methods</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="multiexcelextractor">
 <h2>MultiExcelExtractor<a class="headerlink" href="#multiexcelextractor" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">MultiExcelExtractor</span></code> class processes multiple Excel files from a specified directory.
+It extends the <code class="docutils literal notranslate"><span class="pre">MultiFileExtractor</span></code> and automatically identifies Excel files based on common extensions (.xlsx and .xls).
+For each Excel file, an <code class="docutils literal notranslate"><span class="pre">ExcelExtractor</span></code> instance is created and used to add the data to the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> context.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seroflow.extract.excel_extractor.MultiExcelExtractor">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.extract.excel_extractor.</span></span><span class="sig-name descname"><span class="pre">MultiExcelExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.extract.excel_extractor.MultiExcelExtractor" title="Link to this definition"></a></dt>
@@ -616,9 +753,27 @@ Initializes the MultiExcelExtractor object.</p>
 
 </dd></dl>
 
+<section id="id5">
+<h3>Usage Example<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<p>Below is a simple example that shows how to initialize a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object with an <code class="docutils literal notranslate"><span class="pre">MultiExcelExtractor</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.extract</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultiExcelExtractor</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">multi_excel_extractor</span> <span class="o">=</span> <span class="n">MultiExcelExtractor</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s2">&quot;path_to_directory&quot;</span><span class="p">,</span> <span class="n">on_error</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">target_extractor</span> <span class="o">=</span> <span class="n">multi_excel_extractor</span> <span class="c1"># Or add it using the add_step(s) methods</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="odbcextractor">
 <h2>ODBCExtractor<a class="headerlink" href="#odbcextractor" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">ODBCExtractor</span></code> class is a concrete extractor for reading data from a <code class="docutils literal notranslate"><span class="pre">ODBC</span> <span class="pre">Data</span> <span class="pre">source</span></code> tables.
+Uses a <code class="docutils literal notranslate"><span class="pre">pyodbc.Connection</span></code> to execute <code class="docutils literal notranslate"><span class="pre">SQL</span></code> queries and returns <code class="docutils literal notranslate"><span class="pre">pandas</span></code> DataFrames.
+Supports full-table extraction or chunked extraction via <code class="docutils literal notranslate"><span class="pre">OFFSET/FETCH</span></code> for batching large tables.</p>
+<p><strong>Note</strong>: An <code class="docutils literal notranslate"><span class="pre">Engine</span></code> object must be created and passed to use with the <code class="docutils literal notranslate"><span class="pre">ODBCExtractor</span></code> in the <code class="docutils literal notranslate"><span class="pre">engine</span></code> parameter.</p>
+<p>Please Review the [Engine](engine.md) documentation for further information on <code class="docutils literal notranslate"><span class="pre">Engine</span></code> Objects.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seroflow.extract.odbc_extractor.ODBCExtractor">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.extract.odbc_extractor.</span></span><span class="sig-name descname"><span class="pre">ODBCExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ODBCExtractor'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.extract.odbc_extractor.ODBCExtractor" title="Link to this definition"></a></dt>
@@ -673,9 +828,30 @@ of ‘skiprows’ and ‘nrows’ in kwargs, then adds the resulting DataFrame t
 
 </dd></dl>
 
+<section id="id6">
+<h3>Usage Example<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p>Below is a simple example that shows how to initialize a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object with an <code class="docutils literal notranslate"><span class="pre">ODBCExtractor</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.extract</span><span class="w"> </span><span class="kn">import</span> <span class="n">ODBCExtractor</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pyodbc</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">pyodbc</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">odbc_extractor</span> <span class="o">=</span> <span class="n">ODBCExtractor</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s2">&quot;Table Name&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="n">engine</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="s2">&quot;Schema Name&quot;</span><span class="p">)</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">target_extractor</span> <span class="o">=</span> <span class="n">odbc_extractor</span> <span class="c1"># Or add it using the add_step(s) methods</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="sqlserverextractor">
 <h2>SQLServerExtractor<a class="headerlink" href="#sqlserverextractor" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">SQLServerExtractor</span></code> class is a concrete extractor for reading data from a <code class="docutils literal notranslate"><span class="pre">SQL</span> <span class="pre">Server</span></code> table.
+It uses <code class="docutils literal notranslate"><span class="pre">SQLAlchemy</span></code> to connect to the database and <code class="docutils literal notranslate"><span class="pre">pandas</span></code> to load the table data into a DataFrame.
+This extractor supports both full table reads and chunked reads by constructing <code class="docutils literal notranslate"><span class="pre">SQL</span></code> queries with <code class="docutils literal notranslate"><span class="pre">OFFSET/FETCH</span></code> clauses.
+It also provides a method to obtain the total number of rows in the table without reading the entire dataset.</p>
+<p><strong>Note</strong>: An <code class="docutils literal notranslate"><span class="pre">Engine</span></code> object must be created and passed to use with the <code class="docutils literal notranslate"><span class="pre">SQLServerExtractor</span></code> in the <code class="docutils literal notranslate"><span class="pre">engine</span></code> parameter.</p>
+<p>Please Review the [Engine](engine.md) documentation for further information on <code class="docutils literal notranslate"><span class="pre">Engine</span></code> Objects.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seroflow.extract.sqlserver_extractor.SQLServerExtractor">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.extract.sqlserver_extractor.</span></span><span class="sig-name descname"><span class="pre">SQLServerExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SQLServerExtractor'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.extract.sqlserver_extractor.SQLServerExtractor" title="Link to this definition"></a></dt>
@@ -735,6 +911,21 @@ of rows is retrieved using an OFFSET/FETCH query. Otherwise, the full table is r
 
 </dd></dl>
 
+<section id="id7">
+<h3>Usage Example<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<p>Below is a simple example that shows how to initialize a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object with an <code class="docutils literal notranslate"><span class="pre">SQLServerExtractor</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.extract</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLServerExtractor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLAlchemyEngine</span> <span class="c1"># Select preferred Engine</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">SQLAlchemyEngine</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">sqlserver_extractor</span> <span class="o">=</span> <span class="n">SQLServerExtractor</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s2">&quot;Table Name&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">target_extractor</span> <span class="o">=</span> <span class="n">sqlserver_extractor</span> <span class="c1"># Or add it using the add_step(s) methods</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 
@@ -743,7 +934,7 @@ of rows is retrieved using an OFFSET/FETCH query. Otherwise, the full table is r
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="engine.html" class="btn btn-neutral float-left" title="Engine" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="load.html" class="btn btn-neutral float-right" title="Load" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="load.html" class="btn btn-neutral float-right" title="Loaders" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

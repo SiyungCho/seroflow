@@ -49,6 +49,7 @@
 <li class="toctree-l1"><a class="reference internal" href="cache.html">Cache</a></li>
 <li class="toctree-l1"><a class="reference internal" href="chunker.html">Chunker</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Context</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id1">Context</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#seroflow.context.context.Context"><code class="docutils literal notranslate"><span class="pre">Context</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.context.context.Context.context_name"><code class="docutils literal notranslate"><span class="pre">Context.context_name</span></code></a></li>
@@ -72,6 +73,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.context.context.Context.set_metadata"><code class="docutils literal notranslate"><span class="pre">Context.set_metadata()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#usage-example">Usage Example</a></li>
 </ul>
 </li>
 </ul>
@@ -113,6 +115,13 @@
              
   <section id="context">
 <h1>Context<a class="headerlink" href="#context" title="Link to this heading"></a></h1>
+<p>This module defines the <code class="docutils literal notranslate"><span class="pre">Context</span></code> dataclass for managing <code class="docutils literal notranslate"><span class="pre">pandas</span></code> DataFrames and metadata.
+The <code class="docutils literal notranslate"><span class="pre">Context</span></code> class provides a structured way to store and retrieve multiple DataFrames, manage related metadata, and track DataFrame addresses.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">Context</span></code> class is designed to facilitate the organization of DataFrames along with their associated metadata.
+It provides methods to set and retrieve DataFrames, update metadata, and manage the overall state of a <code class="docutils literal notranslate"><span class="pre">context</span></code>.</p>
+</section>
 <section id="id1">
 <h2>Context<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
 <p id="module-seroflow.context.context">Module that defines the Context dataclass for managing pandas DataFrames and metadata.</p>
@@ -341,6 +350,38 @@ the number of DataFrames currently stored.</p>
 
 </dd></dl>
 
+<section id="usage-example">
+<h3>Usage Example<a class="headerlink" href="#usage-example" title="Link to this heading"></a></h3>
+<p>Below is a simple example that shows how to initialize and use a <code class="docutils literal notranslate"><span class="pre">Context</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.context</span><span class="w"> </span><span class="kn">import</span> <span class="n">Context</span>  <span class="c1"># Adjust the import as needed</span>
+
+<span class="c1"># Create a sample DataFrame</span>
+<span class="n">df_sample</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+    <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]</span>
+<span class="p">})</span>
+
+<span class="c1"># Initialize a Context instance</span>
+<span class="n">my_context</span> <span class="o">=</span> <span class="n">Context</span><span class="p">(</span><span class="n">context_name</span><span class="o">=</span><span class="s2">&quot;SampleContext&quot;</span><span class="p">)</span>
+
+<span class="c1"># Add the DataFrame to the context</span>
+<span class="n">my_context</span><span class="o">.</span><span class="n">add_dataframe</span><span class="p">(</span><span class="s2">&quot;df_sample&quot;</span><span class="p">,</span> <span class="n">df_sample</span><span class="p">)</span>
+
+<span class="c1"># Retrieve the DataFrame by name</span>
+<span class="n">retrieved_df</span> <span class="o">=</span> <span class="n">my_context</span><span class="o">.</span><span class="n">get_dataframe</span><span class="p">(</span><span class="s2">&quot;df_sample&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Retrieved DataFrame:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">retrieved_df</span><span class="p">)</span>
+
+<span class="c1"># Update metadata manually</span>
+<span class="n">my_context</span><span class="o">.</span><span class="n">set_metadata</span><span class="p">(</span><span class="s2">&quot;description&quot;</span><span class="p">,</span> <span class="s2">&quot;This context contains sample data.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Metadata:&quot;</span><span class="p">,</span> <span class="n">my_context</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span>
+
+<span class="c1"># Display all DataFrame names stored in the context</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DataFrame Names:&quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">my_context</span><span class="o">.</span><span class="n">get_dataframe_names</span><span class="p">()))</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 

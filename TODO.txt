@@ -2,7 +2,9 @@ TODO:
 
 post v4 TODO:
 - pytests
-- upload to pip
+- fix rst for transform
+- go through all inline code docstrings and make sure they are all correct and adhere to google styling
+- add proper rst navigation between pages
 
 future
 - add universal engine

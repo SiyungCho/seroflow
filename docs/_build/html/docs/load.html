@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Load &mdash; Seroflow 1.0.2 documentation</title>
+  <title>Loaders &mdash; Seroflow 1.0.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
@@ -51,7 +51,8 @@
 <li class="toctree-l1"><a class="reference internal" href="context.html">Context</a></li>
 <li class="toctree-l1"><a class="reference internal" href="engine.html">Engine</a></li>
 <li class="toctree-l1"><a class="reference internal" href="extract.html">Extractors</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Load</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Loaders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#loader">Loader</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#seroflow.load.loader.Loader"><code class="docutils literal notranslate"><span class="pre">Loader</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.load.loader.Loader.__init__"><code class="docutils literal notranslate"><span class="pre">Loader.__init__()</span></code></a></li>
@@ -61,6 +62,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.load.loader.Loader.stop_step"><code class="docutils literal notranslate"><span class="pre">Loader.stop_step()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#usage-example">Usage Example</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#fileloader">FileLoader</a><ul>
@@ -69,6 +71,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.load.file_loader.FileLoader.func"><code class="docutils literal notranslate"><span class="pre">FileLoader.func()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Usage Example</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#csvloader">CSVLoader</a><ul>
@@ -78,6 +81,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.load.csv_loader.CSVLoader.map_exists_parameter"><code class="docutils literal notranslate"><span class="pre">CSVLoader.map_exists_parameter()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Usage Example</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#multicsvloader">MultiCSVLoader</a><ul>
@@ -85,6 +89,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.load.csv_loader.MultiCSVLoader.__init__"><code class="docutils literal notranslate"><span class="pre">MultiCSVLoader.__init__()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Usage Example</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#excelloader">ExcelLoader</a><ul>
@@ -94,6 +99,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.load.excel_loader.ExcelLoader.map_exists_parameter"><code class="docutils literal notranslate"><span class="pre">ExcelLoader.map_exists_parameter()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Usage Example</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#multiexcelloader">MultiExcelLoader</a><ul>
@@ -101,6 +107,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.load.excel_loader.MultiExcelLoader.__init__"><code class="docutils literal notranslate"><span class="pre">MultiExcelLoader.__init__()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Usage Example</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#odbcloader">ODBCLoader</a><ul>
@@ -110,6 +117,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.load.odbc_loader.ODBCLoader.map_exists_parameter"><code class="docutils literal notranslate"><span class="pre">ODBCLoader.map_exists_parameter()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Usage Example</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#sqlserverloader">SQLServerLoader</a><ul>
@@ -119,6 +127,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.load.sqlserver_loader.SQLServerLoader.map_exists_parameter"><code class="docutils literal notranslate"><span class="pre">SQLServerLoader.map_exists_parameter()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">Usage Example</a></li>
 </ul>
 </li>
 </ul>
@@ -145,7 +154,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Load</li>
+      <li class="breadcrumb-item active">Loaders</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/docs/load.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -155,10 +164,34 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="load">
-<h1>Load<a class="headerlink" href="#load" title="Link to this heading"></a></h1>
+  <section id="loaders">
+<h1>Loaders<a class="headerlink" href="#loaders" title="Link to this heading"></a></h1>
+<p>The modules documented here define the base structure and concrete implementations for <code class="docutils literal notranslate"><span class="pre">Loader</span></code> steps.
+These loaders are responsible for outputting data to target destinations such as files (such as CSV or Excel) or SQL Server tables.
+The loaders handle necessary configurations such as target path determination, file mode management based on an existence parameter, and file-format-specific behavior.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>This documentation covers:</p>
+<ul class="simple">
+<li><p><strong>Loader</strong>: An abstract base class that specifies the interface for writing a DataFrame to a target destination.</p></li>
+<li><p><strong>FileLoader</strong>: An abstract loader for file-based outputs. It extends the Loader class to determine the target file path (or directory), manage file modes (e.g., append, fail, replace), and define the file extension used for output.</p></li>
+<li><p><strong>CSVLoader</strong>: A concrete loader for writing a single DataFrame to a CSV file. It maps the existence parameter to the proper file mode for CSV writing and determines the appropriate target file path.</p></li>
+<li><p><strong>MultiCSVLoader</strong>: A concrete loader for writing multiple DataFrames to separate CSV files within a target directory. It reuses CSVLoader functionality to handle each DataFrame individually.</p></li>
+<li><p><strong>ExcelLoader</strong>: A concrete loader for writing a single DataFrame to an Excel file. It implements Excel-specific logic including target file path determination, selection of Excel writing engines, and mapping of the existence parameter.</p></li>
+<li><p><strong>MultiExcelLoader</strong>: A concrete loader for writing multiple DataFrames to separate Excel files within a target directory. It reuses ExcelLoader functionality to handle each DataFrame individually.</p></li>
+<li><p><strong>SQLServerLoader</strong>: A concrete loader for writing a DataFrame to a SQL Server table using pandas’ to_sql() functionality. It supports writing data into an SQL table while handling schema information and file mode mapping.</p></li>
+<li><p><strong>ODBCLoader</strong>: A concrete loader for writing a DataFrame to a ODBC‑accessible target. Inserts a pandas DataFrame into a database table via ODBC.</p></li>
+</ul>
+</section>
 <section id="loader">
 <h2>Loader<a class="headerlink" href="#loader" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">Loader</span></code> class is an abstract base class for writing a <code class="docutils literal notranslate"><span class="pre">pandas</span></code> DataFrame (or multiple DataFrames) to a target destination.
+It extends a base <code class="docutils literal notranslate"><span class="pre">Step</span></code> class and defines a common interface for output operations.</p>
+<p><strong>The class manages:</strong></p>
+<ul class="simple">
+<li><p>A list of DataFrames (ensuring even single DataFrame inputs are converted to a list).</p></li>
+<li><p>The file mode (or table existence behavior) through an exists parameter that must be one of <code class="docutils literal notranslate"><span class="pre">&quot;append&quot;,</span> <span class="pre">&quot;fail&quot;,</span> <span class="pre">or</span> <span class="pre">&quot;replace&quot;</span></code>.</p></li>
+</ul>
 <dl class="py class">
 <dt class="sig sig-object py" id="seroflow.load.loader.Loader">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.load.loader.</span></span><span class="sig-name descname"><span class="pre">Loader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.loader.Loader" title="Link to this definition"></a></dt>
@@ -215,9 +248,45 @@ Clears the parameters dictionary</p>
 
 </dd></dl>
 
+<section id="usage-example">
+<h3>Usage Example<a class="headerlink" href="#usage-example" title="Link to this heading"></a></h3>
+<p>Below is an example demonstrating how a concrete load implementation might inherit from <code class="docutils literal notranslate"><span class="pre">Loader</span></code> and implement its methods:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.load</span><span class="w"> </span><span class="kn">import</span> <span class="n">Loader</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MyCustomLoader</span><span class="p">(</span><span class="n">Loader</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">,</span> <span class="n">exists</span><span class="o">=</span><span class="s2">&quot;append&quot;</span><span class="p">,</span> <span class="n">on_error</span><span class="o">=</span><span class="s2">&quot;raise&quot;</span><span class="p">):</span>
+        <span class="c1"># Custom initialization logic can be added here</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">step_name</span><span class="o">=</span><span class="s2">&quot;MyCustomLoader&quot;</span><span class="p">,</span> <span class="n">dataframes</span><span class="o">=</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">exists</span><span class="o">=</span><span class="n">exists</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">,</span> <span class="n">on_error</span><span class="o">=</span><span class="n">on_error</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="c1"># Custom logic to write DataFrames to the target</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">dataframes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">df</span> <span class="o">...</span> <span class="c1"># Implement load logic</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">map_exists_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Map the exists parameter; for custom loaders this might be trivial</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">exists</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">target_extractor</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># Set Extractor to gather data</span>
+
+<span class="n">custom_loader</span> <span class="o">=</span> <span class="n">MyCustomLoader</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">target_loader</span> <span class="o">=</span> <span class="n">custom_loader</span> <span class="c1"># Or add it using the add_step(s) methods</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="fileloader">
 <h2>FileLoader<a class="headerlink" href="#fileloader" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">FileLoader</span></code> class is an abstract loader for file-based outputs.
+It extends the <code class="docutils literal notranslate"><span class="pre">Loader</span></code> class and adds functionality to validate and determine the target file path.
+The loader checks if the provided target is a file or a directory.
+When a directory is provided, the file extension is used to form the complete target file name.
+Subclasses are expected to implement file-format-specific logic in the <code class="docutils literal notranslate"><span class="pre">func()</span></code> method.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seroflow.load.file_loader.FileLoader">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.load.file_loader.</span></span><span class="sig-name descname"><span class="pre">FileLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_extension</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'FileLoader'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.file_loader.FileLoader" title="Link to this definition"></a></dt>
@@ -256,9 +325,43 @@ Reads the DataFrame from the context and writes it to a file</p>
 
 </dd></dl>
 
+<section id="id1">
+<h3>Usage Example<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<p>Below is an example demonstrating how a concrete load implementation might inherit from <code class="docutils literal notranslate"><span class="pre">FileLoader</span></code> and implement its methods:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.load</span><span class="w"> </span><span class="kn">import</span> <span class="n">FileLoader</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MyCustomFileLoader</span><span class="p">(</span><span class="n">FileLoader</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">,</span> <span class="n">file_extension</span><span class="p">,</span> <span class="n">exists</span><span class="o">=</span><span class="s2">&quot;append&quot;</span><span class="p">,</span> <span class="n">on_error</span><span class="o">=</span><span class="s2">&quot;raise&quot;</span><span class="p">):</span>
+        <span class="c1"># Custom initialization logic can be added here</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">step_name</span><span class="o">=</span><span class="s2">&quot;MyCustomFileLoader&quot;</span><span class="p">,</span> <span class="n">dataframes</span><span class="o">=</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">file_extension</span><span class="o">=</span><span class="n">file_extension</span><span class="p">,</span> <span class="n">exists</span><span class="o">=</span><span class="n">exists</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">,</span> <span class="n">on_error</span><span class="o">=</span><span class="n">on_error</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="c1"># Custom logic to write DataFrames to the target</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">dataframes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">df</span> <span class="o">...</span> <span class="c1"># Implement load logic</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">map_exists_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Map the exists parameter; for custom loaders this might be trivial</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">exists</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">target_extractor</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># Set Extractor to gather data</span>
+
+<span class="n">custom_file_loader</span> <span class="o">=</span> <span class="n">MyCustomFileLoader</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">target_loader</span> <span class="o">=</span> <span class="n">custom_file_loader</span> <span class="c1"># Or add it using the add_step(s) methods</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="csvloader">
 <h2>CSVLoader<a class="headerlink" href="#csvloader" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">CSVLoader</span></code> class is a concrete loader for writing a single DataFrame to a CSV file.
+It extends <code class="docutils literal notranslate"><span class="pre">FileLoader</span></code> and implements CSV-specific logic by mapping the existence parameter to CSV file modes (<code class="docutils literal notranslate"><span class="pre">'a'</span></code> for append, <code class="docutils literal notranslate"><span class="pre">'x'</span></code> for fail, <code class="docutils literal notranslate"><span class="pre">'w'</span></code> for replace).
+It determines the target file path dynamically if only a directory is provided.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seroflow.load.csv_loader.CSVLoader">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.load.csv_loader.</span></span><span class="sig-name descname"><span class="pre">CSVLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'append'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CSVLoader'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.csv_loader.CSVLoader" title="Link to this definition"></a></dt>
@@ -317,9 +420,26 @@ None: if the exists parameter is not recognized</p>
 
 </dd></dl>
 
+<section id="id2">
+<h3>Usage Example<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<p>Below is a simple example that shows how to initialize a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object with an <code class="docutils literal notranslate"><span class="pre">CSVLoader</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.load</span><span class="w"> </span><span class="kn">import</span> <span class="n">CSVLoader</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">target_extractor</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># Set Extractor to gather data</span>
+
+<span class="n">csv_loader</span> <span class="o">=</span> <span class="n">CSVLoader</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="s2">&quot;path_to_csv_destination&quot;</span><span class="p">,</span> <span class="n">dataframe</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">)</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">target_loader</span> <span class="o">=</span> <span class="n">csv_loader</span> <span class="c1"># Or add it using the add_step(s) methods</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="multicsvloader">
 <h2>MultiCSVLoader<a class="headerlink" href="#multicsvloader" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">MultiCSVLoader</span></code> class extends <code class="docutils literal notranslate"><span class="pre">CSVLoader</span></code> to handle writing multiple DataFrames to separate CSV files.
+It expects a list of DataFrames Names stored in the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> Object and writes each DataFrame to its own file within the specified target directory.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seroflow.load.csv_loader.MultiCSVLoader">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.load.csv_loader.</span></span><span class="sig-name descname"><span class="pre">MultiCSVLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'append'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'MultiCSVLoader'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.csv_loader.MultiCSVLoader" title="Link to this definition"></a></dt>
@@ -348,9 +468,27 @@ Initializes the MultiCSVLoader object.</p>
 
 </dd></dl>
 
+<section id="id3">
+<h3>Usage Example<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<p>Below is a simple example that shows how to initialize a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object with an <code class="docutils literal notranslate"><span class="pre">MultiCSVLoader</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.load</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultiCSVLoader</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">target_extractor</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># Set Extractor to gather data</span>
+
+<span class="n">multi_csv_loader</span> <span class="o">=</span> <span class="n">MultiCSVLoader</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="s2">&quot;path_to_directory_destination&quot;</span><span class="p">,</span> <span class="n">dataframes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;...&quot;</span><span class="p">,</span> <span class="s2">&quot;...&quot;</span><span class="p">])</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">target_loader</span> <span class="o">=</span> <span class="n">multi_csv_loader</span> <span class="c1"># Or add it using the add_step(s) methods</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="excelloader">
 <h2>ExcelLoader<a class="headerlink" href="#excelloader" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">ExcelLoader</span></code> class is a concrete loader for writing a single DataFrame to an Excel file.
+It extends <code class="docutils literal notranslate"><span class="pre">FileLoader</span></code> and implements Excel-specific logic, such as choosing the correct writing engine (e.g., openpyxl for .xlsx) and handling file modes based on the existence parameter.
+It also builds the target file path dynamically if a directory is provided.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seroflow.load.excel_loader.ExcelLoader">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.load.excel_loader.</span></span><span class="sig-name descname"><span class="pre">ExcelLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.xlsx'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'append'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ExcelLoader'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.excel_loader.ExcelLoader" title="Link to this definition"></a></dt>
@@ -407,9 +545,27 @@ Maps the exists parameter to the if_sheet_exists parameter for the ExcelWriter o
 
 </dd></dl>
 
+<section id="id4">
+<h3>Usage Example<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p>Below is a simple example that shows how to initialize a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object with an <code class="docutils literal notranslate"><span class="pre">ExcelLoader</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">v.load</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExcelLoader</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">target_extractor</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># Set Extractor to gather data</span>
+
+<span class="n">excel_loader</span> <span class="o">=</span> <span class="n">ExcelLoader</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="s2">&quot;path_to_excel_destination&quot;</span><span class="p">,</span> <span class="n">dataframe</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">)</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">target_loader</span> <span class="o">=</span> <span class="n">excel_loader</span> <span class="c1"># Or add it using the add_step(s) methods</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="multiexcelloader">
 <h2>MultiExcelLoader<a class="headerlink" href="#multiexcelloader" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">MultiExcelLoader</span></code> class extends <code class="docutils literal notranslate"><span class="pre">ExcelLoader</span></code> to handle multiple DataFrames.
+When provided with a list of DataFrame Names, it writes each one to a separate Excel file within the specified target directory.
+The loader constructs individual file paths based on the DataFrame key and the defined file extension.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seroflow.load.excel_loader.MultiExcelLoader">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.load.excel_loader.</span></span><span class="sig-name descname"><span class="pre">MultiExcelLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.xlsx'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'append'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'MultiExcelLoader'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.excel_loader.MultiExcelLoader" title="Link to this definition"></a></dt>
@@ -439,9 +595,27 @@ Initializes the MultiExcelLoader object.</p>
 
 </dd></dl>
 
+<section id="id5">
+<h3>Usage Example<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<p>Below is a simple example that shows how to initialize a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object with an <code class="docutils literal notranslate"><span class="pre">MultiExcelLoader</span></code>:</p>
+<blockquote>
+<div><p>from seroflow import Pipeline
+from seroflow.load import MultiExcelLoader</p>
+<p>pipeline = Pipeline(…)
+pipeline.target_extractor = … # Set Extractor to gather data</p>
+<p>multi_excel_loader = MultiExcelLoader(target=”path_to_directory_destination”, dataframes=[”…”, “…”])
+pipeline.target_loader = multi_excel_loader # Or add it using the add_step(s) methods
+pipeline.execute()</p>
+</div></blockquote>
+</section>
 </section>
 <section id="odbcloader">
 <h2>ODBCLoader<a class="headerlink" href="#odbcloader" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">ODBCLoader</span></code> class is a concrete loader for writing a DataFrame to into an ODBC-accessible database using raw <code class="docutils literal notranslate"><span class="pre">SQL</span></code> executed via a <code class="docutils literal notranslate"><span class="pre">pyodbc.Connection</span></code>.
+The loader accepts a single target table name, an <code class="docutils literal notranslate"><span class="pre">Engine</span></code> object containing database connection details, and schema information.
+The existence parameter is defined, ensuring the appropriate behavior (append, fail, or replace).</p>
+<p><strong>Note</strong>: An <code class="docutils literal notranslate"><span class="pre">Engine</span></code> object must be created and passed to use with the <code class="docutils literal notranslate"><span class="pre">ODBCLoader</span></code> in the <code class="docutils literal notranslate"><span class="pre">engine</span></code> parameter.</p>
+<p>Please Review the [Engine](engine.md) documentation for further information on <code class="docutils literal notranslate"><span class="pre">Engine</span></code> Objects.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seroflow.load.odbc_loader.ODBCLoader">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.load.odbc_loader.</span></span><span class="sig-name descname"><span class="pre">ODBCLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ODBCLoader'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'append'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.odbc_loader.ODBCLoader" title="Link to this definition"></a></dt>
@@ -509,9 +683,30 @@ Maps the exists parameter, No mapping required for this instance</p>
 
 </dd></dl>
 
+<section id="id6">
+<h3>Usage Example<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p>Below is a simple example that shows how to initialize a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object with an <code class="docutils literal notranslate"><span class="pre">ODBCLoader</span></code>:</p>
+<blockquote>
+<div><p>from seroflow import Pipeline
+from seroflow.load import ODBCLoader
+import pyodbc</p>
+<p>pipeline = Pipeline(…)
+pipeline.target_extractor = … # Set Extractor to gather data
+engine = pyodbc.connect(…)</p>
+<p>odbc_loader = ODBCLoader(target=”Table Name”, dataframe=”…”, engine=engine, schema=”Schema Name”)
+pipeline.target_loader = odbc_loader # Or add it using the add_step(s) methods
+pipeline.execute()</p>
+</div></blockquote>
+</section>
 </section>
 <section id="sqlserverloader">
 <h2>SQLServerLoader<a class="headerlink" href="#sqlserverloader" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">SQLServerLoader</span></code> class is a concrete loader for writing a DataFrame to SQL Server table(s).
+It extends the <code class="docutils literal notranslate"><span class="pre">Loader</span></code> class and leverages pandas’ <code class="docutils literal notranslate"><span class="pre">to_sql()</span></code> method.
+The loader accepts target table names (as a single string or list), an <code class="docutils literal notranslate"><span class="pre">Engine</span></code> object containing database connection details, and schema information.
+The existence parameter is passed directly to the <code class="docutils literal notranslate"><span class="pre">if_exists</span></code> argument of <code class="docutils literal notranslate"><span class="pre">to_sql()</span></code>, ensuring the appropriate behavior (append, fail, or replace).</p>
+<p><strong>Note</strong>: An <code class="docutils literal notranslate"><span class="pre">Engine</span></code> object must be created and passed to use with the <code class="docutils literal notranslate"><span class="pre">SQLServerLoader</span></code> in the <code class="docutils literal notranslate"><span class="pre">engine</span></code> parameter.</p>
+<p>Please Review the [Engine](engine.md) documentation for further information on <code class="docutils literal notranslate"><span class="pre">Engine</span></code> Objects.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seroflow.load.sqlserver_loader.SQLServerLoader">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.load.sqlserver_loader.</span></span><span class="sig-name descname"><span class="pre">SQLServerLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SQLServerLoader'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exists</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'append'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.load.sqlserver_loader.SQLServerLoader" title="Link to this definition"></a></dt>
@@ -566,6 +761,21 @@ Maps the exists parameter, No mapping required for this instance</p>
 
 </dd></dl>
 
+<section id="id7">
+<h3>Usage Example<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<p>Below is a simple example that shows how to initialize a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object with an <code class="docutils literal notranslate"><span class="pre">SQLServerLoader</span></code>:</p>
+<blockquote>
+<div><p>from seroflow import Pipeline
+from seroflow.load import SQLServerLoader
+from seroflow.engine import SQLAlchemyEngine # Select preferred Engine</p>
+<p>pipeline = Pipeline(…)
+pipeline.target_extractor = … # Set Extractor to gather data
+engine = SQLAlchemyEngine(…)</p>
+<p>sqlserver_loader = SQLServerLoader(target=”Table Name”, dataframe=”…”, engine=engine)
+pipeline.target_loader = sqlserver_loader # Or add it using the add_step(s) methods
+pipeline.execute()</p>
+</div></blockquote>
+</section>
 </section>
 </section>
 

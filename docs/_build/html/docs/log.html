@@ -53,12 +53,14 @@
 <li class="toctree-l1"><a class="reference internal" href="extract.html">Extractors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="load.html">Load</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Logging</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#customlogger">CustomLogger</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#seroflow.log.logger.CustomLogger"><code class="docutils literal notranslate"><span class="pre">CustomLogger</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.log.logger.CustomLogger.__init__"><code class="docutils literal notranslate"><span class="pre">CustomLogger.__init__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.log.logger.CustomLogger.init_directory"><code class="docutils literal notranslate"><span class="pre">CustomLogger.init_directory()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#usage-example">Usage Example</a></li>
 </ul>
 </li>
 </ul>
@@ -96,8 +98,24 @@
              
   <section id="logging">
 <h1>Logging<a class="headerlink" href="#logging" title="Link to this heading"></a></h1>
+<p>This module defines the <code class="docutils literal notranslate"><span class="pre">CustomLogger</span></code> class, which sets up a logging mechanism for an application.
+It creates log directories, configures logging to write to a file with a timestamp, and provides a logger instance.</p>
+<p><strong>It is important to note</strong> that <code class="docutils literal notranslate"><span class="pre">Seroflow</span></code> does not require the use of this <code class="docutils literal notranslate"><span class="pre">CustomLogger</span></code> class, any <code class="docutils literal notranslate"><span class="pre">Python</span></code> logging module can be used to log messages as long as it derives from <code class="docutils literal notranslate"><span class="pre">Python</span></code> <code class="docutils literal notranslate"><span class="pre">logging.logger</span></code>.
+<code class="docutils literal notranslate"><span class="pre">Seroflow</span></code> offers an interface and concrete example of a compatible <code class="docutils literal notranslate"><span class="pre">CustomLogger</span></code> for abstraction and validity however it is <strong>not</strong> mandatory to use these unless specified.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">CustomLogger</span></code> class configures the Python logging module to write log messages to a file.
+If no log file path is provided, it creates a default log directory structure based on the current working directory and the process ID, and generates a log file name that includes the log name and a timestamp.</p>
+</section>
 <section id="customlogger">
 <h2>CustomLogger<a class="headerlink" href="#customlogger" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">CustomLogger</span></code> class is designed to manage application logs. It handles the following tasks:</p>
+<ul class="simple">
+<li><p><strong>Directory Initialization:</strong>
+Creates a <code class="docutils literal notranslate"><span class="pre">logs</span></code> directory in the current working directory, then creates a subdirectory for the current process ID, and finally constructs a log file name that includes a timestamp.</p></li>
+<li><p><strong>Logging Configuration:</strong>
+Configures the logging module to write log messages to the specified log file with a defined format and logging level (set to <code class="docutils literal notranslate"><span class="pre">INFO</span></code>).</p></li>
+</ul>
 <dl class="py class">
 <dt class="sig sig-object py" id="seroflow.log.logger.CustomLogger">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.log.logger.</span></span><span class="sig-name descname"><span class="pre">CustomLogger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.log.logger.CustomLogger" title="Link to this definition"></a></dt>
@@ -146,6 +164,20 @@ and the current date and time.</p>
 
 </dd></dl>
 
+<section id="usage-example">
+<h3>Usage Example<a class="headerlink" href="#usage-example" title="Link to this heading"></a></h3>
+<p>Below is an example demonstrating how to use the <code class="docutils literal notranslate"><span class="pre">CustomLogger</span></code> class:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.log</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomLogger</span>
+
+<span class="c1"># Initialize a CustomLogger instance with a custom log name.</span>
+<span class="n">logger_instance</span> <span class="o">=</span> <span class="n">CustomLogger</span><span class="p">(</span><span class="n">log_name</span><span class="o">=</span><span class="s2">&quot;my_app&quot;</span><span class="p">)</span>
+
+<span class="c1"># Use the provided logger to log messages.</span>
+<span class="n">logger_instance</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;This is an informational message.&quot;</span><span class="p">)</span>
+<span class="n">logger_instance</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;This is an error message.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 

@@ -14,7 +14,7 @@ This documentation covers:
 - **MultiExcelLoader**: A concrete loader for writing multiple DataFrames to separate Excel files within a target directory. It reuses ExcelLoader functionality to handle each DataFrame individually.
 - **SQLServerLoader**: A concrete loader for writing a DataFrame to a SQL Server table using pandas’ to_sql() functionality. It supports writing data into an SQL table while handling schema information and file mode mapping.
 - **ODBCLoader**: A concrete loader for writing a DataFrame to a ODBC‑accessible target. Inserts a pandas DataFrame into a database table via ODBC.
-- 
+
 ## Class: Loader
 
 The `Loader` class is an abstract base class for writing a `pandas` DataFrame (or multiple DataFrames) to a target destination. It extends a base `Step` class and defines a common interface for output operations.

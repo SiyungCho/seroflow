@@ -57,6 +57,7 @@
 <li class="toctree-l1"><a class="reference internal" href="types.html">Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Wrappers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id1">wrappers</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#seroflow.wrappers.wrappers.log_error"><code class="docutils literal notranslate"><span class="pre">log_error()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#seroflow.wrappers.wrappers.timer"><code class="docutils literal notranslate"><span class="pre">timer()</span></code></a></li>
@@ -92,6 +93,20 @@
              
   <section id="wrappers">
 <h1>Wrappers<a class="headerlink" href="#wrappers" title="Link to this heading"></a></h1>
+<p>This module provides <code class="docutils literal notranslate"><span class="pre">decorators</span></code> that enhance logging capabilities.
+It includes a <code class="docutils literal notranslate"><span class="pre">timer</span></code> decorator to measure and log the execution time of functions and a <code class="docutils literal notranslate"><span class="pre">log_error</span></code> decorator that catches and logs errors during function execution.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>This module implements two main decorators:</p>
+<ul class="simple">
+<li><p><strong>timer</strong>: Measures the execution time of the decorated function.</p></li>
+</ul>
+<p>It is designed for class methods that have a <code class="docutils literal notranslate"><span class="pre">logger</span></code> attribute.</p>
+<ul class="simple">
+<li><p><strong>log_error</strong>: A decorator factory that returns a decorator for error logging.</p></li>
+</ul>
+<p>It wraps the target function in a try-except block, logs error details (including function name and code line), and optionally re-raises an exception with a custom error message based on the <code class="docutils literal notranslate"><span class="pre">log_only</span></code> flag.</p>
+</section>
 <section id="id1">
 <h2>wrappers<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
 <p id="module-seroflow.wrappers.wrappers">Module: wrappers</p>

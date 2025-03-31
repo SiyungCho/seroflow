@@ -50,6 +50,7 @@
 <li class="toctree-l1"><a class="reference internal" href="chunker.html">Chunker</a></li>
 <li class="toctree-l1"><a class="reference internal" href="context.html">Context</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#abstractengine">AbstractEngine</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#seroflow.engine.engine.AbstractEngine"><code class="docutils literal notranslate"><span class="pre">AbstractEngine</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.engine.engine.AbstractEngine.__enter__"><code class="docutils literal notranslate"><span class="pre">AbstractEngine.__enter__()</span></code></a></li>
@@ -59,6 +60,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.engine.engine.AbstractEngine.test_engine"><code class="docutils literal notranslate"><span class="pre">AbstractEngine.test_engine()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#usage-example">Usage Example:</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#id1">Engine</a><ul>
@@ -72,6 +74,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.engine.engine.Engine.unpack_connection_settings"><code class="docutils literal notranslate"><span class="pre">Engine.unpack_connection_settings()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Usage Example:</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#sqlalchemyengine">SQLAlchemyEngine</a><ul>
@@ -83,6 +86,12 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.engine.sqlalchemy_engine.SQLAlchemyEngine.test_engine"><code class="docutils literal notranslate"><span class="pre">SQLAlchemyEngine.test_engine()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Usage Example:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#instantiating-non-seroflow-provided-engines">Instantiating Non Seroflow provided Engines</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#native-sqlalchemy-example">Native SQLAlchemy Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#native-pyodbc-example">Native Pyodbc Example</a></li>
 </ul>
 </li>
 </ul>
@@ -123,8 +132,27 @@
              
   <section id="engine">
 <h1>Engine<a class="headerlink" href="#engine" title="Link to this heading"></a></h1>
+<p>The modules documented here define the interface and concrete implementations for <code class="docutils literal notranslate"><span class="pre">Seroflow</span></code> <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> compatible <code class="docutils literal notranslate"><span class="pre">Engines</span></code>.
+They provide a common interface to handle common <code class="docutils literal notranslate"><span class="pre">Engine</span></code> connection setup, context‑management, and resource cleanup within a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> Object.</p>
+<p><strong>It is important to note</strong> that all <code class="docutils literal notranslate"><span class="pre">Seroflow</span></code> <code class="docutils literal notranslate"><span class="pre">Extractors</span></code> and <code class="docutils literal notranslate"><span class="pre">Loaders</span></code> that require an <code class="docutils literal notranslate"><span class="pre">Engine</span></code> can use the native <code class="docutils literal notranslate"><span class="pre">SQLAlchemy</span></code> or <code class="docutils literal notranslate"><span class="pre">Pyodbc</span></code> connection without implementing any of the defined <code class="docutils literal notranslate"><span class="pre">Engine</span></code> Classes offered with <code class="docutils literal notranslate"><span class="pre">Seroflow</span></code>, unless specified otherwise.
+<code class="docutils literal notranslate"><span class="pre">Seroflow</span></code> offers an interface and concrete example of a compatible <code class="docutils literal notranslate"><span class="pre">Engine</span></code> for abstraction and validity however it is <strong>not</strong> mandatory to use these unless specified.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>This documentation covers three modules:</p>
+<ul class="simple">
+<li><p><strong>AbstractEngine</strong>: Defines the <code class="docutils literal notranslate"><span class="pre">AbstractEngine</span></code> abstract class, which specifies the interface for creating <code class="docutils literal notranslate"><span class="pre">Seroflow</span></code> compatible engines.</p></li>
+<li><p><strong>Engine</strong>: Implements the <code class="docutils literal notranslate"><span class="pre">Engine</span></code> class, a concrete subclass of <code class="docutils literal notranslate"><span class="pre">AbstractEngine</span></code> that encapsulates a single type of database connection engine.</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">Engine</span></code> class manages connection initialization, default values, error handling, and other connection components.</p>
+<ul class="simple">
+<li><p><strong>SQLAlchemyEngine</strong>: A concrete subclass of <code class="docutils literal notranslate"><span class="pre">Engine</span></code> that defines the connection parameters and components for a <code class="docutils literal notranslate"><span class="pre">SQLAlchemy</span></code> based engine.</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">SQLAlchemy</span></code> can be widely used in many database settings and is the recommended method of creating an <code class="docutils literal notranslate"><span class="pre">Engine</span></code>.</p>
+</section>
 <section id="abstractengine">
 <h2>AbstractEngine<a class="headerlink" href="#abstractengine" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">AbstractEngine</span></code> is an abstract base class that defines the interface for creating <code class="docutils literal notranslate"><span class="pre">Seroflow</span></code> compatible engines.
+It extends Python’s <code class="docutils literal notranslate"><span class="pre">ABC</span></code> (Abstract Base Class) and enforces the implementation of the needed abstract methods.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seroflow.engine.engine.AbstractEngine">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.engine.engine.</span></span><span class="sig-name descname"><span class="pre">AbstractEngine</span></span><a class="headerlink" href="#seroflow.engine.engine.AbstractEngine" title="Link to this definition"></a></dt>
@@ -201,9 +229,45 @@ and connection testing functionality.</p>
 
 </dd></dl>
 
+<section id="usage-example">
+<h3>Usage Example:<a class="headerlink" href="#usage-example" title="Link to this heading"></a></h3>
+<p>Below is an example demonstrating how a concrete engine implementation might inherit from <code class="docutils literal notranslate"><span class="pre">AbstractEngine</span></code> and implement its methods:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">AbstractEngine</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MyEngine</span><span class="p">(</span><span class="n">AbstractEngine</span><span class="p">):</span>
+   <span class="k">def</span><span class="w"> </span><span class="nf">create_engine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="c1"># Initialize engine connection.</span>
+      <span class="k">pass</span>
+
+   <span class="k">def</span><span class="w"> </span><span class="nf">test_engine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="c1"># Implement engine connection test.</span>
+      <span class="k">pass</span>
+
+   <span class="k">def</span><span class="w"> </span><span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="c1"># Implement engine &#39;with&#39; logic.</span>
+      <span class="k">return</span>
+
+   <span class="k">def</span><span class="w"> </span><span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">):</span>
+      <span class="c1"># Implement engine connection deletion logic.</span>
+      <span class="k">return</span>
+
+   <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Driver: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Database: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="si">}</span><span class="s2">&quot;</span>
+      <span class="p">)</span>
+</pre></div>
+</div>
+<p>Although the <code class="docutils literal notranslate"><span class="pre">AbstractEngine</span></code> class can be used to create Custom <code class="docutils literal notranslate"><span class="pre">Engine</span></code> Objects, it is not recommended due to the fact that the user will need to implement the full <cite>Engine</cite> logic.
+It is instead recommended to use the <code class="docutils literal notranslate"><span class="pre">Engine</span></code> Class documented below.</p>
+</section>
 </section>
 <section id="id1">
 <h2>Engine<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">Engine</span></code> class provides a concrete base implementation of <code class="docutils literal notranslate"><span class="pre">AbstractEngine</span></code>.
+It handles common functionality such as unpacking a dictionary of connection settings into individual attributes, automatically creating and testing the underlying connection upon initialization, and cleaning up resources when used within a <code class="docutils literal notranslate"><span class="pre">with</span></code> block.</p>
+<p>After unpacking settings and creating the <code class="docutils literal notranslate"><span class="pre">Engine</span></code> object via its subclass’s <code class="docutils literal notranslate"><span class="pre">create_engine()</span></code> implementation, the base class calls <code class="docutils literal notranslate"><span class="pre">test_engine()</span></code> if requested.
+When exiting a <code class="docutils literal notranslate"><span class="pre">with</span></code> block, the <code class="docutils literal notranslate"><span class="pre">Engine</span></code> automatically closes or disposes of the underlying connection in a safe manner.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seroflow.engine.engine.Engine">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.engine.engine.</span></span><span class="sig-name descname"><span class="pre">Engine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">schema</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection_settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_engine</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.engine.engine.Engine" title="Link to this definition"></a></dt>
@@ -314,9 +378,29 @@ Must be implemented by subclasses.</p>
 
 </dd></dl>
 
+<section id="id2">
+<h3>Usage Example:<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<p>Below is an example demonstrating how a concrete engine implementation might inherit from <code class="docutils literal notranslate"><span class="pre">Engine</span></code> and implement its methods:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">Engine</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">DummyEngine</span><span class="p">(</span><span class="n">Engine</span><span class="p">):</span>
+   <span class="k">def</span><span class="w"> </span><span class="nf">create_engine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="c1"># Implement connection logic here.</span>
+      <span class="k">return</span>
+
+   <span class="k">def</span><span class="w"> </span><span class="nf">test_engine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="c1"># Implement engine testing logic here.</span>
+      <span class="k">pass</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="sqlalchemyengine">
 <h2>SQLAlchemyEngine<a class="headerlink" href="#sqlalchemyengine" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">SQLAlchemyEngine</span></code> class extends <code class="docutils literal notranslate"><span class="pre">Engine</span></code> to provide a fully functional connection using <code class="docutils literal notranslate"><span class="pre">SQLAlchemy’s</span></code> <code class="docutils literal notranslate"><span class="pre">create_engine()</span></code> under the hood.
+It builds a connection <code class="docutils literal notranslate"><span class="pre">URL</span></code> from parameters such as server, database, driver, username, password, and trusted authentication settings, then instantiates a <code class="docutils literal notranslate"><span class="pre">SQLAlchemy</span></code> Engine with <code class="docutils literal notranslate"><span class="pre">fast_executemany</span></code> enabled for high‑speed bulk inserts.</p>
+<p>On initialization, <code class="docutils literal notranslate"><span class="pre">SQLAlchemyEngine</span></code> constructs its <code class="docutils literal notranslate"><span class="pre">URL</span></code>, creates the engine, and tests connectivity by executing a simple query against <code class="docutils literal notranslate"><span class="pre">INFORMATION_SCHEMA.TABLES</span></code>.
+If any step fails, it raises a descriptive <code class="docutils literal notranslate"><span class="pre">RuntimeError</span></code>.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seroflow.engine.sqlalchemy_engine.SQLAlchemyEngine">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.engine.sqlalchemy_engine.</span></span><span class="sig-name descname"><span class="pre">SQLAlchemyEngine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">schema</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">server</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">database</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">driver</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fast_executemany</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'yes'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dialect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'mssql+pyodbc'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trusted_connection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'yes'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.engine.sqlalchemy_engine.SQLAlchemyEngine" title="Link to this definition"></a></dt>
@@ -406,6 +490,60 @@ INFORMATION_SCHEMA.TABLES.</p>
 
 </dd></dl>
 
+<section id="id3">
+<h3>Usage Example:<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<p>Below is an example demonstrating how <code class="docutils literal notranslate"><span class="pre">SQLAlchemyEngine</span></code> may be used:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.extract</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLServerExtractor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLAlchemyEngine</span> <span class="c1"># Select preferred Engine</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">SQLAlchemyEngine</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">sqlserver_extractor</span> <span class="o">=</span> <span class="n">SQLServerExtractor</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s2">&quot;Table Name&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">target_extractor</span> <span class="o">=</span> <span class="n">sqlserver_extractor</span> <span class="c1"># Or add it using the add_step(s) methods</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="instantiating-non-seroflow-provided-engines">
+<h2>Instantiating Non Seroflow provided Engines<a class="headerlink" href="#instantiating-non-seroflow-provided-engines" title="Link to this heading"></a></h2>
+<p>As mentioned previously, it is entirely possible to bypass <code class="docutils literal notranslate"><span class="pre">Pipeline’s</span></code> classes entirely if you prefer a native approach:</p>
+<section id="native-sqlalchemy-example">
+<h3>Native SQLAlchemy Example<a class="headerlink" href="#native-sqlalchemy-example" title="Link to this heading"></a></h3>
+<p>In the example below we create a native <code class="docutils literal notranslate"><span class="pre">sqlalchemy</span></code> based engine and use it in conjunction with a <code class="docutils literal notranslate"><span class="pre">Loader</span></code> <code class="docutils literal notranslate"><span class="pre">Step</span></code> in the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.extract</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLServerExtractor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">URL</span>
+
+<span class="n">connection_url</span> <span class="o">=</span> <span class="n">URL</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">connection_url</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">sqlserver_extractor</span> <span class="o">=</span> <span class="n">SQLServerExtractor</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s2">&quot;Table Name&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">target_extractor</span> <span class="o">=</span> <span class="n">sqlserver_extractor</span> <span class="c1"># Or add it using the add_step(s) methods</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="native-pyodbc-example">
+<h3>Native Pyodbc Example<a class="headerlink" href="#native-pyodbc-example" title="Link to this heading"></a></h3>
+<p>In the example below we create a native <code class="docutils literal notranslate"><span class="pre">pyodbc</span></code> based engine and use it in conjunction with a <code class="docutils literal notranslate"><span class="pre">Loader</span></code> <code class="docutils literal notranslate"><span class="pre">Step</span></code> in the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.extract</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLServerExtractor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyodbc</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">pyodbc</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">sqlserver_extractor</span> <span class="o">=</span> <span class="n">SQLServerExtractor</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s2">&quot;Table Name&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">target_extractor</span> <span class="o">=</span> <span class="n">sqlserver_extractor</span> <span class="c1"># Or add it using the add_step(s) methods</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 

@@ -126,7 +126,7 @@ Refer to the [Documentation](../README.md#documentation) for detailed usage and 
    :maxdepth: 3
    :caption: Contents:
 
-   Home <self>
+   Getting Started with Seroflow <self>
    docs/seroflow
    docs/cache
    docs/chunker

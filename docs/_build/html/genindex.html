@@ -48,7 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="docs/context.html">Context</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docs/engine.html">Engine</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docs/extract.html">Extractors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="docs/load.html">Load</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/load.html">Loaders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docs/log.html">Logging</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docs/step.html">Step</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docs/transform.html">seroflow.transform package</a></li>
@@ -105,6 +105,7 @@
  | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
  | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
  
 </div>
 <h2 id="_">_</h2>
@@ -113,7 +114,11 @@
       <li><a href="docs/step.html#seroflow.step.step.Step.__call__">__call__() (seroflow.step.step.Step method)</a>
 </li>
       <li><a href="docs/cache.html#seroflow.cache.lfu_cache.LFUCache.__del__">__del__() (seroflow.cache.lfu_cache.LFUCache method)</a>
+
+      <ul>
+        <li><a href="docs/seroflow.html#seroflow.Pipeline.__del__">(seroflow.Pipeline method)</a>
 </li>
+      </ul></li>
       <li><a href="docs/engine.html#seroflow.engine.engine.AbstractEngine.__enter__">__enter__() (seroflow.engine.engine.AbstractEngine method)</a>
 
       <ul>
@@ -174,6 +179,8 @@
         <li><a href="docs/load.html#seroflow.load.sqlserver_loader.SQLServerLoader.__init__">(seroflow.load.sqlserver_loader.SQLServerLoader method)</a>
 </li>
         <li><a href="docs/log.html#seroflow.log.logger.CustomLogger.__init__">(seroflow.log.logger.CustomLogger method)</a>
+</li>
+        <li><a href="docs/seroflow.html#seroflow.Pipeline.__init__">(seroflow.Pipeline method)</a>
 </li>
         <li><a href="docs/step.html#seroflow.step.step.Step.__init__">(seroflow.step.step.Step method)</a>
 </li>
@@ -497,6 +504,8 @@
 </li>
         <li><a href="docs/engine.html#seroflow.engine.engine.Engine.__str__">(seroflow.engine.engine.Engine method)</a>
 </li>
+        <li><a href="docs/seroflow.html#seroflow.Pipeline.__str__">(seroflow.Pipeline method)</a>
+</li>
         <li><a href="docs/step.html#seroflow.step.step.Step.__str__">(seroflow.step.step.Step method)</a>
 </li>
         <li><a href="docs/transform.html#seroflow.transform.cache.CacheState.__str__">(seroflow.transform.cache.CacheState method)</a>
@@ -530,14 +539,18 @@
 </li>
       <li><a href="docs/step.html#seroflow.step.step.Step.add_params">add_params() (seroflow.step.step.Step method)</a>
 </li>
+      <li><a href="docs/seroflow.html#seroflow.Pipeline.add_step">add_step() (seroflow.Pipeline method)</a>
+</li>
+      <li><a href="docs/seroflow.html#seroflow.Pipeline.add_steps">add_steps() (seroflow.Pipeline method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/transform.html#seroflow.transform.AddColumn">AddColumn (class in seroflow.transform)</a>
 
       <ul>
         <li><a href="docs/transform.html#seroflow.transform.column.AddColumn">(class in seroflow.transform.column)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/transform.html#seroflow.transform.AddDataFrame">AddDataFrame (class in seroflow.transform)</a>
 
       <ul>
@@ -564,12 +577,18 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="docs/transform.html#seroflow.transform.cache.CacheState.cache">cache (seroflow.transform.cache.CacheState attribute)</a>
+      <li><a href="docs/seroflow.html#seroflow.Pipeline.cache">cache (seroflow.Pipeline attribute)</a>
 
       <ul>
+        <li><a href="docs/seroflow.html#id0">(seroflow.Pipeline property)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.cache.CacheState.cache">(seroflow.transform.cache.CacheState attribute)</a>
+</li>
         <li><a href="docs/transform.html#seroflow.transform.CacheState.cache">(seroflow.transform.CacheState attribute)</a>
 </li>
       </ul></li>
+      <li><a href="docs/seroflow.html#seroflow.Pipeline.cache_state">cache_state() (seroflow.Pipeline method)</a>
+</li>
       <li><a href="docs/transform.html#seroflow.transform.CacheState">CacheState (class in seroflow.transform)</a>
 
       <ul>
@@ -610,6 +629,12 @@
 </li>
       <li><a href="docs/chunker.html#seroflow.chunker.chunker.Chunker">Chunker (class in seroflow.chunker.chunker)</a>
 </li>
+      <li><a href="docs/seroflow.html#seroflow.Pipeline.chunker">chunker (seroflow.Pipeline attribute)</a>
+
+      <ul>
+        <li><a href="docs/seroflow.html#id1">(seroflow.Pipeline property)</a>
+</li>
+      </ul></li>
       <li><a href="docs/transform.html#seroflow.transform.AddColumn.column">column (seroflow.transform.AddColumn attribute)</a>
 
       <ul>
@@ -722,6 +747,8 @@
         <li><a href="docs/transform.html#seroflow.transform.RenameColumns.columns_mapping">(seroflow.transform.RenameColumns attribute)</a>
 </li>
       </ul></li>
+      <li><a href="docs/cache.html#seroflow.cache.lfu_cache.LFUCache.compare_function_code">compare_function_code() (seroflow.cache.lfu_cache.LFUCache method)</a>
+</li>
       <li><a href="docs/transform.html#seroflow.transform.AddColumn.compute_func">compute_func (seroflow.transform.AddColumn attribute)</a>
 
       <ul>
@@ -864,6 +891,12 @@
       </ul></li>
       <li><a href="docs/context.html#id2">dataframe_addr (seroflow.context.context.Context attribute)</a>, <a href="docs/context.html#seroflow.context.context.Context.dataframe_addr">[1]</a>
 </li>
+      <li><a href="docs/seroflow.html#seroflow.Pipeline.dataframe_index">dataframe_index (seroflow.Pipeline attribute)</a>
+
+      <ul>
+        <li><a href="docs/seroflow.html#id2">(seroflow.Pipeline property)</a>
+</li>
+      </ul></li>
       <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColCorrelation.dataframe_name">dataframe_name (seroflow.transform.aggregation.GetColCorrelation attribute)</a>
 
       <ul>
@@ -920,6 +953,10 @@
         <li><a href="docs/transform.html#seroflow.transform.variable.DecrementVariable">(class in seroflow.transform.variable)</a>
 </li>
       </ul></li>
+      <li><a href="docs/cache.html#seroflow.cache.lfu_cache.LFUCache.delete_cached_file">delete_cached_file() (seroflow.cache.lfu_cache.LFUCache method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/context.html#seroflow.context.context.Context.delete_dataframe">delete_dataframe() (seroflow.context.context.Context method)</a>
 </li>
       <li><a href="docs/transform.html#seroflow.transform.DeleteDataFrame">DeleteDataFrame (class in seroflow.transform)</a>
@@ -928,8 +965,6 @@
         <li><a href="docs/transform.html#seroflow.transform.internal.DeleteDataFrame">(class in seroflow.transform.internal)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/transform.html#seroflow.transform.column.SplitColumn.delimiter">delimiter (seroflow.transform.column.SplitColumn attribute)</a>
 
       <ul>
@@ -1112,14 +1147,16 @@
 </li>
       <li><a href="docs/load.html#seroflow.load.excel_loader.ExcelLoader">ExcelLoader (class in seroflow.load.excel_loader)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="docs/step.html#seroflow.step.base_step.AbstractStep.execute">execute() (seroflow.step.base_step.AbstractStep method)</a>
+      <li><a href="docs/seroflow.html#seroflow.Pipeline.execute">execute() (seroflow.Pipeline method)</a>
 
       <ul>
+        <li><a href="docs/step.html#seroflow.step.base_step.AbstractStep.execute">(seroflow.step.base_step.AbstractStep method)</a>
+</li>
         <li><a href="docs/step.html#seroflow.step.step.Step.execute">(seroflow.step.step.Step method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/transform.html#seroflow.transform.ExplodeColumn">ExplodeColumn (class in seroflow.transform)</a>
 
       <ul>
@@ -1514,6 +1551,8 @@
         <li><a href="docs/cache.html#seroflow.cache.lfu_cache.LFUCache.get">(seroflow.cache.lfu_cache.LFUCache method)</a>
 </li>
       </ul></li>
+      <li><a href="docs/cache.html#seroflow.cache.lfu_cache.LFUCache.get_cached_checkpoint">get_cached_checkpoint() (seroflow.cache.lfu_cache.LFUCache method)</a>
+</li>
       <li><a href="docs/context.html#seroflow.context.context.Context.get_dataframe">get_dataframe() (seroflow.context.context.Context method)</a>
 </li>
       <li><a href="docs/context.html#seroflow.context.context.Context.get_dataframe_names">get_dataframe_names() (seroflow.context.context.Context method)</a>
@@ -1604,9 +1643,13 @@
         <li><a href="docs/transform.html#seroflow.transform.aggregation.GetColVariance">(class in seroflow.transform.aggregation)</a>
 </li>
       </ul></li>
-      <li><a href="docs/transform.html#seroflow.transform.cache.CacheState.globalcontext">globalcontext (seroflow.transform.cache.CacheState attribute)</a>
+      <li><a href="docs/seroflow.html#seroflow.Pipeline.globalcontext">globalcontext (seroflow.Pipeline attribute)</a>
 
       <ul>
+        <li><a href="docs/seroflow.html#id3">(seroflow.Pipeline property)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.cache.CacheState.globalcontext">(seroflow.transform.cache.CacheState attribute)</a>
+</li>
         <li><a href="docs/transform.html#seroflow.transform.CacheState.globalcontext">(seroflow.transform.CacheState attribute)</a>
 </li>
       </ul></li>
@@ -1692,11 +1735,19 @@
         <li><a href="docs/cache.html#seroflow.cache.lfu_cache.LFUCache.load">(seroflow.cache.lfu_cache.LFUCache method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/load.html#seroflow.load.loader.Loader">Loader (class in seroflow.load.loader)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/wrappers.html#seroflow.wrappers.wrappers.log_error">log_error() (in module seroflow.wrappers.wrappers)</a>
+</li>
+      <li><a href="docs/seroflow.html#seroflow.Pipeline.logger">logger (seroflow.Pipeline attribute)</a>
+
+      <ul>
+        <li><a href="docs/seroflow.html#id4">(seroflow.Pipeline property)</a>
+</li>
+      </ul></li>
+      <li><a href="docs/seroflow.html#seroflow.Pipeline.logger_is_set">logger_is_set() (seroflow.Pipeline method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1742,12 +1793,16 @@
       </ul></li>
       <li><a href="docs/context.html#id4">metadata (seroflow.context.context.Context attribute)</a>, <a href="docs/context.html#seroflow.context.context.Context.metadata">[1]</a>
 </li>
+      <li><a href="docs/seroflow.html#seroflow.Pipeline.mode">mode (seroflow.Pipeline attribute)</a>
+
+      <ul>
+        <li><a href="docs/seroflow.html#id5">(seroflow.Pipeline property)</a>
+</li>
+      </ul></li>
       <li>
     module
 
       <ul>
-        <li><a href="docs/seroflow.html#module-seroflow">seroflow</a>
-</li>
         <li><a href="docs/context.html#module-seroflow.context.context">seroflow.context.context</a>
 </li>
         <li><a href="docs/transform.html#module-seroflow.transform">seroflow.transform</a>
@@ -1871,20 +1926,26 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="docs/transform.html#seroflow.transform.cache.CacheState.parameter_index">parameter_index (seroflow.transform.cache.CacheState attribute)</a>
+      <li><a href="docs/seroflow.html#seroflow.Pipeline.parameter_index">parameter_index (seroflow.Pipeline attribute)</a>
 
       <ul>
+        <li><a href="docs/seroflow.html#id6">(seroflow.Pipeline property)</a>
+</li>
+        <li><a href="docs/transform.html#seroflow.transform.cache.CacheState.parameter_index">(seroflow.transform.cache.CacheState attribute)</a>
+</li>
         <li><a href="docs/transform.html#seroflow.transform.CacheState.parameter_index">(seroflow.transform.CacheState attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/seroflow.html#seroflow.Pipeline">Pipeline (class in seroflow)</a>
+</li>
       <li><a href="docs/transform.html#seroflow.transform.PivotDataFrame">PivotDataFrame (class in seroflow.transform)</a>
 
       <ul>
         <li><a href="docs/transform.html#seroflow.transform.dataframe.PivotDataFrame">(class in seroflow.transform.dataframe)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/cache.html#seroflow.cache.cache.AbstractCache.put">put() (seroflow.cache.cache.AbstractCache method)</a>
 
       <ul>
@@ -1909,7 +1970,11 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/cache.html#seroflow.cache.lfu_cache.LFUCache.read_config">read_config() (seroflow.cache.lfu_cache.LFUCache method)</a>
+</li>
       <li><a href="docs/chunker.html#seroflow.chunker.chunker.Chunker.reload">reload() (seroflow.chunker.chunker.Chunker method)</a>
+</li>
+      <li><a href="docs/seroflow.html#seroflow.Pipeline.reload_cached_state">reload_cached_state() (seroflow.Pipeline method)</a>
 </li>
       <li><a href="docs/transform.html#seroflow.transform.ReloadCacheState">ReloadCacheState (class in seroflow.transform)</a>
 
@@ -1969,6 +2034,8 @@
         <li><a href="docs/cache.html#seroflow.cache.lfu_cache.LFUCache.reset">(seroflow.cache.lfu_cache.LFUCache method)</a>
 </li>
       </ul></li>
+      <li><a href="docs/seroflow.html#seroflow.Pipeline.reset_cache">reset_cache() (seroflow.Pipeline method)</a>
+</li>
       <li><a href="docs/transform.html#seroflow.transform.ResetCache">ResetCache (class in seroflow.transform)</a>
 
       <ul>
@@ -1999,13 +2066,6 @@
 
       <ul>
         <li><a href="docs/transform.html#seroflow.transform.MergeColumns.separator">(seroflow.transform.MergeColumns attribute)</a>
-</li>
-      </ul></li>
-      <li>
-    seroflow
-
-      <ul>
-        <li><a href="docs/seroflow.html#module-seroflow">module</a>
 </li>
       </ul></li>
       <li>
@@ -2134,12 +2194,12 @@
         <li><a href="docs/wrappers.html#module-seroflow.wrappers.wrappers">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/context.html#seroflow.context.context.Context.set_context_name">set_context_name() (seroflow.context.context.Context method)</a>
 </li>
       <li><a href="docs/context.html#seroflow.context.context.Context.set_dataframe">set_dataframe() (seroflow.context.context.Context method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/context.html#seroflow.context.context.Context.set_metadata">set_metadata() (seroflow.context.context.Context method)</a>
 </li>
       <li><a href="docs/transform.html#seroflow.transform.SetIndex">SetIndex (class in seroflow.transform)</a>
@@ -2202,6 +2262,18 @@
       </ul></li>
       <li><a href="docs/step.html#seroflow.step.step.Step">Step (class in seroflow.step.step)</a>
 </li>
+      <li><a href="docs/seroflow.html#seroflow.Pipeline.step_index">step_index (seroflow.Pipeline attribute)</a>
+
+      <ul>
+        <li><a href="docs/seroflow.html#id7">(seroflow.Pipeline property)</a>
+</li>
+      </ul></li>
+      <li><a href="docs/seroflow.html#seroflow.Pipeline.step_name_index">step_name_index (seroflow.Pipeline attribute)</a>
+
+      <ul>
+        <li><a href="docs/seroflow.html#id8">(seroflow.Pipeline property)</a>
+</li>
+      </ul></li>
       <li><a href="docs/extract.html#seroflow.extract.extractor.Extractor.stop_step">stop_step() (seroflow.extract.extractor.Extractor method)</a>
 
       <ul>
@@ -2240,6 +2312,10 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/seroflow.html#seroflow.Pipeline.target_extractor">target_extractor (seroflow.Pipeline property)</a>
+</li>
+      <li><a href="docs/seroflow.html#seroflow.Pipeline.target_loader">target_loader (seroflow.Pipeline property)</a>
+</li>
       <li><a href="docs/engine.html#seroflow.engine.engine.AbstractEngine.test_engine">test_engine() (seroflow.engine.engine.AbstractEngine method)</a>
 
       <ul>
@@ -2250,14 +2326,14 @@
       </ul></li>
       <li><a href="docs/wrappers.html#seroflow.wrappers.wrappers.timer">timer() (in module seroflow.wrappers.wrappers)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/transform.html#seroflow.transform.ReplaceStringInColumn.to_replace">to_replace (seroflow.transform.ReplaceStringInColumn attribute)</a>
 
       <ul>
         <li><a href="docs/transform.html#seroflow.transform.string.ReplaceStringInColumn.to_replace">(seroflow.transform.string.ReplaceStringInColumn attribute)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/transform.html#seroflow.transform.Transformation">Transformation (class in seroflow.transform)</a>
 
       <ul>
@@ -2277,6 +2353,8 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="docs/engine.html#seroflow.engine.engine.Engine.unpack_connection_settings">unpack_connection_settings() (seroflow.engine.engine.Engine method)</a>
+</li>
+      <li><a href="docs/cache.html#seroflow.cache.lfu_cache.LFUCache.update_config">update_config() (seroflow.cache.lfu_cache.LFUCache method)</a>
 </li>
       <li><a href="docs/step.html#seroflow.step.step.Step.update_params_list">update_params_list() (seroflow.step.step.Step method)</a>
 </li>
@@ -2380,6 +2458,14 @@
         <li><a href="docs/transform.html#seroflow.transform.variable.UpdateVariable.variable">(seroflow.transform.variable.UpdateVariable attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="docs/cache.html#seroflow.cache.lfu_cache.LFUCache.write_config">write_config() (seroflow.cache.lfu_cache.LFUCache method)</a>
+</li>
   </ul></td>
 </tr></table>
 

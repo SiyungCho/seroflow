@@ -57,6 +57,7 @@
 <li class="toctree-l1"><a class="reference internal" href="transform.html">seroflow.transform package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="types.html">Types</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Utils</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id1">utils</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#seroflow.utils.utils.check_directory"><code class="docutils literal notranslate"><span class="pre">check_directory()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#seroflow.utils.utils.check_file"><code class="docutils literal notranslate"><span class="pre">check_file()</span></code></a></li>
@@ -108,6 +109,18 @@
              
   <section id="utils">
 <h1>Utils<a class="headerlink" href="#utils" title="Link to this heading"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">utils.py</span></code> module provides a set of utility functions for various common operations.
+These include generating hash keys, retrieving and hashing function source code, dictionary filtering, AST node conversion, extracting function return elements, file gathering, file/directory checks and creation, and string manipulation functions.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The module contains functions for:</p>
+<ul class="simple">
+<li><p><strong>Hashing &amp; Source Code Operations</strong>: Generate unique keys from strings, retrieve function source code, and compute source code hashes.</p></li>
+<li><p><strong>Dictionary Utilities</strong>: Check for keyword presence in dictionaries and filter out specified keys.</p></li>
+<li><p><strong>AST &amp; Return Value Extraction</strong>: Convert AST nodes to Python objects and extract return elements from function source code.</p></li>
+<li><p><strong>File Gathering &amp; File System Operations</strong>: Collect files based on file extensions, check for the existence of directories/files, create directories/files, and perform basic file path manipulations.</p></li>
+</ul>
+</section>
 <section id="id1">
 <h2>utils<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
 <p id="module-seroflow.utils.utils">Module: utils.py</p>

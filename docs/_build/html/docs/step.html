@@ -54,6 +54,7 @@
 <li class="toctree-l1"><a class="reference internal" href="load.html">Load</a></li>
 <li class="toctree-l1"><a class="reference internal" href="log.html">Logging</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Step</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#abstractstep">AbstractStep</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#seroflow.step.base_step.AbstractStep"><code class="docutils literal notranslate"><span class="pre">AbstractStep</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.step.base_step.AbstractStep.execute"><code class="docutils literal notranslate"><span class="pre">AbstractStep.execute()</span></code></a></li>
@@ -61,6 +62,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.step.base_step.AbstractStep.stop_step"><code class="docutils literal notranslate"><span class="pre">AbstractStep.stop_step()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#usage-example">Usage Example</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#id1">Step</a><ul>
@@ -81,6 +83,14 @@
 <li class="toctree-l4"><a class="reference internal" href="#seroflow.step.step.Step.update_return_list"><code class="docutils literal notranslate"><span class="pre">Step.update_return_list()</span></code></a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-custom-steps-via-the-step-class">Creating Custom Steps via the <code class="docutils literal notranslate"><span class="pre">Step</span></code> Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#option-1-wrapper-method">Option 1: Wrapper Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Usage Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#option-2-inherit-the-step-class">Option 2: Inherit the <code class="docutils literal notranslate"><span class="pre">Step</span></code> Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Usage Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#option-3-inherit-the-transformation-class">Option 3: Inherit the <code class="docutils literal notranslate"><span class="pre">Transformation</span></code> Class</a></li>
 </ul>
 </li>
 </ul>
@@ -117,8 +127,22 @@
              
   <section id="step">
 <h1>Step<a class="headerlink" href="#step" title="Link to this heading"></a></h1>
+<p>The modules documented here define the interface and a concrete implementation for custom <code class="docutils literal notranslate"><span class="pre">Step</span></code> creation compatible with the <code class="docutils literal notranslate"><span class="pre">Seroflow</span></code> <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> Object.
+They provide a common interface to initialize, clean up, and execute operations (steps) within a <code class="docutils literal notranslate"><span class="pre">Seroflow</span></code> <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>This documentation covers two modules:</p>
+<ul class="simple">
+<li><p><strong>abstract_step</strong>: Defines the <code class="docutils literal notranslate"><span class="pre">AbstractStep</span></code> abstract class, which specifies the interface for creating steps.</p></li>
+<li><p><strong>step</strong>: Implements the <code class="docutils literal notranslate"><span class="pre">Step</span></code> class, a concrete subclass of <code class="docutils literal notranslate"><span class="pre">AbstractStep</span></code> that encapsulates a single operation or transformation.</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">Step</span></code> class manages function initialization, parameter handling, default values, error handling, and dynamic updates to return and parameter lists.
+It can be used to create a custom <code class="docutils literal notranslate"><span class="pre">Step</span></code> via, subclass creation, the transformation subclass or wrapper definition.</p>
+</section>
 <section id="abstractstep">
 <h2>AbstractStep<a class="headerlink" href="#abstractstep" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">AbstractStep</span></code> is an abstract base class that defines the structure of a <code class="docutils literal notranslate"><span class="pre">Seroflow's</span></code> <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> step.
+This design enforces a standardized interface and behavior across different <code class="docutils literal notranslate"><span class="pre">Step</span></code> operations and strategies.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seroflow.step.base_step.AbstractStep">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.step.base_step.</span></span><span class="sig-name descname"><span class="pre">AbstractStep</span></span><a class="headerlink" href="#seroflow.step.base_step.AbstractStep" title="Link to this definition"></a></dt>
@@ -150,9 +174,40 @@ This method should contain logic to clean up the step after execution has comple
 
 </dd></dl>
 
+<section id="usage-example">
+<h3>Usage Example<a class="headerlink" href="#usage-example" title="Link to this heading"></a></h3>
+<p>Below is an example demonstrating how a concrete step implementation might inherit from <code class="docutils literal notranslate"><span class="pre">AbstractStep</span></code> and implement its methods:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.step</span><span class="w"> </span><span class="kn">import</span> <span class="n">AbstractStep</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MyStep</span><span class="p">(</span><span class="n">AbstractStep</span><span class="p">):</span>
+   <span class="k">def</span><span class="w"> </span><span class="nf">start_step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="c1"># Initialize resources or validate input</span>
+      <span class="k">pass</span>
+
+   <span class="k">def</span><span class="w"> </span><span class="nf">stop_step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="c1"># Perform cleanup after execution</span>
+      <span class="k">pass</span>
+
+   <span class="k">def</span><span class="w"> </span><span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="c1"># Implement the step&#39;s main logic</span>
+      <span class="k">return</span> <span class="s2">&quot;Step executed&quot;</span>
+</pre></div>
+</div>
+<p>Although the <code class="docutils literal notranslate"><span class="pre">AbstractStep</span></code> class can be used to create Custom <code class="docutils literal notranslate"><span class="pre">Step</span></code> Objects, it is not recommended due to the fact that the user will need to implement the logic for interaction between the Custom <code class="docutils literal notranslate"><span class="pre">Step</span></code> and the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> Object.
+It is instead recommended to use the <code class="docutils literal notranslate"><span class="pre">Step</span></code> Class documented below.</p>
+</section>
 </section>
 <section id="id1">
 <h2>Step<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">Step</span></code> class is a concrete implementation of <code class="docutils literal notranslate"><span class="pre">AbstractStep</span></code> that encapsulates the logic for executing a function with given parameters and DataFrames.
+It also serves as a convenient wrapper, allowing you to easily create custom steps by simply decorating your function with <code class="docutils literal notranslate"><span class="pre">&#64;Step()</span></code>.
+It is highly recommended that any custom step operations users may want to develop are subclasses of the <code class="docutils literal notranslate"><span class="pre">Step</span></code> Class if the user wishes to implement a pre and post execution logic.
+In other general cases, the wrapper technique is recommended.
+However unlike the <code class="docutils literal notranslate"><span class="pre">AbstractStep</span></code> this is not obligatory.</p>
+<p>Variables created inside a <code class="docutils literal notranslate"><span class="pre">Step</span></code> Function can be returned and will subsequently be saved as a variable internally within the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> Object.
+Subsequent steps that request a variable will be passed the value most recently stored.
+This way interstep variable communication can be performed.
+Other methods such as caching can also aid with this.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="seroflow.step.step.Step">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">seroflow.step.step.</span></span><span class="sig-name descname"><span class="pre">Step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataframes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'raise'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#seroflow.step.step.Step" title="Link to this definition"></a></dt>
@@ -380,6 +435,94 @@ Used externally to explicitly set the return list.</p>
 
 </dd></dl>
 
+</section>
+<section id="creating-custom-steps-via-the-step-class">
+<h2>Creating Custom Steps via the <code class="docutils literal notranslate"><span class="pre">Step</span></code> Class<a class="headerlink" href="#creating-custom-steps-via-the-step-class" title="Link to this heading"></a></h2>
+<p>There are 3 main ways to create custom <code class="docutils literal notranslate"><span class="pre">Step</span></code> Objects to use within the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> execution.
+For most basic and quick step creation the wrapper method is recommended.
+For more complex transformations and operations, inheriting the <code class="docutils literal notranslate"><span class="pre">Step</span></code> or <code class="docutils literal notranslate"><span class="pre">Transformation</span></code> Class is recommended.</p>
+<section id="option-1-wrapper-method">
+<h3>Option 1: Wrapper Method<a class="headerlink" href="#option-1-wrapper-method" title="Link to this heading"></a></h3>
+<p>The wrapper method is the simplest way to create a custom <code class="docutils literal notranslate"><span class="pre">Step</span></code> object.
+It allows the user to insert the <code class="docutils literal notranslate"><span class="pre">Step</span></code> using the <code class="docutils literal notranslate"><span class="pre">add_step(s)(...)</span></code> methods.
+The wrapper method also allows users to call the step function as if it were a regular python function by creating the needed variables and passing them into the function to test its execution.</p>
+<p>To create a custom <code class="docutils literal notranslate"><span class="pre">Step</span></code> using the wrapper method, users simply add the <code class="docutils literal notranslate"><span class="pre">&#64;Step()</span></code> wrapper above a function.
+This turns the function into a <code class="docutils literal notranslate"><span class="pre">Step</span></code> function and allows it to be passed into the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> object.</p>
+<ul class="simple">
+<li><p>A <code class="docutils literal notranslate"><span class="pre">step_name</span></code> argument can be passed as a parameter in the <code class="docutils literal notranslate"><span class="pre">&#64;Step(step_name=&quot;...&quot;)</span></code> wrapper to give the step a specific name, however, this is optional and if omitted the function’s name is the default name used.</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">dataframes</span></code> argument can be passed as a parameter in the <code class="docutils literal notranslate"><span class="pre">&#64;Step(dataframes=[...])</span></code> wrapper to specify which DataFrames are to be passed into the step during <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> execution. <strong>If omitted then all DataFrames are loaded into the step.</strong></p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">params</span></code> argument can be passed as a parameter in the <code class="docutils literal notranslate"><span class="pre">&#64;Step(params={&quot;...&quot;:</span> <span class="pre">...})</span></code> wrapper to pass values to variables used in the function. In <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> execution, these values passed via the <code class="docutils literal notranslate"><span class="pre">params</span></code> parameter take precedence over any current value stored internally within the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> Object.</p></li>
+<li><p>Default values within the functions signature can also be used however, these have the lowest level of precedence.</p></li>
+<li><p>In <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> execution the priority hierarchy for a variables value goes as such:</p>
+<ol class="arabic simple">
+<li><p>Values stored via a <code class="docutils literal notranslate"><span class="pre">Step</span></code>’s params parameter.</p></li>
+<li><p>Values stored internally within the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> Object</p></li>
+<li><p>Default values defined by the function’s signature</p></li>
+</ol>
+</li>
+</ul>
+</section>
+<section id="id2">
+<h3>Usage Example<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<p>Below is a simple example that shows how to create a custom <code class="docutils literal notranslate"><span class="pre">Step</span></code> using the wrapper method:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.step</span><span class="w"> </span><span class="kn">import</span> <span class="n">Step</span> <span class="c1"># Import the Step class</span>
+
+<span class="nd">@Step</span><span class="p">(</span><span class="n">dataframes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;df1&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span> <span class="o">...</span><span class="p">})</span> <span class="c1"># Create a Custom Step using the wrapper format</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sample_function</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+  <span class="n">df1</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">get_dataframe</span><span class="p">(</span><span class="s1">&#39;df1&#39;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">context</span><span class="p">,</span> <span class="n">b</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">add_step</span><span class="p">(</span><span class="n">sample_function</span><span class="p">)</span> <span class="c1"># We can add the Custom Step function by passing the function name as an object</span>
+
+<span class="n">sample_function</span><span class="p">(</span><span class="o">...</span><span class="p">)</span> <span class="c1"># Wrapper based function can also be called as a normal python function</span>
+</pre></div>
+</div>
+</section>
+<section id="option-2-inherit-the-step-class">
+<h3>Option 2: Inherit the <code class="docutils literal notranslate"><span class="pre">Step</span></code> Class<a class="headerlink" href="#option-2-inherit-the-step-class" title="Link to this heading"></a></h3>
+<p>Inherit the <code class="docutils literal notranslate"><span class="pre">Step</span></code> Class method is a slightly more involved way to create a custom <code class="docutils literal notranslate"><span class="pre">Step</span></code> object.
+It allows the user to insert the <code class="docutils literal notranslate"><span class="pre">Step</span></code> using the <code class="docutils literal notranslate"><span class="pre">add_step(s)(...)</span></code> methods.
+However, unlike the wrapper method does not intuitively allow users to call the step function as if it were a regular python function.</p>
+<p>Inheriting the <code class="docutils literal notranslate"><span class="pre">Step</span></code> Class does however, allow users to define a more complex methodology for how the custom step is to be executed.
+Namely the methods: <code class="docutils literal notranslate"><span class="pre">start_step(...)</span></code> and <code class="docutils literal notranslate"><span class="pre">stop_step(...)</span></code> allow users to define logic which occurs directly before and after the execution of the step function.
+This allows for pre and post validation, type checking and more.</p>
+<p>Parameter definition is the same as the wrapper method, however, a <code class="docutils literal notranslate"><span class="pre">step_name</span></code> must be defined as the name <code class="docutils literal notranslate"><span class="pre">func</span></code> will cause errors in <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> execution.</p>
+</section>
+<section id="id3">
+<h3>Usage Example<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<p>Below is a simple example that shows how to create a custom <code class="docutils literal notranslate"><span class="pre">Step</span></code> by inheriting the <code class="docutils literal notranslate"><span class="pre">Step</span></code> class:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">seroflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">seroflow.step</span><span class="w"> </span><span class="kn">import</span> <span class="n">Step</span> <span class="c1"># Import the Step class</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">CustomStep</span><span class="p">(</span><span class="n">Step</span><span class="p">):</span>
+  <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframes</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">step_name</span><span class="o">=</span><span class="s2">&quot;sample_function&quot;</span><span class="p">,</span> <span class="n">on_error</span><span class="o">=</span><span class="s2">&quot;raise&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">step_name</span><span class="o">=</span><span class="n">step_name</span><span class="p">,</span> <span class="n">dataframes</span><span class="o">=</span><span class="n">dataframes</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">,</span> <span class="n">on_error</span><span class="o">=</span><span class="n">on_error</span><span class="p">)</span>
+
+  <span class="k">def</span><span class="w"> </span><span class="nf">func</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">df1</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">get_dataframe</span><span class="p">(</span><span class="s1">&#39;df1&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">context</span><span class="p">,</span> <span class="n">b</span>
+
+  <span class="k">def</span><span class="w"> </span><span class="nf">start_step</span><span class="p">(</span><span class="o">...</span><span class="p">):</span>
+    <span class="o">...</span>
+
+  <span class="k">def</span><span class="w"> </span><span class="nf">stop_step</span><span class="p">(</span><span class="o">...</span><span class="p">):</span>
+    <span class="o">...</span>
+
+<span class="n">custom_step</span> <span class="o">=</span> <span class="n">CustomStep</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">add_step</span><span class="p">(</span><span class="n">custom_step</span><span class="p">)</span> <span class="c1"># We can add the Custom Step function by passing the object</span>
+</pre></div>
+</div>
+</section>
+<section id="option-3-inherit-the-transformation-class">
+<h3>Option 3: Inherit the <code class="docutils literal notranslate"><span class="pre">Transformation</span></code> Class<a class="headerlink" href="#option-3-inherit-the-transformation-class" title="Link to this heading"></a></h3>
+<p>Please review the [Transformation](transformations/transformation.md) documentation for further information.</p>
+</section>
 </section>
 </section>
 

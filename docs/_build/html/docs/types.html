@@ -56,6 +56,7 @@
 <li class="toctree-l1"><a class="reference internal" href="step.html">Step</a></li>
 <li class="toctree-l1"><a class="reference internal" href="transform.html">seroflow.transform package</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Types</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-seroflow.types.type_validation">type_validation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#seroflow.types.type_validation.is_context"><code class="docutils literal notranslate"><span class="pre">is_context()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#seroflow.types.type_validation.is_context_object"><code class="docutils literal notranslate"><span class="pre">is_context_object()</span></code></a></li>
@@ -97,6 +98,21 @@
              
   <section id="types">
 <h1>Types<a class="headerlink" href="#types" title="Link to this heading"></a></h1>
+<p>This module provides utility functions for type validation.
+It verifies whether a given object is an instance of a specific base class for various <code class="docutils literal notranslate"><span class="pre">Seroflow</span></code> components—such as <code class="docutils literal notranslate"><span class="pre">Extractor</span></code>, <code class="docutils literal notranslate"><span class="pre">Loader</span></code>, <code class="docutils literal notranslate"><span class="pre">Step</span></code>, and <code class="docutils literal notranslate"><span class="pre">Context</span></code>—or, in the case of context objects, whether a dictionary contains only valid <code class="docutils literal notranslate"><span class="pre">Context</span></code> instances.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>This module includes the following functions:</p>
+<ul class="simple">
+<li><p><strong>is_extractor(extractor, _raise=False)</strong>: Validates that an object is an instance of the base <code class="docutils literal notranslate"><span class="pre">Extractor</span></code> class.</p></li>
+<li><p><strong>is_multiextractor(multiextractor, _raise=False)</strong>: Validates that an object is an instance of the base <code class="docutils literal notranslate"><span class="pre">MultiExtractor</span></code> class.</p></li>
+<li><p><strong>is_loader(loader, _raise=False)</strong>: Validates that an object is an instance of the base <code class="docutils literal notranslate"><span class="pre">Loader</span></code> class.</p></li>
+<li><p><strong>is_step(step, _raise=False)</strong>: Validates that an object is an instance of the base <code class="docutils literal notranslate"><span class="pre">Step</span></code> class.</p></li>
+<li><p><strong>is_context(context, _raise=False)</strong>: Validates that an object is an instance of the base <code class="docutils literal notranslate"><span class="pre">Context</span></code> class.</p></li>
+<li><p><strong>is_context_object(context, _raise=False)</strong>: Validates that the provided object is a dictionary where every value is a valid base <code class="docutils literal notranslate"><span class="pre">Context</span></code> instance.</p></li>
+</ul>
+<p>Each function takes an optional <code class="docutils literal notranslate"><span class="pre">_raise</span></code> parameter. When <code class="docutils literal notranslate"><span class="pre">_raise</span></code> is set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, a <code class="docutils literal notranslate"><span class="pre">TypeError</span></code> is raised if the validation fails.</p>
+</section>
 <section id="module-seroflow.types.type_validation">
 <span id="type-validation"></span><h2>type_validation<a class="headerlink" href="#module-seroflow.types.type_validation" title="Link to this heading"></a></h2>
 <p>Module: type_validation.py</p>

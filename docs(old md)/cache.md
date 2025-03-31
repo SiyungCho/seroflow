@@ -1,22 +1,22 @@
 # Cache Documentation
 
-The modules documented here define the base structure and a concrete implementation for `Pipeline` caching. They provide a common interface to inserting, retrieving, storing, loading, and resetting cache items. This ensures consistent cache behavior across different caching strategies.
+The modules documented here define the interface and a concrete implementation for caching with the `Seroflow` `Pipeline` Object. We provide a common interface to inserting, retrieving, storing, loading, and resetting cache items. This ensures consistent cache behavior across different caching strategies.
 
 ## Overview
 
 This documentation covers two modules:
 
 - **abstract_cache**:  
-  Defines the `AbstractCache` abstract class, which specifies the interface for creating caches.
+  Defines the `AbstractCache` abstract class, which specifies the interface for creating custom caches.
 
 - **lfu_cache**:  
   The Least Frequently Used (LFU), `LFUCache` class implements the `AbstractCache` interface to store, retrieve, and manage states within the `Pipeline` execution. It supports caching of `Pipeline` parameters and global context, along with mechanisms to evict the least frequently used items when the cache capacity is exceeded, persist cache state to disk, and restore the state from saved checkpoints.
 
 ## Class: AbstractCache
 
-`AbstractCache` is an abstract base class (inheriting from `ABC`) for implementing caching mechanisms within the `Pipeline` framework. Derived classes must implement all the abstract methods below to handle caching operations. This design enforces a standardized interface and behavior across different caching strategies.
+`AbstractCache` is an abstract base class (inheriting from `ABC`) for implementing caching. Derived classes must implement all the abstract methods below to handle caching operations. This design enforces a standardized interface and behavior across different caching strategies.
 
-**Note**: It is important to consider how a custom cache will interact with the internal systems in the `Pipeline` Object. Please Review the [Cache Transformations](transformations/cache.md) documentation for further information on `CacheState`, `ReloadCacheState` and `ResetCache`.
+**Note**: It is important to consider how a custom cache will interact with the internal systems in the `Seroflow` `Pipeline` Object. Please Review the [Cache Transformations](transformations/cache.md) documentation for further information on `CacheState`, `ReloadCacheState` and `ResetCache`.
 
 **Subclasses must override:**
 - `put(self, value)`
