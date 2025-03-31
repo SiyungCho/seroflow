@@ -1,6 +1,7 @@
 ## Seroflow
 ![PyPI](https://img.shields.io/pypi/v/seroflow)
 ![Python](https://img.shields.io/pypi/pyversions/seroflow)
+![License](https://img.shields.io/github/SiyungCho/seroflow)
 <!-- [![codecov](https://codecov.io/gh/<USERNAME>/<REPO>/branch/main/graph/badge.svg)](https://codecov.io/gh/<USERNAME>/<REPO>) -->
 [![Documentation Status](https://readthedocs.org/projects/seroflow/badge/?version=latest)](https://seroflow.readthedocs.io/en/latest/?badge=latest)
 
